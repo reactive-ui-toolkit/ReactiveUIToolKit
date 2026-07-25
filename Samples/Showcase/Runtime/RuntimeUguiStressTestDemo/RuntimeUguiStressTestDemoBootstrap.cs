@@ -66,9 +66,15 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
                     UguiHostConfig.DebugStagingRoot != null
                         ? UguiHostConfig.DebugStagingRoot.childCount
                         : -1;
+                // totalImages counts every Image under the mount (boxes + a
+                // handful of chrome) — a duplicated box subtree shows up as
+                // roughly double the box count here even when the area ref
+                // went stale.
+                int totalImages = GetComponentsInChildren<UnityEngine.UI.Image>(true).Length;
                 Debug.Log(
                     $"[UguiStress] t={_elapsed:F1}s area={(areaRt != null ? areaRt.name : "NULL")} "
-                        + $"children={(areaRt != null ? areaRt.childCount : -1)} staging={staging} | "
+                        + $"children={(areaRt != null ? areaRt.childCount : -1)} staging={staging} "
+                        + $"totalImages={totalImages} | "
                         + $"created={UguiHostConfig.DebugCreated} appended={UguiHostConfig.DebugAppended} "
                         + $"inserted={UguiHostConfig.DebugInserted} removed={UguiHostConfig.DebugRemoved} "
                         + $"pooled={UguiHostConfig.DebugPooled} destroyed={UguiHostConfig.DebugDestroyed}"
@@ -218,21 +224,24 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             area.Color = new Color(0.09f, 0.1f, 0.13f);
 
             int boxCount = running ? s_boxCount : 0;
-            if (Time.frameCount % 60 == 0)
-            {
-                Debug.Log(
-                    $"[UguiStress] render: running={running} boxCount={boxCount} t={t:F2}"
-                );
-            }
+            var areaRt = s_areaRef.Current;
+            var bounds = areaRt != null ? areaRt.rect : new Rect(0f, 0f, 900f, 500f);
+            float rangeX = Mathf.Max(50f, bounds.width - 18f);
+            float rangeY = Mathf.Max(50f, bounds.height - 18f);
             var boxes = new VirtualNode[boxCount];
             for (int i = 0; i < boxCount; i++)
             {
                 var box = UguiBaseProps.__Rent<UguiImageProps>();
                 box.Anchors = UguiAnchorPreset.BottomLeft;
                 box.SizeDelta = new Vector2(18f, 18f);
+                // PingPong = constant-speed bounce off the area edges (the
+                // classic stress-test motion); per-box speed/phase derived
+                // deterministically from the index.
+                float speed = 60f + (i * 37) % 90;
+                float phase = (i * 131) % 997;
                 box.AnchoredPosition = new Vector2(
-                    Mathf.Abs(Mathf.Sin(t * 0.9f + i * 0.37f)) * (Screen.width - 20f),
-                    Mathf.Abs(Mathf.Cos(t * 1.3f + i * 0.11f)) * (Screen.height - 80f)
+                    Mathf.PingPong(phase + t * speed, rangeX),
+                    Mathf.PingPong(phase * 0.61f + t * speed * 0.83f, rangeY)
                 );
                 box.Color = Color.HSVToRGB(i % 32 / 32f, 0.7f, 1f);
                 boxes[i] = U.Image(box, $"box-{i}");
