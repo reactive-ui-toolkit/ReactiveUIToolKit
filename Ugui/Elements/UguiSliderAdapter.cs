@@ -12,7 +12,11 @@ namespace ReactiveUITK.Ugui
     {
         public override GameObject Create()
         {
-            return DefaultControls.CreateSlider(UguiDefaultResources.GetLegacyResources());
+            var go = DefaultControls.CreateSlider(UguiDefaultResources.GetLegacyResources());
+            var tag = UguiNodeTag.GetOrAdd(go);
+            tag.Selectable = go.GetComponent<Slider>();
+            tag.Control = tag.Selectable;
+            return go;
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
@@ -31,7 +35,8 @@ namespace ReactiveUITK.Ugui
         {
             if (next == null)
                 return;
-            var slider = go.GetComponent<Slider>();
+            var sliderTag = UguiNodeTag.Find(go);
+            var slider = sliderTag != null ? sliderTag.Selectable as Slider : go.GetComponent<Slider>();
             if (slider == null)
                 return;
             bool full = prev == null;
@@ -102,7 +107,13 @@ namespace ReactiveUITK.Ugui
     {
         public override GameObject Create()
         {
-            return DefaultControls.CreateScrollbar(UguiDefaultResources.GetLegacyResources());
+            var go = DefaultControls.CreateScrollbar(UguiDefaultResources.GetLegacyResources());
+            var tag = UguiNodeTag.GetOrAdd(go);
+            tag.Selectable = go.GetComponent<Scrollbar>();
+            tag.Control = tag.Selectable;
+            tag.Image = go.GetComponent<Image>();
+            tag.Graphic = tag.Image;
+            return go;
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
@@ -121,12 +132,17 @@ namespace ReactiveUITK.Ugui
         {
             if (next == null)
                 return;
-            var bar = go.GetComponent<Scrollbar>();
+            var barTag = UguiNodeTag.Find(go);
+            var bar = barTag != null ? barTag.Selectable as Scrollbar : go.GetComponent<Scrollbar>();
             if (bar == null)
                 return;
             bool full = prev == null;
 
-            UguiImageApplier.ApplyDiffOrFull(go.GetComponent<Image>(), prev, next);
+            UguiImageApplier.ApplyDiffOrFull(
+                barTag != null ? barTag.Image : go.GetComponent<Image>(),
+                prev,
+                next
+            );
             UguiSelectableApplier.Apply(bar, prev, next);
 
             if ((full || next.Size != prev.Size) && next.Size.HasValue)

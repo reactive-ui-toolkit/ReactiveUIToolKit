@@ -12,28 +12,37 @@ namespace ReactiveUITK.Ugui
             // Raycast hygiene: purely visual elements do not block raycasts
             // unless asked to (raycastTarget prop overrides).
             image.raycastTarget = false;
+            var tag = UguiNodeTag.GetOrAdd(go);
+            tag.Image = image;
+            tag.Graphic = image;
             return go;
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
         {
-            UguiImageApplier.ApplyFull(go.GetComponent<Image>(), props as UguiImageProps);
+            UguiImageApplier.ApplyFull(CachedImage(go), props as UguiImageProps);
             base.ApplyTypedFull(go, props);
         }
 
         public override void ApplyTypedDiff(GameObject go, UguiBaseProps prev, UguiBaseProps next)
         {
             UguiImageApplier.ApplyDiff(
-                go.GetComponent<Image>(),
+                CachedImage(go),
                 prev as UguiImageProps,
                 next as UguiImageProps
             );
             base.ApplyTypedDiff(go, prev, next);
         }
 
+        internal static Image CachedImage(GameObject go)
+        {
+            var tag = UguiNodeTag.Find(go);
+            return tag != null && tag.Image != null ? tag.Image : go.GetComponent<Image>();
+        }
+
         public override bool TryResetForPool(GameObject go)
         {
-            var image = go.GetComponent<Image>();
+            var image = CachedImage(go);
             if (image == null)
                 return false;
             ResetCommonState(go);

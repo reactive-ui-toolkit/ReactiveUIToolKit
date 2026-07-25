@@ -35,13 +35,23 @@ namespace ReactiveUITK.Ugui
             viewportImage.raycastTarget = true;
 
             scroll.viewport = viewportRt;
+            var tag = UguiNodeTag.GetOrAdd(root);
+            tag.Control = scroll;
+            tag.Image = rootImage;
+            tag.Graphic = rootImage;
             return root;
         }
 
         public override GameObject ResolveChildHost(GameObject go)
         {
-            var scroll = go.GetComponent<ScrollRect>();
+            var scroll = CachedScroll(go);
             return scroll != null && scroll.viewport != null ? scroll.viewport.gameObject : go;
+        }
+
+        private static ScrollRect CachedScroll(GameObject go)
+        {
+            var tag = UguiNodeTag.Find(go);
+            return tag != null && tag.Control is ScrollRect s ? s : go.GetComponent<ScrollRect>();
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
@@ -60,12 +70,17 @@ namespace ReactiveUITK.Ugui
         {
             if (next == null)
                 return;
-            var scroll = go.GetComponent<ScrollRect>();
+            var scroll = CachedScroll(go);
             if (scroll == null)
                 return;
             bool full = prev == null;
 
-            UguiImageApplier.ApplyDiffOrFull(go.GetComponent<Image>(), prev, next);
+            var tag = UguiNodeTag.Find(go);
+            UguiImageApplier.ApplyDiffOrFull(
+                tag != null ? tag.Image : go.GetComponent<Image>(),
+                prev,
+                next
+            );
 
             if ((full || next.Horizontal != prev.Horizontal) && next.Horizontal.HasValue)
                 scroll.horizontal = next.Horizontal.Value;

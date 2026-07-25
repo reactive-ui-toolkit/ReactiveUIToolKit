@@ -15,7 +15,13 @@ namespace ReactiveUITK.Ugui
     {
         public override GameObject Create()
         {
-            return TMP_DefaultControls.CreateInputField(UguiDefaultResources.GetTmpResources());
+            var go = TMP_DefaultControls.CreateInputField(UguiDefaultResources.GetTmpResources());
+            var tag = UguiNodeTag.GetOrAdd(go);
+            tag.Selectable = go.GetComponent<TMP_InputField>();
+            tag.Control = tag.Selectable;
+            tag.Image = go.GetComponent<Image>();
+            tag.Graphic = tag.Image;
+            return go;
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
@@ -34,12 +40,17 @@ namespace ReactiveUITK.Ugui
         {
             if (next == null)
                 return;
-            var input = go.GetComponent<TMP_InputField>();
+            var tag = UguiNodeTag.Find(go);
+            var input = tag != null ? tag.Selectable as TMP_InputField : go.GetComponent<TMP_InputField>();
             if (input == null)
                 return;
             bool full = prev == null;
 
-            UguiImageApplier.ApplyDiffOrFull(go.GetComponent<Image>(), prev, next);
+            UguiImageApplier.ApplyDiffOrFull(
+                tag != null ? tag.Image : go.GetComponent<Image>(),
+                prev,
+                next
+            );
             UguiSelectableApplier.Apply(input, prev, next);
 
             if ((full || next.CharacterLimit != prev.CharacterLimit) && next.CharacterLimit.HasValue)

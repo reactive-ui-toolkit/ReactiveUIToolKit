@@ -13,6 +13,8 @@ namespace ReactiveUITK.Ugui
                 typeof(CanvasScaler),
                 typeof(GraphicRaycaster)
             );
+            var tag = UguiNodeTag.GetOrAdd(go);
+            tag.Control = go.GetComponent<Canvas>();
             return go;
         }
 
@@ -34,7 +36,8 @@ namespace ReactiveUITK.Ugui
                 return;
             bool full = prev == null;
 
-            var canvas = go.GetComponent<Canvas>();
+            var tag = UguiNodeTag.Find(go);
+            var canvas = tag != null ? tag.Control as Canvas : go.GetComponent<Canvas>();
             if (canvas != null)
             {
                 if ((full || next.RenderMode != prev.RenderMode) && next.RenderMode.HasValue)

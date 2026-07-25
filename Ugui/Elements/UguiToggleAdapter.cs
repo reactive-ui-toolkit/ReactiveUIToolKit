@@ -52,6 +52,9 @@ namespace ReactiveUITK.Ugui
             var toggle = root.AddComponent<Toggle>();
             toggle.targetGraphic = bgImage;
             toggle.graphic = checkImage;
+            var tag = UguiNodeTag.GetOrAdd(root);
+            tag.Selectable = toggle;
+            tag.Control = toggle;
             return root;
         }
 
@@ -71,7 +74,8 @@ namespace ReactiveUITK.Ugui
         {
             if (next == null)
                 return;
-            var toggle = go.GetComponent<Toggle>();
+            var tag = UguiNodeTag.Find(go);
+            var toggle = tag != null ? tag.Selectable as Toggle : go.GetComponent<Toggle>();
             if (toggle == null)
                 return;
             bool full = prev == null;

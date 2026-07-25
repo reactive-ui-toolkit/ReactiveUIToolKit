@@ -16,18 +16,21 @@ namespace ReactiveUITK.Ugui
             var go = new GameObject("Text");
             var tmp = go.AddComponent<TextMeshProUGUI>();
             tmp.raycastTarget = false;
+            var tag = UguiNodeTag.GetOrAdd(go);
+            tag.Graphic = tmp;
+            tag.Control = tmp;
             return go;
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
         {
-            Apply(go.GetComponent<TextMeshProUGUI>(), null, props as UguiTextProps);
+            Apply(CachedText(go), null, props as UguiTextProps);
             base.ApplyTypedFull(go, props);
         }
 
         public override void ApplyTypedDiff(GameObject go, UguiBaseProps prev, UguiBaseProps next)
         {
-            Apply(go.GetComponent<TextMeshProUGUI>(), prev as UguiTextProps, next as UguiTextProps);
+            Apply(CachedText(go), prev as UguiTextProps, next as UguiTextProps);
             base.ApplyTypedDiff(go, prev, next);
         }
 
@@ -42,15 +45,23 @@ namespace ReactiveUITK.Ugui
                 && t is string s
             )
             {
-                var tmp = go.GetComponent<TextMeshProUGUI>();
+                var tmp = CachedText(go);
                 if (tmp != null && tmp.text != s)
                     tmp.text = s;
             }
         }
 
+        private static TextMeshProUGUI CachedText(GameObject go)
+        {
+            var tag = UguiNodeTag.Find(go);
+            return tag != null && tag.Control is TextMeshProUGUI tmp
+                ? tmp
+                : go.GetComponent<TextMeshProUGUI>();
+        }
+
         public override bool TryResetForPool(GameObject go)
         {
-            var tmp = go.GetComponent<TextMeshProUGUI>();
+            var tmp = CachedText(go);
             if (tmp == null)
                 return false;
             ResetCommonState(go);

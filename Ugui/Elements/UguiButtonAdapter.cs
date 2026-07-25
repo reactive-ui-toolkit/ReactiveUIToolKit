@@ -23,13 +23,18 @@ namespace ReactiveUITK.Ugui
             }
             var button = go.AddComponent<Button>();
             button.targetGraphic = image;
+            var tag = UguiNodeTag.GetOrAdd(go);
+            tag.Image = image;
+            tag.Graphic = image;
+            tag.Selectable = button;
+            tag.Control = button;
             return go;
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
         {
             var bp = props as UguiButtonProps;
-            UguiImageApplier.ApplyFull(go.GetComponent<Image>(), bp);
+            UguiImageApplier.ApplyFull(UguiImageAdapter.CachedImage(go), bp);
             ApplyButton(go, null, bp);
             base.ApplyTypedFull(go, props);
         }
@@ -38,7 +43,7 @@ namespace ReactiveUITK.Ugui
         {
             var bp = prev as UguiButtonProps;
             var bn = next as UguiButtonProps;
-            UguiImageApplier.ApplyDiff(go.GetComponent<Image>(), bp, bn);
+            UguiImageApplier.ApplyDiff(UguiImageAdapter.CachedImage(go), bp, bn);
             ApplyButton(go, bp, bn);
             base.ApplyTypedDiff(go, prev, next);
         }
@@ -47,7 +52,8 @@ namespace ReactiveUITK.Ugui
         {
             if (next == null)
                 return;
-            var button = go.GetComponent<Button>();
+            var tag = UguiNodeTag.Find(go);
+            var button = tag != null ? tag.Selectable as Button : go.GetComponent<Button>();
             if (button == null)
                 return;
 

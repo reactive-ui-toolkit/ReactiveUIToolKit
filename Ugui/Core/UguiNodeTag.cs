@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ReactiveUITK.Ugui
@@ -19,15 +20,53 @@ namespace ReactiveUITK.Ugui
         /// </summary>
         internal UguiElementAdapter Adapter;
 
+        // Typed component cache, populated by the adapter at Create time so
+        // the per-frame diff path writes properties directly — the uGUI
+        // equivalent of UITK diffs writing on the typed VisualElement, with
+        // no GetComponent on the hot path. Adapters fall back to
+        // GetComponent only when a cache slot is empty.
+        internal UnityEngine.UI.Graphic Graphic;
+        internal UnityEngine.UI.Image Image;
+        internal UnityEngine.UI.Selectable Selectable;
+        internal Component Control;
+
+        private static readonly Dictionary<GameObject, UguiNodeTag> s_byGo =
+            new Dictionary<GameObject, UguiNodeTag>();
+
         internal static UguiNodeTag GetOrAdd(GameObject go)
         {
+            if (s_byGo.TryGetValue(go, out var cached) && cached != null)
+            {
+                return cached;
+            }
             var tag = go.GetComponent<UguiNodeTag>();
             if (tag == null)
             {
                 tag = go.AddComponent<UguiNodeTag>();
                 tag.hideFlags = HideFlags.HideInInspector;
             }
+            s_byGo[go] = tag;
             return tag;
+        }
+
+        /// <summary>Cache lookup without adding — null for untagged hosts.</summary>
+        internal static UguiNodeTag Find(GameObject go)
+        {
+            if (s_byGo.TryGetValue(go, out var cached) && cached != null)
+            {
+                return cached;
+            }
+            var tag = go.GetComponent<UguiNodeTag>();
+            if (tag != null)
+            {
+                s_byGo[go] = tag;
+            }
+            return tag;
+        }
+
+        private void OnDestroy()
+        {
+            s_byGo.Remove(gameObject);
         }
     }
 }

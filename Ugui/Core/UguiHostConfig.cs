@@ -231,7 +231,7 @@ namespace ReactiveUITK.Ugui
             var go = (GameObject)element;
             if (go == null)
                 return;
-            var tag = go.GetComponent<UguiNodeTag>();
+            var tag = UguiNodeTag.Find(go);
             if (tag != null && tag.AssignedRef != null)
             {
                 UguiRefUtility.Assign(tag.AssignedRef, null);
@@ -273,7 +273,7 @@ namespace ReactiveUITK.Ugui
             var parentGo = (GameObject)parent;
             if (parentGo == null)
                 return null;
-            var tag = parentGo.GetComponent<UguiNodeTag>();
+            var tag = UguiNodeTag.Find(parentGo);
             var host = tag?.Adapter?.ResolveChildHost(parentGo) ?? parentGo;
             return host.transform;
         }

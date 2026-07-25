@@ -14,7 +14,13 @@ namespace ReactiveUITK.Ugui
     {
         public override GameObject Create()
         {
-            return TMP_DefaultControls.CreateDropdown(UguiDefaultResources.GetTmpResources());
+            var go = TMP_DefaultControls.CreateDropdown(UguiDefaultResources.GetTmpResources());
+            var tag = UguiNodeTag.GetOrAdd(go);
+            tag.Selectable = go.GetComponent<TMP_Dropdown>();
+            tag.Control = tag.Selectable;
+            tag.Image = go.GetComponent<Image>();
+            tag.Graphic = tag.Image;
+            return go;
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
@@ -33,12 +39,17 @@ namespace ReactiveUITK.Ugui
         {
             if (next == null)
                 return;
-            var dropdown = go.GetComponent<TMP_Dropdown>();
+            var tag = UguiNodeTag.Find(go);
+            var dropdown = tag != null ? tag.Selectable as TMP_Dropdown : go.GetComponent<TMP_Dropdown>();
             if (dropdown == null)
                 return;
             bool full = prev == null;
 
-            UguiImageApplier.ApplyDiffOrFull(go.GetComponent<Image>(), prev, next);
+            UguiImageApplier.ApplyDiffOrFull(
+                tag != null ? tag.Image : go.GetComponent<Image>(),
+                prev,
+                next
+            );
             UguiSelectableApplier.Apply(dropdown, prev, next);
 
             if (

@@ -10,24 +10,33 @@ namespace ReactiveUITK.Ugui
             var go = new GameObject("RawImage");
             var raw = go.AddComponent<RawImage>();
             raw.raycastTarget = false;
+            var tag = UguiNodeTag.GetOrAdd(go);
+            tag.Graphic = raw;
+            tag.Control = raw;
             return go;
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
         {
-            Apply(go.GetComponent<RawImage>(), null, props as UguiRawImageProps);
+            Apply(CachedRaw(go), null, props as UguiRawImageProps);
             base.ApplyTypedFull(go, props);
         }
 
         public override void ApplyTypedDiff(GameObject go, UguiBaseProps prev, UguiBaseProps next)
         {
-            Apply(go.GetComponent<RawImage>(), prev as UguiRawImageProps, next as UguiRawImageProps);
+            Apply(CachedRaw(go), prev as UguiRawImageProps, next as UguiRawImageProps);
             base.ApplyTypedDiff(go, prev, next);
+        }
+
+        private static RawImage CachedRaw(GameObject go)
+        {
+            var tag = UguiNodeTag.Find(go);
+            return tag != null && tag.Control is RawImage raw ? raw : go.GetComponent<RawImage>();
         }
 
         public override bool TryResetForPool(GameObject go)
         {
-            var raw = go.GetComponent<RawImage>();
+            var raw = CachedRaw(go);
             if (raw == null)
                 return false;
             ResetCommonState(go);
