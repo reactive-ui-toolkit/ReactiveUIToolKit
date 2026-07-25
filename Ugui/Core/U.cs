@@ -70,6 +70,24 @@ namespace ReactiveUITK.Ugui
             params VirtualNode[] children
         ) => Rent("Button", key, props, children);
 
+        public static VirtualNode HorizontalLayoutGroup(
+            UguiHorizontalLayoutGroupProps props = null,
+            string key = null,
+            params VirtualNode[] children
+        ) => Rent("HorizontalLayoutGroup", key, props, children);
+
+        public static VirtualNode VerticalLayoutGroup(
+            UguiVerticalLayoutGroupProps props = null,
+            string key = null,
+            params VirtualNode[] children
+        ) => Rent("VerticalLayoutGroup", key, props, children);
+
+        public static VirtualNode GridLayoutGroup(
+            UguiGridLayoutGroupProps props = null,
+            string key = null,
+            params VirtualNode[] children
+        ) => Rent("GridLayoutGroup", key, props, children);
+
         /// <summary>
         /// Portal into any RectTransform in the scene (overlay layers,
         /// user-managed canvases). The uGUI counterpart of

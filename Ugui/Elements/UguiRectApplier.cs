@@ -11,6 +11,38 @@ namespace ReactiveUITK.Ugui
     /// </summary>
     internal static class UguiRectApplier
     {
+#if UNITY_EDITOR
+        private static readonly System.Collections.Generic.HashSet<int> s_drivenHintShown =
+            new System.Collections.Generic.HashSet<int>();
+
+        private static void HintIfDriven(RectTransform rt, UguiBaseProps props)
+        {
+            if (rt.drivenByObject == null)
+                return;
+            bool writesPositional =
+                props.AnchoredPosition.HasValue
+                || props.SizeDelta.HasValue
+                || props.OffsetMin.HasValue
+                || props.OffsetMax.HasValue
+                || props.Anchors.HasValue
+                || props.AnchorMin.HasValue
+                || props.AnchorMax.HasValue;
+            if (!writesPositional)
+                return;
+            int id = rt.GetInstanceID();
+            if (!s_drivenHintShown.Add(id))
+                return;
+            Debug.LogWarning(
+                $"[ReactiveUITK.Ugui] '{rt.name}': rect props are driven by "
+                    + $"{rt.drivenByObject.GetType().Name} — the written values will be "
+                    + "overridden on the next layout pass. Control this element through "
+                    + "layoutElement (min/preferred/flexible) or the parent group's "
+                    + "settings instead.",
+                rt
+            );
+        }
+#endif
+
         internal static void ApplyFull(GameObject go, UguiBaseProps props)
         {
             if (props == null)
@@ -24,6 +56,9 @@ namespace ReactiveUITK.Ugui
             var rt = go.transform as RectTransform;
             if (rt != null)
             {
+#if UNITY_EDITOR
+                HintIfDriven(rt, props);
+#endif
                 if (props.Anchors.HasValue)
                 {
                     UguiAnchorPresets.Resolve(
@@ -80,6 +115,9 @@ namespace ReactiveUITK.Ugui
             var rt = go.transform as RectTransform;
             if (rt != null)
             {
+#if UNITY_EDITOR
+                HintIfDriven(rt, next);
+#endif
                 bool anchorsChanged = next.Anchors != prev.Anchors;
                 if (anchorsChanged && next.Anchors.HasValue)
                 {

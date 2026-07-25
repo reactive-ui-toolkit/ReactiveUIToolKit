@@ -35,6 +35,11 @@ namespace ReactiveUITK.Ugui
         public bool? Active { get; set; }
         public int? Layer { get; set; }
 
+        // --- Prop groups (declarative "Add Component") ---
+        public UguiLayoutElement LayoutElement { get; set; }
+        public UguiContentSizeFitter ContentSizeFitter { get; set; }
+        public UguiAspectRatioFitter AspectRatioFitter { get; set; }
+
         public virtual bool ShallowEquals(UguiBaseProps other)
         {
             if (other == null)
@@ -72,6 +77,12 @@ namespace ReactiveUITK.Ugui
                 return false;
             if (Layer != other.Layer)
                 return false;
+            if (!UguiLayoutElement.ValueEquals(LayoutElement, other.LayoutElement))
+                return false;
+            if (!UguiContentSizeFitter.ValueEquals(ContentSizeFitter, other.ContentSizeFitter))
+                return false;
+            if (!UguiAspectRatioFitter.ValueEquals(AspectRatioFitter, other.AspectRatioFitter))
+                return false;
 
             return true;
         }
@@ -102,6 +113,9 @@ namespace ReactiveUITK.Ugui
             Scale = null;
             Active = null;
             Layer = null;
+            LayoutElement = null;
+            ContentSizeFitter = null;
+            AspectRatioFitter = null;
         }
 
         internal virtual void __ResetFields() { }

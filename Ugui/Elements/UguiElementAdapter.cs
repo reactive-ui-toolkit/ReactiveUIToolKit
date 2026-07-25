@@ -15,6 +15,7 @@ namespace ReactiveUITK.Ugui
         public virtual void ApplyTypedFull(GameObject go, UguiBaseProps props)
         {
             UguiRectApplier.ApplyFull(go, props);
+            UguiPropGroupApplier.ApplyFull(go, props);
             if (props?.Ref != null)
             {
                 UguiNodeTag.GetOrAdd(go).AssignedRef = props.Ref;
@@ -25,6 +26,7 @@ namespace ReactiveUITK.Ugui
         public virtual void ApplyTypedDiff(GameObject go, UguiBaseProps prev, UguiBaseProps next)
         {
             UguiRectApplier.ApplyDiff(go, prev, next);
+            UguiPropGroupApplier.ApplyDiff(go, prev, next);
             if (!ReferenceEquals(prev?.Ref, next?.Ref))
             {
                 if (prev?.Ref != null)

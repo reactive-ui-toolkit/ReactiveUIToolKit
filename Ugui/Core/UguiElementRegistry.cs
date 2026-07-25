@@ -46,6 +46,10 @@ namespace ReactiveUITK.Ugui
 
             registry.Register("Button", new UguiButtonAdapter());
 
+            registry.Register("HorizontalLayoutGroup", new UguiHorizontalLayoutGroupAdapter());
+            registry.Register("VerticalLayoutGroup", new UguiVerticalLayoutGroupAdapter());
+            registry.Register("GridLayoutGroup", new UguiGridLayoutGroupAdapter());
+
             s_default = registry;
             return s_default;
         }
