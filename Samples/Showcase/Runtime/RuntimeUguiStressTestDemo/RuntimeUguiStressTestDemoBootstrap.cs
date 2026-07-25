@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using ReactiveUITK.Core;
 using ReactiveUITK.Signals;
 using ReactiveUITK.Ugui;
@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
     /// The uGUI port of Samples/Components/StressTest: N boxes animated for a
     /// chosen duration with a live average-FPS readout. The bootstrap's
     /// Update drives a time signal while running; every tick re-renders the
-    /// whole box field through the reconciler — that sustained full-tree diff
+    /// whole box field through the reconciler â€” that sustained full-tree diff
     /// IS the stress. Scene setup: Canvas + EventSystem + a stretched
     /// RectTransform with a UguiRootRenderer and this component.
     /// </summary>
@@ -22,7 +22,7 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
         private static readonly Signal<bool> s_running =
             SignalFactory.Get<bool>("UguiStress.Running", false);
         private static readonly Signal<string> s_status =
-            SignalFactory.Get<string>("UguiStress.Status", "uGUI Stress Test — Ready");
+            SignalFactory.Get<string>("UguiStress.Status", "uGUI Stress Test â€” Ready");
 
         private static int s_boxCount = 300;
         private static float s_duration = 10f;
@@ -49,14 +49,14 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             {
                 s_running.Set(false);
                 s_status.Set(
-                    $"DONE — {s_boxCount} boxes | Avg FPS: {avgFps:F1} | "
+                    $"DONE â€” {s_boxCount} boxes | Avg FPS: {avgFps:F1} | "
                         + $"Duration: {_elapsed:F1}s | Frames: {_frames}"
                 );
                 return;
             }
 
             s_status.Set(
-                $"uGUI Stress — {s_boxCount} boxes | Avg FPS: {avgFps:F1} | "
+                $"uGUI Stress â€” {s_boxCount} boxes | Avg FPS: {avgFps:F1} | "
                     + $"Elapsed: {_elapsed:F1}s / {s_duration:F0}s"
             );
             s_time.Set(_elapsed);
@@ -68,6 +68,29 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             _frames = 0;
             s_time.Set(0f);
             s_running.Set(true);
+        }
+
+        private static VirtualNode HeaderLabel(string text)
+        {
+            var props = UguiBaseProps.__Rent<UguiTextProps>();
+            props.Text = text;
+            props.FontSize = 14f;
+            props.Alignment = TMPro.TextAlignmentOptions.Midline;
+            props.LayoutElement = new UguiLayoutElement { MinWidth = 44f };
+            return U.Text(props);
+        }
+
+        private static VirtualNode ButtonLabel(string text)
+        {
+            var props = UguiBaseProps.__Rent<UguiTextProps>();
+            props.Text = text;
+            props.FontSize = 14f;
+            props.Color = new Color(0.13f, 0.13f, 0.15f);
+            props.Alignment = TMPro.TextAlignmentOptions.Center;
+            props.Anchors = UguiAnchorPreset.Stretch;
+            props.OffsetMin = Vector2.zero;
+            props.OffsetMax = Vector2.zero;
+            return U.Text(props);
         }
 
         private VirtualNode StressTest(IProps props, IReadOnlyList<VirtualNode> children)
@@ -94,6 +117,7 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             var statusProps = UguiBaseProps.__Rent<UguiTextProps>();
             statusProps.Text = status;
             statusProps.FontSize = 16f;
+            statusProps.Alignment = TMPro.TextAlignmentOptions.MidlineLeft;
             statusProps.LayoutElement = new UguiLayoutElement { FlexibleWidth = 1f };
 
             var boxesInput = UguiBaseProps.__Rent<UguiInputFieldProps>();
@@ -126,10 +150,11 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             };
             start.LayoutElement = new UguiLayoutElement { MinWidth = 90f, MinHeight = 28f };
 
-            var area = UguiBaseProps.__Rent<UguiPanelProps>();
+            var area = UguiBaseProps.__Rent<UguiImageProps>();
             area.Anchors = UguiAnchorPreset.Stretch;
             area.OffsetMin = new Vector2(0f, 0f);
             area.OffsetMax = new Vector2(0f, -52f);
+            area.Color = new Color(0.09f, 0.1f, 0.13f);
 
             int boxCount = running ? s_boxCount : 0;
             var boxes = new VirtualNode[boxCount];
@@ -153,13 +178,13 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
                     header,
                     "header",
                     U.Text(statusProps),
-                    U.Text("Boxes:"),
+                    HeaderLabel("Boxes:"),
                     U.InputField(boxesInput),
-                    U.Text("Sec:"),
+                    HeaderLabel("Sec:"),
                     U.InputField(durationInput),
-                    U.Button(start, null, U.Text(running ? "Running..." : "Start"))
+                    U.Button(start, null, ButtonLabel(running ? "Running..." : "Start"))
                 ),
-                U.Panel(area, "area", boxes)
+                U.Image(area, "area", boxes)
             );
         }
     }
