@@ -27,8 +27,13 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
         private static int s_boxCount = 300;
         private static float s_duration = 10f;
 
+        // Diagnostic: the area element assigns this ref on mount so Update
+        // can report whether box children actually reach the hierarchy.
+        private static readonly Ref<RectTransform> s_areaRef = new Ref<RectTransform>();
+
         private float _elapsed;
         private int _frames;
+        private int _lastReportedSecond = -1;
 
         private void Start()
         {
@@ -50,6 +55,17 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             _elapsed += Time.deltaTime;
             _frames++;
             float avgFps = _frames / Mathf.Max(0.0001f, _elapsed);
+
+            int second = Mathf.FloorToInt(_elapsed);
+            if (second != _lastReportedSecond)
+            {
+                _lastReportedSecond = second;
+                var areaRt = s_areaRef.Current;
+                Debug.Log(
+                    $"[UguiStress] t={_elapsed:F1}s area={(areaRt != null ? areaRt.name : "NULL")} "
+                        + $"children={(areaRt != null ? areaRt.childCount : -1)}"
+                );
+            }
 
             if (_elapsed >= s_duration)
             {
@@ -175,6 +191,7 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             start.LayoutElement = new UguiLayoutElement { MinWidth = 90f, MinHeight = 28f };
 
             var area = UguiBaseProps.__Rent<UguiImageProps>();
+            area.Ref = s_areaRef;
             area.Anchors = UguiAnchorPreset.Stretch;
             area.OffsetMin = new Vector2(0f, 0f);
             area.OffsetMax = new Vector2(0f, -52f);
