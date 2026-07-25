@@ -39,6 +39,7 @@ namespace ReactiveUITK.Ugui
         public UguiLayoutElement LayoutElement { get; set; }
         public UguiContentSizeFitter ContentSizeFitter { get; set; }
         public UguiAspectRatioFitter AspectRatioFitter { get; set; }
+        public UguiPointerEvents Pointer { get; set; }
 
         public virtual bool ShallowEquals(UguiBaseProps other)
         {
@@ -83,6 +84,8 @@ namespace ReactiveUITK.Ugui
                 return false;
             if (!UguiAspectRatioFitter.ValueEquals(AspectRatioFitter, other.AspectRatioFitter))
                 return false;
+            if (!UguiPointerEvents.ValueEquals(Pointer, other.Pointer))
+                return false;
 
             return true;
         }
@@ -116,6 +119,7 @@ namespace ReactiveUITK.Ugui
             LayoutElement = null;
             ContentSizeFitter = null;
             AspectRatioFitter = null;
+            Pointer = null;
         }
 
         internal virtual void __ResetFields() { }

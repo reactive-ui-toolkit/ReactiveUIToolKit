@@ -45,13 +45,10 @@ namespace ReactiveUITK.Ugui
             if (button == null)
                 return;
 
+            UguiSelectableApplier.Apply(button, prev, next);
             if (prev == null || next.OnClick != prev.OnClick)
             {
                 UguiButtonBinding.GetOrAdd(go).Current = next.OnClick;
-            }
-            if ((prev == null || next.Interactable != prev.Interactable) && next.Interactable.HasValue)
-            {
-                button.interactable = next.Interactable.Value;
             }
         }
     }

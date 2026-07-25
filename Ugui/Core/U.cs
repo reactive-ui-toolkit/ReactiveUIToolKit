@@ -88,6 +88,48 @@ namespace ReactiveUITK.Ugui
             params VirtualNode[] children
         ) => Rent("GridLayoutGroup", key, props, children);
 
+        public static VirtualNode Toggle(
+            UguiToggleProps props = null,
+            string key = null,
+            params VirtualNode[] children
+        ) => Rent("Toggle", key, props, children);
+
+        public static VirtualNode ToggleGroup(
+            UguiToggleGroupProps props = null,
+            string key = null,
+            params VirtualNode[] children
+        ) => Rent("ToggleGroup", key, props, children);
+
+        public static VirtualNode Slider(
+            UguiSliderProps props = null,
+            string key = null,
+            params VirtualNode[] children
+        ) => Rent("Slider", key, props, children);
+
+        public static VirtualNode Scrollbar(
+            UguiScrollbarProps props = null,
+            string key = null,
+            params VirtualNode[] children
+        ) => Rent("Scrollbar", key, props, children);
+
+        public static VirtualNode ScrollRect(
+            UguiScrollRectProps props = null,
+            string key = null,
+            params VirtualNode[] children
+        ) => Rent("ScrollRect", key, props, children);
+
+        public static VirtualNode Dropdown(
+            UguiDropdownProps props = null,
+            string key = null,
+            params VirtualNode[] children
+        ) => Rent("Dropdown", key, props, children);
+
+        public static VirtualNode InputField(
+            UguiInputFieldProps props = null,
+            string key = null,
+            params VirtualNode[] children
+        ) => Rent("InputField", key, props, children);
+
         /// <summary>
         /// Portal into any RectTransform in the scene (overlay layers,
         /// user-managed canvases). The uGUI counterpart of

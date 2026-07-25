@@ -50,6 +50,14 @@ namespace ReactiveUITK.Ugui
             registry.Register("VerticalLayoutGroup", new UguiVerticalLayoutGroupAdapter());
             registry.Register("GridLayoutGroup", new UguiGridLayoutGroupAdapter());
 
+            registry.Register("Toggle", new UguiToggleAdapter());
+            registry.Register("ToggleGroup", new UguiToggleGroupAdapter());
+            registry.Register("Slider", new UguiSliderAdapter());
+            registry.Register("Scrollbar", new UguiScrollbarAdapter());
+            registry.Register("ScrollRect", new UguiScrollRectAdapter());
+            registry.Register("Dropdown", new UguiDropdownAdapter());
+            registry.Register("InputField", new UguiInputFieldAdapter());
+
             s_default = registry;
             return s_default;
         }

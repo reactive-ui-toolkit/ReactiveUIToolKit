@@ -5,12 +5,12 @@ namespace ReactiveUITK.Ugui
     /// <summary>
     /// Props for the Button element — a Selectable Button whose background is
     /// its own Image (the GameObject &gt; UI &gt; Button shape). Inherits the
-    /// full Image prop surface for the background graphic.
+    /// full Image surface for the background graphic and the Selectable
+    /// surface (transition block, navigation).
     /// </summary>
-    public sealed class UguiButtonProps : UguiImageProps
+    public sealed class UguiButtonProps : UguiSelectableProps
     {
         public Action OnClick { get; set; }
-        public bool? Interactable { get; set; }
 
         public override bool ShallowEquals(UguiBaseProps other)
         {
@@ -18,15 +18,12 @@ namespace ReactiveUITK.Ugui
                 return false;
             if (OnClick != o.OnClick)
                 return false;
-            if (Interactable != o.Interactable)
-                return false;
             return base.ShallowEquals(other);
         }
 
         internal override void __ResetFields()
         {
             OnClick = null;
-            Interactable = null;
             base.__ResetFields();
         }
 

@@ -21,6 +21,8 @@ namespace ReactiveUITK.Ugui
                 ApplyContentSizeFitter(go, props.ContentSizeFitter);
             if (props.AspectRatioFitter != null)
                 ApplyAspectRatioFitter(go, props.AspectRatioFitter);
+            if (props.Pointer != null)
+                UguiPointerBridge.GetOrAdd(go).Current = props.Pointer;
         }
 
         internal static void ApplyDiff(GameObject go, UguiBaseProps prev, UguiBaseProps next)
@@ -53,6 +55,19 @@ namespace ReactiveUITK.Ugui
                     ApplyAspectRatioFitter(go, next.AspectRatioFitter);
                 else
                     RemoveComponent<AspectRatioFitter>(go);
+            }
+            if (!UguiPointerEvents.ValueEquals(prev.Pointer, next.Pointer))
+            {
+                if (next.Pointer != null)
+                {
+                    UguiPointerBridge.GetOrAdd(go).Current = next.Pointer;
+                }
+                else
+                {
+                    var bridge = go.GetComponent<UguiPointerBridge>();
+                    if (bridge != null)
+                        bridge.Current = null;
+                }
             }
         }
 

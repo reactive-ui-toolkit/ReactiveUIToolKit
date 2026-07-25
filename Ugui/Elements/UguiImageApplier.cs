@@ -8,6 +8,14 @@ namespace ReactiveUITK.Ugui
     /// </summary>
     internal static class UguiImageApplier
     {
+        internal static void ApplyDiffOrFull(Image image, UguiImageProps prev, UguiImageProps next)
+        {
+            if (prev == null)
+                ApplyFull(image, next);
+            else
+                ApplyDiff(image, prev, next);
+        }
+
         internal static void ApplyFull(Image image, UguiImageProps props)
         {
             if (image == null || props == null)
