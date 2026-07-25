@@ -202,6 +202,12 @@ namespace ReactiveUITK.Language.Parser
         /// or <c>export default</c> marking — no inline <c>export</c> prefix exists in source, so
         /// the formatter must not synthesize one.</summary>
         public bool IsExportImplied { get; init; }
+        /// <summary>True for a null-only component (React case 2): the body has no top-level
+        /// <c>return (…);</c> but contains an explicit top-level <c>return null;</c> — a component
+        /// that always renders nothing. The markup range is empty and the whole body (including
+        /// the <c>return null;</c>) lives in <see cref="FunctionSetupCode"/>; the formatter must
+        /// not synthesize a markup return for this shape.</summary>
+        public bool HasNullReturn { get; init; }
     };
 
     // ── Plain declaration (ES-modules, U-04) ─────────────────────────────────
@@ -450,6 +456,13 @@ namespace ReactiveUITK.Language.Parser
         /// </summary>
         public ImmutableArray<UsingDirective> UsingDirectives { get; init; }
             = ImmutableArray<UsingDirective>.Empty;
+
+        /// <summary>True for a null-only component (React case 2): no top-level
+        /// <c>return (…);</c> exists, but the body contains an explicit top-level
+        /// <c>return null;</c>. The markup range is empty and the whole body lives in
+        /// <see cref="FunctionSetupCode"/>. Hoisted from the primary
+        /// <see cref="ComponentDeclaration.HasNullReturn"/> for new-mode files.</summary>
+        public bool HasNullReturn { get; init; }
 
         /// <summary>
         /// All <c>component</c> declarations in this file, in source order (mixed-decl v1, leg 3).

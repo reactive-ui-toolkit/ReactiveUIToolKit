@@ -473,19 +473,26 @@ namespace ReactiveUITK.Language.Parser
                 )
             )
             {
-                int malformedReturnPos = FindTopLevelReturnAfter(source, bodyStart, bodyEndExclusive);
-                diagnosticBag.Add(new ParseDiagnostic
+                // Null-only component (React case 2): an explicit top-level
+                // `return null;` with no markup return is valid — the component
+                // always renders nothing. Only bodies with neither shape error.
+                int nullOnlyReturnPos = FindTopLevelReturnNull(source, bodyStart, bodyEndExclusive);
+                if (nullOnlyReturnPos < 0)
                 {
-                    Code = malformedReturnPos >= 0 ? "UITKX2102" : "UITKX2101",
-                    Severity = ParseSeverity.Error,
-                    SourceLine = malformedReturnPos >= 0 ? LineAtPos(source, malformedReturnPos) : componentLine,
-                    // For UITKX2101 point the squiggle at the component name, matching UITKX0103.
-                    SourceColumn = malformedReturnPos >= 0 ? 0 : componentNameCol,
-                    EndColumn    = malformedReturnPos >= 0 ? 0 : componentNameCol + componentName.Length,
-                    Message = malformedReturnPos >= 0
-                        ? "'return' must return UITKX markup using 'return (...)'."
-                        : "Function-style component must contain exactly one top-level 'return (...)' statement.",
-                });
+                    int malformedReturnPos = FindTopLevelReturnAfter(source, bodyStart, bodyEndExclusive);
+                    diagnosticBag.Add(new ParseDiagnostic
+                    {
+                        Code = malformedReturnPos >= 0 ? "UITKX2102" : "UITKX2101",
+                        Severity = ParseSeverity.Error,
+                        SourceLine = malformedReturnPos >= 0 ? LineAtPos(source, malformedReturnPos) : componentLine,
+                        // For UITKX2101 point the squiggle at the component name, matching UITKX0103.
+                        SourceColumn = malformedReturnPos >= 0 ? 0 : componentNameCol,
+                        EndColumn    = malformedReturnPos >= 0 ? 0 : componentNameCol + componentName.Length,
+                        Message = malformedReturnPos >= 0
+                            ? "'return' must return UITKX markup using 'return (...)'."
+                            : "Function-style component must contain exactly one top-level 'return (...)' statement (or an explicit 'return null;' for a component that renders nothing).",
+                    });
+                }
 
                 int fseTrimStart1 = FirstNonWhitespaceAt(source, bodyStart);
                 var setupMarkupRanges1 = FindJsxBlockRanges(source, bodyStart, bodyEndExclusive);
@@ -514,7 +521,12 @@ namespace ReactiveUITK.Language.Parser
                     SetupCodeMarkupRanges: setupMarkupRanges1,
                     SetupCodeBareJsxRanges: bareJsxRanges1
                 )
-                { LeadingTrivia = leadingTrivia.ToImmutableArray(), UsingDirectives = usingDirectives.ToImmutableArray(), UsesLegacySyntax = true };
+                {
+                    LeadingTrivia = leadingTrivia.ToImmutableArray(),
+                    UsingDirectives = usingDirectives.ToImmutableArray(),
+                    UsesLegacySyntax = true,
+                    HasNullReturn = nullOnlyReturnPos >= 0,
+                };
                 if (backendName != null) directiveSet = directiveSet with { Backend = backendName };
                 return true;
             }
@@ -900,18 +912,25 @@ namespace ReactiveUITK.Language.Parser
                 )
             )
             {
-                int malformedReturnPos = FindTopLevelReturnAfter(source, bodyStart, bodyEndExclusive);
-                diagnosticBag.Add(new ParseDiagnostic
+                // Null-only component (React case 2): an explicit top-level
+                // `return null;` with no markup return is valid — the component
+                // always renders nothing. Only bodies with neither shape error.
+                int nullOnlyReturnPos = FindTopLevelReturnNull(source, bodyStart, bodyEndExclusive);
+                if (nullOnlyReturnPos < 0)
                 {
-                    Code = malformedReturnPos >= 0 ? "UITKX2102" : "UITKX2101",
-                    Severity = ParseSeverity.Error,
-                    SourceLine = malformedReturnPos >= 0 ? LineAtPos(source, malformedReturnPos) : componentLine,
-                    SourceColumn = malformedReturnPos >= 0 ? 0 : componentNameCol,
-                    EndColumn    = malformedReturnPos >= 0 ? 0 : componentNameCol + componentName.Length,
-                    Message = malformedReturnPos >= 0
-                        ? "'return' must return UITKX markup using 'return (...)'."
-                        : "Function-style component must contain exactly one top-level 'return (...)' statement.",
-                });
+                    int malformedReturnPos = FindTopLevelReturnAfter(source, bodyStart, bodyEndExclusive);
+                    diagnosticBag.Add(new ParseDiagnostic
+                    {
+                        Code = malformedReturnPos >= 0 ? "UITKX2102" : "UITKX2101",
+                        Severity = ParseSeverity.Error,
+                        SourceLine = malformedReturnPos >= 0 ? LineAtPos(source, malformedReturnPos) : componentLine,
+                        SourceColumn = malformedReturnPos >= 0 ? 0 : componentNameCol,
+                        EndColumn    = malformedReturnPos >= 0 ? 0 : componentNameCol + componentName.Length,
+                        Message = malformedReturnPos >= 0
+                            ? "'return' must return UITKX markup using 'return (...)'."
+                            : "Function-style component must contain exactly one top-level 'return (...)' statement (or an explicit 'return null;' for a component that renders nothing).",
+                    });
+                }
 
                 int fseTrimStart1 = FirstNonWhitespaceAt(source, bodyStart);
                 var setupMarkupRanges1 = FindJsxBlockRanges(source, bodyStart, bodyEndExclusive);
@@ -939,6 +958,7 @@ namespace ReactiveUITK.Language.Parser
                 {
                     SetupCodeMarkupRanges = setupMarkupRanges1,
                     SetupCodeBareJsxRanges = bareJsxRanges1,
+                    HasNullReturn = nullOnlyReturnPos >= 0,
                 };
             }
 
@@ -2595,6 +2615,7 @@ namespace ReactiveUITK.Language.Parser
                 DefaultExportName = defaultExportName,
                 ExportListNames = exportListNames.ConvertAll(e => e.Name).ToImmutableArray(),
                 UsesLegacySyntax = false,
+                HasNullReturn = primary?.HasNullReturn ?? false,
             };
             return true;
         }
@@ -3499,6 +3520,57 @@ namespace ReactiveUITK.Language.Parser
             }
 
             return returnStart >= 0;
+        }
+
+        /// <summary>
+        /// Scans for a top-level (brace/paren/bracket depth 0) <c>return null;</c>
+        /// statement. A component whose body has one — and no top-level
+        /// <c>return (…);</c> — is a valid null-only component (React case 2:
+        /// always renders nothing); the caller accepts it instead of raising
+        /// UITKX2101/2102. Returns the index of the <c>return</c> keyword, or -1.
+        /// </summary>
+        private static int FindTopLevelReturnNull(string source, int start, int endExclusive)
+        {
+            int i = start;
+            int braceDepth = 0;
+            int parenDepth = 0;
+            int bracketDepth = 0;
+
+            while (i < endExclusive)
+            {
+                if (TrySkipNonCodeSpan(source, ref i, endExclusive))
+                    continue;
+
+                char c = source[i];
+                if (c == '{') { braceDepth++; i++; continue; }
+                if (c == '}') { if (braceDepth > 0) braceDepth--; i++; continue; }
+                if (c == '(') { parenDepth++; i++; continue; }
+                if (c == ')') { if (parenDepth > 0) parenDepth--; i++; continue; }
+                if (c == '[') { bracketDepth++; i++; continue; }
+                if (c == ']') { if (bracketDepth > 0) bracketDepth--; i++; continue; }
+
+                if (
+                    braceDepth == 0
+                    && parenDepth == 0
+                    && bracketDepth == 0
+                    && TryReadKeywordAt(source, i, "return")
+                )
+                {
+                    int j = i + "return".Length;
+                    SkipWhitespace(source, ref j);
+                    if (TryReadKeywordAt(source, j, "null"))
+                    {
+                        j += "null".Length;
+                        SkipWhitespace(source, ref j);
+                        if (j < endExclusive && source[j] == ';')
+                            return i;
+                    }
+                }
+
+                i++;
+            }
+
+            return -1;
         }
 
         private static int FindTopLevelReturnAfter(string source, int start, int endExclusive)

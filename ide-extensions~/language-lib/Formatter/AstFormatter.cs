@@ -417,6 +417,23 @@ namespace ReactiveUITK.Language.Formatter
                 }
             }
 
+            // Null-only component (React case 2): there is no markup return to
+            // print — the explicit `return null;` is part of the setup code
+            // emitted above. Synthesizing a `return ( … );` here would inject
+            // markup the author never wrote.
+            if (directives.HasNullReturn)
+            {
+                while (
+                    _sb.Length >= 2
+                    && _sb[_sb.Length - 1] == '\n'
+                    && _sb[_sb.Length - 2] == '\n'
+                )
+                    _sb.Length--;
+                _indent--;
+                Ln("}");
+                return;
+            }
+
             Ln("return (");
             _indent++;
             FormatNodeList(nodes, topLevel: false);

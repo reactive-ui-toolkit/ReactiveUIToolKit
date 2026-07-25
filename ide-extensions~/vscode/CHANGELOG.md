@@ -8,6 +8,9 @@ New: UITKX2111 flags unknown or duplicate @backend values; UITKX2112 warns that 
 UI Toolkit files are untouched — IDE behavior and generated code are byte-identical when the directive is absent.
 
 SG suite 1744/1744, LSP suite 152/152.
+- Feature: null-only components (React case 2) — a .uitkx component may now end in an explicit top-level `return null;` with no markup return: the component always renders nothing (the effect-only shape React permits). Diagnostics stay strict — a body with no top-level return at all is still UITKX2101 (its message now mentions the null form), and `return expr;` is still UITKX2102. Uniform across the compiler, hot reload, the formatter (no synthesized markup return on format), IntelliSense virtual documents, and both backends (uitk and @backend ugui).
+
+SG suite 1754/1754, LSP suite 152/152.
 
 ## [1.6.0] - 2026-07-18
 - Field-testing wave on the 0.9.0 ES-modules surface (pairs with Unity package 0.10.0).
