@@ -87,6 +87,17 @@ deliberately no `Style`/USS surface on uGUI elements.
   UI Toolkit mount path overwrote it from the trace level, so uGUI mounts
   logged every state set. The default is now false and `UguiRootRenderer`
   mirrors `RootRenderer`'s diagnostics wiring (verbose trace re-enables).
+- **uGUI test assembly gated on the Test Framework package**: `Ugui/Tests`
+  is the package's first Unity-visible test asmdef, and `UNITY_INCLUDE_TESTS`
+  is defined in every editor compile — so any project WITHOUT
+  `com.unity.test-framework` (including the Asset Store export shell, which
+  failed the 0.11.0 store build with a CS0246 NUnit storm) tried to compile
+  the tests without NUnit. Two layers: the asmdef now adds a
+  `versionDefines` gate so the assembly compiles only when the Test
+  Framework package is present, and `Ugui/Tests` joins
+  `pathsToOmitFromStore` so the Asset Store `.unitypackage` ships with no
+  test files at all (the dist/git channels keep them, inert without the
+  package).
 
 ### Changed — performance & API
 
