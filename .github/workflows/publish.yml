@@ -645,6 +645,32 @@ jobs:
           name: ReactiveUIToolKit-unitypackage-${{ steps.check.outputs.version }}
           path: out/*.unitypackage
 
+      # Permanent public copy: run artifacts expire (default 90 days); a GitHub
+      # Release asset on the version tag does not. deploy-dist creates v<version>
+      # in the same run (or a prior one) and finishes minutes before this job's
+      # docker import, so the tag normally exists; the --target fallback covers
+      # the cold path where it does not yet. --clobber makes re-runs idempotent.
+      - name: Attach .unitypackage to GitHub Release
+        if: steps.check.outputs.skip == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -e
+          VERSION="${{ steps.check.outputs.version }}"
+          if ! gh release view "v$VERSION" >/dev/null 2>&1; then
+            if git ls-remote --tags origin "refs/tags/v$VERSION" | grep -q .; then
+              gh release create "v$VERSION" \
+                --title "ReactiveUIToolKit $VERSION" \
+                --notes "Unity Asset Store package export (built with floor Unity $UNITY_VERSION; compatible with that version and newer). See CHANGELOG.md for the full $VERSION entry."
+            else
+              gh release create "v$VERSION" \
+                --target "$GITHUB_SHA" \
+                --title "ReactiveUIToolKit $VERSION" \
+                --notes "Unity Asset Store package export (built with floor Unity $UNITY_VERSION; compatible with that version and newer). See CHANGELOG.md for the full $VERSION entry."
+            fi
+          fi
+          gh release upload "v$VERSION" out/*.unitypackage --clobber
+
       - name: Tag built version
         if: steps.check.outputs.skip == 'false'
         run: |
