@@ -35,6 +35,22 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
         private int _frames;
         private int _lastReportedSecond = -1;
 
+        // Same box model as Samples/Components/StressTest: per-box random
+        // size/position/velocity (seed 42), dt-integrated with edge bounce.
+        private struct Box
+        {
+            public float X;
+            public float Y;
+            public float Size;
+            public float Vx;
+            public float Vy;
+            public Color Color;
+        }
+
+        private Box[] _boxes = System.Array.Empty<Box>();
+        private float _areaW = 900f;
+        private float _areaH = 500f;
+
         private void Start()
         {
             s_time ??= SignalFactory.Get<float>("UguiStress.Time", 0f);
@@ -55,6 +71,7 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             _elapsed += Time.deltaTime;
             _frames++;
             float avgFps = _frames / Mathf.Max(0.0001f, _elapsed);
+            StepBoxes(Time.deltaTime);
 
             int second = Mathf.FloorToInt(_elapsed);
             if (second != _lastReportedSecond)
@@ -113,10 +130,77 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
         private void StartRun()
         {
             Debug.Log($"[UguiStress] Run started — {s_boxCount} boxes for {s_duration:F0}s");
+            RefreshAreaSize();
+            var rng = new System.Random(42);
+            _boxes = new Box[s_boxCount];
+            for (int j = 0; j < s_boxCount; j++)
+            {
+                float size = 8f + (float)(rng.NextDouble() * 16.0);
+                Color color = Color.HSVToRGB((float)rng.NextDouble(), 0.7f, 0.9f);
+                _boxes[j] = new Box
+                {
+                    X = (float)(rng.NextDouble() * _areaW),
+                    Y = (float)(rng.NextDouble() * _areaH),
+                    Size = size,
+                    Vx =
+                        (60f + (float)(rng.NextDouble() * 120.0))
+                        * (rng.NextDouble() > 0.5 ? 1f : -1f),
+                    Vy =
+                        (60f + (float)(rng.NextDouble() * 120.0))
+                        * (rng.NextDouble() > 0.5 ? 1f : -1f),
+                    Color = color,
+                };
+            }
             _elapsed = 0f;
             _frames = 0;
             s_time.Set(0f);
             s_running.Set(true);
+        }
+
+        private void RefreshAreaSize()
+        {
+            var areaRt = s_areaRef.Current;
+            if (areaRt != null && areaRt.rect.width > 0f && areaRt.rect.height > 0f)
+            {
+                _areaW = areaRt.rect.width;
+                _areaH = areaRt.rect.height;
+            }
+        }
+
+        private void StepBoxes(float dt)
+        {
+            RefreshAreaSize();
+            for (int i = 0; i < _boxes.Length; i++)
+            {
+                var b = _boxes[i];
+                float nx = b.X + b.Vx * dt;
+                float ny = b.Y + b.Vy * dt;
+
+                if (nx < 0f)
+                {
+                    nx = 0f;
+                    b.Vx = -b.Vx;
+                }
+                else if (nx + b.Size > _areaW)
+                {
+                    nx = _areaW - b.Size;
+                    b.Vx = -b.Vx;
+                }
+                if (ny < 0f)
+                {
+                    ny = 0f;
+                    b.Vy = -b.Vy;
+                }
+                else if (ny + b.Size > _areaH)
+                {
+                    ny = _areaH - b.Size;
+                    b.Vy = -b.Vy;
+                }
+
+                b.X = nx;
+                b.Y = ny;
+                _boxes[i] = b;
+            }
         }
 
         private static string CleanNumeric(string raw)
@@ -223,27 +307,16 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             area.OffsetMax = new Vector2(0f, -52f);
             area.Color = new Color(0.09f, 0.1f, 0.13f);
 
-            int boxCount = running ? s_boxCount : 0;
-            var areaRt = s_areaRef.Current;
-            var bounds = areaRt != null ? areaRt.rect : new Rect(0f, 0f, 900f, 500f);
-            float rangeX = Mathf.Max(50f, bounds.width - 18f);
-            float rangeY = Mathf.Max(50f, bounds.height - 18f);
+            int boxCount = running ? Mathf.Min(s_boxCount, _boxes.Length) : 0;
             var boxes = new VirtualNode[boxCount];
             for (int i = 0; i < boxCount; i++)
             {
+                var b = _boxes[i];
                 var box = UguiBaseProps.__Rent<UguiImageProps>();
                 box.Anchors = UguiAnchorPreset.BottomLeft;
-                box.SizeDelta = new Vector2(18f, 18f);
-                // PingPong = constant-speed bounce off the area edges (the
-                // classic stress-test motion); per-box speed/phase derived
-                // deterministically from the index.
-                float speed = 60f + (i * 37) % 90;
-                float phase = (i * 131) % 997;
-                box.AnchoredPosition = new Vector2(
-                    Mathf.PingPong(phase + t * speed, rangeX),
-                    Mathf.PingPong(phase * 0.61f + t * speed * 0.83f, rangeY)
-                );
-                box.Color = Color.HSVToRGB(i % 32 / 32f, 0.7f, 1f);
+                box.SizeDelta = new Vector2(b.Size, b.Size);
+                box.AnchoredPosition = new Vector2(b.X, b.Y);
+                box.Color = b.Color;
                 boxes[i] = U.Image(box, $"box-{i}");
             }
 
