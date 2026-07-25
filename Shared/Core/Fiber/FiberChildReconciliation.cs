@@ -367,8 +367,8 @@ namespace ReactiveUITK.Core.Fiber
 
                 case VirtualNodeType.Portal:
                     fiber.Tag = FiberTag.HostPortal;
-                    fiber.PortalTarget = vnode.PortalTarget;
-                    fiber.HostElement = vnode.PortalTarget;
+                    fiber.PortalTarget = vnode.PortalTargetHost;
+                    fiber.HostElement = vnode.PortalTargetHost;
                     break;
 
                 case VirtualNodeType.ErrorBoundary:

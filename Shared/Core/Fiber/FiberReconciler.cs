@@ -4,7 +4,6 @@ using System.Diagnostics;
 using ReactiveUITK.Core;
 using UnityEngine;
 using UnityEngine.Profiling;
-using UnityEngine.UIElements;
 
 namespace ReactiveUITK.Core.Fiber
 {
@@ -78,7 +77,8 @@ namespace ReactiveUITK.Core.Fiber
         public FiberReconciler(HostContext hostContext)
         {
             _hostContext = hostContext;
-            _hostConfig = new FiberHostConfig(hostContext.ElementRegistry);
+            _hostConfig =
+                hostContext.HostConfig ?? new UitkHostConfig(hostContext.ElementRegistry);
 
             if (
                 hostContext?.Environment != null
@@ -93,7 +93,7 @@ namespace ReactiveUITK.Core.Fiber
         /// <summary>
         /// Create a fiber root and mount a virtual node tree
         /// </summary>
-        public FiberRoot CreateRoot(VisualElement container, VirtualNode vnode)
+        public FiberRoot CreateRoot(object container, VirtualNode vnode)
         {
             // Create root fiber
             var rootFiber = new FiberNode
@@ -986,7 +986,7 @@ namespace ReactiveUITK.Core.Fiber
         /// descent at host fibers (whose VE subtree comes along automatically)
         /// and at nested HostPortal fibers (which own their own target).
         /// </summary>
-        private void ReparentTopLevelHostChildren(FiberNode parent, VisualElement newTarget)
+        private void ReparentTopLevelHostChildren(FiberNode parent, object newTarget)
         {
             var child = parent.Child;
             while (child != null)
@@ -997,7 +997,7 @@ namespace ReactiveUITK.Core.Fiber
                 }
                 else if (child.HostElement != null)
                 {
-                    if (!ReferenceEquals(child.HostElement.parent, newTarget))
+                    if (!ReferenceEquals(_hostConfig.GetParent(child.HostElement), newTarget))
                     {
                         _hostConfig.AppendChild(newTarget, child.HostElement);
                     }
@@ -1029,7 +1029,7 @@ namespace ReactiveUITK.Core.Fiber
                 }
                 else if (child.HostElement != null)
                 {
-                    var current = child.HostElement.parent;
+                    var current = _hostConfig.GetParent(child.HostElement);
                     if (current != null)
                     {
                         _hostConfig.RemoveChild(current, child.HostElement);
@@ -1130,7 +1130,7 @@ namespace ReactiveUITK.Core.Fiber
                     {
                         if (FiberConfig.EnableFiberLogging)
                             UnityEngine.Debug.Log(
-                                $"[Fiber] InsertBefore {fiber.ElementType} before {before.name}"
+                                $"[Fiber] InsertBefore {fiber.ElementType} before {_hostConfig.GetDebugName(before)}"
                             );
                         _hostConfig.InsertBefore(
                             parentFiber.HostElement,
@@ -1169,7 +1169,7 @@ namespace ReactiveUITK.Core.Fiber
         /// such as Fragments and FunctionComponents) until a stable host node
         /// is found, or we run out of siblings within the same host-parent.
         /// </summary>
-        private static VisualElement GetHostSibling(FiberNode fiber)
+        private static object GetHostSibling(FiberNode fiber)
         {
             FiberNode node = fiber;
 
@@ -1369,8 +1369,7 @@ namespace ReactiveUITK.Core.Fiber
             // If this fiber has a HostElement, remove it from its parent
             if (fiber.HostElement != null)
             {
-                // Clean up previousStyles tracking to prevent memory leak (P0-5)
-                ReactiveUITK.Props.PropsApplier.NotifyElementRemoved(fiber.HostElement);
+                _hostConfig.OnHostRemoved(fiber.HostElement);
 
                 var parentFiber = fiber.Parent;
                 while (parentFiber != null && parentFiber.HostElement == null)

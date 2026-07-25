@@ -66,8 +66,8 @@ namespace ReactiveUITK.Core.Fiber
 
                 case VirtualNodeType.Portal:
                     fiber.Tag = FiberTag.HostPortal;
-                    fiber.PortalTarget = vnode.PortalTarget;
-                    fiber.HostElement = vnode.PortalTarget;
+                    fiber.PortalTarget = vnode.PortalTargetHost;
+                    fiber.HostElement = vnode.PortalTargetHost;
                     fiber.EffectTag = EffectFlags.None;
                     break;
 
@@ -191,8 +191,8 @@ namespace ReactiveUITK.Core.Fiber
                     && newVNode.NodeType == VirtualNodeType.Portal
                 )
                 {
-                    clone.PortalTarget = newVNode.PortalTarget;
-                    clone.HostElement = newVNode.PortalTarget;
+                    clone.PortalTarget = newVNode.PortalTargetHost;
+                    clone.HostElement = newVNode.PortalTargetHost;
                 }
                 else
                 {

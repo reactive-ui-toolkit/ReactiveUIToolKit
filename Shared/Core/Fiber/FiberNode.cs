@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using ReactiveUITK.Core;
-using UnityEngine.UIElements;
 
 namespace ReactiveUITK.Core.Fiber
 {
@@ -64,8 +63,13 @@ namespace ReactiveUITK.Core.Fiber
         internal FunctionComponentState ComponentState;
 
         // ==== For Host Elements ====
-        /// <summary>The actual VisualElement (only for host nodes)</summary>
-        public VisualElement HostElement;
+        /// <summary>
+        /// The host element handle (only for host nodes). Opaque to the fiber:
+        /// a <c>VisualElement</c> under the UI Toolkit backend, a
+        /// <c>GameObject</c> under the uGUI backend. Only the owning
+        /// <see cref="FiberHostConfig"/> interprets it.
+        /// </summary>
+        public object HostElement;
 
         /// <summary>Committed typed host props from last render (typed pipeline).</summary>
         public Props.Typed.BaseProps HostProps;
@@ -101,8 +105,8 @@ namespace ReactiveUITK.Core.Fiber
         public Dictionary<string, object> ProvidedContext;
 
         // ==== Refs ====
-        /// <summary>For Portal nodes</summary>
-        public VisualElement PortalTarget;
+        /// <summary>For Portal nodes — opaque host handle, same contract as <see cref="HostElement"/>.</summary>
+        public object PortalTarget;
 
         // ==== Error Boundary State ====
         public bool ErrorBoundaryActive;

@@ -1,5 +1,3 @@
-using UnityEngine.UIElements;
-
 namespace ReactiveUITK.Core.Fiber
 {
     /// <summary>
@@ -7,8 +5,8 @@ namespace ReactiveUITK.Core.Fiber
     /// </summary>
     public class FiberRoot
     {
-        /// <summary>The root VisualElement container</summary>
-        public VisualElement ContainerElement;
+        /// <summary>The root container — opaque host handle owned by the mount's backend.</summary>
+        public object ContainerElement;
 
         /// <summary>Current fiber tree (what's on screen)</summary>
         public FiberNode Current;

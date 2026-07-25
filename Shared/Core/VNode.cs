@@ -43,7 +43,11 @@ namespace ReactiveUITK.Core
         // ═══════════════════════════════════════════════════════════════════
         internal VirtualNodeType _nodeType;
         internal string _elementTypeName;
-        internal UnityEngine.UIElements.VisualElement _portalTarget;
+
+        // Opaque host handle: a VisualElement for UI Toolkit portals, a
+        // RectTransform/GameObject for uGUI portals. The fiber layer passes it
+        // through untouched; only the mount's FiberHostConfig interprets it.
+        internal object _portalTarget;
         internal VirtualNode _fallback;
         internal System.Func<bool> _suspenseReady;
         internal System.Threading.Tasks.Task _suspenseReadyTask;
@@ -77,7 +81,17 @@ namespace ReactiveUITK.Core
         // ═══════════════════════════════════════════════════════════════════
         public VirtualNodeType NodeType => _nodeType;
         public string ElementTypeName => _elementTypeName;
-        public UnityEngine.UIElements.VisualElement PortalTarget => _portalTarget;
+
+        /// <summary>
+        /// Portal target as a UI Toolkit element (null for non-UITK targets).
+        /// Kept <c>VisualElement</c>-typed for source compatibility; the fiber
+        /// reads the untyped <see cref="PortalTargetHost"/> instead.
+        /// </summary>
+        public UnityEngine.UIElements.VisualElement PortalTarget =>
+            _portalTarget as UnityEngine.UIElements.VisualElement;
+
+        /// <summary>Portal target as the opaque host handle (any backend).</summary>
+        public object PortalTargetHost => _portalTarget;
         public VirtualNode Fallback => _fallback;
         public System.Func<bool> SuspenseReady => _suspenseReady;
         public System.Threading.Tasks.Task SuspenseReadyTask => _suspenseReadyTask;
