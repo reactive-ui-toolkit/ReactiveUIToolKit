@@ -280,21 +280,24 @@ public sealed class CompletionHandler : ICompletionHandler
             CursorKind.ControlFlowName when inCodeBlockLine && !inEmbeddedMarkupInCode =>
                 Enumerable.Empty<CompletionItem>(),
             CursorKind.ControlFlowName => ControlFlowItems(ctx.Prefix, text, request.Position),
-            CursorKind.TagName => TagItems(ctx.Prefix, text, offset),
+            CursorKind.TagName => TagItems(ctx.Prefix, text, offset, parseResult.Directives.Backend),
             CursorKind.AttributeName => AttributeItems(
                 ctx.TagName ?? "",
                 ctx.Prefix,
-                HasExistingBinding(text, offset)
+                HasExistingBinding(text, offset),
+                parseResult.Directives.Backend
             ),
             CursorKind.AttributeValue => AttributeValueItems(
                 ctx.TagName ?? "",
                 ctx.AttributeName ?? "",
-                ctx.Prefix
+                ctx.Prefix,
+                parseResult.Directives.Backend
             ),
             CursorKind.None when inCodeBlockLine && triggerChar == "<" => TagItems(
                 "",
                 text,
-                offset
+                offset,
+                parseResult.Directives.Backend
             ),
             _ => Enumerable.Empty<CompletionItem>(),
         };
@@ -843,7 +846,12 @@ public sealed class CompletionHandler : ICompletionHandler
         return (line, start);
     }
 
-    private IEnumerable<CompletionItem> TagItems(string prefix, string text, int offset)
+    private IEnumerable<CompletionItem> TagItems(
+        string prefix,
+        string text,
+        int offset,
+        string? backend
+    )
     {
         bool existingTag = HasExistingTagBody(text, offset);
 
@@ -861,7 +869,7 @@ public sealed class CompletionHandler : ICompletionHandler
                         ? $"Component `{name}`"
                         : $"Component `{name}` — {props.Count} prop(s):\n"
                             + string.Join(", ", props.Take(5).Select(p => $"`{p.Name}`"));
-                var acceptsChildren = _schema.TryGetElement(name)?.AcceptsChildren ?? true;
+                var acceptsChildren = _schema.TryGetElement(name, backend)?.AcceptsChildren ?? true;
                 return new CompletionItem
                 {
                     Label = name,
@@ -881,7 +889,8 @@ public sealed class CompletionHandler : ICompletionHandler
         // Schema built-ins not already covered by the workspace index
         var userVersion = _roslynHost.DetectedUnityVersion;
         var schemaItems = _schema
-            .Root.Elements.Where(kv =>
+            .GetElements(backend)
+            .Where(kv =>
                 kv.Key.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
                 && !knownElements.Contains(kv.Key)
             )
@@ -914,7 +923,8 @@ public sealed class CompletionHandler : ICompletionHandler
     private IEnumerable<CompletionItem> AttributeItems(
         string tagName,
         string prefix,
-        bool hasExistingBinding
+        bool hasExistingBinding,
+        string? backend
     )
     {
         var workspaceProps = _index.GetProps(tagName);
@@ -923,7 +933,7 @@ public sealed class CompletionHandler : ICompletionHandler
         foreach (var p in workspaceProps)
         {
             coveredNames.Add(p.Name);
-            coveredNames.Add(CanonicalSchemaAttributeName(tagName, p.Name));
+            coveredNames.Add(CanonicalSchemaAttributeName(tagName, p.Name, backend));
         }
 
         // Props declared in *Props.cs (dynamic, workspace-specific)
@@ -931,7 +941,7 @@ public sealed class CompletionHandler : ICompletionHandler
             .Where(p => p.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase))
             .Select(p =>
             {
-                var canonicalName = CanonicalSchemaAttributeName(tagName, p.Name);
+                var canonicalName = CanonicalSchemaAttributeName(tagName, p.Name, backend);
                 var isString = p.Type.Equals("string", StringComparison.OrdinalIgnoreCase);
                 // When an existing ={value} binding follows the cursor, insert
                 // only the attribute name — the binding is already there.
@@ -957,7 +967,7 @@ public sealed class CompletionHandler : ICompletionHandler
         // Schema attrs for built-in elements + universal attrs not already covered
         var userVersion = _roslynHost.DetectedUnityVersion;
         var schemaItems = _schema
-            .GetAttributesForElement(tagName)
+            .GetAttributesForElement(tagName, backend)
             .Where(a =>
                 !coveredNames.Contains(a.Name)
                 && a.Name.StartsWith(prefix, StringComparison.OrdinalIgnoreCase)
@@ -989,10 +999,10 @@ public sealed class CompletionHandler : ICompletionHandler
         return dynItems.Concat(schemaItems);
     }
 
-    private string CanonicalSchemaAttributeName(string tagName, string fallbackName)
+    private string CanonicalSchemaAttributeName(string tagName, string fallbackName, string? backend)
     {
         var schemaAttr = _schema
-            .GetAttributesForElement(tagName)
+            .GetAttributesForElement(tagName, backend)
             .FirstOrDefault(a => a.Name.Equals(fallbackName, StringComparison.OrdinalIgnoreCase));
 
         return schemaAttr?.Name ?? fallbackName;
@@ -1001,11 +1011,12 @@ public sealed class CompletionHandler : ICompletionHandler
     private IEnumerable<CompletionItem> AttributeValueItems(
         string tagName,
         string attributeName,
-        string prefix
+        string prefix,
+        string? backend
     )
     {
         var attr = _schema
-            .GetAttributesForElement(tagName)
+            .GetAttributesForElement(tagName, backend)
             .FirstOrDefault(a => a.Name.Equals(attributeName, StringComparison.OrdinalIgnoreCase));
 
         if (attr is null)

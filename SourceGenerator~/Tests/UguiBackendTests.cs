@@ -141,6 +141,92 @@ public class UguiBackendTests
         Assert.False(result.SourceContains("ReactiveUITK.Ugui"), "No ugui leakage into UITK files");
     }
 
+    // ── Vocabulary contract: every ugui tag resolves to its U factory ────────
+
+    [Fact]
+    public void UguiVocabulary_EveryTag_EmitsItsUFactory()
+    {
+        var vocabulary = new (string tag, string method)[]
+        {
+            ("Canvas", "Canvas"),
+            ("Panel", "Panel"),
+            ("Image", "Image"),
+            ("RawImage", "RawImage"),
+            ("Text", "Text"),
+            ("Button", "Button"),
+            ("HorizontalLayoutGroup", "HorizontalLayoutGroup"),
+            ("VerticalLayoutGroup", "VerticalLayoutGroup"),
+            ("GridLayoutGroup", "GridLayoutGroup"),
+            ("Toggle", "Toggle"),
+            ("ToggleGroup", "ToggleGroup"),
+            ("Slider", "Slider"),
+            ("Scrollbar", "Scrollbar"),
+            ("ScrollRect", "ScrollRect"),
+            ("Dropdown", "Dropdown"),
+            ("InputField", "InputField"),
+            ("Prefab", "Prefab"),
+            ("UitkHost", "UitkHost"),
+        };
+
+        foreach (var (tag, method) in vocabulary)
+        {
+            var result = GeneratorTestHelper.Run(UguiFile($"<{tag}/>"));
+            Assert.True(
+                result.SourceContains($"global::ReactiveUITK.Ugui.U.{method}("),
+                $"Tag <{tag}> did not emit U.{method}("
+            );
+        }
+    }
+
+    // ── Cross-backend imports (UITKX2113) ────────────────────────────────────
+
+    [Fact]
+    public void UguiFile_ImportingUitkComponent_Raises2113()
+    {
+        var result = GeneratorTestHelper.RunMultiple(
+            new[]
+            {
+                (
+                    "Card.uitkx",
+                    "export VirtualNode Card() {\n  return ( <Label text=\"x\"/> );\n}\n"
+                ),
+                (
+                    "Screen.uitkx",
+                    "@backend ugui\nimport { Card } from \"./Card\"\n"
+                        + "export VirtualNode Screen() {\n  return ( <Panel><Card/></Panel> );\n}\n"
+                ),
+            },
+            "Screen.uitkx"
+        );
+
+        Assert.True(
+            result.HasDiagnostic("UITKX2113"),
+            "Expected UITKX2113 for a ugui file importing a uitk peer"
+        );
+    }
+
+    [Fact]
+    public void SameBackendImport_NoCrossBackendDiagnostic()
+    {
+        var result = GeneratorTestHelper.RunMultiple(
+            new[]
+            {
+                (
+                    "Card.uitkx",
+                    "@backend ugui\nexport VirtualNode Card() {\n  return ( <Text text=\"x\"/> );\n}\n"
+                ),
+                (
+                    "Screen.uitkx",
+                    "@backend ugui\nimport { Card } from \"./Card\"\n"
+                        + "export VirtualNode Screen() {\n  return ( <Panel><Card/></Panel> );\n}\n"
+                ),
+            },
+            "Screen.uitkx"
+        );
+
+        Assert.False(result.HasDiagnostic("UITKX2113"), "Same-backend import must not flag");
+    }
+
     // ── Formatter round-trip ─────────────────────────────────────────────────
 
     [Fact]

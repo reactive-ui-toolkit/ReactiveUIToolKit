@@ -37,6 +37,7 @@ import { CssHelpersReferencePage } from './pages/UITKX/CssHelpersRef/CssHelpersR
 import { RefGuidePage } from './pages/UITKX/Guides/RefGuidePage'
 import { KeyGuidePage } from './pages/UITKX/Guides/KeyGuidePage'
 import { AdvancedAPIPage } from './pages/UITKX/AdvancedAPI/AdvancedAPIPage'
+import { UguiBackendPage } from './pages/Ugui/UguiBackendPage'
 
 export type DocPage = {
   id: string
@@ -181,6 +182,21 @@ export const sections: DocSection[] = [
         return <UitkxComponentReferencePage title={page.title} />
       },
     })),
+  },
+  {
+    id: 'ugui-backend',
+    title: 'uGUI Backend',
+    pages: [
+      {
+        id: 'ugui-backend-page',
+        canonicalId: 'ugui-backend',
+        title: 'uGUI Backend',
+        path: '/ugui',
+        keywords: ['ugui', 'unity ui', 'canvas', 'recttransform', 'anchors', 'layoutgroup', 'prefab', 'islands', '@backend'],
+        searchContent: 'ugui backend unity ui canvas recttransform UguiRootRenderer U factories render classic uGUI same components hooks signals context router hmr fiber reconciler anchors pivot preset prop UguiAnchorPreset MiddleCenter TopStretch Stretch sprites colors materials layoutgroups no style uss deliberately mental model eventsystem required assign target rect Initialize Render V.Func UguiBaseProps __Rent object initializer counter VerticalLayoutGroup Text Button onClick spacing padding childControlWidth contentSizeFitter @backend ugui directive UITKX2111 unknown duplicate backend UITKX2112 uss no effect element vocabulary uitk default byte-identical Canvas Panel Image RawImage Text TMP TextMeshPro Button HorizontalLayoutGroup VerticalLayoutGroup GridLayoutGroup Toggle ToggleGroup Slider Scrollbar ScrollRect first child is content Dropdown InputField Prefab migration bridge IReactivePrefab bind source onInstantiated UitkHost UguiHost islands render texture PanelSettings input forwarding one mount one backend prop groups layoutElement contentSizeFitter aspectRatioFitter canvasGroup mask rectMask2D shadow outline pointer add component declarative controlled components SetValueWithoutNotify SetTextWithoutNotify raycast hygiene raycastTarget driven rect editor hint default sprites UISprite Background Knob builtin menu-identical visuals',
+        element: () => <UguiBackendPage />,
+      },
+    ],
   },
   {
     id: 'concepts',

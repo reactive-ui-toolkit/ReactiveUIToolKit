@@ -47,9 +47,27 @@ deliberately no `Style`/USS surface on uGUI elements.
   through `HostPropsBase` — no behavior change for UI Toolkit mounts
   (all 1726 pre-existing generator pins unchanged).
 
-Deferred items are tracked in `Plans~/REMAINING_WORK.md` §11 (GameObject
-pooling, deep LSP backend-awareness, cross-backend import diagnostics,
-default-sprite styling in players, docs-site section).
+- **Complete Inspector prop coverage**: Selectable animation triggers,
+  toggle transition, TMP gradients/outline/style sheets/sprite assets,
+  dropdown option icons + arrow/template/item styling, input-field
+  inputType/keyboardType/characterValidation/caret control +
+  onSelect/onDeselect, canvas sorting layer/target display/shader channels,
+  full 3D rotation + localPosition.z + GameObject tag, image alpha hit
+  test, scrollbar spacing.
+- **GameObject pooling**: per-adapter pool for stateless visuals (Panel,
+  Image, RawImage, Text), gated on a pristine-state reset — stateful
+  controls are never pooled, so reuse cannot leak toggle/input state.
+- **Menu-identical visuals everywhere**: a shipped resources asset
+  references Unity's builtin UI sprites, so runtime-created controls look
+  like the GameObject > UI menu ones in the editor AND player builds.
+- **Backend-aware IDE intelligence**: completions, hover, diagnostics, and
+  virtual-document props resolution follow `@backend`; `UITKX2113` flags
+  cross-backend imports at compile time (both directions); an 18-tag
+  vocabulary contract test pins the ugui tag surface. Docs site gains the
+  "uGUI Backend" page.
+
+Remaining follow-ups in `Plans~/REMAINING_WORK.md` §11 (markup-level
+driven-rect diagnostic, ugui Animate adapter, sample gallery).
 
 ## [0.10.0] - 2026-07-18
 

@@ -1,4 +1,4 @@
-{
+﻿{
   "version": "1.2",
   "description": "UITKX element and directive schema for IDE tooling",
   "structuralAttributes": [
@@ -322,7 +322,7 @@
     },
     {
       "name": "component",
-      "description": "(deprecated — ES-modules campaign) Name of the component class. Write a plain `export VirtualNode Name(...) { ... }` declaration instead; kept for the deprecation window."
+      "description": "(deprecated â€” ES-modules campaign) Name of the component class. Write a plain `export VirtualNode Name(...) { ... }` declaration instead; kept for the deprecation window."
     },
     {
       "name": "using",
@@ -348,7 +348,7 @@
   "controlFlow": [
     {
       "name": "if",
-      "description": "Conditional rendering — generates a ternary."
+      "description": "Conditional rendering â€” generates a ternary."
     },
     {
       "name": "else",
@@ -356,11 +356,11 @@
     },
     {
       "name": "foreach",
-      "description": "Loop rendering — generates .Select().ToArray()."
+      "description": "Loop rendering â€” generates .Select().ToArray()."
     },
     {
       "name": "switch",
-      "description": "Switch expression — generates a C# switch expression."
+      "description": "Switch expression â€” generates a C# switch expression."
     },
     {
       "name": "case",
@@ -372,11 +372,11 @@
     },
     {
       "name": "for",
-      "description": "C-style for loop — generates a standard for loop."
+      "description": "C-style for loop â€” generates a standard for loop."
     },
     {
       "name": "while",
-      "description": "While loop — generates a while loop."
+      "description": "While loop â€” generates a while loop."
     }
   ],
   "elements": {
@@ -936,7 +936,7 @@
         {
           "name": "ScaleMode",
           "type": "string",
-          "description": "scaleToFit (default) | scaleAndCrop | stretchToFill — maps to BackgroundSize."
+          "description": "scaleToFit (default) | scaleAndCrop | stretchToFill â€” maps to BackgroundSize."
         },
         {
           "name": "AudioOutputMode",
@@ -1315,7 +1315,7 @@
         {
           "name": "value",
           "type": "float",
-          "description": "Progress value (0–100)."
+          "description": "Progress value (0â€“100)."
         },
         {
           "name": "title",
@@ -1764,7 +1764,7 @@
     },
     "VisualElement": {
       "propsType": "Dictionary",
-      "description": "Bare VisualElement — generic container with arbitrary props.",
+      "description": "Bare VisualElement â€” generic container with arbitrary props.",
       "acceptsChildren": true,
       "attributes": [
         {
@@ -1877,7 +1877,7 @@
     },
     "Route": {
       "propsType": "RouteFuncProps",
-      "description": "Renders its children/element only when the current location matches the given path. When both 'element' and child <Route>s are supplied it acts as a layout route — the matched child is forwarded to the descendant <Outlet/>.",
+      "description": "Renders its children/element only when the current location matches the given path. When both 'element' and child <Route>s are supplied it acts as a layout route â€” the matched child is forwarded to the descendant <Outlet/>.",
       "acceptsChildren": true,
       "attributes": [
         {
@@ -1898,7 +1898,7 @@
         {
           "name": "index",
           "type": "bool",
-          "description": "Index route — matches the parent pattern exactly with no extra segment."
+          "description": "Index route â€” matches the parent pattern exactly with no extra segment."
         },
         {
           "name": "caseSensitive",
@@ -2796,9 +2796,12 @@
     { "name": "offsetMin", "type": "Vector2", "description": "RectTransform.offsetMin (margins from the anchor rect)." },
     { "name": "offsetMax", "type": "Vector2", "description": "RectTransform.offsetMax." },
     { "name": "rotationZ", "type": "float", "description": "Local Z rotation in degrees." },
+    { "name": "rotation", "type": "Vector3", "description": "Full local Euler rotation (overrides rotationZ)." },
     { "name": "scale", "type": "Vector3", "description": "RectTransform.localScale." },
+    { "name": "localPositionZ", "type": "float", "description": "localPosition.z depth offset." },
     { "name": "active", "type": "bool", "description": "GameObject.SetActive." },
     { "name": "layer", "type": "int", "description": "GameObject.layer." },
+    { "name": "tag", "type": "string", "description": "GameObject.tag." },
     { "name": "layoutElement", "type": "UguiLayoutElement", "description": "LayoutElement prop group: min/preferred/flexible width and height, ignoreLayout, layoutPriority." },
     { "name": "contentSizeFitter", "type": "UguiContentSizeFitter", "description": "ContentSizeFitter prop group: horizontalFit, verticalFit." },
     { "name": "aspectRatioFitter", "type": "UguiAspectRatioFitter", "description": "AspectRatioFitter prop group: aspectMode, aspectRatio." },
@@ -2817,6 +2820,9 @@
       "attributes": [
         { "name": "renderMode", "type": "RenderMode", "description": "Canvas.renderMode (ignored on nested canvases)." },
         { "name": "sortingOrder", "type": "int", "description": "Canvas.sortingOrder." },
+        { "name": "sortingLayerName", "type": "string", "description": "Canvas.sortingLayerName." },
+        { "name": "targetDisplay", "type": "int", "description": "Canvas.targetDisplay." },
+        { "name": "additionalShaderChannels", "type": "AdditionalCanvasShaderChannels", "description": "Extra vertex channels (TexCoord1..3, Normal, Tangent)." },
         { "name": "pixelPerfect", "type": "bool", "description": "Canvas.pixelPerfect." },
         { "name": "overrideSorting", "type": "bool", "description": "Canvas.overrideSorting (nested canvases)." },
         { "name": "worldCamera", "type": "Camera", "description": "Canvas.worldCamera." },
@@ -2891,6 +2897,13 @@
         { "name": "lineSpacing", "type": "float", "description": "TMP_Text.lineSpacing." },
         { "name": "paragraphSpacing", "type": "float", "description": "TMP_Text.paragraphSpacing." },
         { "name": "margin", "type": "Vector4", "description": "TMP_Text.margin." },
+        { "name": "gradient", "type": "VertexGradient", "description": "Four-corner vertex color gradient." },
+        { "name": "gradientPreset", "type": "TMP_ColorGradient", "description": "Color gradient preset asset." },
+        { "name": "extraPadding", "type": "bool", "description": "TMP_Text.extraPadding." },
+        { "name": "outlineWidth", "type": "float", "description": "TMP outline width (instantiates the material)." },
+        { "name": "outlineColor", "type": "Color32", "description": "TMP outline color." },
+        { "name": "styleSheet", "type": "TMP_StyleSheet", "description": "TMP style sheet asset." },
+        { "name": "spriteAsset", "type": "TMP_SpriteAsset", "description": "TMP sprite asset for inline sprites." },
         { "name": "color", "type": "Color", "description": "Graphic.color." }
       ]
     },
@@ -2909,6 +2922,7 @@
         { "name": "selectOnDown", "type": "object", "description": "Explicit navigation target." },
         { "name": "selectOnLeft", "type": "object", "description": "Explicit navigation target." },
         { "name": "selectOnRight", "type": "object", "description": "Explicit navigation target." },
+        { "name": "animationTriggers", "type": "UguiAnimationTriggers", "description": "Animation-transition trigger names (normal/highlighted/pressed/selected/disabled)." },
         { "name": "sprite", "type": "Sprite", "description": "Background Image.sprite." },
         { "name": "color", "type": "Color", "description": "Background color." },
         { "name": "type", "type": "Image.Type", "description": "Background image type (sliced for 9-slice)." }
@@ -2983,6 +2997,7 @@
         { "name": "checkmarkColor", "type": "Color", "description": "Checkmark color." },
         { "name": "group", "type": "ToggleGroup", "description": "Explicit ToggleGroup reference." },
         { "name": "joinGroup", "type": "bool", "description": "Auto-join the nearest ancestor ToggleGroup element." },
+        { "name": "toggleTransition", "type": "Toggle.ToggleTransition", "description": "Checkmark fade transition (none/fade)." },
         { "name": "interactable", "type": "bool", "description": "Selectable.interactable." },
         { "name": "sprite", "type": "Sprite", "description": "Background Image.sprite." },
         { "name": "color", "type": "Color", "description": "Background color." }
@@ -3045,6 +3060,8 @@
         { "name": "scrollSensitivity", "type": "float", "description": "ScrollRect.scrollSensitivity." },
         { "name": "showHorizontalScrollbar", "type": "bool", "description": "Generate/toggle a wired horizontal scrollbar (auto-hide-and-expand)." },
         { "name": "showVerticalScrollbar", "type": "bool", "description": "Generate/toggle a wired vertical scrollbar (auto-hide-and-expand)." },
+        { "name": "horizontalScrollbarSpacing", "type": "float", "description": "ScrollRect.horizontalScrollbarSpacing." },
+        { "name": "verticalScrollbarSpacing", "type": "float", "description": "ScrollRect.verticalScrollbarSpacing." },
         { "name": "onValueChanged", "type": "Action<Vector2>", "description": "ScrollRect.onValueChanged." }
       ]
     },
@@ -3058,6 +3075,14 @@
         { "name": "onValueChanged", "type": "Action<int>", "description": "TMP_Dropdown.onValueChanged." },
         { "name": "labelFontSize", "type": "float", "description": "Caption label font size." },
         { "name": "labelColor", "type": "Color", "description": "Caption label color." },
+        { "name": "optionSprites", "type": "IReadOnlyList<Sprite>", "description": "Per-option icons (index-aligned with options)." },
+        { "name": "arrowSprite", "type": "Sprite", "description": "Arrow part sprite." },
+        { "name": "arrowColor", "type": "Color", "description": "Arrow part color." },
+        { "name": "templateSprite", "type": "Sprite", "description": "Template background sprite." },
+        { "name": "templateColor", "type": "Color", "description": "Template background color." },
+        { "name": "itemFontSize", "type": "float", "description": "Item label font size." },
+        { "name": "itemColor", "type": "Color", "description": "Item label color." },
+        { "name": "alphaFadeSpeed", "type": "float", "description": "TMP_Dropdown.alphaFadeSpeed." },
         { "name": "interactable", "type": "bool", "description": "Selectable.interactable." }
       ]
     },
@@ -3076,6 +3101,14 @@
         { "name": "textColor", "type": "Color", "description": "Input text color." },
         { "name": "placeholderColor", "type": "Color", "description": "Placeholder color." },
         { "name": "caretBlinkRate", "type": "float", "description": "TMP_InputField.caretBlinkRate." },
+        { "name": "inputType", "type": "TMP_InputField.InputType", "description": "Standard/AutoCorrect/Password." },
+        { "name": "keyboardType", "type": "TouchScreenKeyboardType", "description": "On-screen keyboard type." },
+        { "name": "characterValidation", "type": "TMP_InputField.CharacterValidation", "description": "Per-character validation rule." },
+        { "name": "caretWidth", "type": "int", "description": "TMP_InputField.caretWidth." },
+        { "name": "customCaretColor", "type": "bool", "description": "Use caretColor instead of the text color." },
+        { "name": "caretColor", "type": "Color", "description": "Caret color (with customCaretColor)." },
+        { "name": "onSelect", "type": "Action<string>", "description": "Field gained focus." },
+        { "name": "onDeselect", "type": "Action<string>", "description": "Field lost focus." },
         { "name": "selectionColor", "type": "Color", "description": "TMP_InputField.selectionColor." },
         { "name": "onValueChanged", "type": "Action<string>", "description": "Per-keystroke change." },
         { "name": "onEndEdit", "type": "Action<string>", "description": "Focus-loss / submit end." },
