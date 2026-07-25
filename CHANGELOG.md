@@ -66,6 +66,19 @@ deliberately no `Style`/USS surface on uGUI elements.
   vocabulary contract test pins the ugui tag surface. Docs site gains the
   "uGUI Backend" page.
 
+### Added — null-only components (React case 2)
+
+A component may now end in an explicit top-level `return null;` with no
+markup return — the React shape for a component that always renders
+nothing (effect-only components: register something, play a sound,
+portal-less side effects). The whole body emits as setup code with full
+hook support and the runtime renders nothing. Diagnostics stay strict: a
+body with no top-level return at all is still UITKX2101 (its message now
+mentions the null form), and `return expr;` is still UITKX2102. Uniform
+across the source generator, HMR emitter, formatter (no synthesized
+markup return on format), IDE virtual document, and both element
+vocabularies (uitk and `@backend ugui`).
+
 ### Fixed — fiber core hardening (found by uGUI field testing, benefits both backends)
 
 - **Render-restart starvation**: state updates arriving while a large render

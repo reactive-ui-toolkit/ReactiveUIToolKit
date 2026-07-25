@@ -1121,6 +1121,7 @@ namespace ReactiveUITK.SourceGenerator
                 SetupCodeBareJsxRanges = c.SetupCodeBareJsxRanges,
                 FunctionSetupGapOffset = c.FunctionSetupGapOffset,
                 FunctionSetupGapLength = c.FunctionSetupGapLength,
+                HasNullReturn = c.HasNullReturn,
                 HookDeclarations = ImmutableArray<HookDeclaration>.Empty,
                 ModuleDeclarations = ImmutableArray<ModuleDeclaration>.Empty,
                 MemberDeclarations = ImmutableArray<MemberDeclaration>.Empty,

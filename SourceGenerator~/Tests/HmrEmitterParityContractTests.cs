@@ -36,6 +36,72 @@ namespace ReactiveUITK.SourceGenerator.Tests;
 /// </summary>
 public class HmrEmitterParityContractTests
 {
+    // ── Null-only components (React case 2) ─────────────────────────────────
+
+    /// <summary>
+    /// A component whose only top-level return is <c>return null;</c> is valid
+    /// (always renders nothing). SG emits the whole body as setup code —
+    /// including the author's <c>return null;</c> — followed by the
+    /// empty-markup fallback <c>return (VirtualNode)null;</c>. HMR mirrors
+    /// this via the same <c>markupNodes.Count == 0</c> branch in
+    /// <c>HmrCSharpEmitter</c>; its header pragma already suppresses the
+    /// CS0162 the unreachable fallback produces.
+    /// </summary>
+    [Fact]
+    public void Sg_NullOnlyComponent_EmitsSetupThenFallbackReturn()
+    {
+        var result = GeneratorTestHelper.Run(
+            """
+            export VirtualNode Gone() {
+              useEffect(() => {
+                return null;
+              }, new object[] { });
+              return null;
+            }
+            """
+        );
+
+        Assert.True(result.SourceWasProduced);
+        Assert.True(result.SourceContains("__Render_body"));
+        Assert.True(
+            result.SourceContains("return null;"),
+            "The author's explicit return null must be spliced verbatim"
+        );
+        Assert.True(
+            result.SourceContains("return (global::ReactiveUITK.Core.VirtualNode)null;"),
+            "The empty-markup fallback return must close the render body"
+        );
+    }
+
+    /// <summary>
+    /// The full React shape: a braced markup guard plus a final top-level
+    /// <c>return null;</c>. The guard's JSX is converted by the setup-code
+    /// splicer (paren-block ranges), so V.* factories must appear even though
+    /// the component has no top-level markup return. HMR shares
+    /// <c>SpliceSetupCodeMarkup</c> semantics.
+    /// </summary>
+    [Fact]
+    public void Sg_NullOnlyComponent_WithBracedMarkupGuard_SplicesGuardJsx()
+    {
+        var result = GeneratorTestHelper.Run(
+            """
+            export VirtualNode MaybeBadge(bool show = false) {
+              if (show) {
+                return (<Label text="badge" />);
+              }
+              return null;
+            }
+            """
+        );
+
+        Assert.True(result.SourceWasProduced);
+        Assert.True(
+            result.SourceContains("V.Label("),
+            "Braced guard JSX must be spliced into V.* calls"
+        );
+        Assert.True(result.SourceContains("return (global::ReactiveUITK.Core.VirtualNode)null;"));
+    }
+
     // ── Issue 5 — ref={x} routing on function components ────────────────────────
 
     /// <summary>

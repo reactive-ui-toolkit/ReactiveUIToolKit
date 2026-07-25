@@ -516,6 +516,84 @@ public class ParserTests
         Assert.Contains(diags, d => d.Code == "UITKX2102");
     }
 
+    // ── Null-only components (React case 2) ──────────────────────────────────
+
+    [Fact]
+    public void Directives_FunctionStyle_NullOnlyReturn_Accepted()
+    {
+        const string src =
+            """
+            component SoundEffect {
+                useEffect(() => {
+                    Play();
+                    return null;
+                }, System.Array.Empty<object>());
+                return null;
+            }
+            """;
+
+        var set = ParseDirectives(src, out var diags);
+
+        Assert.DoesNotContain(diags, d => d.Code == "UITKX2101");
+        Assert.DoesNotContain(diags, d => d.Code == "UITKX2102");
+        Assert.True(set.IsFunctionStyle);
+        Assert.True(set.HasNullReturn);
+        Assert.Contains("return null;", set.FunctionSetupCode ?? string.Empty);
+        Assert.Equal(set.MarkupStartIndex, set.MarkupEndIndex);
+    }
+
+    [Fact]
+    public void PlainDeclaration_NullOnlyComponent_Accepted()
+    {
+        const string src =
+            """
+            export VirtualNode Gone() {
+              return null;
+            }
+            """;
+
+        var set = ParseDirectives(src, out var diags);
+
+        Assert.DoesNotContain(diags, d => d.Code == "UITKX2101");
+        Assert.DoesNotContain(diags, d => d.Code == "UITKX2102");
+        var component = Assert.Single(set.ComponentDeclarations);
+        Assert.True(component.HasNullReturn);
+        Assert.True(set.HasNullReturn);
+        Assert.Contains("return null;", component.FunctionSetupCode ?? string.Empty);
+    }
+
+    [Fact]
+    public void Directives_GuardReturnNull_WithMarkupReturn_NotNullOnly()
+    {
+        const string src =
+            """
+            component CounterPanel {
+                if (hidden) { return null; }
+                return (<Box />);
+            }
+            """;
+
+        var set = ParseDirectives(src, out var diags);
+
+        Assert.DoesNotContain(diags, d => d.Code == "UITKX2101" || d.Code == "UITKX2102");
+        Assert.False(set.HasNullReturn);
+        Assert.True(set.MarkupEndIndex > set.MarkupStartIndex);
+    }
+
+    [Fact]
+    public void Directives_ReturnNullExpression_StillEmitsUITKX2102()
+    {
+        const string src =
+            """
+            component CounterPanel {
+                return nullableThing;
+            }
+            """;
+
+        ParseDirectives(src, out var diags);
+        Assert.Contains(diags, d => d.Code == "UITKX2102");
+    }
+
     [Fact]
     public void Directives_FunctionStyle_WithTrailingDirective_EmitsUITKX2104()
     {
