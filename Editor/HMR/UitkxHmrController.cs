@@ -495,6 +495,12 @@ namespace ReactiveUITK.EditorSupport.HMR
                 if (vhr?.FiberRendererInternal?.Root?.Current != null)
                     yield return vhr.FiberRendererInternal.Root.Current;
             }
+            foreach (var uguiRenderer in ReactiveUITK.Ugui.UguiRootRenderer.AllInstances)
+            {
+                var root = uguiRenderer?.FiberRootInternal;
+                if (root?.Current != null)
+                    yield return root.Current;
+            }
         }
 
         // Returns true when the path was newly queued, false when it was already

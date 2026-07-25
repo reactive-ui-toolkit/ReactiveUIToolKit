@@ -155,6 +155,14 @@ namespace ReactiveUITK.EditorSupport.HMR
                     continue;
                 ScheduleFullTreeUpdate(vhr.FiberRendererInternal.Root.Current);
             }
+
+            foreach (var uguiRenderer in ReactiveUITK.Ugui.UguiRootRenderer.AllInstances)
+            {
+                var root = uguiRenderer?.FiberRootInternal;
+                if (root?.Current == null)
+                    continue;
+                ScheduleFullTreeUpdate(root.Current);
+            }
         }
 
         private static void ScheduleFullTreeUpdate(FiberNode fiber)
