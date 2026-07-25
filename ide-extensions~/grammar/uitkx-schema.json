@@ -1,4 +1,4 @@
-﻿{
+{
   "version": "1.2",
   "description": "UITKX element and directive schema for IDE tooling",
   "structuralAttributes": [
@@ -322,7 +322,7 @@
     },
     {
       "name": "component",
-      "description": "(deprecated â€” ES-modules campaign) Name of the component class. Write a plain `export VirtualNode Name(...) { ... }` declaration instead; kept for the deprecation window."
+      "description": "(deprecated — ES-modules campaign) Name of the component class. Write a plain `export VirtualNode Name(...) { ... }` declaration instead; kept for the deprecation window."
     },
     {
       "name": "using",
@@ -348,7 +348,7 @@
   "controlFlow": [
     {
       "name": "if",
-      "description": "Conditional rendering â€” generates a ternary."
+      "description": "Conditional rendering — generates a ternary."
     },
     {
       "name": "else",
@@ -356,11 +356,11 @@
     },
     {
       "name": "foreach",
-      "description": "Loop rendering â€” generates .Select().ToArray()."
+      "description": "Loop rendering — generates .Select().ToArray()."
     },
     {
       "name": "switch",
-      "description": "Switch expression â€” generates a C# switch expression."
+      "description": "Switch expression — generates a C# switch expression."
     },
     {
       "name": "case",
@@ -372,11 +372,11 @@
     },
     {
       "name": "for",
-      "description": "C-style for loop â€” generates a standard for loop."
+      "description": "C-style for loop — generates a standard for loop."
     },
     {
       "name": "while",
-      "description": "While loop â€” generates a while loop."
+      "description": "While loop — generates a while loop."
     }
   ],
   "elements": {
@@ -936,7 +936,7 @@
         {
           "name": "ScaleMode",
           "type": "string",
-          "description": "scaleToFit (default) | scaleAndCrop | stretchToFill â€” maps to BackgroundSize."
+          "description": "scaleToFit (default) | scaleAndCrop | stretchToFill — maps to BackgroundSize."
         },
         {
           "name": "AudioOutputMode",
@@ -1315,7 +1315,7 @@
         {
           "name": "value",
           "type": "float",
-          "description": "Progress value (0â€“100)."
+          "description": "Progress value (0–100)."
         },
         {
           "name": "title",
@@ -1764,7 +1764,7 @@
     },
     "VisualElement": {
       "propsType": "Dictionary",
-      "description": "Bare VisualElement â€” generic container with arbitrary props.",
+      "description": "Bare VisualElement — generic container with arbitrary props.",
       "acceptsChildren": true,
       "attributes": [
         {
@@ -1877,7 +1877,7 @@
     },
     "Route": {
       "propsType": "RouteFuncProps",
-      "description": "Renders its children/element only when the current location matches the given path. When both 'element' and child <Route>s are supplied it acts as a layout route â€” the matched child is forwarded to the descendant <Outlet/>.",
+      "description": "Renders its children/element only when the current location matches the given path. When both 'element' and child <Route>s are supplied it acts as a layout route — the matched child is forwarded to the descendant <Outlet/>.",
       "acceptsChildren": true,
       "attributes": [
         {
@@ -1898,7 +1898,7 @@
         {
           "name": "index",
           "type": "bool",
-          "description": "Index route â€” matches the parent pattern exactly with no extra segment."
+          "description": "Index route — matches the parent pattern exactly with no extra segment."
         },
         {
           "name": "caseSensitive",

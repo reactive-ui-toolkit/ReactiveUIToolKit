@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using ReactiveUITK.Core;
 using ReactiveUITK.Signals;
 using ReactiveUITK.Ugui;
@@ -10,19 +10,19 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
     /// The uGUI port of Samples/Components/StressTest: N boxes animated for a
     /// chosen duration with a live average-FPS readout. The bootstrap's
     /// Update drives a time signal while running; every tick re-renders the
-    /// whole box field through the reconciler â€” that sustained full-tree diff
+    /// whole box field through the reconciler — that sustained full-tree diff
     /// IS the stress. Scene setup: Canvas + EventSystem + a stretched
     /// RectTransform with a UguiRootRenderer and this component.
     /// </summary>
     [RequireComponent(typeof(UguiRootRenderer))]
     public sealed class RuntimeUguiStressTestDemoBootstrap : MonoBehaviour
     {
-        private static readonly Signal<float> s_time =
-            SignalFactory.Get<float>("UguiStress.Time", 0f);
-        private static readonly Signal<bool> s_running =
-            SignalFactory.Get<bool>("UguiStress.Running", false);
-        private static readonly Signal<string> s_status =
-            SignalFactory.Get<string>("UguiStress.Status", "uGUI Stress Test â€” Ready");
+        // Created in Start, never in field initializers: SignalFactory boots
+        // the signals runtime host, which Unity forbids during MonoBehaviour
+        // construction (type initializers run in constructor context).
+        private static Signal<float> s_time;
+        private static Signal<bool> s_running;
+        private static Signal<string> s_status;
 
         private static int s_boxCount = 300;
         private static float s_duration = 10f;
@@ -32,12 +32,18 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
 
         private void Start()
         {
+            s_time ??= SignalFactory.Get<float>("UguiStress.Time", 0f);
+            s_running ??= SignalFactory.Get<bool>("UguiStress.Running", false);
+            s_status ??= SignalFactory.Get<string>(
+                "UguiStress.Status",
+                "uGUI Stress Test — Ready"
+            );
             GetComponent<UguiRootRenderer>().Render(V.Func(StressTest));
         }
 
         private void Update()
         {
-            if (!s_running.Value)
+            if (s_running == null || !s_running.Value)
             {
                 return;
             }
@@ -49,14 +55,14 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             {
                 s_running.Set(false);
                 s_status.Set(
-                    $"DONE â€” {s_boxCount} boxes | Avg FPS: {avgFps:F1} | "
+                    $"DONE — {s_boxCount} boxes | Avg FPS: {avgFps:F1} | "
                         + $"Duration: {_elapsed:F1}s | Frames: {_frames}"
                 );
                 return;
             }
 
             s_status.Set(
-                $"uGUI Stress â€” {s_boxCount} boxes | Avg FPS: {avgFps:F1} | "
+                $"uGUI Stress — {s_boxCount} boxes | Avg FPS: {avgFps:F1} | "
                     + $"Elapsed: {_elapsed:F1}s / {s_duration:F0}s"
             );
             s_time.Set(_elapsed);
