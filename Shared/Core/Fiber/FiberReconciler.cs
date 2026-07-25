@@ -253,9 +253,31 @@ namespace ReactiveUITK.Core.Fiber
                 }
                 else if (_root.Current.Alternate != null && rootCurrent == _root.Current.Alternate)
                 {
-                    // Found the alternate root (which is not currently set as WIP).
-                    // This is valid during a commit phase or if we are interacting with a tree that is being committed.
-                    // We allow it to proceed, as it will create a WIP from this root.
+                    // The scheduling fiber belongs to the SUPERSEDED tree — the
+                    // typical case for deferred updates captured mid-pass and
+                    // replayed after the pass committed. Building the WIP from
+                    // this stale root would reconcile against pre-commit
+                    // children: subtrees the last commit already placed get
+                    // re-mounted as duplicates while the committed ones are
+                    // orphaned with no deletion (frozen ghost elements).
+                    // Redirect to the live root and re-mark the pending-update
+                    // flags on the live counterpart so the render cannot bail
+                    // out past the updated component.
+                    var liveFiber = fiber?.Alternate ?? fiber;
+                    if (liveFiber != null)
+                    {
+                        liveFiber.HasPendingStateUpdate = true;
+                        var walkUp = liveFiber;
+                        while (walkUp != null)
+                        {
+                            if (walkUp.Parent != null)
+                            {
+                                walkUp.Parent.SubtreeHasUpdates = true;
+                            }
+                            walkUp = walkUp.Parent;
+                        }
+                    }
+                    rootCurrent = _root.Current;
                 }
                 else
                 {
