@@ -33,6 +33,11 @@ namespace ReactiveUITK.EditorSupport.HMR
         private static readonly Dictionary<string, TagRes> s_tagMap =
             HmrBuiltinTagDiscovery.BuildAutoDiscoveredTagMap();
 
+        // The ugui vocabulary (@backend ugui files) — discovered from U the
+        // same way s_tagMap is discovered from V, so both stay drift-proof.
+        private static readonly Dictionary<string, TagRes> s_uguiTagMap =
+            HmrBuiltinTagDiscovery.BuildUguiTagMap();
+
         // Single source of truth lives in
         // Shared/Core/Router/RouterTagAliases.cs.  Both the source generator
         // and this HMR emitter consume the same dictionary so that markup tag
@@ -205,6 +210,11 @@ namespace ReactiveUITK.EditorSupport.HMR
             private readonly string _componentName;
             private readonly string _propsTypeName;
             private readonly bool _isFunctionStyle;
+            private readonly bool _isUgui;
+            private readonly string _factory;
+
+            private string QualifiedProps(string propsType) =>
+                _isUgui ? $"global::ReactiveUITK.Ugui.{propsType}" : propsType;
             private readonly IList _usings;
             private readonly IList _ussFiles;
             private readonly IList _functionParams;
@@ -243,6 +253,8 @@ namespace ReactiveUITK.EditorSupport.HMR
                 _componentName = GP<string>(directives, "ComponentName") ?? "Unknown";
                 _propsTypeName = GP<string>(directives, "PropsTypeName");
                 _isFunctionStyle = GP<bool>(directives, "IsFunctionStyle");
+                _isUgui = GP<string>(directives, "Backend") == "ugui";
+                _factory = _isUgui ? "global::ReactiveUITK.Ugui.U" : "V";
                 _usings = UitkxHmrCompiler.GetItems(UitkxHmrCompiler.GetProp(directives, "Usings"));
                 _ussFiles = UitkxHmrCompiler.GetItems(
                     UitkxHmrCompiler.GetProp(directives, "UssFiles")
@@ -1353,7 +1365,8 @@ namespace ReactiveUITK.EditorSupport.HMR
                 }
 
                 // Try built-in resolution
-                if (s_tagMap.TryGetValue(tagName, out var res))
+                var tagMap = _isUgui ? s_uguiTagMap : s_tagMap;
+                if (tagMap.TryGetValue(tagName, out var res))
                 {
                     switch (res.Kind)
                     {
@@ -1473,7 +1486,7 @@ namespace ReactiveUITK.EditorSupport.HMR
 
                 if (skipPooling)
                 {
-                    _sb.Append($"V.{res.MethodName}(new {res.PropsType} {{ ");
+                    _sb.Append($"{_factory}.{res.MethodName}(new {QualifiedProps(res.PropsType)} {{ ");
                     bool first = true;
                     foreach (var attr in filteredAttrs)
                     {
@@ -1501,7 +1514,9 @@ namespace ReactiveUITK.EditorSupport.HMR
                     int pId = _poolVarId++;
                     string propsVar = $"__p_{pId}";
                     _rentBuffer.Append(
-                        $"var {propsVar} = global::ReactiveUITK.Props.Typed.BaseProps.__Rent<{res.PropsType}>(); "
+                        _isUgui
+                            ? $"var {propsVar} = global::ReactiveUITK.Ugui.UguiBaseProps.__Rent<global::ReactiveUITK.Ugui.{res.PropsType}>(); "
+                            : $"var {propsVar} = global::ReactiveUITK.Props.Typed.BaseProps.__Rent<{res.PropsType}>(); "
                     );
 
                     string styleVarName = null;
@@ -1557,7 +1572,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                         );
                     }
 
-                    _sb.Append($"V.{res.MethodName}({propsVar}, key: {keyExpr}");
+                    _sb.Append($"{_factory}.{res.MethodName}({propsVar}, key: {keyExpr}");
                 } // end else (!skipPooling)
 
                 if (res.Kind == TagKind.TypedC && children.Count > 0)
@@ -1597,7 +1612,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                     }
                 }
 
-                _sb.Append($"V.{res.MethodName}(");
+                _sb.Append($"{_factory}.{res.MethodName}(");
                 if (hasNonKeyAttrs)
                 {
                     _sb.Append("new Dictionary<string,object> { ");
@@ -1936,7 +1951,7 @@ namespace ReactiveUITK.EditorSupport.HMR
             private void EmitPortal(IList attrs, string keyExpr, IList children)
             {
                 string target = GetAttrExpr(attrs, "target") ?? "null";
-                _sb.Append($"V.Portal({target}, key: {keyExpr}");
+                _sb.Append($"{_factory}.Portal({target}, key: {keyExpr}");
                 if (children.Count > 0)
                 {
                     if (TryClassifySimpleChildren(children))
@@ -3672,10 +3687,33 @@ namespace ReactiveUITK.EditorSupport.HMR
         // the test must change in lockstep.
         private static class HmrBuiltinTagDiscovery
         {
+            public static Dictionary<string, TagRes> BuildUguiTagMap()
+            {
+                var map = Discover(
+                    typeof(global::ReactiveUITK.Ugui.U),
+                    // U.Text has a typed UguiTextProps overload that must win the
+                    // "text" tag (SG parity: BuiltinTyped overwrites) — so the
+                    // string-sugar special case is disabled for this factory.
+                    treatStringTextAsTextNode: false
+                );
+                map["suspense"] = new TagRes(TagKind.Suspense, "Suspense", null);
+                map["portal"] = new TagRes(TagKind.Portal, "Portal", null);
+                return map;
+            }
+
             public static Dictionary<string, TagRes> BuildAutoDiscoveredTagMap()
             {
+                var map = Discover(typeof(global::ReactiveUITK.V), treatStringTextAsTextNode: true);
+                return FinishVMap(map);
+            }
+
+            private static Dictionary<string, TagRes> Discover(
+                System.Type factoryType,
+                bool treatStringTextAsTextNode
+            )
+            {
                 var map = new Dictionary<string, TagRes>(StringComparer.OrdinalIgnoreCase);
-                var vType = typeof(global::ReactiveUITK.V);
+                var vType = factoryType;
                 var vNodeType = typeof(global::ReactiveUITK.Core.VirtualNode);
                 var vNodeArrayType = typeof(global::ReactiveUITK.Core.VirtualNode[]);
                 var paramArrayAttr = typeof(ParamArrayAttribute);
@@ -3707,9 +3745,21 @@ namespace ReactiveUITK.EditorSupport.HMR
                     }
 
                     // V.Text(string text, string key = null)
-                    if (m.Name == "Text" && firstType == typeof(string))
+                    if (
+                        treatStringTextAsTextNode
+                        && m.Name == "Text"
+                        && firstType == typeof(string)
+                    )
                     {
                         map["text"] = new TagRes(TagKind.Text, "Text", null);
+                        continue;
+                    }
+                    if (
+                        !treatStringTextAsTextNode
+                        && m.Name == "Text"
+                        && firstType == typeof(string)
+                    )
+                    {
                         continue;
                     }
 
@@ -3747,6 +3797,11 @@ namespace ReactiveUITK.EditorSupport.HMR
                     // explicit manual overrides below.
                 }
 
+                return map;
+            }
+
+            private static Dictionary<string, TagRes> FinishVMap(Dictionary<string, TagRes> map)
+            {
                 // -- Manual overrides ----------------------------------------
                 // Tags whose V.* factory has a non-*Props first parameter but
                 // whose markup tag must still resolve through the typed-path

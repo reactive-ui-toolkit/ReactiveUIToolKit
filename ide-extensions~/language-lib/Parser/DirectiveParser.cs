@@ -44,6 +44,7 @@ namespace ReactiveUITK.Language.Parser
             "props",
             "key",
             "inject",
+            "backend",
         };
 
         // ── Public API ────────────────────────────────────────────────────────
@@ -161,12 +162,45 @@ namespace ReactiveUITK.Language.Parser
             var ussFiles = new List<string>();
             var imports = new List<ImportDeclaration>();
             string? inlineNamespace = null;
+            string? backendName = null;
             bool parsedPreambleLine;
             do
             {
                 parsedPreambleLine = false;
                 if (TryReadFunctionStyleUsing(source, ref i, ref line, usings, usingDirectives))
                 {
+                    SkipLeadingFunctionStyleTrivia(source, ref i, ref line, leadingTrivia);
+                    parsedPreambleLine = true;
+                }
+                if (TryReadFunctionStyleBackendDirective(source, ref i, ref line, out string? parsedBackend))
+                {
+                    // Same consume-even-when-rejecting rule as @namespace (U-09):
+                    // a bad or duplicate @backend line must still advance the
+                    // cursor or the whole file fails with a misleading UITKX2105.
+                    if (parsedBackend != "ugui" && parsedBackend != "uitk")
+                    {
+                        diagnosticBag.Add(new ParseDiagnostic
+                        {
+                            Code = "UITKX2111",
+                            Severity = ParseSeverity.Error,
+                            SourceLine = line,
+                            Message = $"Unknown backend '{parsedBackend}' — @backend accepts 'ugui' or 'uitk' (the default). The directive is ignored.",
+                        });
+                    }
+                    else if (backendName == null)
+                    {
+                        backendName = parsedBackend == "uitk" ? null : parsedBackend;
+                    }
+                    else
+                    {
+                        diagnosticBag.Add(new ParseDiagnostic
+                        {
+                            Code = "UITKX2111",
+                            Severity = ParseSeverity.Error,
+                            SourceLine = line,
+                            Message = "Duplicate @backend directive — only one is allowed. The first one is used.",
+                        });
+                    }
                     SkipLeadingFunctionStyleTrivia(source, ref i, ref line, leadingTrivia);
                     parsedPreambleLine = true;
                 }
@@ -221,6 +255,17 @@ namespace ReactiveUITK.Language.Parser
                 }
             } while (parsedPreambleLine);
 
+            if (backendName == "ugui" && ussFiles.Count > 0)
+            {
+                diagnosticBag.Add(new ParseDiagnostic
+                {
+                    Code = "UITKX2112",
+                    Severity = ParseSeverity.Warning,
+                    SourceLine = 1,
+                    Message = "@uss has no effect in a '@backend ugui' file — uGUI elements are styled with sprites, colors, and materials, not USS.",
+                });
+            }
+
             // Import/export grammar (leg 3): a name imported twice anywhere in the file → UITKX2303
             // (scan-side family diagnostic, per the frozen emit split).
             ReportDuplicateImports(imports, diagnosticBag);
@@ -250,7 +295,9 @@ namespace ReactiveUITK.Language.Parser
                         ref i, ref line, usings, usingDirectives, ussFiles, imports, leadingTrivia,
                         inlineNamespace, useLastReturn))
                 {
-                    directiveSet = plainSet;
+                    directiveSet = backendName != null
+                        ? plainSet with { Backend = backendName }
+                        : plainSet;
                     return true;
                 }
             }
@@ -273,6 +320,8 @@ namespace ReactiveUITK.Language.Parser
                         UsesLegacySyntax = true,
                     };
                 }
+                if (backendName != null && directiveSet != null)
+                    directiveSet = directiveSet with { Backend = backendName };
                 return hookModuleOk;
             }
 
@@ -369,6 +418,7 @@ namespace ReactiveUITK.Language.Parser
                     ComponentNameColumn: componentNameCol
                 )
                 { LeadingTrivia = leadingTrivia.ToImmutableArray(), UsingDirectives = usingDirectives.ToImmutableArray(), UsesLegacySyntax = true };
+                if (backendName != null) directiveSet = directiveSet with { Backend = backendName };
                 return true;
             }
 
@@ -403,6 +453,7 @@ namespace ReactiveUITK.Language.Parser
                     ComponentNameColumn: componentNameCol
                 )
                 { LeadingTrivia = leadingTrivia.ToImmutableArray(), UsingDirectives = usingDirectives.ToImmutableArray(), UsesLegacySyntax = true };
+                if (backendName != null) directiveSet = directiveSet with { Backend = backendName };
                 return true;
             }
 
@@ -464,6 +515,7 @@ namespace ReactiveUITK.Language.Parser
                     SetupCodeBareJsxRanges: bareJsxRanges1
                 )
                 { LeadingTrivia = leadingTrivia.ToImmutableArray(), UsingDirectives = usingDirectives.ToImmutableArray(), UsesLegacySyntax = true };
+                if (backendName != null) directiveSet = directiveSet with { Backend = backendName };
                 return true;
             }
 
@@ -700,6 +752,7 @@ namespace ReactiveUITK.Language.Parser
                 };
             }
 
+            if (backendName != null) directiveSet = directiveSet with { Backend = backendName };
             return true;
         }
 
@@ -2896,6 +2949,11 @@ namespace ReactiveUITK.Language.Parser
                     SkipLeadingFunctionStyleTrivia(source, ref i, ref line);
                     skippedSomething = true;
                 }
+                if (TryReadFunctionStyleBackendDirective(source, ref i, ref line, out _))
+                {
+                    SkipLeadingFunctionStyleTrivia(source, ref i, ref line);
+                    skippedSomething = true;
+                }
                 if (TryReadFunctionStyleNamespaceImport(source, ref i, ref line, dummy, dummyUsingDirectives))
                 {
                     SkipLeadingFunctionStyleTrivia(source, ref i, ref line);
@@ -2977,6 +3035,71 @@ namespace ReactiveUITK.Language.Parser
             }
 
             namespaceName = ns;
+            return true;
+        }
+
+        /// <summary>
+        /// Tries to read a single <c>@backend ugui</c> line at the current position.
+        /// On success advances <paramref name="i"/> past the line terminator and sets
+        /// <paramref name="backendName"/> to the raw (trimmed) payload — validation of
+        /// the value happens at the call site so invalid values still CONSUME the line
+        /// (the U-09 rule: a rejected directive must not stall the preamble cursor).
+        /// On failure restores <paramref name="i"/> and returns false.
+        /// </summary>
+        private static bool TryReadFunctionStyleBackendDirective(
+            string source,
+            ref int i,
+            ref int line,
+            out string? backendName
+        )
+        {
+            backendName = null;
+            int savedI = i;
+            int savedLine = line;
+
+            while (i < source.Length && (source[i] == ' ' || source[i] == '\t'))
+                i++;
+
+            if (i >= source.Length || source[i] != '@')
+            {
+                i = savedI;
+                line = savedLine;
+                return false;
+            }
+
+            i++; // consume '@'
+
+            if (!TryReadKeyword(source, ref i, "backend"))
+            {
+                i = savedI;
+                line = savedLine;
+                return false;
+            }
+
+            SkipSpaces(source, ref i);
+
+            int nameStart = i;
+            while (i < source.Length && source[i] != ';' && !IsNewline(source[i]))
+                i++;
+
+            string value = source.Substring(nameStart, i - nameStart).Trim();
+
+            if (i < source.Length && source[i] == ';')
+                i++;
+
+            while (i < source.Length && !IsNewline(source[i]))
+                i++;
+            if (i < source.Length && IsNewline(source[i]))
+                ConsumeNewline(source, ref i, ref line);
+
+            if (string.IsNullOrWhiteSpace(value))
+            {
+                i = savedI;
+                line = savedLine;
+                return false;
+            }
+
+            backendName = value;
             return true;
         }
 

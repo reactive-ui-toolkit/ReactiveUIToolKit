@@ -339,6 +339,12 @@ public sealed class CompletionHandler : ICompletionHandler
                 doc: "Loads a USS stylesheet and attaches it to the component's root element before panel attachment.\n\nPath is relative to the `.uitkx` file:\n```\n@uss \"./PlayerCard.uss\"\n@uss \"../shared/buttons.uss\"\n```"
             ),
             (
+                label: "@backend",
+                insert: "@backend ${1|ugui,uitk|}",
+                detail: "Selects this file's render backend (ugui or uitk).",
+                doc: "Chooses the element vocabulary for the whole file:\n```\n@backend ugui\n```\n`ugui` targets Unity UI (RectTransform anchors, sprites, TMP text) rendered by a `UguiRootRenderer`; `uitk` (the default — the directive can be omitted) targets UI Toolkit. One per file, before any declaration."
+            ),
+            (
                 label: "export VirtualNode",
                 insert: "export VirtualNode ${1:MyComponent}(${2}) {\n\treturn (\n\t\t$0\n\t);\n}",
                 detail: "Declares an exported component (plain declaration).",

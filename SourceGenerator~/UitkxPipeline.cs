@@ -359,7 +359,13 @@ namespace ReactiveUITK.SourceGenerator
 
             // ── Stage 3: PropsResolver ────────────────────────────────────────
             var (starNsMap, aliasTypeMap) = BuildImportAliasTagMaps(directives, filePath, peerExports);
-            var resolver = new PropsResolver(compilation, peerComponents, starNsMap, aliasTypeMap);
+            var resolver = new PropsResolver(
+                compilation,
+                peerComponents,
+                starNsMap,
+                aliasTypeMap,
+                directives.Backend
+            );
 
             ct.ThrowIfCancellationRequested();
 
