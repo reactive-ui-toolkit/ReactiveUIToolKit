@@ -35,6 +35,14 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
         private int _frames;
         private int _lastReportedSecond = -1;
 
+        // Honest throughput split: the game loop can tick far faster than the
+        // UI actually commits (large passes span multiple sliced frames, and
+        // mid-pass updates coalesce). Frame FPS alone overstates the stress
+        // result — UI Hz is the number comparable across backends.
+        private static int s_renders;
+        private int _uiHz;
+        private int _lastRenderCount;
+
         // Same box model as Samples/Components/StressTest: per-box random
         // size/position/velocity (seed 42), dt-integrated with edge bounce.
         private struct Box
@@ -77,6 +85,8 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             if (second != _lastReportedSecond)
             {
                 _lastReportedSecond = second;
+                _uiHz = s_renders - _lastRenderCount;
+                _lastRenderCount = s_renders;
                 var areaRt = s_areaRef.Current;
 #if UNITY_EDITOR
                 int staging =
@@ -113,16 +123,17 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             if (_elapsed >= s_duration)
             {
                 s_running.Set(false);
+                float avgUiHz = s_renders / Mathf.Max(0.0001f, _elapsed);
                 s_status.Set(
-                    $"DONE — {s_boxCount} boxes | Avg FPS: {avgFps:F1} | "
-                        + $"Duration: {_elapsed:F1}s | Frames: {_frames}"
+                    $"DONE — {s_boxCount} boxes | Frame FPS: {avgFps:F1} | "
+                        + $"UI: {avgUiHz:F1} Hz | Duration: {_elapsed:F1}s | Frames: {_frames}"
                 );
                 return;
             }
 
             s_status.Set(
-                $"uGUI Stress — {s_boxCount} boxes | Avg FPS: {avgFps:F1} | "
-                    + $"Elapsed: {_elapsed:F1}s / {s_duration:F0}s"
+                $"uGUI Stress — {s_boxCount} boxes | Frame FPS: {avgFps:F1} | "
+                    + $"UI: {_uiHz} Hz | Elapsed: {_elapsed:F1}s / {s_duration:F0}s"
             );
             s_time.Set(_elapsed);
         }
@@ -237,6 +248,7 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
 
         private VirtualNode StressTest(IProps props, IReadOnlyList<VirtualNode> children)
         {
+            s_renders++;
             float t = Hooks.UseSignal(s_time);
             bool running = Hooks.UseSignal(s_running);
             string status = Hooks.UseSignal(s_status);
