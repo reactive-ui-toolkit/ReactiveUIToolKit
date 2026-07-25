@@ -29,13 +29,14 @@ namespace ReactiveUITK.Core.Fiber
         );
 
         /// <summary>
-        /// Apply typed props to a host element (primary path).
+        /// Apply typed props to a host element (primary path). Props are the
+        /// backend family's own types; the config casts once at this boundary.
         /// </summary>
         public abstract void ApplyTypedProperties(
             object element,
             string elementType,
-            BaseProps oldProps,
-            BaseProps newProps
+            HostPropsBase oldProps,
+            HostPropsBase newProps
         );
 
         public abstract void AppendChild(object parent, object child);

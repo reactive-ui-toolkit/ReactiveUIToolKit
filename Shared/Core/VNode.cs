@@ -61,7 +61,7 @@ namespace ReactiveUITK.Core
         internal IReadOnlyList<PropTypeDefinition> _propTypes;
         internal System.Func<IProps, IReadOnlyList<VirtualNode>, VirtualNode> _typedFunctionRender;
         internal IProps _typedProps;
-        internal BaseProps _hostProps;
+        internal HostPropsBase _hostProps;
 
         // ── Family handle (UITKX Fast Refresh, editor-only) ────────────────
         // Non-null when the vnode was produced by a V.Func(Family,...) overload
@@ -117,11 +117,15 @@ namespace ReactiveUITK.Core
         public IProps TypedProps => _typedProps;
 
         /// <summary>
-        /// Typed host props for built-in host elements. Non-null when a typed
-        /// <c>V.*</c> factory (e.g. <c>V.Label</c>) is used. Eliminates the
-        /// <c>ToDictionary()</c> allocation on the hot path.
+        /// Typed host props for built-in UI Toolkit host elements, or null for
+        /// other backend families. Kept <c>BaseProps</c>-typed for source
+        /// compatibility; the fiber reads the family-neutral
+        /// <see cref="HostPropsRaw"/> instead.
         /// </summary>
-        public BaseProps HostProps => _hostProps;
+        public BaseProps HostProps => _hostProps as BaseProps;
+
+        /// <summary>Typed host props as the backend-neutral base (any family).</summary>
+        public HostPropsBase HostPropsRaw => _hostProps;
 
         /// <summary>
         /// UITKX Fast Refresh family handle. Non-null when the vnode was

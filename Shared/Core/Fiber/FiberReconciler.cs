@@ -608,7 +608,7 @@ namespace ReactiveUITK.Core.Fiber
                     }
                     else if (
                         fiber.PendingHostProps != null
-                            ? !fiber.PendingHostProps.ShallowEquals(fiber.HostProps)
+                            ? !fiber.PendingHostProps.HostShallowEquals(fiber.HostProps)
                             : !AreHostPropsEqual(fiber.PendingProps, fiber.Props)
                     )
                     {
@@ -706,7 +706,7 @@ namespace ReactiveUITK.Core.Fiber
 
             // Update props for new render
             workInProgress.PendingProps = ExtractProps(vnode);
-            workInProgress.PendingHostProps = vnode?.HostProps ?? current.PendingHostProps;
+            workInProgress.PendingHostProps = vnode?._hostProps ?? current.PendingHostProps;
             // The passed vnode IS the child of the root, so we wrap it in a list
             // Fix: If vnode is null (state update), preserve existing children to avoid wiping the tree
             workInProgress.Children = vnode != null ? new[] { vnode } : current.Children;
@@ -779,11 +779,12 @@ namespace ReactiveUITK.Core.Fiber
                 // Safe before passive effects because _isCommitting defers all state updates.
                 CommitPropsAndClearFlags(_root.Current);
 
-                // Flush pooled Style/BaseProps returns accumulated during commit.
-                // Must happen after the full tree walk so no fiber still references
-                // an object that's being returned to the pool.
-                Props.Typed.Style.__FlushReturns();
-                Props.Typed.BaseProps.__FlushReturns();
+                // Flush pooled props returns accumulated during commit (every
+                // registered backend family; UITK's flusher returns Style then
+                // BaseProps in the original order). Must happen after the full
+                // tree walk so no fiber still references an object that's
+                // being returned to a pool.
+                Props.Typed.HostPropsBase.__FlushAllFamilies();
 
                 // Flush passive effects in two passes: all cleanups first, then all setups.
                 // This preserves React's invariant that no component's setup runs before all
@@ -1281,8 +1282,7 @@ namespace ReactiveUITK.Core.Fiber
                 // Schedule old props/style for pool return (only if actually replaced)
                 if (oldHostProps != null && !ReferenceEquals(oldHostProps, fiber.HostProps))
                 {
-                    Props.Typed.Style.__ScheduleReturn(oldHostProps.Style);
-                    Props.Typed.BaseProps.__ScheduleReturn(oldHostProps);
+                    oldHostProps.__ScheduleReturnToFamilyPool();
                 }
             }
             else
@@ -1385,8 +1385,7 @@ namespace ReactiveUITK.Core.Fiber
                 // Return deleted fiber's props/style to pool
                 if (fiber.HostProps != null)
                 {
-                    Props.Typed.Style.__ScheduleReturn(fiber.HostProps.Style);
-                    Props.Typed.BaseProps.__ScheduleReturn(fiber.HostProps);
+                    fiber.HostProps.__ScheduleReturnToFamilyPool();
                 }
             }
         }

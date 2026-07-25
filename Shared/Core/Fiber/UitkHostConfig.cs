@@ -60,8 +60,8 @@ namespace ReactiveUITK.Core.Fiber
         public override void ApplyTypedProperties(
             object element,
             string elementType,
-            BaseProps oldProps,
-            BaseProps newProps
+            HostPropsBase oldProps,
+            HostPropsBase newProps
         )
         {
             var adapter = _registry.Resolve(elementType);
@@ -69,9 +69,9 @@ namespace ReactiveUITK.Core.Fiber
             {
                 var ve = (VisualElement)element;
                 if (oldProps != null)
-                    typed.ApplyTypedDiff(ve, oldProps, newProps);
+                    typed.ApplyTypedDiff(ve, (BaseProps)oldProps, (BaseProps)newProps);
                 else
-                    typed.ApplyTypedFull(ve, newProps);
+                    typed.ApplyTypedFull(ve, (BaseProps)newProps);
             }
         }
 

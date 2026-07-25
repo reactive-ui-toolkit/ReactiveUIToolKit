@@ -329,7 +329,7 @@ namespace ReactiveUITK.Core.Fiber
                 Parent = parent,
                 Index = index,
                 PendingProps = ExtractProps(vnode),
-                PendingHostProps = vnode.HostProps,
+                PendingHostProps = vnode._hostProps,
                 Children = vnode.Children,
                 EffectTag = EffectFlags.Placement,
             };

@@ -72,10 +72,10 @@ namespace ReactiveUITK.Core.Fiber
         public object HostElement;
 
         /// <summary>Committed typed host props from last render (typed pipeline).</summary>
-        public Props.Typed.BaseProps HostProps;
+        public Props.Typed.HostPropsBase HostProps;
 
         /// <summary>Pending typed host props for next render (typed pipeline).</summary>
-        public Props.Typed.BaseProps PendingHostProps;
+        public Props.Typed.HostPropsBase PendingHostProps;
 
         // ==== Props and State ====
         /// <summary>Current props</summary>
