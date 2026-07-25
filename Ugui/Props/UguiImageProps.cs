@@ -15,6 +15,7 @@ namespace ReactiveUITK.Ugui
         public bool? PreserveAspect { get; set; }
         public float? PixelsPerUnitMultiplier { get; set; }
         public bool? UseSpriteMesh { get; set; }
+        public float? AlphaHitTestMinimumThreshold { get; set; }
 
         public override bool ShallowEquals(UguiBaseProps other)
         {
@@ -40,6 +41,8 @@ namespace ReactiveUITK.Ugui
                 return false;
             if (UseSpriteMesh != o.UseSpriteMesh)
                 return false;
+            if (AlphaHitTestMinimumThreshold != o.AlphaHitTestMinimumThreshold)
+                return false;
             return base.ShallowEquals(other);
         }
 
@@ -55,6 +58,7 @@ namespace ReactiveUITK.Ugui
             PreserveAspect = null;
             PixelsPerUnitMultiplier = null;
             UseSpriteMesh = null;
+            AlphaHitTestMinimumThreshold = null;
             base.__ResetFields();
         }
 

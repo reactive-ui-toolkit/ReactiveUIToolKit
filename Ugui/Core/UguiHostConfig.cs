@@ -18,6 +18,14 @@ namespace ReactiveUITK.Ugui
         private readonly UguiElementRegistry _registry;
         private Transform _stagingRoot;
 
+        // Per-element-type pool for stateless visuals. An element joins only
+        // when its adapter's TryResetForPool restores the pristine Create()
+        // state, so reuse can never leak state between mounts. Stateful
+        // controls are destroyed as before.
+        private const int PoolCapacityPerType = 128;
+        private readonly Dictionary<UguiElementAdapter, Stack<GameObject>> _pool =
+            new Dictionary<UguiElementAdapter, Stack<GameObject>>();
+
         public UguiHostConfig(UguiElementRegistry registry)
         {
             _registry = registry;
@@ -41,15 +49,27 @@ namespace ReactiveUITK.Ugui
         public override object CreateElement(string elementType)
         {
             var adapter = _registry.Resolve(elementType);
-            GameObject go;
-            if (adapter != null)
+            GameObject go = null;
+            if (adapter != null && _pool.TryGetValue(adapter, out var stack))
             {
-                go = adapter.Create();
-                UguiNodeTag.GetOrAdd(go).Adapter = adapter;
+                while (stack.Count > 0 && go == null)
+                {
+                    var candidate = stack.Pop();
+                    if (candidate != null)
+                        go = candidate;
+                }
             }
-            else
+            if (go == null)
             {
-                go = new GameObject(elementType, typeof(RectTransform));
+                if (adapter != null)
+                {
+                    go = adapter.Create();
+                    UguiNodeTag.GetOrAdd(go).Adapter = adapter;
+                }
+                else
+                {
+                    go = new GameObject(elementType, typeof(RectTransform));
+                }
             }
             go.transform.SetParent(StagingRoot, false);
             return go;
@@ -181,6 +201,22 @@ namespace ReactiveUITK.Ugui
             {
                 UguiRefUtility.Assign(tag.AssignedRef, null);
                 tag.AssignedRef = null;
+            }
+
+            var adapter = tag != null ? tag.Adapter : null;
+            if (adapter != null && go.transform.childCount == 0 && adapter.TryResetForPool(go))
+            {
+                if (!_pool.TryGetValue(adapter, out var stack))
+                {
+                    stack = new Stack<GameObject>();
+                    _pool[adapter] = stack;
+                }
+                if (stack.Count < PoolCapacityPerType)
+                {
+                    go.transform.SetParent(StagingRoot, false);
+                    stack.Push(go);
+                    return;
+                }
             }
             DestroySafely(go);
         }

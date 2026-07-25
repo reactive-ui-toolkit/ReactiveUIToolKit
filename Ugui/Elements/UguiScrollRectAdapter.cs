@@ -89,6 +89,16 @@ namespace ReactiveUITK.Ugui
                 scroll.scrollSensitivity = next.ScrollSensitivity.Value;
 
             if (
+                (full || next.HorizontalScrollbarSpacing != prev.HorizontalScrollbarSpacing)
+                && next.HorizontalScrollbarSpacing.HasValue
+            )
+                scroll.horizontalScrollbarSpacing = next.HorizontalScrollbarSpacing.Value;
+            if (
+                (full || next.VerticalScrollbarSpacing != prev.VerticalScrollbarSpacing)
+                && next.VerticalScrollbarSpacing.HasValue
+            )
+                scroll.verticalScrollbarSpacing = next.VerticalScrollbarSpacing.Value;
+            if (
                 (full || next.ShowVerticalScrollbar != prev.ShowVerticalScrollbar)
                 && next.ShowVerticalScrollbar.HasValue
             )
@@ -129,7 +139,7 @@ namespace ReactiveUITK.Ugui
             }
             if (bar == null)
             {
-                var barGo = DefaultControls.CreateScrollbar(new DefaultControls.Resources());
+                var barGo = DefaultControls.CreateScrollbar(UguiDefaultResources.GetLegacyResources());
                 barGo.name = name;
                 var rt = (RectTransform)barGo.transform;
                 rt.SetParent(scroll.transform, false);

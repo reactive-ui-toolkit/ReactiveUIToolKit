@@ -30,5 +30,36 @@ namespace ReactiveUITK.Ugui
             );
             base.ApplyTypedDiff(go, prev, next);
         }
+
+        public override bool TryResetForPool(GameObject go)
+        {
+            var image = go.GetComponent<Image>();
+            if (image == null)
+                return false;
+            ResetCommonState(go);
+            go.name = "Image";
+            ResetImageState(image);
+            return true;
+        }
+
+        internal static void ResetImageState(Image image)
+        {
+            image.sprite = null;
+            image.type = Image.Type.Simple;
+            image.fillMethod = Image.FillMethod.Radial360;
+            image.fillAmount = 1f;
+            image.fillOrigin = 0;
+            image.fillClockwise = true;
+            image.fillCenter = true;
+            image.preserveAspect = false;
+            image.pixelsPerUnitMultiplier = 1f;
+            image.useSpriteMesh = false;
+            image.alphaHitTestMinimumThreshold = 0f;
+            image.color = Color.white;
+            image.material = null;
+            image.raycastTarget = false;
+            image.raycastPadding = Vector4.zero;
+            image.maskable = true;
+        }
     }
 }

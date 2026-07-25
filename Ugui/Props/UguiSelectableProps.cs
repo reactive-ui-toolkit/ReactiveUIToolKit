@@ -16,6 +16,7 @@ namespace ReactiveUITK.Ugui
         public Selectable.Transition? Transition { get; set; }
         public ColorBlock? Colors { get; set; }
         public SpriteState? SpriteState { get; set; }
+        public UguiAnimationTriggers AnimationTriggers { get; set; }
         public Navigation.Mode? NavigationMode { get; set; }
         public object SelectOnUp { get; set; }
         public object SelectOnDown { get; set; }
@@ -33,6 +34,8 @@ namespace ReactiveUITK.Ugui
             if (!ColorBlockEquals(Colors, o.Colors))
                 return false;
             if (!SpriteStateEquals(SpriteState, o.SpriteState))
+                return false;
+            if (!UguiAnimationTriggers.ValueEquals(AnimationTriggers, o.AnimationTriggers))
                 return false;
             if (NavigationMode != o.NavigationMode)
                 return false;
@@ -84,6 +87,7 @@ namespace ReactiveUITK.Ugui
             Transition = null;
             Colors = null;
             SpriteState = null;
+            AnimationTriggers = null;
             NavigationMode = null;
             SelectOnUp = null;
             SelectOnDown = null;

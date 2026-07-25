@@ -117,6 +117,8 @@ namespace ReactiveUITK.Ugui
         internal Action<string> ValueChanged;
         internal Action<string> EndEdit;
         internal Action<string> Submit;
+        internal Action<string> Selected;
+        internal Action<string> Deselected;
 
         internal static UguiInputFieldBinding GetOrAdd(GameObject go)
         {
@@ -131,6 +133,8 @@ namespace ReactiveUITK.Ugui
                     input.onValueChanged.AddListener(v => b.ValueChanged?.Invoke(v));
                     input.onEndEdit.AddListener(v => b.EndEdit?.Invoke(v));
                     input.onSubmit.AddListener(v => b.Submit?.Invoke(v));
+                    input.onSelect.AddListener(v => b.Selected?.Invoke(v));
+                    input.onDeselect.AddListener(v => b.Deselected?.Invoke(v));
                 }
             }
             return b;

@@ -12,7 +12,7 @@ namespace ReactiveUITK.Ugui
     {
         public override GameObject Create()
         {
-            return DefaultControls.CreateSlider(new DefaultControls.Resources());
+            return DefaultControls.CreateSlider(UguiDefaultResources.GetLegacyResources());
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
@@ -102,7 +102,7 @@ namespace ReactiveUITK.Ugui
     {
         public override GameObject Create()
         {
-            return DefaultControls.CreateScrollbar(new DefaultControls.Resources());
+            return DefaultControls.CreateScrollbar(UguiDefaultResources.GetLegacyResources());
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)

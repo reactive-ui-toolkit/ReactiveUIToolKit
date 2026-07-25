@@ -15,6 +15,12 @@ namespace ReactiveUITK.Ugui
             var go = new GameObject("Button");
             var image = go.AddComponent<Image>();
             image.raycastTarget = true;
+            var defaults = UguiDefaultResources.Instance;
+            if (defaults != null && defaults.uiSprite != null)
+            {
+                image.sprite = defaults.uiSprite;
+                image.type = Image.Type.Sliced;
+            }
             var button = go.AddComponent<Button>();
             button.targetGraphic = image;
             return go;

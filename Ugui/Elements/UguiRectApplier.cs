@@ -52,6 +52,8 @@ namespace ReactiveUITK.Ugui
                 go.name = props.Name;
             if (props.Layer.HasValue)
                 go.layer = props.Layer.Value;
+            if (props.Tag != null)
+                go.tag = props.Tag;
 
             var rt = go.transform as RectTransform;
             if (rt != null)
@@ -87,10 +89,18 @@ namespace ReactiveUITK.Ugui
                 if (props.OffsetMax.HasValue)
                     rt.offsetMax = props.OffsetMax.Value;
 
-                if (props.RotationZ.HasValue)
+                if (props.Rotation.HasValue)
+                    rt.localRotation = Quaternion.Euler(props.Rotation.Value);
+                else if (props.RotationZ.HasValue)
                     rt.localRotation = Quaternion.Euler(0f, 0f, props.RotationZ.Value);
                 if (props.Scale.HasValue)
                     rt.localScale = props.Scale.Value;
+                if (props.LocalPositionZ.HasValue)
+                {
+                    var lp = rt.localPosition;
+                    lp.z = props.LocalPositionZ.Value;
+                    rt.localPosition = lp;
+                }
             }
 
             if (props.Active.HasValue)
@@ -111,6 +121,8 @@ namespace ReactiveUITK.Ugui
                 go.name = next.Name;
             if (next.Layer != prev.Layer && next.Layer.HasValue)
                 go.layer = next.Layer.Value;
+            if (next.Tag != prev.Tag && next.Tag != null)
+                go.tag = next.Tag;
 
             var rt = go.transform as RectTransform;
             if (rt != null)
@@ -147,10 +159,18 @@ namespace ReactiveUITK.Ugui
                 if (next.OffsetMax != prev.OffsetMax && next.OffsetMax.HasValue)
                     rt.offsetMax = next.OffsetMax.Value;
 
-                if (next.RotationZ != prev.RotationZ && next.RotationZ.HasValue)
+                if (next.Rotation != prev.Rotation && next.Rotation.HasValue)
+                    rt.localRotation = Quaternion.Euler(next.Rotation.Value);
+                else if (next.RotationZ != prev.RotationZ && next.RotationZ.HasValue)
                     rt.localRotation = Quaternion.Euler(0f, 0f, next.RotationZ.Value);
                 if (next.Scale != prev.Scale && next.Scale.HasValue)
                     rt.localScale = next.Scale.Value;
+                if (next.LocalPositionZ != prev.LocalPositionZ && next.LocalPositionZ.HasValue)
+                {
+                    var lp = rt.localPosition;
+                    lp.z = next.LocalPositionZ.Value;
+                    rt.localPosition = lp;
+                }
             }
 
             if (next.Active != prev.Active)

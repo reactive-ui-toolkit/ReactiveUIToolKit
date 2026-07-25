@@ -115,6 +115,29 @@ namespace ReactiveUITK.Ugui
         }
     }
 
+    /// <summary>Selectable Animation-transition trigger names (Inspector parity).</summary>
+    public sealed class UguiAnimationTriggers
+    {
+        public string Normal { get; set; }
+        public string Highlighted { get; set; }
+        public string Pressed { get; set; }
+        public string Selected { get; set; }
+        public string Disabled { get; set; }
+
+        internal static bool ValueEquals(UguiAnimationTriggers a, UguiAnimationTriggers b)
+        {
+            if (ReferenceEquals(a, b))
+                return true;
+            if (a == null || b == null)
+                return false;
+            return a.Normal == b.Normal
+                && a.Highlighted == b.Highlighted
+                && a.Pressed == b.Pressed
+                && a.Selected == b.Selected
+                && a.Disabled == b.Disabled;
+        }
+    }
+
     /// <summary>Shared shape for the Shadow and Outline vertex effects.</summary>
     public sealed class UguiShadowEffect
     {

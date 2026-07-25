@@ -41,6 +41,18 @@ namespace ReactiveUITK.Ugui
                     canvas.renderMode = next.RenderMode.Value;
                 if ((full || next.SortingOrder != prev.SortingOrder) && next.SortingOrder.HasValue)
                     canvas.sortingOrder = next.SortingOrder.Value;
+                if (
+                    (full || next.SortingLayerName != prev.SortingLayerName)
+                    && next.SortingLayerName != null
+                )
+                    canvas.sortingLayerName = next.SortingLayerName;
+                if ((full || next.TargetDisplay != prev.TargetDisplay) && next.TargetDisplay.HasValue)
+                    canvas.targetDisplay = next.TargetDisplay.Value;
+                if (
+                    (full || next.AdditionalShaderChannels != prev.AdditionalShaderChannels)
+                    && next.AdditionalShaderChannels.HasValue
+                )
+                    canvas.additionalShaderChannels = next.AdditionalShaderChannels.Value;
                 if ((full || next.PixelPerfect != prev.PixelPerfect) && next.PixelPerfect.HasValue)
                     canvas.pixelPerfect = next.PixelPerfect.Value;
                 if (

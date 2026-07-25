@@ -40,6 +40,8 @@ namespace ReactiveUITK.Ugui
                 image.pixelsPerUnitMultiplier = props.PixelsPerUnitMultiplier.Value;
             if (props.UseSpriteMesh.HasValue)
                 image.useSpriteMesh = props.UseSpriteMesh.Value;
+            if (props.AlphaHitTestMinimumThreshold.HasValue)
+                image.alphaHitTestMinimumThreshold = props.AlphaHitTestMinimumThreshold.Value;
             UguiGraphicApplier.ApplyFull(image, props);
         }
 
@@ -75,6 +77,11 @@ namespace ReactiveUITK.Ugui
                 image.pixelsPerUnitMultiplier = next.PixelsPerUnitMultiplier.Value;
             if (next.UseSpriteMesh != prev.UseSpriteMesh && next.UseSpriteMesh.HasValue)
                 image.useSpriteMesh = next.UseSpriteMesh.Value;
+            if (
+                next.AlphaHitTestMinimumThreshold != prev.AlphaHitTestMinimumThreshold
+                && next.AlphaHitTestMinimumThreshold.HasValue
+            )
+                image.alphaHitTestMinimumThreshold = next.AlphaHitTestMinimumThreshold.Value;
             UguiGraphicApplier.ApplyDiff(image, prev, next);
         }
     }

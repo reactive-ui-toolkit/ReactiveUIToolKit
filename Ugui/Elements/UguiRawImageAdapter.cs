@@ -25,6 +25,22 @@ namespace ReactiveUITK.Ugui
             base.ApplyTypedDiff(go, prev, next);
         }
 
+        public override bool TryResetForPool(GameObject go)
+        {
+            var raw = go.GetComponent<RawImage>();
+            if (raw == null)
+                return false;
+            ResetCommonState(go);
+            go.name = "RawImage";
+            raw.texture = null;
+            raw.uvRect = new Rect(0f, 0f, 1f, 1f);
+            raw.color = Color.white;
+            raw.material = null;
+            raw.raycastTarget = false;
+            raw.maskable = true;
+            return true;
+        }
+
         private static void Apply(RawImage raw, UguiRawImageProps prev, UguiRawImageProps next)
         {
             if (raw == null || next == null)

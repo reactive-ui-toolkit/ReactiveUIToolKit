@@ -48,6 +48,42 @@ namespace ReactiveUITK.Ugui
             }
         }
 
+        public override bool TryResetForPool(GameObject go)
+        {
+            var tmp = go.GetComponent<TextMeshProUGUI>();
+            if (tmp == null)
+                return false;
+            ResetCommonState(go);
+            go.name = "Text";
+            tmp.text = string.Empty;
+            if (TMP_Settings.defaultFontAsset != null)
+                tmp.font = TMP_Settings.defaultFontAsset;
+            tmp.fontSize = 36f;
+            tmp.enableAutoSizing = false;
+            tmp.fontSizeMin = 18f;
+            tmp.fontSizeMax = 72f;
+            tmp.fontStyle = FontStyles.Normal;
+            tmp.alignment = TextAlignmentOptions.TopLeft;
+            tmp.textWrappingMode = TextWrappingModes.Normal;
+            tmp.overflowMode = TextOverflowModes.Overflow;
+            tmp.richText = true;
+            tmp.characterSpacing = 0f;
+            tmp.wordSpacing = 0f;
+            tmp.lineSpacing = 0f;
+            tmp.paragraphSpacing = 0f;
+            tmp.margin = UnityEngine.Vector4.zero;
+            tmp.enableVertexGradient = false;
+            tmp.colorGradient = new VertexGradient(UnityEngine.Color.white);
+            tmp.colorGradientPreset = null;
+            tmp.extraPadding = false;
+            tmp.outlineWidth = 0f;
+            tmp.color = UnityEngine.Color.white;
+            tmp.material = null;
+            tmp.raycastTarget = false;
+            tmp.maskable = true;
+            return true;
+        }
+
         private static void Apply(TextMeshProUGUI tmp, UguiTextProps prev, UguiTextProps next)
         {
             if (tmp == null || next == null)
@@ -92,6 +128,32 @@ namespace ReactiveUITK.Ugui
                 tmp.paragraphSpacing = next.ParagraphSpacing.Value;
             if ((full || next.Margin != prev.Margin) && next.Margin.HasValue)
                 tmp.margin = next.Margin.Value;
+            if (next.Gradient.HasValue && (full || !next.Gradient.Equals(prev.Gradient)))
+            {
+                tmp.enableVertexGradient = true;
+                tmp.colorGradient = next.Gradient.Value;
+            }
+            if (
+                (full || !ReferenceEquals(next.GradientPreset, prev.GradientPreset))
+                && next.GradientPreset != null
+            )
+                tmp.colorGradientPreset = next.GradientPreset;
+            if ((full || next.ExtraPadding != prev.ExtraPadding) && next.ExtraPadding.HasValue)
+                tmp.extraPadding = next.ExtraPadding.Value;
+            if ((full || next.OutlineWidth != prev.OutlineWidth) && next.OutlineWidth.HasValue)
+                tmp.outlineWidth = next.OutlineWidth.Value;
+            if (next.OutlineColor.HasValue && (full || !next.OutlineColor.Equals(prev.OutlineColor)))
+                tmp.outlineColor = next.OutlineColor.Value;
+            if (
+                (full || !ReferenceEquals(next.StyleSheet, prev.StyleSheet))
+                && next.StyleSheet != null
+            )
+                tmp.styleSheet = next.StyleSheet;
+            if (
+                (full || !ReferenceEquals(next.SpriteAsset, prev.SpriteAsset))
+                && next.SpriteAsset != null
+            )
+                tmp.spriteAsset = next.SpriteAsset;
 
             if (full)
                 UguiGraphicApplier.ApplyFull(tmp, next);

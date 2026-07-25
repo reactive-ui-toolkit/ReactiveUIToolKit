@@ -20,6 +20,30 @@ namespace ReactiveUITK.Ugui
                 s.colors = next.Colors.Value;
             if (next.SpriteState.HasValue && (full || !next.SpriteState.Equals(prev.SpriteState)))
                 s.spriteState = next.SpriteState.Value;
+            if (
+                next.AnimationTriggers != null
+                && (
+                    full
+                    || !UguiAnimationTriggers.ValueEquals(
+                        prev.AnimationTriggers,
+                        next.AnimationTriggers
+                    )
+                )
+            )
+            {
+                var triggers = s.animationTriggers ?? new AnimationTriggers();
+                if (next.AnimationTriggers.Normal != null)
+                    triggers.normalTrigger = next.AnimationTriggers.Normal;
+                if (next.AnimationTriggers.Highlighted != null)
+                    triggers.highlightedTrigger = next.AnimationTriggers.Highlighted;
+                if (next.AnimationTriggers.Pressed != null)
+                    triggers.pressedTrigger = next.AnimationTriggers.Pressed;
+                if (next.AnimationTriggers.Selected != null)
+                    triggers.selectedTrigger = next.AnimationTriggers.Selected;
+                if (next.AnimationTriggers.Disabled != null)
+                    triggers.disabledTrigger = next.AnimationTriggers.Disabled;
+                s.animationTriggers = triggers;
+            }
 
             bool navChanged =
                 full

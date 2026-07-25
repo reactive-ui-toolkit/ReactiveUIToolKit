@@ -13,6 +13,9 @@ namespace ReactiveUITK.Ugui
     {
         public RenderMode? RenderMode { get; set; }
         public int? SortingOrder { get; set; }
+        public string SortingLayerName { get; set; }
+        public int? TargetDisplay { get; set; }
+        public AdditionalCanvasShaderChannels? AdditionalShaderChannels { get; set; }
         public bool? PixelPerfect { get; set; }
         public bool? OverrideSorting { get; set; }
         public Camera WorldCamera { get; set; }
@@ -34,6 +37,12 @@ namespace ReactiveUITK.Ugui
             if (RenderMode != o.RenderMode)
                 return false;
             if (SortingOrder != o.SortingOrder)
+                return false;
+            if (SortingLayerName != o.SortingLayerName)
+                return false;
+            if (TargetDisplay != o.TargetDisplay)
+                return false;
+            if (AdditionalShaderChannels != o.AdditionalShaderChannels)
                 return false;
             if (PixelPerfect != o.PixelPerfect)
                 return false;
@@ -64,6 +73,9 @@ namespace ReactiveUITK.Ugui
         {
             RenderMode = null;
             SortingOrder = null;
+            SortingLayerName = null;
+            TargetDisplay = null;
+            AdditionalShaderChannels = null;
             PixelPerfect = null;
             OverrideSorting = null;
             WorldCamera = null;

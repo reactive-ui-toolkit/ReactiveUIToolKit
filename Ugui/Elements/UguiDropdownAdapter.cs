@@ -14,7 +14,7 @@ namespace ReactiveUITK.Ugui
     {
         public override GameObject Create()
         {
-            return TMP_DefaultControls.CreateDropdown(new TMP_DefaultControls.Resources());
+            return TMP_DefaultControls.CreateDropdown(UguiDefaultResources.GetTmpResources());
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
@@ -42,13 +42,23 @@ namespace ReactiveUITK.Ugui
             UguiSelectableApplier.Apply(dropdown, prev, next);
 
             if (
-                (full || !UguiDropdownProps.OptionsEqual(next.Options, prev.Options))
+                (
+                    full
+                    || !UguiDropdownProps.OptionsEqual(next.Options, prev.Options)
+                    || !UguiDropdownProps.SpritesEqual(next.OptionSprites, prev.OptionSprites)
+                )
                 && next.Options != null
             )
             {
                 var data = new List<TMP_Dropdown.OptionData>(next.Options.Count);
                 for (int i = 0; i < next.Options.Count; i++)
-                    data.Add(new TMP_Dropdown.OptionData(next.Options[i]));
+                {
+                    Sprite icon =
+                        next.OptionSprites != null && i < next.OptionSprites.Count
+                            ? next.OptionSprites[i]
+                            : null;
+                    data.Add(new TMP_Dropdown.OptionData(next.Options[i], icon, UnityEngine.Color.white));
+                }
                 dropdown.options = data;
             }
 
@@ -59,6 +69,44 @@ namespace ReactiveUITK.Ugui
                     label.fontSize = next.LabelFontSize.Value;
                 if ((full || next.LabelColor != prev.LabelColor) && next.LabelColor.HasValue)
                     label.color = next.LabelColor.Value;
+            }
+
+            if ((full || next.AlphaFadeSpeed != prev.AlphaFadeSpeed) && next.AlphaFadeSpeed.HasValue)
+                dropdown.alphaFadeSpeed = next.AlphaFadeSpeed.Value;
+
+            var arrow = go.transform.Find("Arrow");
+            UguiSliderAdapter.ApplyPart(
+                arrow,
+                next.ArrowSprite,
+                next.ArrowColor,
+                full,
+                prev?.ArrowSprite,
+                prev?.ArrowColor
+            );
+            if (dropdown.template != null)
+            {
+                UguiSliderAdapter.ApplyPart(
+                    dropdown.template,
+                    next.TemplateSprite,
+                    next.TemplateColor,
+                    full,
+                    prev?.TemplateSprite,
+                    prev?.TemplateColor
+                );
+            }
+            if (
+                dropdown.itemText != null
+                && (
+                    full
+                    || next.ItemFontSize != prev.ItemFontSize
+                    || next.ItemColor != prev.ItemColor
+                )
+            )
+            {
+                if (next.ItemFontSize.HasValue)
+                    dropdown.itemText.fontSize = next.ItemFontSize.Value;
+                if (next.ItemColor.HasValue)
+                    dropdown.itemText.color = next.ItemColor.Value;
             }
 
             if (full || next.OnValueChanged != prev.OnValueChanged)

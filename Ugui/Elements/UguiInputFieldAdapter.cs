@@ -15,7 +15,7 @@ namespace ReactiveUITK.Ugui
     {
         public override GameObject Create()
         {
-            return TMP_DefaultControls.CreateInputField(new TMP_DefaultControls.Resources());
+            return TMP_DefaultControls.CreateInputField(UguiDefaultResources.GetTmpResources());
         }
 
         public override void ApplyTypedFull(GameObject go, UguiBaseProps props)
@@ -48,10 +48,28 @@ namespace ReactiveUITK.Ugui
                 input.contentType = next.ContentType.Value;
             if ((full || next.LineType != prev.LineType) && next.LineType.HasValue)
                 input.lineType = next.LineType.Value;
+            if ((full || next.InputType != prev.InputType) && next.InputType.HasValue)
+                input.inputType = next.InputType.Value;
+            if ((full || next.KeyboardType != prev.KeyboardType) && next.KeyboardType.HasValue)
+                input.keyboardType = next.KeyboardType.Value;
+            if (
+                (full || next.CharacterValidation != prev.CharacterValidation)
+                && next.CharacterValidation.HasValue
+            )
+                input.characterValidation = next.CharacterValidation.Value;
             if ((full || next.ReadOnly != prev.ReadOnly) && next.ReadOnly.HasValue)
                 input.readOnly = next.ReadOnly.Value;
             if ((full || next.CaretBlinkRate != prev.CaretBlinkRate) && next.CaretBlinkRate.HasValue)
                 input.caretBlinkRate = next.CaretBlinkRate.Value;
+            if ((full || next.CaretWidth != prev.CaretWidth) && next.CaretWidth.HasValue)
+                input.caretWidth = next.CaretWidth.Value;
+            if (
+                (full || next.CustomCaretColor != prev.CustomCaretColor)
+                && next.CustomCaretColor.HasValue
+            )
+                input.customCaretColor = next.CustomCaretColor.Value;
+            if ((full || next.CaretColor != prev.CaretColor) && next.CaretColor.HasValue)
+                input.caretColor = next.CaretColor.Value;
             if ((full || next.SelectionColor != prev.SelectionColor) && next.SelectionColor.HasValue)
                 input.selectionColor = next.SelectionColor.Value;
 
@@ -82,12 +100,16 @@ namespace ReactiveUITK.Ugui
                 || next.OnValueChanged != prev.OnValueChanged
                 || next.OnEndEdit != prev.OnEndEdit
                 || next.OnSubmit != prev.OnSubmit
+                || next.OnSelect != prev.OnSelect
+                || next.OnDeselect != prev.OnDeselect
             )
             {
                 var binding = UguiInputFieldBinding.GetOrAdd(go);
                 binding.ValueChanged = next.OnValueChanged;
                 binding.EndEdit = next.OnEndEdit;
                 binding.Submit = next.OnSubmit;
+                binding.Selected = next.OnSelect;
+                binding.Deselected = next.OnDeselect;
             }
 
             if ((full || next.Text != prev.Text) && next.Text != null && input.text != next.Text)

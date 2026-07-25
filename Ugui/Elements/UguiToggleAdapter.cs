@@ -18,9 +18,16 @@ namespace ReactiveUITK.Ugui
             var rootRt = (RectTransform)root.transform;
             rootRt.sizeDelta = new Vector2(160f, 20f);
 
+            var defaults = UguiDefaultResources.Instance;
+
             var background = new GameObject("Background");
             var bgImage = background.AddComponent<Image>();
             bgImage.raycastTarget = true;
+            if (defaults != null && defaults.uiSprite != null)
+            {
+                bgImage.sprite = defaults.uiSprite;
+                bgImage.type = Image.Type.Sliced;
+            }
             var bgRt = (RectTransform)background.transform;
             bgRt.SetParent(root.transform, false);
             bgRt.anchorMin = new Vector2(0f, 0.5f);
@@ -32,6 +39,10 @@ namespace ReactiveUITK.Ugui
             var checkmark = new GameObject("Checkmark");
             var checkImage = checkmark.AddComponent<Image>();
             checkImage.raycastTarget = false;
+            if (defaults != null && defaults.checkmark != null)
+            {
+                checkImage.sprite = defaults.checkmark;
+            }
             var checkRt = (RectTransform)checkmark.transform;
             checkRt.SetParent(background.transform, false);
             checkRt.anchorMin = new Vector2(0.5f, 0.5f);
@@ -80,6 +91,8 @@ namespace ReactiveUITK.Ugui
                     checkmark.color = next.CheckmarkColor.Value;
             }
 
+            if ((full || next.ToggleTransition != prev.ToggleTransition) && next.ToggleTransition.HasValue)
+                toggle.toggleTransition = next.ToggleTransition.Value;
             if ((full || !ReferenceEquals(next.Group, prev.Group)) && next.Group != null)
                 toggle.group = next.Group;
             var binding = UguiToggleBinding.GetOrAdd(go);

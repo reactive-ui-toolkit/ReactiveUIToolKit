@@ -29,11 +29,14 @@ namespace ReactiveUITK.Ugui
         public Vector2? OffsetMin { get; set; }
         public Vector2? OffsetMax { get; set; }
         public float? RotationZ { get; set; }
+        public Vector3? Rotation { get; set; }
         public Vector3? Scale { get; set; }
+        public float? LocalPositionZ { get; set; }
 
         // --- GameObject ---
         public bool? Active { get; set; }
         public int? Layer { get; set; }
+        public string Tag { get; set; }
 
         // --- Prop groups (declarative "Add Component") ---
         public UguiLayoutElement LayoutElement { get; set; }
@@ -77,11 +80,17 @@ namespace ReactiveUITK.Ugui
                 return false;
             if (RotationZ != other.RotationZ)
                 return false;
+            if (Rotation != other.Rotation)
+                return false;
             if (Scale != other.Scale)
+                return false;
+            if (LocalPositionZ != other.LocalPositionZ)
                 return false;
             if (Active != other.Active)
                 return false;
             if (Layer != other.Layer)
+                return false;
+            if (Tag != other.Tag)
                 return false;
             if (!UguiLayoutElement.ValueEquals(LayoutElement, other.LayoutElement))
                 return false;
@@ -128,9 +137,12 @@ namespace ReactiveUITK.Ugui
             OffsetMin = null;
             OffsetMax = null;
             RotationZ = null;
+            Rotation = null;
             Scale = null;
+            LocalPositionZ = null;
             Active = null;
             Layer = null;
+            Tag = null;
             LayoutElement = null;
             ContentSizeFitter = null;
             AspectRatioFitter = null;
