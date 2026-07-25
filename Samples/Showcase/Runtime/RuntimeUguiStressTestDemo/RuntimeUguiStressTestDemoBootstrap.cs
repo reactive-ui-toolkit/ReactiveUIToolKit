@@ -70,10 +70,20 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
 
         private void StartRun()
         {
+            Debug.Log($"[UguiStress] Run started — {s_boxCount} boxes for {s_duration:F0}s");
             _elapsed = 0f;
             _frames = 0;
             s_time.Set(0f);
             s_running.Set(true);
+        }
+
+        private static string CleanNumeric(string raw)
+        {
+            if (string.IsNullOrEmpty(raw))
+            {
+                return string.Empty;
+            }
+            return raw.Replace("\u200B", string.Empty).Trim();
         }
 
         private static VirtualNode HeaderLabel(string text)
@@ -144,10 +154,18 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
                 {
                     return;
                 }
-                if (
-                    int.TryParse(countText, out int n) && n > 0 && n <= 10000
-                    && float.TryParse(durationText, out float dur) && dur > 0f
-                )
+                // TMP input fields can smuggle a zero-width space (U+200B)
+                // into .text; strip it before parsing or TryParse fails
+                // silently and the click looks dead.
+                string countClean = CleanNumeric(countText);
+                string durationClean = CleanNumeric(durationText);
+                bool okCount = int.TryParse(countClean, out int n) && n > 0 && n <= 10000;
+                bool okDuration = float.TryParse(durationClean, out float dur) && dur > 0f;
+                Debug.Log(
+                    $"[UguiStress] Start clicked — boxes '{countClean}' parsed={okCount}, "
+                        + $"seconds '{durationClean}' parsed={okDuration}"
+                );
+                if (okCount && okDuration)
                 {
                     s_boxCount = n;
                     s_duration = dur;
