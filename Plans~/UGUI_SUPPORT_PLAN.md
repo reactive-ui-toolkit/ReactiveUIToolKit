@@ -256,9 +256,12 @@ Three candidates, one recommendation:
 Hooks (state/reducer/memo/effect/layoutEffect/context/deferred/imperative-handle),
 signals, suspense, keys/reorder semantics, the time-sliced work loop, Fast-Refresh
 families (keyed by component FQN — backend-irrelevant), the `.uitkx` parser/formatter/
-importer machinery, the SG emission shape (emitted code is `V.El("Tag", props)` /
-`V.Func(...)` — backend-neutral by construction; only tag RESOLUTION and schema know
-about backends), HMR compile/swap plumbing. Portals: re-target to any `RectTransform`
+importer machinery, and component-level SG emission (`V.Func<TProps>`, `V.Suspense`,
+`V.Portal`, `V.Fragment`, `V.Text` — backend-neutral by construction), HMR compile/swap
+plumbing. ELEMENT emission is NOT free (verified against CSharpEmitter): elements emit
+TYPED factories (`V.Box(new BoxProps {...})`) resolved by PropsResolver against the
+factory surface — the ugui vocabulary needs its own factory class + props classes; see
+section 4. Portals: re-target to any `RectTransform`
 (the GO reparent op is native). The `Animate` layer needs the backend split (it writes
 style properties today) — uGUI animation habit is Animator/tweens via refs; `Animate`
 support can trail.
@@ -266,16 +269,34 @@ support can trail.
 ---
 
 ## 4. Language & tooling parity surface (the four layers)
+Facts below verified against the code 2026-07-25.
 - Parser/language-lib: `@backend` directive (trivial preamble addition); no grammar
   change otherwise.
-- SG: vocabulary-switched tag resolution in PropsResolver; ugui props classes in a new
-  `Shared/Ugui/` area; diagnostics (§7). Emission unchanged.
-- LSP: `uitkx-schema-ugui.json` (generated from the ugui props classes the same way the
-  UITK schema is), completion/hover/diagnostics keyed off `@backend`; everything else
-  (defs, rename, formatting, semantic tokens) is tag-agnostic already.
-- HMR: emission is backend-neutral; the hot unit's compile references are unchanged; the
-  only addition is pool invalidation on swap and a `UguiRootRenderer` entry in the
-  root-fiber enumeration.
+- SG: elements emit typed factory calls (`V.{MethodName}(new {X}Props {...})`), so the
+  ugui vocabulary is a NEW factory surface — a sibling static factory class (working
+  name `U.*`; final name = open question 1b) + ugui props classes in a new
+  `Shared/Ugui/` area, with PropsResolver selecting the factory surface by `@backend`.
+  Markup tags stay bare Inspector names; only generated code differs. This is also how
+  the tag-name overlap with UITK (`Image`, `Button`) is resolved at compile time; the
+  per-mount registry resolves the same names at runtime. Diagnostics per section 7.
+- Emitter parity: the new element table mirrors across SG (CSharpEmitter), the HMR
+  emitters, and the IDE virtual document — `HmrEmitterParityContractTests` grows a ugui
+  fixture set, and the VDG (not covered by those tests) gets explicit pins.
+- HookRegistry (single source of truth, Compile-linked into the language-lib under
+  `UNITY_EDITOR`): its virtual-document hook stubs are UITK-typed today (`useRef()`
+  returns `VisualElement`; `useUiDocumentRoot` is UITK-only). It gains per-backend stub
+  sets keyed by `@backend` (`useRef` typed to the ugui host in ugui files;
+  `useUiDocumentRoot` in a ugui file = diagnostic). M1 must keep the language-lib
+  link-compile of this file intact.
+- LSP: `uitkx-schema-ugui.json` — a second MAINTAINED schema next to
+  `ide-extensions~/grammar/uitkx-schema.json`, kept current via the same `automation~`
+  diff/patch flow (the UITK schema is not generated from props classes; neither is
+  this one). Completion/hover/diagnostics keyed off `@backend`; defs, rename,
+  formatting, semantic tokens are tag-agnostic already.
+- HMR: compile/swap plumbing unchanged; additions are the mirrored element table
+  (above), pool invalidation on swap, and `UguiRootRenderer` in the two root
+  enumeration sites (`UitkxHmrController` + `UitkxHmrDelegateSwapper`, which today walk
+  `RootRenderer.AllInstances` + `EditorRootRendererUtility.GetAllRenderers()`).
 
 ---
 
@@ -284,7 +305,7 @@ support can trail.
 | M | Deliverable | Gate |
 |---|---|---|
 | M0 | This plan reviewed; owner decisions on §8 open questions | owner sign-off |
-| M1 | Host abstraction (§3.2c): fiber on `object` host + `HostBackend`; UITK backend re-seated | ALL suites green, golden emissions byte-identical, commit-path micro-bench flat |
+| M1 | Host abstraction (§3.2c): fiber on `object` host + `HostBackend`; UITK backend re-seated | ALL suites green, golden emissions byte-identical, commit-path micro-bench flat, language-lib link-compile of HookRegistry.cs intact |
 | M2 | `UguiRootRenderer` + core elements: Canvas, Panel, Image, RawImage, Text(TMP), Button + RectTransform props + anchor presets + events | playmode smoke scene renders + counter demo works |
 | M3 | Layout: LayoutGroups, LayoutElement/ContentSizeFitter/AspectRatioFitter prop groups, driven-rect diagnostics, rebuild batching | layout parity scene vs hand-built duplicate; driven-prop diagnostics fire |
 | M4 | Full interaction set: Toggle(+Group), Slider, Scrollbar, ScrollRect, Dropdown, InputField, Selectable nav/transitions | interactive gallery sample |
@@ -298,6 +319,25 @@ Honest effort: M1 is the risk concentrate (touching the hottest code in the libr
 M2-M5 are wide but mechanical; total is a multi-week, Godot-port-scale effort, plus a
 permanent second maintenance leg (every future element/prop/Unity-version wave gains a
 uGUI column — `add-unity-version` skill must grow a step).
+
+### M8 docs & changelog deliverables (the repo's specific machinery, not generic "docs")
+- Docs site (`ReactiveUIToolKitDocs~`): new "uGUI backend" section — getting started
+  for uGUI (mount, first component, anchor presets), full element/prop reference
+  (generated-page style matching the UITK reference), the prefab migration-bridge
+  guide, and a "which backend when" page; getting-started updated to present the
+  backend choice. Redeploy = the owner's republish flow.
+- `CHANGELOG.md` (source of truth): minor-version entry via `scripts/changelog.mjs`
+  assist, per VERSIONING.md (additive = minor).
+- `Plans~/DISCORD_CHANGELOG.md`: release post under the hard 2000-char-per-entry cap
+  (discord-changelog skill rules: ASCII-only, prepend-only).
+- IDE extensions: entries added to `ide-extensions~/changelog.json` (`@backend`
+  directive, ugui schema completions/hover/diagnostics) and marketplace pages
+  REGENERATED via the changelog system — README.md/overview.md are never hand-edited
+  (changelog skill). Extensions version independently (0.x line).
+- Samples: the M4 interactive gallery + M5 migration-bridge scene ship under
+  `Samples/`, store-shape-checked (the store omit-list must not leak dev fixtures).
+- Drift checks: docs-vs-code sweep for the new pages joins the existing docs accuracy
+  audit routine.
 
 ---
 
@@ -318,14 +358,17 @@ uGUI on rebuild-heavy scenarios, better on raycast/idle (because of hygiene defa
   versa).
 - 2114 (Warning): pointer handler on an element with explicit `raycastTarget={false}`.
 - 2115 (Info/Hint): `EventSystem` missing at mount (runtime log, not compile-time).
-Numbers to be verified free at implementation time; family band untouched (these are
-Unity-local by nature).
+Verified free 2026-07-25: 2100-2110 are occupied; 2111+ is the next open range.
+Re-verify at implementation time; family band untouched (these are Unity-local by
+nature).
 
 ---
 
 ## 8. Open questions for the owner
 1. Tag naming: bare Inspector names (`<Image>`, `<Button>`) with per-mount resolution, or
    a `u:` prefix? (Plan assumes bare names + `@backend`; cleanest for habit preservation.)
+   1b. Generated-code factory class name for the ugui surface (`U`, `Vu`, `V.Ugui`) —
+   users never type it in markup, but it appears in generated partials and stack traces.
 2. Should `UguiRootRenderer` optionally own/create its Canvas (prefab-less quick start)?
 3. Pool by default or opt-in per mount?
 4. Does `Animate` ship in v1 for uGUI (tween adapter) or defer to refs+DOTween habits?
