@@ -25,44 +25,5 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
         {
             GetComponent<UguiRootRenderer>().Render(V.Func(UguiStressTest.Render));
         }
-
-#if UNITY_EDITOR
-        private int _lastReportedSecond = -1;
-
-        private void Update()
-        {
-            int second = Mathf.FloorToInt(Time.unscaledTime);
-            if (second == _lastReportedSecond)
-            {
-                return;
-            }
-            _lastReportedSecond = second;
-            int ops =
-                UguiHostConfig.DebugCreated
-                + UguiHostConfig.DebugAppended
-                + UguiHostConfig.DebugInserted
-                + UguiHostConfig.DebugRemoved;
-            if (ops == 0)
-            {
-                return;
-            }
-            int staging =
-                UguiHostConfig.DebugStagingRoot != null
-                    ? UguiHostConfig.DebugStagingRoot.childCount
-                    : -1;
-            Debug.Log(
-                $"[UguiStress] staging={staging} created={UguiHostConfig.DebugCreated} "
-                    + $"appended={UguiHostConfig.DebugAppended} inserted={UguiHostConfig.DebugInserted} "
-                    + $"removed={UguiHostConfig.DebugRemoved} pooled={UguiHostConfig.DebugPooled} "
-                    + $"destroyed={UguiHostConfig.DebugDestroyed}"
-            );
-            UguiHostConfig.DebugCreated = 0;
-            UguiHostConfig.DebugAppended = 0;
-            UguiHostConfig.DebugInserted = 0;
-            UguiHostConfig.DebugRemoved = 0;
-            UguiHostConfig.DebugPooled = 0;
-            UguiHostConfig.DebugDestroyed = 0;
-        }
-#endif
     }
 }

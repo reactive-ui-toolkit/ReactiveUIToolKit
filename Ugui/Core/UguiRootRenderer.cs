@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using ReactiveUITK.Core;
+using ReactiveUITK.Core.Diagnostics;
 using ReactiveUITK.Core.Fiber;
 using ReactiveUITK.Elements;
 using ReactiveUITK.Signals;
@@ -55,6 +56,16 @@ namespace ReactiveUITK.Ugui
             );
             sharedHostContext.Environment["scheduler"] = RenderScheduler.Instance;
             sharedHostContext.Environment["isEditor"] = false;
+
+            sharedHostContext.Environment["env"] = BuildDefinesConfig.ResolveEnvironment();
+
+            DiagnosticsConfig.CurrentTraceLevel = BuildDefinesConfig.ResolveTraceLevel();
+            DiagnosticsConfig.EnableDiffTracing = BuildDefinesConfig.ResolveEnableDiffTracing();
+            DiagnosticsConfig.UseExceptionBoundaryFlow =
+                BuildDefinesConfig.ResolveExceptionBoundaryFlow();
+
+            InternalLogOptions.EnableInternalLogs =
+                DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose;
         }
 
         private void Awake()
