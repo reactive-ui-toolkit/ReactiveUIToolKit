@@ -26,6 +26,18 @@ namespace ReactiveUITK.Ugui
         private readonly Dictionary<UguiElementAdapter, Stack<GameObject>> _pool =
             new Dictionary<UguiElementAdapter, Stack<GameObject>>();
 
+#if UNITY_EDITOR
+        // Temporary field-debug counters (adding-uGUI wave) — read/reset by
+        // diagnostics to localize where host operations stop flowing.
+        public static int DebugCreated;
+        public static int DebugAppended;
+        public static int DebugInserted;
+        public static int DebugRemoved;
+        public static int DebugPooled;
+        public static int DebugDestroyed;
+        public static Transform DebugStagingRoot;
+#endif
+
         public UguiHostConfig(UguiElementRegistry registry)
         {
             _registry = registry;
@@ -41,6 +53,9 @@ namespace ReactiveUITK.Ugui
                     go.hideFlags = HideFlags.HideAndDontSave;
                     go.SetActive(false);
                     _stagingRoot = go.transform;
+#if UNITY_EDITOR
+                    DebugStagingRoot = _stagingRoot;
+#endif
                 }
                 return _stagingRoot;
             }
@@ -71,6 +86,9 @@ namespace ReactiveUITK.Ugui
                     go = new GameObject(elementType, typeof(RectTransform));
                 }
             }
+#if UNITY_EDITOR
+            DebugCreated++;
+#endif
             go.transform.SetParent(StagingRoot, false);
             return go;
         }
@@ -119,6 +137,9 @@ namespace ReactiveUITK.Ugui
             var host = ResolveChildHostTransform(parent);
             if (host == null)
                 return;
+#if UNITY_EDITOR
+            DebugAppended++;
+#endif
             childGo.transform.SetParent(host, false);
             childGo.transform.SetAsLastSibling();
         }
@@ -140,6 +161,9 @@ namespace ReactiveUITK.Ugui
                 return;
             }
 
+#if UNITY_EDITOR
+            DebugInserted++;
+#endif
             int index = beforeGo.transform.GetSiblingIndex();
             childGo.transform.SetParent(host, false);
             childGo.transform.SetSiblingIndex(index);
@@ -153,6 +177,9 @@ namespace ReactiveUITK.Ugui
             var host = ResolveChildHostTransform(parent);
             if (host != null && childGo.transform.parent == host)
             {
+#if UNITY_EDITOR
+                DebugRemoved++;
+#endif
                 childGo.transform.SetParent(StagingRoot, false);
             }
         }
@@ -213,11 +240,17 @@ namespace ReactiveUITK.Ugui
                 }
                 if (stack.Count < PoolCapacityPerType)
                 {
+#if UNITY_EDITOR
+                    DebugPooled++;
+#endif
                     go.transform.SetParent(StagingRoot, false);
                     stack.Push(go);
                     return;
                 }
             }
+#if UNITY_EDITOR
+            DebugDestroyed++;
+#endif
             DestroySafely(go);
         }
 

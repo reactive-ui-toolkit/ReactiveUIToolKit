@@ -61,10 +61,30 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             {
                 _lastReportedSecond = second;
                 var areaRt = s_areaRef.Current;
+#if UNITY_EDITOR
+                int staging =
+                    UguiHostConfig.DebugStagingRoot != null
+                        ? UguiHostConfig.DebugStagingRoot.childCount
+                        : -1;
+                Debug.Log(
+                    $"[UguiStress] t={_elapsed:F1}s area={(areaRt != null ? areaRt.name : "NULL")} "
+                        + $"children={(areaRt != null ? areaRt.childCount : -1)} staging={staging} | "
+                        + $"created={UguiHostConfig.DebugCreated} appended={UguiHostConfig.DebugAppended} "
+                        + $"inserted={UguiHostConfig.DebugInserted} removed={UguiHostConfig.DebugRemoved} "
+                        + $"pooled={UguiHostConfig.DebugPooled} destroyed={UguiHostConfig.DebugDestroyed}"
+                );
+                UguiHostConfig.DebugCreated = 0;
+                UguiHostConfig.DebugAppended = 0;
+                UguiHostConfig.DebugInserted = 0;
+                UguiHostConfig.DebugRemoved = 0;
+                UguiHostConfig.DebugPooled = 0;
+                UguiHostConfig.DebugDestroyed = 0;
+#else
                 Debug.Log(
                     $"[UguiStress] t={_elapsed:F1}s area={(areaRt != null ? areaRt.name : "NULL")} "
                         + $"children={(areaRt != null ? areaRt.childCount : -1)}"
                 );
+#endif
             }
 
             if (_elapsed >= s_duration)
