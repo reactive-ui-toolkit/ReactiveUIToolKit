@@ -58,6 +58,8 @@ namespace ReactiveUITK.Ugui
             registry.Register("Dropdown", new UguiDropdownAdapter());
             registry.Register("InputField", new UguiInputFieldAdapter());
 
+            registry.Register("Prefab", new UguiPrefabAdapter());
+
             s_default = registry;
             return s_default;
         }

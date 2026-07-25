@@ -130,6 +130,11 @@ namespace ReactiveUITK.Ugui
             params VirtualNode[] children
         ) => Rent("InputField", key, props, children);
 
+        public static VirtualNode Prefab(
+            UguiPrefabProps props,
+            string key = null
+        ) => Rent("Prefab", key, props, null);
+
         /// <summary>
         /// Portal into any RectTransform in the scene (overlay layers,
         /// user-managed canvases). The uGUI counterpart of

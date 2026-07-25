@@ -65,4 +65,72 @@ namespace ReactiveUITK.Ugui
             return a.AspectMode == b.AspectMode && a.AspectRatio == b.AspectRatio;
         }
     }
+
+    public sealed class UguiCanvasGroup
+    {
+        public float? Alpha { get; set; }
+        public bool? Interactable { get; set; }
+        public bool? BlocksRaycasts { get; set; }
+        public bool? IgnoreParentGroups { get; set; }
+
+        internal static bool ValueEquals(UguiCanvasGroup a, UguiCanvasGroup b)
+        {
+            if (ReferenceEquals(a, b))
+                return true;
+            if (a == null || b == null)
+                return false;
+            return a.Alpha == b.Alpha
+                && a.Interactable == b.Interactable
+                && a.BlocksRaycasts == b.BlocksRaycasts
+                && a.IgnoreParentGroups == b.IgnoreParentGroups;
+        }
+    }
+
+    public sealed class UguiMask
+    {
+        public bool? ShowMaskGraphic { get; set; }
+
+        internal static bool ValueEquals(UguiMask a, UguiMask b)
+        {
+            if (ReferenceEquals(a, b))
+                return true;
+            if (a == null || b == null)
+                return false;
+            return a.ShowMaskGraphic == b.ShowMaskGraphic;
+        }
+    }
+
+    public sealed class UguiRectMask2D
+    {
+        public UnityEngine.Vector4? Padding { get; set; }
+        public UnityEngine.Vector2Int? Softness { get; set; }
+
+        internal static bool ValueEquals(UguiRectMask2D a, UguiRectMask2D b)
+        {
+            if (ReferenceEquals(a, b))
+                return true;
+            if (a == null || b == null)
+                return false;
+            return a.Padding == b.Padding && a.Softness == b.Softness;
+        }
+    }
+
+    /// <summary>Shared shape for the Shadow and Outline vertex effects.</summary>
+    public sealed class UguiShadowEffect
+    {
+        public UnityEngine.Color? EffectColor { get; set; }
+        public UnityEngine.Vector2? EffectDistance { get; set; }
+        public bool? UseGraphicAlpha { get; set; }
+
+        internal static bool ValueEquals(UguiShadowEffect a, UguiShadowEffect b)
+        {
+            if (ReferenceEquals(a, b))
+                return true;
+            if (a == null || b == null)
+                return false;
+            return a.EffectColor == b.EffectColor
+                && a.EffectDistance == b.EffectDistance
+                && a.UseGraphicAlpha == b.UseGraphicAlpha;
+        }
+    }
 }

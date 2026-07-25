@@ -40,6 +40,11 @@ namespace ReactiveUITK.Ugui
         public UguiContentSizeFitter ContentSizeFitter { get; set; }
         public UguiAspectRatioFitter AspectRatioFitter { get; set; }
         public UguiPointerEvents Pointer { get; set; }
+        public UguiCanvasGroup CanvasGroup { get; set; }
+        public UguiMask Mask { get; set; }
+        public UguiRectMask2D RectMask2D { get; set; }
+        public UguiShadowEffect Shadow { get; set; }
+        public UguiShadowEffect Outline { get; set; }
 
         public virtual bool ShallowEquals(UguiBaseProps other)
         {
@@ -86,6 +91,16 @@ namespace ReactiveUITK.Ugui
                 return false;
             if (!UguiPointerEvents.ValueEquals(Pointer, other.Pointer))
                 return false;
+            if (!UguiCanvasGroup.ValueEquals(CanvasGroup, other.CanvasGroup))
+                return false;
+            if (!UguiMask.ValueEquals(Mask, other.Mask))
+                return false;
+            if (!UguiRectMask2D.ValueEquals(RectMask2D, other.RectMask2D))
+                return false;
+            if (!UguiShadowEffect.ValueEquals(Shadow, other.Shadow))
+                return false;
+            if (!UguiShadowEffect.ValueEquals(Outline, other.Outline))
+                return false;
 
             return true;
         }
@@ -120,6 +135,11 @@ namespace ReactiveUITK.Ugui
             ContentSizeFitter = null;
             AspectRatioFitter = null;
             Pointer = null;
+            CanvasGroup = null;
+            Mask = null;
+            RectMask2D = null;
+            Shadow = null;
+            Outline = null;
         }
 
         internal virtual void __ResetFields() { }
