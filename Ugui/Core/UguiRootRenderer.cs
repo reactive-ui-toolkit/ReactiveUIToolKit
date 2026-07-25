@@ -1,0 +1,147 @@
+using System;
+using System.Collections.Generic;
+using ReactiveUITK.Core;
+using ReactiveUITK.Core.Fiber;
+using ReactiveUITK.Elements;
+using ReactiveUITK.Signals;
+using UnityEngine;
+using UnityEngine.EventSystems;
+
+namespace ReactiveUITK.Ugui
+{
+    /// <summary>
+    /// Mounts a fiber tree under a RectTransform inside any existing Canvas —
+    /// the uGUI sibling of <see cref="RootRenderer"/>. Does not own or create
+    /// the Canvas or the EventSystem: it slots into the scene structure the
+    /// team already has, and validates the EventSystem at first render with a
+    /// single actionable warning.
+    /// </summary>
+    public sealed class UguiRootRenderer : MonoBehaviour
+    {
+        [SerializeField]
+        private RectTransform target;
+
+        private HostContext sharedHostContext;
+        private FiberRenderer fiberRenderer;
+        private bool eventSystemChecked;
+
+#if UNITY_EDITOR
+        /// <summary>HMR: all active UguiRootRenderer instances for multi-tree walking.</summary>
+        private static readonly HashSet<UguiRootRenderer> s_allInstances = new();
+        internal static IEnumerable<UguiRootRenderer> AllInstances => s_allInstances;
+
+        /// <summary>HMR: exposes the fiber root for tree walking.</summary>
+        internal FiberRoot FiberRootInternal => fiberRenderer?.Root;
+#endif
+
+        private void EnsureSetup()
+        {
+            if (sharedHostContext != null)
+            {
+                return;
+            }
+            if (RenderScheduler.Instance == null)
+            {
+                var go = new GameObject("RenderScheduler");
+                go.hideFlags = HideFlags.DontSave;
+                go.AddComponent<RenderScheduler>();
+            }
+            SignalsRuntime.EnsureInitialized();
+
+            var uguiRegistry = UguiElementRegistryProvider.GetDefaultRegistry();
+            sharedHostContext = new HostContext(
+                ElementRegistryProvider.GetDefaultRegistry(),
+                new UguiHostConfig(uguiRegistry)
+            );
+            sharedHostContext.Environment["scheduler"] = RenderScheduler.Instance;
+            sharedHostContext.Environment["isEditor"] = false;
+        }
+
+        private void Awake()
+        {
+#if UNITY_EDITOR
+            s_allInstances.Add(this);
+#endif
+            EnsureSetup();
+        }
+
+        private void OnDestroy()
+        {
+#if UNITY_EDITOR
+            s_allInstances.Remove(this);
+#endif
+            Unmount();
+        }
+
+        /// <summary>
+        /// Sets the mount rect and optionally seeds environment slots (portal
+        /// targets, feature flags) into the <see cref="HostContext"/>. Must be
+        /// called before the first <see cref="Render"/> unless the target is
+        /// assigned in the Inspector or this component sits on a RectTransform.
+        /// </summary>
+        public void Initialize(RectTransform mountTarget, Action<HostContext> env = null)
+        {
+            EnsureSetup();
+            target = mountTarget;
+            env?.Invoke(sharedHostContext);
+        }
+
+        public void Render(VirtualNode rootNode)
+        {
+            EnsureSetup();
+            var mount = ResolveTarget();
+            if (mount == null)
+            {
+                Debug.LogError(
+                    "[ReactiveUITK.Ugui] UguiRootRenderer has no mount target. Assign a "
+                        + "RectTransform in the Inspector, call Initialize(rectTransform), or "
+                        + "place the component on a RectTransform under a Canvas.",
+                    this
+                );
+                return;
+            }
+            WarnIfNoEventSystem();
+            if (fiberRenderer == null)
+            {
+                fiberRenderer = new FiberRenderer((object)mount.gameObject, sharedHostContext);
+            }
+            fiberRenderer.Render(rootNode);
+        }
+
+        public void Unmount()
+        {
+            if (fiberRenderer != null)
+            {
+                fiberRenderer.Clear();
+                fiberRenderer = null;
+            }
+        }
+
+        private RectTransform ResolveTarget()
+        {
+            if (target != null)
+            {
+                return target;
+            }
+            return transform as RectTransform;
+        }
+
+        private void WarnIfNoEventSystem()
+        {
+            if (eventSystemChecked)
+            {
+                return;
+            }
+            eventSystemChecked = true;
+            if (EventSystem.current == null)
+            {
+                Debug.LogWarning(
+                    "[ReactiveUITK.Ugui] No EventSystem found in the scene — uGUI "
+                        + "interaction events (Button.onClick, pointer handlers) will not "
+                        + "fire. Add one via GameObject > UI > Event System.",
+                    this
+                );
+            }
+        }
+    }
+}
