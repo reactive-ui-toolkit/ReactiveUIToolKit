@@ -12,6 +12,9 @@ companion `.hooks.uitkx` (hook exports) and `.style.uitkx`
 Includes 25+ demos: counters, context, effects, portals, routing,
 signals, synthetic events, keyed diffing, and more.
 
+`UguiStressTest/` is the `@backend ugui` twin of `StressTest/` — the same
+hook-driven flow rendered through classic Unity UI instead of UI Toolkit.
+
 ### Shared/
 
 Shared data models, utility functions, and reusable `.uitkx` components
@@ -24,6 +27,9 @@ Contains EditorWindow entries for in-editor preview.
 
 - `Editor/` — Individual demo windows (one per component)
 - `Both/` — Showcase All aggregated demo page
+- `Runtime/` — Play-mode bootstraps, including the uGUI demos
+  (`RuntimeUguiGalleryDemo`, `RuntimeUguiStressTestDemo`) — uGUI cannot
+  render in editor windows, so these mount in a scene
 
 ### Shared/ (Common Utilities)
 
