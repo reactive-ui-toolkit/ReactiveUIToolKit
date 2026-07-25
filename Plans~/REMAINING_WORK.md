@@ -122,3 +122,19 @@
 | G-1..G-7 | Release engineering: RC branch, regression record, runbook dry-run, upgrade-path check, clean-env publish, release gates, post-release monitoring | process work, not done | V1 G-* |
 | Store-1 | Asset Store: create package draft + first upload from a 6.2 editor + Submit (**paused by owner**; price switched to ~$5 → payout/tax setup required first) | no submission occurred | ASSET_STORE |
 | RUNTIME-V | Unity-in-editor runtime verification of the 0.7.x import/export wave: the 5 HMR hook-family-key scenarios + F5 pass over migrated samples + JustStayOn | pending user | triage |
+
+## 11. uGUI backend (adding-uGUI wave, 2026-07-25)
+
+Deliberate deferrals from the uGUI backend implementation (`Ugui/` assembly,
+`@backend ugui` vocabulary). Each was scoped out consciously, not forgotten.
+
+| ID | Item | Evidence / anchor | Trigger to revisit |
+|---|---|---|---|
+| UG-1 | GameObject pooling for unmount/remount (opt-in per mount). Deferred: pooling stateful controls (Toggle.isOn, InputField.text, bindings' Current) across unmounts risks stale-state bugs; props pooling already covers the hot path | `UguiHostConfig.OnHostRemoved` destroys | benchmark scene shows GO churn dominating a real workload |
+| UG-2 | LSP deep backend-awareness: thread `parseResult.Directives.Backend` into tag/attr completion (`CompletionHandler.cs:858/878/954/989/1002`), hover (`HoverHandler.cs:161/234`), attr validation (`DiagnosticsPublisher.cs:1096/1147/1185`), props adapter (`PropsTypeAdapter.cs:43/70/107`). The backend-aware `SchemaLoader` surface (`TryGetElement(tag, backend)`, `GetElements`, `GetIntrinsicAttributes`) already ships — this is call-site threading only | SchemaLoader.cs has the API; consumers still UITK-keyed | first ugui field-testing wave in an IDE |
+| UG-3 | Compile-time diagnostics: 2113 cross-backend import (a ugui file importing a uitk component and vice versa — needs peer Backend in the import validation path), compile-time driven-rect warning (rect props under a childControl* LayoutGroup parent — runtime editor hint ships), pointer-handler-with-raycastTarget-false hint | runtime hint in `UguiRectApplier.HintIfDriven` | ugui field wave surfaces real confusion |
+| UG-4 | DefaultControls-built skeletons (Slider/Scrollbar/Dropdown/InputField/ScrollRect bars) have null sprites in players — Unity's builtin UI sprites are editor-only resources; visuals are flat boxes until sprite props are set. Docs must state "style via props for shipping look" | adapters pass empty `DefaultControls.Resources` | docs pass / owner decision on bundling default sprites |
+| UG-5 | `HmrBuiltinTagDiscoveryContractTests` mirrors only the V discovery; add the U-map fixture (typed-Text precedence, no visualelementsafe, manual suspense/portal) | `HmrCSharpEmitter.BuildUguiTagMap` | next HMR contract-test touch |
+| UG-6 | Docs site: full "uGUI backend" section (getting started, element reference from `uguiElements` schema, prefab migration guide, "which backend when") | `ReactiveUIToolKitDocs~` untouched this wave | M8 docs pass with owner |
+| UG-7 | `Animate` support for ugui hosts (tween adapter); current guidance: Animator/DOTween via `Ref<RectTransform>` | `ResolveAnimationTarget` casts to VisualElement (null for ugui) | user demand |
+| UG-8 | uGUI sample gallery scenes under `Samples/` + store omit-list review for them | minimal C# demo only this wave | pre-store-submission pass |

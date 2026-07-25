@@ -4,6 +4,7 @@
     "ReactiveUITK.Editor",
     "ReactiveUITK.Shared",
     "ReactiveUITK.Runtime",
+    "ReactiveUITK.Ugui",
     "Unity.InputSystem"
   ],
   "includePlatforms": [],

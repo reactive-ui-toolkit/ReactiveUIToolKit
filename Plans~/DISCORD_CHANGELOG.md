@@ -1,4 +1,19 @@
-﻿## [0.10.0] - 2026-07-18
+﻿## [0.11.0] - Unreleased
+
+**uGUI support is here.** ReactiveUIToolKit now renders classic Unity UI (uGUI) with the same components, hooks, signals, router, and hot reload you use on UI Toolkit - and it speaks uGUI's native language. No CSS, no flexbox emulation: you position with RectTransform anchors/pivots (including an `anchors` preset prop that mirrors the Inspector widget), you style with sprites, colors, and materials, you stack with LayoutGroups. If you know uGUI, you already know this API.
+
+**What ships:**
+- `UguiRootRenderer` mounts a reactive tree under any RectTransform in YOUR existing Canvas - no scene takeover.
+- Elements: Canvas, Panel, Image, RawImage, Text (TMP), Button, H/V/Grid LayoutGroups, Toggle(+Group), Slider, Scrollbar, ScrollRect, Dropdown, InputField - compound controls built on the exact GameObject > UI menu skeletons.
+- `<Prefab source={...} bind={...}>` - mount your existing uGUI prefabs inside the reactive tree and migrate screen by screen.
+- Prop groups = declarative Add Component: layoutElement, contentSizeFitter, canvasGroup, mask, rectMask2D, shadow, outline, pointer events on any element.
+- Controlled components everywhere (no event echo), one-time event subscriptions, raycast hygiene by default, and an editor hint when a layout group is driving rect props you tried to set.
+- `.uitkx` files: add `@backend ugui` and the whole toolchain (compiler, hot reload, schema, IDE completion) switches vocabulary.
+- v2 islands: `UguiHost` puts a uGUI subtree inside a UITK tree; `UitkHost` puts a UITK panel (render texture + input forwarding) inside a uGUI tree.
+
+UI Toolkit users: nothing changes - output is byte-identical when the directive is absent.
+
+## [0.10.0] - 2026-07-18
 
 **License:** from 0.10.0 ReactiveUIToolKit ships under the **ReactiveUI Community License 1.0** (previously PolyForm Shield) — free to use and ship commercially for any team earning under **$250k/year**; above that, shipping takes a commercial license ($2,000/title or $2,500/studio/year — same mechanic on Godot, Unity, and Unreal). Development/evaluation stays free at any size; everything already downloaded keeps the license it shipped with. Ask of everyone: a "Made with ReactiveUI" credits line. Details: `LICENSE.md` + `LICENSE-COMMERCIAL.md` in the repo — full announcement posted separately.
 

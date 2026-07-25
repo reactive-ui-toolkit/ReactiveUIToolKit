@@ -6,6 +6,51 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 For IDE extension changelogs (VS Code, Visual Studio 2022), see
 `ide-extensions~/changelog.json` â€” the single source of truth for extension releases.
 
+## [0.11.0] - Unreleased
+
+### Added — uGUI render backend (`@backend ugui`)
+
+The library now renders **Unity UI (uGUI)** through the same fiber reconciler,
+hooks, signals, context, router, and Fast Refresh as UI Toolkit. The design
+principle: uGUI keeps its own mental model — RectTransform anchors/pivots for
+positioning (with an `anchors` preset prop mirroring the Inspector widget),
+sprites/colors/materials for styling, LayoutGroups for stacking. There is
+deliberately no `Style`/USS surface on uGUI elements.
+
+- **New `ReactiveUITK.Ugui` assembly** (`Ugui/`): `UguiRootRenderer` mounts a
+  tree under any RectTransform in an existing Canvas; `U.*` factories and a
+  per-element adapter registry cover Canvas, Panel, Image, RawImage, Text
+  (TMP), Button, Horizontal/Vertical/GridLayoutGroup, Toggle(+ToggleGroup),
+  Slider, Scrollbar, ScrollRect, Dropdown (TMP), InputField (TMP), and
+  `<Prefab>` — the migration bridge that mounts existing uGUI prefabs with
+  `IReactivePrefab` prop binding.
+- **Prop groups** = declarative "Add Component": `layoutElement`,
+  `contentSizeFitter`, `aspectRatioFitter`, `canvasGroup`, `mask`,
+  `rectMask2D`, `shadow`, `outline`, and `pointer` (IPointer*/drag/scroll
+  bridge) on any element; non-null adds/updates, null-transition removes.
+- **Controlled components**: all value writes go through SetValueWithoutNotify
+  / SetTextWithoutNotify (no event echo); UnityEvents are subscribed exactly
+  once with delegate-field diffs. Raycast hygiene: visual elements default
+  `raycastTarget=false`, interactive ones true. Editor-only hint when rect
+  props are written on a RectTransform driven by a layout component.
+- **`.uitkx` support**: the `@backend ugui` file directive selects the ugui
+  element vocabulary across the source generator, HMR emitter, schema, and
+  IDE tooling (UITKX2111 invalid/duplicate backend, UITKX2112 `@uss` in a
+  ugui file). UI Toolkit emission is byte-identical when the directive is
+  absent.
+- **Cross-backend islands (v2)**: `UguiHost` embeds a uGUI subtree inside a
+  UI Toolkit tree (screen-synced overlay canvas, native input); `UitkHost`
+  embeds a UI Toolkit panel inside a uGUI tree (PanelSettings render texture
+  + forwarded pointer input).
+- **Host-agnostic fiber core**: host operations now route through an abstract
+  `FiberHostConfig` with opaque host handles, and typed props generalize
+  through `HostPropsBase` — no behavior change for UI Toolkit mounts
+  (all 1726 pre-existing generator pins unchanged).
+
+Deferred items are tracked in `Plans~/REMAINING_WORK.md` §11 (GameObject
+pooling, deep LSP backend-awareness, cross-backend import diagnostics,
+default-sprite styling in players, docs-site section).
+
 ## [0.10.0] - 2026-07-18
 
 ### Changed — License: PolyForm Shield 1.0.0 → ReactiveUI Community License 1.0
