@@ -1,4 +1,4 @@
-﻿## [0.11.0] - Unreleased
+## [0.11.0] - Unreleased
 
 **uGUI support is here.** ReactiveUIToolKit now renders classic Unity UI (uGUI) with the same components, hooks, signals, router, and hot reload you use on UI Toolkit - and it speaks uGUI's native language. No CSS, no flexbox emulation: you position with RectTransform anchors/pivots (including an `anchors` preset prop that mirrors the Inspector widget), you style with sprites, colors, and materials, you stack with LayoutGroups. If you know uGUI, you already know this API.
 
@@ -11,7 +11,7 @@
 - `.uitkx` files: add `@backend ugui` and the whole toolchain (compiler, hot reload, schema, IDE completion) switches vocabulary.
 - v2 islands: `UguiHost` puts a uGUI subtree inside a UITK tree; `UitkHost` puts a UITK panel (render texture + input forwarding) inside a uGUI tree.
 
-UI Toolkit users: nothing changes - output is byte-identical when the directive is absent.
+UI Toolkit users: nothing changes - output is byte-identical when the directive is absent. Bonus: uGUI field testing surfaced three fiber-core bugs (keyed reorders, update starvation, stale-root replays) - all fixed, hardening BOTH backends.
 
 ## [0.10.0] - 2026-07-18
 

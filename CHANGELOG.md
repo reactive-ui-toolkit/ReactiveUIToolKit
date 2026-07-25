@@ -66,6 +66,51 @@ deliberately no `Style`/USS surface on uGUI elements.
   vocabulary contract test pins the ugui tag surface. Docs site gains the
   "uGUI Backend" page.
 
+### Fixed — fiber core hardening (found by uGUI field testing, benefits both backends)
+
+- **Render-restart starvation**: state updates arriving while a large render
+  pass was in flight restarted the pass from scratch, forever, under
+  sustained update pressure — the tree never committed. In-flight passes now
+  finish and the queued updates replay after commit.
+- **Keyed reorders now physically move hosts**: reusing a keyed child never
+  moved its host element, so reorders silently rendered in stale order.
+  React-style lastPlacedIndex tracking plus a move branch in CommitPlacement,
+  with DOM-semantics same-parent InsertBefore in both host configs.
+- **Deferred updates on a swapped root**: updates deferred across a commit
+  could target the stale alternate tree and die silently (frozen subtrees);
+  they now redirect to the live fiber and re-mark the parent path.
+- **Stress-sample Restart**: the auto-stop was level-triggered on stale
+  `finished` state and re-cancelled a restart one render later; now
+  edge-triggered on the finish transition (UITK and uGUI samples alike).
+- **Internal diagnostics logs off by default**:
+  `InternalLogOptions.EnableInternalLogs` defaulted to true and only the
+  UI Toolkit mount path overwrote it from the trace level, so uGUI mounts
+  logged every state set. The default is now false and `UguiRootRenderer`
+  mirrors `RootRenderer`'s diagnostics wiring (verbose trace re-enables).
+
+### Changed — performance & API
+
+- **Typed component cache on the uGUI diff path**: adapters cache
+  Graphic/Image/Selectable/control references on the node tag at create
+  time; per-frame prop writes are a field read plus a property set — the
+  same cost model as UI Toolkit's typed VisualElement writes. GetComponent
+  survives only as cache-miss fallback and on cold paths.
+- **`AnimationTicker` is now public** (`ReactiveUITK.Core.Animation`): the
+  host-agnostic per-frame tick source (editor and player) for backends with
+  no per-element scheduler; `Subscribe(Action)` returns the disposer.
+
+### Samples & docs
+
+- **`UguiStressTest`** — the stress test as a `.uitkx` `@backend ugui`
+  component mirroring the UI Toolkit `StressTest` hook-for-hook (same
+  seed-42 physics, keyed box field, `AnimationTicker` in place of
+  `schedule.Every(16)`), so backend throughput compares like for like.
+  Mounted by `RuntimeUguiStressTestDemo`; `RuntimeUguiGalleryDemo` walks the
+  element vocabulary; an EditMode suite (`Ugui/Tests`) pins mount, diff,
+  keyed-reorder, and pool-churn behavior.
+- Root README and Samples README now cover the uGUI backend (directory map,
+  `@backend ugui` example, element vocabulary, islands, docs link).
+
 Remaining follow-ups in `Plans~/REMAINING_WORK.md` §11 (markup-level
 driven-rect diagnostic, ugui Animate adapter, sample gallery).
 
