@@ -136,6 +136,31 @@ namespace ReactiveUITK.Ugui
         ) => Rent("Prefab", key, props, null);
 
         /// <summary>
+        /// Island: a uGUI subtree inside a UI TOOLKIT tree. Emits a UITK
+        /// element ("UguiHost") — use it from UITK components.
+        /// </summary>
+        public static VirtualNode UguiHost(UguiHostProps props, string key = null)
+        {
+            UguiIslands.EnsureRegistered();
+            var v = VirtualNode.__Rent();
+            v._nodeType = VirtualNodeType.Element;
+            v._elementTypeName = "UguiHost";
+            v._key = key;
+            v._hostProps = props;
+            return v;
+        }
+
+        /// <summary>
+        /// Island: a UI Toolkit subtree inside a UGUI tree (PanelSettings
+        /// render texture + input forwarding).
+        /// </summary>
+        public static VirtualNode UitkHost(UguiUitkHostProps props, string key = null)
+        {
+            UguiIslands.EnsureRegistered();
+            return Rent("UitkHost", key, props, null);
+        }
+
+        /// <summary>
         /// Portal into any RectTransform in the scene (overlay layers,
         /// user-managed canvases). The uGUI counterpart of
         /// <c>V.Portal(VisualElement, ...)</c>.
