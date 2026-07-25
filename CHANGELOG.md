@@ -92,8 +92,12 @@ deliberately no `Style`/USS surface on uGUI elements.
   is defined in every editor compile — so any project WITHOUT
   `com.unity.test-framework` (including the Asset Store export shell, which
   failed the 0.11.0 store build with a CS0246 NUnit storm) tried to compile
-  the tests without NUnit. The asmdef now adds a `versionDefines` gate:
-  the assembly compiles only when the Test Framework package is present.
+  the tests without NUnit. Two layers: the asmdef now adds a
+  `versionDefines` gate so the assembly compiles only when the Test
+  Framework package is present, and `Ugui/Tests` joins
+  `pathsToOmitFromStore` so the Asset Store `.unitypackage` ships with no
+  test files at all (the dist/git channels keep them, inert without the
+  package).
 
 ### Changed — performance & API
 
