@@ -15,10 +15,15 @@ export VirtualNode UguiStressTest() {
 
   var (boxes, avgFps, elapsed, totalFrames, finished) = useStressTestLoop(areaRef, areaSize, boxCount, duration, running, version);
 
-  // Auto-stop when hook signals finished
-  if (finished && running) {
+  // Auto-stop when the hook TRANSITIONS to finished. Level-triggered
+  // (finished && running) would re-cancel a restart: finished stays stale-true
+  // until the next regen tick clears it, so the render right after the
+  // Restart click sees finished && running and kills the new run.
+  var wasFinished = useRef(false);
+  if (finished && !wasFinished.Current && running) {
     setRunning(false);
   }
+  wasFinished.Current = finished;
 
   useEffect(() => {
     var rt = areaRef?.Current;
