@@ -20,8 +20,13 @@ namespace ReactiveUITK.Core.Animation
     ///
     /// Subscribers are responsible for gating style writes on
     /// target.panel != null; AnimationTicker only delivers the tick.
+    ///
+    /// Public because it is the host-agnostic frame source for render
+    /// backends with no per-element scheduler (uGUI has no equivalent of
+    /// VisualElement.schedule) — components and hooks subscribe in an
+    /// effect and invoke the disposer in the cleanup.
     /// </summary>
-    internal static class AnimationTicker
+    public static class AnimationTicker
     {
         private static event Action s_tick;
         private static bool s_wired;
@@ -29,6 +34,11 @@ namespace ReactiveUITK.Core.Animation
         private static Action s_runtimeUnsubscribe;
 #endif
 
+        /// <summary>
+        /// Adds <paramref name="onTick"/> to the per-frame pump and returns
+        /// the disposer that removes it. The caller MUST invoke the disposer
+        /// when done — the ticker holds strong references.
+        /// </summary>
         public static Action Subscribe(Action onTick)
         {
             if (onTick == null)

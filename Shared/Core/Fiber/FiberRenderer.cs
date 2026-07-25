@@ -13,7 +13,8 @@ namespace ReactiveUITK.Core.Fiber
     {
         private FiberRoot _root;
         private FiberReconciler _reconciler;
-        private VisualElement _container;
+        private object _container;
+        private FiberHostConfig _hostConfig;
 
 #if UNITY_EDITOR
         /// <summary>HMR: exposes the root for fiber tree walking.</summary>
@@ -30,6 +31,26 @@ namespace ReactiveUITK.Core.Fiber
                 context = new HostContext(registry);
             }
 
+            _hostConfig = context.HostConfig;
+            _reconciler = new FiberReconciler(context);
+        }
+
+        /// <summary>
+        /// Backend-agnostic entry: the container is an opaque host handle
+        /// interpreted by <paramref name="context"/>'s
+        /// <see cref="HostContext.HostConfig"/> (e.g. a RectTransform host
+        /// under the uGUI backend).
+        /// </summary>
+        public FiberRenderer(object container, HostContext context)
+        {
+            if (context == null)
+            {
+                var registry = ElementRegistryProvider.GetDefaultRegistry();
+                context = new HostContext(registry);
+            }
+
+            _container = container;
+            _hostConfig = context.HostConfig;
             _reconciler = new FiberReconciler(context);
         }
 
@@ -41,7 +62,7 @@ namespace ReactiveUITK.Core.Fiber
             if (_root == null)
             {
                 // Initial mount - ensure container is clean
-                _container.Clear();
+                _hostConfig.ClearChildren(_container);
                 _root = _reconciler.CreateRoot(_container, vnode);
             }
             else
@@ -67,7 +88,7 @@ namespace ReactiveUITK.Core.Fiber
         public void Clear()
         {
             _reconciler?.UnmountRoot();
-            _container.Clear();
+            _hostConfig.ClearChildren(_container);
             _root = null;
         }
 
@@ -84,7 +105,7 @@ namespace ReactiveUITK.Core.Fiber
         /// rootVisualElement was replaced but the user's logical UI tree
         /// is unchanged.
         /// </summary>
-        public void RetargetContainer(VisualElement nextContainer)
+        public void RetargetContainer(object nextContainer)
         {
             if (nextContainer == null || ReferenceEquals(nextContainer, _container))
             {
@@ -92,17 +113,17 @@ namespace ReactiveUITK.Core.Fiber
             }
             // Snapshot before moving — Add() removes from current parent and
             // mutates the source collection.
-            int childCount = _container.childCount;
+            int childCount = _hostConfig.GetChildCount(_container);
             if (childCount > 0)
             {
-                var moved = new VisualElement[childCount];
+                var moved = new object[childCount];
                 for (int i = 0; i < childCount; i++)
                 {
-                    moved[i] = _container[i];
+                    moved[i] = _hostConfig.GetChildAt(_container, i);
                 }
                 for (int i = 0; i < childCount; i++)
                 {
-                    nextContainer.Add(moved[i]);
+                    _hostConfig.AppendChild(nextContainer, moved[i]);
                 }
             }
             _container = nextContainer;

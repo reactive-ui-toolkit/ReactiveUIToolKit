@@ -158,14 +158,14 @@ public sealed class HoverHandler : IHoverHandler
         }
 
         // 2. Fallback to schema built-in element
-        var element = _schema.TryGetElement(word);
+        var element = _schema.TryGetElement(word, parseResult.Directives.Backend);
         if (element is not null)
         {
             var elementAttrs = element.Attributes;
             // Built-in elements show intrinsic + structural under "Common attributes".
             // (User components don't reach this branch — they go through the
             // workspace-prop path above.)
-            var commonAttrs = _schema.Root.IntrinsicElementAttributes
+            var commonAttrs = _schema.GetIntrinsicAttributes(parseResult.Directives.Backend)
                 .Concat(_schema.Root.StructuralAttributes)
                 .ToList();
             var attrList =
@@ -231,7 +231,7 @@ public sealed class HoverHandler : IHoverHandler
 
             // Fall back to schema attr
             var attr = _schema
-                .GetAttributesForElement(tagContext)
+                .GetAttributesForElement(tagContext, parseResult.Directives.Backend)
                 .FirstOrDefault(a => a.Name.Equals(word, StringComparison.OrdinalIgnoreCase));
             if (attr is not null)
             {

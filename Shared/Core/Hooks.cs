@@ -423,7 +423,7 @@ namespace ReactiveUITK.Core
             {
                 if (fiber.HostElement != null)
                 {
-                    return fiber.HostElement;
+                    return fiber.HostElement as UnityEngine.UIElements.VisualElement;
                 }
                 fiber = fiber.Parent;
             }
@@ -439,7 +439,7 @@ namespace ReactiveUITK.Core
             {
                 if (current.HostElement != null)
                 {
-                    return current.HostElement;
+                    return current.HostElement as UnityEngine.UIElements.VisualElement;
                 }
                 var childResult = FindFirstHostElement(current.Child);
                 if (childResult != null)

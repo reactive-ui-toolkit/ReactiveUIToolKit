@@ -2,6 +2,8 @@
 
 ReactiveUIToolKit brings a React-like component model to Unity UI Toolkit, with function components, hooks, a virtual node tree, and a typed props model that all run entirely in C# on top of UI Toolkit.
 
+The same components also render to classic **Unity UI (uGUI)**: one fiber reconciler, two render backends. A `.uitkx` file opts in with the `@backend ugui` directive and mounts under any Canvas `RectTransform` — see [uGUI Backend](#ugui-backend) below.
+
 👉 Full documentation, guides, and examples: http://reactiveuitoolkit.info/
 
 💬 Join the community on Discord: https://discord.gg/Knedqu4Wyv
@@ -16,6 +18,7 @@ ReactiveUIToolKit brings a React-like component model to Unity UI Toolkit, with 
 |---|---|
 | `Runtime/` | Thin MonoBehaviour adapter — `RootRenderer`, `RenderScheduler` |
 | `Shared/` | Core reactive library — `V`, `VNode`, Hooks, Fiber reconciler, Elements, Props |
+| `Ugui/` | uGUI render backend — `UguiRootRenderer`, `U.*` factories, element adapters, islands |
 | `Editor/` | Unity Editor integration — HMR, change watcher, console navigation |
 | `Analyzers/` | Published Roslyn analyzer / source generator DLLs |
 | `Samples/` | Demo components: legacy C# (`Components/`), UITKX (`UITKX/`), showcase app (`Showcase/`) |
@@ -28,6 +31,7 @@ ReactiveUIToolKit brings a React-like component model to Unity UI Toolkit, with 
 ### Key Architectural Decisions
 
 - **Shared is the core** — `Runtime/` is a thin adapter that hosts the reconciler inside Unity
+- **Host-agnostic fiber** — the same reconciler drives UI Toolkit and classic uGUI (`Ugui/`); a mount owns one backend, islands mix them
 - **Source generator** transpiles `.uitkx` → C# partial classes at build time (zero runtime overhead)
 - **LSP server** (`language-lib` + `lsp-server`) provides IDE features across all editors
 - **HMR** compiles `.uitkx` changes in-editor without domain reload (50–200 ms cycle)
@@ -127,6 +131,7 @@ import { CardStyle } from "./MyComponent.style"
 | [`Samples/Components/UitkxCounterFunc/UitkxCounterFunc.uitkx`](Samples/Components/UitkxCounterFunc/UitkxCounterFunc.uitkx) | Minimal counter — `useState` + markup |
 | [`Samples/Components/DirectiveSuccessDemo/DirectiveSuccessDemo.uitkx`](Samples/Components/DirectiveSuccessDemo/DirectiveSuccessDemo.uitkx) | `@if/@else`, `@for`, `@foreach`, `@switch`, `@while`, cross-file imports |
 | [`Samples/Components/PropTypesDemoFunc/PropTypesDemoFunc.uitkx`](Samples/Components/PropTypesDemoFunc/PropTypesDemoFunc.uitkx) | Typed props via declared component parameters |
+| [`Samples/Components/UguiStressTest/UguiStressTest.uitkx`](Samples/Components/UguiStressTest/UguiStressTest.uitkx) | `@backend ugui` — the stress test rendered through uGUI with the same hook flow as the UI Toolkit `StressTest` |
 
 See [`Samples/README.md`](Samples/README.md) for a full breakdown of each sample category.
 
@@ -173,6 +178,50 @@ and all enum values including element props (`SelectNone`, `SortCustom`, `PickIg
 The old tuple syntax `(StyleKeys.Key, value)` remains available as an escape hatch.
 
 👉 Full guide: [Styling documentation](http://reactiveuitoolkit.info/styling)
+
+---
+
+## uGUI Backend
+
+The same components, hooks, signals, context, router, and HMR also render
+classic **Unity UI (uGUI)** — mounted under a `RectTransform` in an existing
+Canvas instead of a `UIDocument`. uGUI keeps its own mental model: positioning
+is RectTransform anchors/pivots (with an `anchors` preset prop mirroring the
+Inspector widget), styling is sprites, colors, and materials, stacking is
+LayoutGroups. There is deliberately no `Style`/USS surface on uGUI elements.
+
+A `.uitkx` file opts into the uGUI element vocabulary with a preamble directive:
+
+```uitkx
+@backend ugui
+export VirtualNode HelloUgui() {
+  var (count, setCount) = useState(0);
+
+  return (
+    <VerticalLayoutGroup spacing={8f}>
+      <Text text={$"Count: {count}"} fontSize={16f} />
+      <Button onClick={() => setCount(count + 1)}>
+        <Text text="Increment" />
+      </Button>
+    </VerticalLayoutGroup>
+  );
+}
+```
+
+Mount it with `UguiRootRenderer` (the uGUI sibling of `RootRenderer`) on a
+RectTransform under your Canvas — an EventSystem is required for interaction:
+
+```csharp
+GetComponent<UguiRootRenderer>().Render(V.Func(HelloUgui.Render));
+```
+
+The element vocabulary covers Canvas, Panel, Image, RawImage, Text (TMP),
+Button, the three LayoutGroups, Toggle/ToggleGroup, Slider, Scrollbar,
+ScrollRect, Dropdown, InputField, plus `<Prefab>` (mounts existing uGUI
+prefabs) and islands for mixing backends: `U.UguiHost` embeds a uGUI subtree
+in a UI Toolkit tree, `U.UitkHost` embeds a UI Toolkit panel in a uGUI tree.
+
+👉 Full guide: [uGUI Backend documentation](http://reactiveuitoolkit.info/ugui)
 
 ---
 

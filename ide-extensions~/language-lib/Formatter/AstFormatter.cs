@@ -55,6 +55,12 @@ namespace ReactiveUITK.Language.Formatter
         {
             bool has = false;
 
+            if (!string.IsNullOrEmpty(directives.Backend))
+            {
+                Ln($"@backend {directives.Backend}");
+                has = true;
+            }
+
             if (directives.HasExplicitNamespace && !string.IsNullOrWhiteSpace(directives.Namespace))
             {
                 Ln($"@namespace {directives.Namespace}");

@@ -160,7 +160,14 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             _displayName = Path.GetFileName(filePath);
             _linePath = NormalizeLinePath(filePath);
             _hookKeyMap = hookKeyMap;
+            _isUgui = directives.Backend == "ugui";
+            // Fully qualified for the ugui vocabulary so emission never depends
+            // on a using; "V" stays bare so UITK output is byte-identical.
+            _factory = _isUgui ? "global::ReactiveUITK.Ugui.U" : "V";
         }
+
+        private readonly bool _isUgui;
+        private readonly string _factory;
 
         // -- Top-level builder -------------------------------------------------
 
@@ -1409,7 +1416,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 }
             }
 
-            _sb.Append($"V.{res.MethodName}(");
+            _sb.Append($"{_factory}.{res.MethodName}(");
 
             // ErrorBoundaryProps extends IProps (not BaseProps) - cannot be pooled
             bool skipPooling = res.PropsTypeName == "ErrorBoundaryProps";
@@ -1445,13 +1452,19 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 int pId = _poolVarId++;
                 string propsVar = $"__p_{pId}";
                 _rentBuffer.Append(
-                    $"var {propsVar} = global::ReactiveUITK.Props.Typed.BaseProps.__Rent<{res.PropsTypeName}>(); "
+                    _isUgui
+                        ? $"var {propsVar} = global::ReactiveUITK.Ugui.UguiBaseProps.__Rent<global::ReactiveUITK.Ugui.{res.PropsTypeName}>(); "
+                        : $"var {propsVar} = global::ReactiveUITK.Props.Typed.BaseProps.__Rent<{res.PropsTypeName}>(); "
                 );
 
-                // Check for style attribute - try to hoist (Phase A) or pool it
+                // Check for style attribute - try to hoist (Phase A) or pool it.
+                // The ugui props family has no Style surface — a stray style attr
+                // is caught by attribute validation, not the hoist machinery.
                 string? styleVarName = null;
                 foreach (var attr in attrs)
                 {
+                    if (_isUgui)
+                        break;
                     if (IsKey(attr.Name))
                         continue;
                     if (string.Equals(ToPropName(attr.Name), "Style", StringComparison.Ordinal))
@@ -1942,7 +1955,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         {
             string targetArg = GetAttrValue(attrs, "target") ?? "null";
 
-            _sb.Append($"V.Portal({targetArg}, key: {keyExpr}");
+            _sb.Append($"{_factory}.Portal({targetArg}, key: {keyExpr}");
 
             if (!children.IsEmpty)
             {

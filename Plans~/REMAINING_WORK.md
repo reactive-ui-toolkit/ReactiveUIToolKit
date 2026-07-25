@@ -35,6 +35,7 @@
 | D-HMR-B10 | `AssemblyReloadSuppressor` deferred refresh can fire after re-lock | not addressed | V1 D-HMR-B10 |
 | D-OPT-1 | HMR dependency index over-links copy-rename near-clones (deferred pending telemetry) | deferred | V1 D-OPT-1 |
 | HMR-MC | Multi-component files hot-swap only their FIRST component (HMR reads the singular `ComponentName`; `ComponentDeclarations` is never read in `Editor/HMR/`) — documented as a Known Issue; full support = per-declaration compile/swap | `Editor/HMR/UitkxHmrCompiler.cs` `Compile()` singular read | triage 2026-07-15 |
+| HMR-FSW | If the member-file silence recurs WITH the 2026-07-18 trail in place (save produces neither an `[HMR] Save:` line nor, with Verbose watcher trace on, an `[HMR][trace] FSW` line), the drop is OS-level FSW non-delivery (Mono 8 KB buffer / AV hook) — next step is a bounded mtime-sweep fallback over the known `.uitkx` set in the watcher pump (the AssetPostprocessor net cannot help mid-session: `DisallowAutoRefresh` starves it). Trigger to revisit: one field report with the trail present | `Editor/HMR/UitkxHmrFileWatcher.cs` pump; fix wave `fix/hmr-field-wave` | field triage 2026-07-18 |
 
 ## 3. Performance
 
@@ -121,3 +122,20 @@
 | G-1..G-7 | Release engineering: RC branch, regression record, runbook dry-run, upgrade-path check, clean-env publish, release gates, post-release monitoring | process work, not done | V1 G-* |
 | Store-1 | Asset Store: create package draft + first upload from a 6.2 editor + Submit (**paused by owner**; price switched to ~$5 → payout/tax setup required first) | no submission occurred | ASSET_STORE |
 | RUNTIME-V | Unity-in-editor runtime verification of the 0.7.x import/export wave: the 5 HMR hook-family-key scenarios + F5 pass over migrated samples + JustStayOn | pending user | triage |
+
+## 11. uGUI backend (adding-uGUI wave, 2026-07-25)
+
+The gap-closure wave (same branch) CLOSED the original UG-1..UG-6: GameObject
+pooling shipped (per-adapter, pristine-reset gated — stateless visuals pool,
+stateful controls destroyed), deep LSP backend-awareness shipped (completion/
+hover/diagnostics/props-type resolution keyed by @backend, virtual documents
+included), UITKX2113 cross-backend import shipped (both directions pinned),
+builtin default sprites ship via Ugui/Resources/UguiDefaultResources.asset
+(menu-identical look in editor AND players), the U-vocabulary contract test
+pins all 18 tags, and the docs site has the "uGUI Backend" page at /ugui.
+
+| ID | Item | Evidence / anchor | Trigger to revisit |
+|---|---|---|---|
+| UG-3b | Compile-time markup diagnostics: driven-rect warning (rect props on a child of a childControl* LayoutGroup tag) and pointer-with-raycastTarget-false hint — the runtime editor hint ships (`UguiRectApplier.HintIfDriven`); the markup-level analysis needs parent-chain prop inspection in DiagnosticsAnalyzer | runtime hint only | ugui field wave shows the runtime hint is not early enough |
+| UG-7 | `Animate` support for ugui hosts (tween adapter) — ON HOLD by owner; current guidance: Animator/DOTween via `Ref<RectTransform>` | `ResolveAnimationTarget` casts to VisualElement (null for ugui) | owner go |
+| UG-8 | Prefab-bridge and island SCENE samples (need owner-side prefab/PanelSettings assets) + store omit-list review. Shipped: UguiDemo counter, RuntimeUguiGalleryDemo (slider/toggle/dropdown/input/scroll list), RuntimeUguiStressTestDemo (StressTest port), and the ReactiveUITK.Ugui.Tests EditMode assembly (11 runtime tests incl. two stress-churn loops) | Samples/Showcase/Runtime + Ugui/Tests | owner F5 pass |

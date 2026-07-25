@@ -28,5 +28,9 @@ namespace ReactiveUITK.SourceGenerator
         ImmutableArray<string> ExportedComponentNames,
         /// <summary>The <c>export default</c> name, or <c>null</c>.</summary>
         string? DefaultExportName
-    );
+    )
+    {
+        /// <summary>The peer's <c>@backend</c> value ("ugui" or null for UI Toolkit).</summary>
+        public string? Backend { get; init; } = null;
+    };
 }

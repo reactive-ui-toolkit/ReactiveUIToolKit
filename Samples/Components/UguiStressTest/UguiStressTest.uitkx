@@ -1,0 +1,155 @@
+@backend ugui
+import { useStressTestLoop } from "./UguiStressTest.hooks"
+import "@ReactiveUITK.Ugui"
+
+export VirtualNode UguiStressTest() {
+  var areaRef = useRef<RectTransform?>(null);
+  var (areaSize, setAreaSize) = useState(Vector2.zero);
+  var measured = useRef(false);
+  var (boxCount, setBoxCount) = useState(300);
+  var (duration, setDuration) = useState(10f);
+  var (countText, setCountText) = useState("300");
+  var (durationText, setDurationText) = useState("10");
+  var (running, setRunning) = useState(false);
+  var (version, setVersion) = useState(0);
+
+  var (boxes, avgFps, elapsed, totalFrames, finished) = useStressTestLoop(areaRef, areaSize, boxCount, duration, running, version);
+
+  // Auto-stop when the hook TRANSITIONS to finished. Level-triggered
+  // (finished && running) would re-cancel a restart: finished stays stale-true
+  // until the next regen tick clears it, so the render right after the
+  // Restart click sees finished && running and kills the new run.
+  var wasFinished = useRef(false);
+  if (finished && !wasFinished.Current && running) {
+    setRunning(false);
+  }
+  wasFinished.Current = finished;
+
+  useEffect(() => {
+    var rt = areaRef?.Current;
+    if (rt == null) {
+      return null;
+    }
+
+    Action poller = AnimationTicker.Subscribe(() => {
+      if (measured.Current) return;
+      float w = rt.rect.width;
+      float h = rt.rect.height;
+      if (w > 0 && h > 0) {
+        measured.Current = true;
+        setAreaSize(new Vector2(w, h));
+      }
+    });
+
+    return () => poller();
+  }, new object[] { areaRef?.Current });
+
+  string statusText;
+  if (finished) {
+    statusText = $"DONE — {boxes.Count} boxes | Avg FPS: {avgFps:F1} | Duration: {elapsed:F1}s | Frames: {totalFrames}";
+  } else if (running) {
+    statusText = $"uGUI Stress Test — {boxes.Count} boxes | Avg FPS: {avgFps:F1} | Elapsed: {elapsed:F1}s / {duration:F0}s | Frames: {totalFrames}";
+  } else {
+    statusText = "uGUI Stress Test — Ready";
+  }
+
+  return (
+    <Panel>
+      <HorizontalLayoutGroup
+        anchors={UguiAnchorPreset.TopStretch}
+        sizeDelta={new Vector2(0f, 44f)}
+        spacing={8f}
+        paddingLeft={8}
+        paddingRight={8}
+        paddingTop={8}
+        childControlWidth={true}
+        childControlHeight={true}
+        childForceExpandWidth={false}
+      >
+        <Text
+          text={statusText}
+          fontSize={16f}
+          alignment={TMPro.TextAlignmentOptions.MidlineLeft}
+          layoutElement={new UguiLayoutElement { FlexibleWidth = 1f }}
+        />
+        <Text
+          text="Duration(s):"
+          fontSize={14f}
+          alignment={TMPro.TextAlignmentOptions.Midline}
+          layoutElement={new UguiLayoutElement { MinWidth = 44f }}
+        />
+        <InputField
+          text={durationText}
+          onValueChanged={v => setDurationText(v)}
+          layoutElement={new UguiLayoutElement { MinWidth = 60f, MinHeight = 28f }}
+        />
+        <Text
+          text="Boxes:"
+          fontSize={14f}
+          alignment={TMPro.TextAlignmentOptions.Midline}
+          layoutElement={new UguiLayoutElement { MinWidth = 44f }}
+        />
+        <InputField
+          text={countText}
+          onValueChanged={v => setCountText(v)}
+          layoutElement={new UguiLayoutElement { MinWidth = 80f, MinHeight = 28f }}
+        />
+        <Button
+          interactable={!running}
+          onClick={() => {
+            if (running) return;
+            string countClean = countText.Replace("\u200B", "").Trim();
+            string durationClean = durationText.Replace("\u200B", "").Trim();
+            if (int.TryParse(countClean, out int n) && n > 0 && n <= 10000 &&
+                float.TryParse(durationClean, out float dur) && dur > 0) {
+              setBoxCount(n);
+              setDuration(dur);
+              setVersion(v => v + 1);
+              setRunning(true);
+            }
+          }}
+          layoutElement={new UguiLayoutElement { MinWidth = 90f, MinHeight = 28f }}
+        >
+          <Text
+            text={running ? "Running..." : (finished ? "Restart" : "Start")}
+            fontSize={14f}
+            color={new Color(0.13f, 0.13f, 0.15f)}
+            alignment={TMPro.TextAlignmentOptions.Center}
+            anchors={UguiAnchorPreset.Stretch}
+            offsetMin={Vector2.zero}
+            offsetMax={Vector2.zero}
+          />
+        </Button>
+      </HorizontalLayoutGroup>
+      <Image
+        ref={areaRef}
+        anchors={UguiAnchorPreset.Stretch}
+        offsetMin={new Vector2(0f, 0f)}
+        offsetMax={new Vector2(0f, -52f)}
+        color={new Color(0.09f, 0.1f, 0.13f)}
+      >
+        @if (areaSize.x > 0) {
+          return (
+            <Panel
+              anchors={UguiAnchorPreset.Stretch}
+              offsetMin={Vector2.zero}
+              offsetMax={Vector2.zero}
+            >
+              @foreach (var box in boxes) {
+                return (
+                  <Image
+                    key={box.id}
+                    anchors={UguiAnchorPreset.BottomLeft}
+                    anchoredPosition={new Vector2(box.x, box.y)}
+                    sizeDelta={new Vector2(box.size, box.size)}
+                    color={box.color}
+                  />
+                );
+              }
+            </Panel>
+          );
+        }
+      </Image>
+    </Panel>
+  );
+}

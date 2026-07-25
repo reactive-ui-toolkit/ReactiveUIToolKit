@@ -537,7 +537,10 @@ namespace ReactiveUITK.SourceGenerator
                     ? ImmutableArray<MemberDeclaration>.Empty
                     : ds.MemberDeclarations,
                 exportedComponents.ToImmutable(),
-                ds.DefaultExportName);
+                ds.DefaultExportName)
+            {
+                Backend = ds.Backend,
+            };
             return true;
         }
 

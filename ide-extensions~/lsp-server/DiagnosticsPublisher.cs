@@ -490,10 +490,10 @@ public sealed class DiagnosticsPublisher
         // UITKX0105 (unknown element) and UITKX0109 (unknown attribute) until
         // the scan finishes and ScanCompleted triggers RevalidateOpenDocuments.
         var projectElements = _index.HasCompletedInitialScan
-            ? BuildProjectElements(directives.ComponentName)
+            ? BuildProjectElements(directives.ComponentName, directives.Backend)
             : null;
         var knownAttributes = projectElements != null
-            ? BuildKnownAttributes(projectElements)
+            ? BuildKnownAttributes(projectElements, directives.Backend)
             : null;
         var t2Diags = _analyzer.Analyze(parseResult, localPath, projectElements, knownAttributes, text);
 
@@ -505,7 +505,8 @@ public sealed class DiagnosticsPublisher
         // Check elements and style properties against the detected Unity version.
         // Only produces diagnostics when schema entries carry sinceUnity annotations.
         var versionDiags = CheckVersionCompatibility(
-            parsedNodes, roslynHost?.DetectedUnityVersion ?? UnityVersion.Unknown);
+            parsedNodes, roslynHost?.DetectedUnityVersion ?? UnityVersion.Unknown,
+            directives.Backend);
 
         // ── UITKX0113 — duplicate `component <Name>` in same asmdef ──────────
         // The multi-valued WorkspaceIndex (TECH_DEBT_V2 #21 fix, 2026-05-18) keeps
@@ -1059,17 +1060,17 @@ public sealed class DiagnosticsPublisher
     /// Returns an empty list when the user version is unknown or no annotations exist.
     /// </summary>
     private List<ParseDiagnostic> CheckVersionCompatibility(
-        ImmutableArray<AstNode> nodes, UnityVersion userVersion)
+        ImmutableArray<AstNode> nodes, UnityVersion userVersion, string? backend)
     {
         var diags = new List<ParseDiagnostic>();
         if (!userVersion.IsKnown)
             return diags;
         foreach (var node in nodes)
-            WalkForVersionDiags(node, userVersion, diags);
+            WalkForVersionDiags(node, userVersion, backend, diags);
         return diags;
     }
 
-    private void WalkForVersionDiags(AstNode node, UnityVersion userVersion, List<ParseDiagnostic> diags)
+    private void WalkForVersionDiags(AstNode node, UnityVersion userVersion, string? backend, List<ParseDiagnostic> diags)
     {
         if (node is ElementNode el)
         {
@@ -1093,7 +1094,7 @@ public sealed class DiagnosticsPublisher
             // Check attribute version requirements
             foreach (var attr in el.Attributes)
             {
-                var schemaAttr = _schema.GetAttributesForElement(el.TagName)
+                var schemaAttr = _schema.GetAttributesForElement(el.TagName, backend)
                     .FirstOrDefault(a => a.Name.Equals(attr.Name, StringComparison.OrdinalIgnoreCase));
                 if (schemaAttr?.SinceUnity is not null
                     && UnityVersion.TryParse(schemaAttr.SinceUnity, out var attrMinVersion)
@@ -1130,7 +1131,7 @@ public sealed class DiagnosticsPublisher
 
             // Recurse into children
             foreach (var child in el.Children)
-                WalkForVersionDiags(child, userVersion, diags);
+                WalkForVersionDiags(child, userVersion, backend, diags);
         }
     }
 
@@ -1141,10 +1142,10 @@ public sealed class DiagnosticsPublisher
     /// (built-in UITKX elements) and the dynamic workspace index (*Props.cs scan).
     /// Used for UITKX0105 unknown-element checks.
     /// </summary>
-    private HashSet<string> BuildProjectElements(string? ownComponentName = null)
+    private HashSet<string> BuildProjectElements(string? ownComponentName = null, string? backend = null)
     {
         var set = new HashSet<string>(StringComparer.Ordinal);
-        foreach (var key in _schema.Root.Elements.Keys)
+        foreach (var key in _schema.GetElements(backend).Keys)
             set.Add(key);
         foreach (var e in _index.KnownElements)
             set.Add(e);
@@ -1174,7 +1175,8 @@ public sealed class DiagnosticsPublisher
     /// Svelte (typed) component-prop semantics.</para>
     /// </summary>
     private IReadOnlyDictionary<string, IReadOnlyCollection<string>> BuildKnownAttributes(
-        HashSet<string> projectElements
+        HashSet<string> projectElements,
+        string? backend = null
     )
     {
         var result = new Dictionary<string, IReadOnlyCollection<string>>(
@@ -1182,10 +1184,10 @@ public sealed class DiagnosticsPublisher
         );
 
         // Built-in elements — schema per-element + intrinsic + structural.
-        foreach (var tagName in _schema.Root.Elements.Keys)
+        foreach (var tagName in _schema.GetElements(backend).Keys)
         {
             var attrs = _schema
-                .GetAttributesForElement(tagName)
+                .GetAttributesForElement(tagName, backend)
                 .Select(a => a.Name)
                 .ToHashSet(StringComparer.OrdinalIgnoreCase);
             result[tagName] = attrs;

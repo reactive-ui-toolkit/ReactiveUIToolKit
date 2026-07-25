@@ -106,6 +106,14 @@ public sealed class UitkxSchema
         [JsonPropertyName("elements")]
         public Dictionary<string, ElementInfo> Elements { get; set; } = new();
 
+        /// <summary>The uGUI vocabulary (files with <c>@backend ugui</c>).</summary>
+        [JsonPropertyName("uguiElements")]
+        public Dictionary<string, ElementInfo> UguiElements { get; set; } = new();
+
+        /// <summary>Shared RectTransform/prop-group surface for every uGUI element.</summary>
+        [JsonPropertyName("uguiIntrinsicAttributes")]
+        public List<AttributeInfo> UguiIntrinsicAttributes { get; set; } = new();
+
         [JsonPropertyName("styleKeyValues")]
         public Dictionary<string, List<string>> StyleKeyValues { get; set; } =
             new(StringComparer.OrdinalIgnoreCase);
@@ -186,6 +194,10 @@ public sealed class UitkxSchema
             Root.Elements,
             StringComparer.OrdinalIgnoreCase
         );
+        Root.UguiElements = new Dictionary<string, ElementInfo>(
+            Root.UguiElements,
+            StringComparer.OrdinalIgnoreCase
+        );
     }
 
     // ── Helpers ──────────────────────────────────────────────────────────────
@@ -194,18 +206,39 @@ public sealed class UitkxSchema
         Root.Elements.TryGetValue(tagName, out var el) ? el : null;
 
     /// <summary>
+    /// Backend-aware element lookup: <paramref name="backend"/> is the file's
+    /// <c>@backend</c> value ("ugui" selects the uGUI vocabulary; null/other
+    /// selects the default UI Toolkit vocabulary).
+    /// </summary>
+    public ElementInfo? TryGetElement(string tagName, string? backend) =>
+        backend == "ugui"
+            ? (Root.UguiElements.TryGetValue(tagName, out var uel) ? uel : null)
+            : TryGetElement(tagName);
+
+    /// <summary>The element dictionary for a file backend.</summary>
+    public Dictionary<string, ElementInfo> GetElements(string? backend) =>
+        backend == "ugui" ? Root.UguiElements : Root.Elements;
+
+    /// <summary>The shared per-element attribute surface for a file backend.</summary>
+    public List<AttributeInfo> GetIntrinsicAttributes(string? backend) =>
+        backend == "ugui" ? Root.UguiIntrinsicAttributes : Root.IntrinsicElementAttributes;
+
+    /// <summary>
     /// Returns every attribute valid for a built-in element — the element's
     /// per-tag attributes, plus the intrinsic-element common attributes
     /// (<c>BaseProps</c> surface), plus the structural-universal attributes
     /// (<c>key</c>, <c>ref</c>). Returns empty for unknown / user-component tags.
     /// </summary>
-    public IEnumerable<AttributeInfo> GetAttributesForElement(string tagName)
+    public IEnumerable<AttributeInfo> GetAttributesForElement(string tagName) =>
+        GetAttributesForElement(tagName, null);
+
+    public IEnumerable<AttributeInfo> GetAttributesForElement(string tagName, string? backend)
     {
-        var el = TryGetElement(tagName);
+        var el = TryGetElement(tagName, backend);
         if (el is null)
             return Enumerable.Empty<AttributeInfo>();
         return el.Attributes
-            .Concat(Root.IntrinsicElementAttributes)
+            .Concat(GetIntrinsicAttributes(backend))
             .Concat(Root.StructuralAttributes);
     }
 

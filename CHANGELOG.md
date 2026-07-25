@@ -6,6 +6,114 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 For IDE extension changelogs (VS Code, Visual Studio 2022), see
 `ide-extensions~/changelog.json` â€” the single source of truth for extension releases.
 
+## [0.11.0] - Unreleased
+
+### Added — uGUI render backend (`@backend ugui`)
+
+The library now renders **Unity UI (uGUI)** through the same fiber reconciler,
+hooks, signals, context, router, and Fast Refresh as UI Toolkit. The design
+principle: uGUI keeps its own mental model — RectTransform anchors/pivots for
+positioning (with an `anchors` preset prop mirroring the Inspector widget),
+sprites/colors/materials for styling, LayoutGroups for stacking. There is
+deliberately no `Style`/USS surface on uGUI elements.
+
+- **New `ReactiveUITK.Ugui` assembly** (`Ugui/`): `UguiRootRenderer` mounts a
+  tree under any RectTransform in an existing Canvas; `U.*` factories and a
+  per-element adapter registry cover Canvas, Panel, Image, RawImage, Text
+  (TMP), Button, Horizontal/Vertical/GridLayoutGroup, Toggle(+ToggleGroup),
+  Slider, Scrollbar, ScrollRect, Dropdown (TMP), InputField (TMP), and
+  `<Prefab>` — the migration bridge that mounts existing uGUI prefabs with
+  `IReactivePrefab` prop binding.
+- **Prop groups** = declarative "Add Component": `layoutElement`,
+  `contentSizeFitter`, `aspectRatioFitter`, `canvasGroup`, `mask`,
+  `rectMask2D`, `shadow`, `outline`, and `pointer` (IPointer*/drag/scroll
+  bridge) on any element; non-null adds/updates, null-transition removes.
+- **Controlled components**: all value writes go through SetValueWithoutNotify
+  / SetTextWithoutNotify (no event echo); UnityEvents are subscribed exactly
+  once with delegate-field diffs. Raycast hygiene: visual elements default
+  `raycastTarget=false`, interactive ones true. Editor-only hint when rect
+  props are written on a RectTransform driven by a layout component.
+- **`.uitkx` support**: the `@backend ugui` file directive selects the ugui
+  element vocabulary across the source generator, HMR emitter, schema, and
+  IDE tooling (UITKX2111 invalid/duplicate backend, UITKX2112 `@uss` in a
+  ugui file). UI Toolkit emission is byte-identical when the directive is
+  absent.
+- **Cross-backend islands (v2)**: `UguiHost` embeds a uGUI subtree inside a
+  UI Toolkit tree (screen-synced overlay canvas, native input); `UitkHost`
+  embeds a UI Toolkit panel inside a uGUI tree (PanelSettings render texture
+  + forwarded pointer input).
+- **Host-agnostic fiber core**: host operations now route through an abstract
+  `FiberHostConfig` with opaque host handles, and typed props generalize
+  through `HostPropsBase` — no behavior change for UI Toolkit mounts
+  (all 1726 pre-existing generator pins unchanged).
+
+- **Complete Inspector prop coverage**: Selectable animation triggers,
+  toggle transition, TMP gradients/outline/style sheets/sprite assets,
+  dropdown option icons + arrow/template/item styling, input-field
+  inputType/keyboardType/characterValidation/caret control +
+  onSelect/onDeselect, canvas sorting layer/target display/shader channels,
+  full 3D rotation + localPosition.z + GameObject tag, image alpha hit
+  test, scrollbar spacing.
+- **GameObject pooling**: per-adapter pool for stateless visuals (Panel,
+  Image, RawImage, Text), gated on a pristine-state reset — stateful
+  controls are never pooled, so reuse cannot leak toggle/input state.
+- **Menu-identical visuals everywhere**: a shipped resources asset
+  references Unity's builtin UI sprites, so runtime-created controls look
+  like the GameObject > UI menu ones in the editor AND player builds.
+- **Backend-aware IDE intelligence**: completions, hover, diagnostics, and
+  virtual-document props resolution follow `@backend`; `UITKX2113` flags
+  cross-backend imports at compile time (both directions); an 18-tag
+  vocabulary contract test pins the ugui tag surface. Docs site gains the
+  "uGUI Backend" page.
+
+### Fixed — fiber core hardening (found by uGUI field testing, benefits both backends)
+
+- **Render-restart starvation**: state updates arriving while a large render
+  pass was in flight restarted the pass from scratch, forever, under
+  sustained update pressure — the tree never committed. In-flight passes now
+  finish and the queued updates replay after commit.
+- **Keyed reorders now physically move hosts**: reusing a keyed child never
+  moved its host element, so reorders silently rendered in stale order.
+  React-style lastPlacedIndex tracking plus a move branch in CommitPlacement,
+  with DOM-semantics same-parent InsertBefore in both host configs.
+- **Deferred updates on a swapped root**: updates deferred across a commit
+  could target the stale alternate tree and die silently (frozen subtrees);
+  they now redirect to the live fiber and re-mark the parent path.
+- **Stress-sample Restart**: the auto-stop was level-triggered on stale
+  `finished` state and re-cancelled a restart one render later; now
+  edge-triggered on the finish transition (UITK and uGUI samples alike).
+- **Internal diagnostics logs off by default**:
+  `InternalLogOptions.EnableInternalLogs` defaulted to true and only the
+  UI Toolkit mount path overwrote it from the trace level, so uGUI mounts
+  logged every state set. The default is now false and `UguiRootRenderer`
+  mirrors `RootRenderer`'s diagnostics wiring (verbose trace re-enables).
+
+### Changed — performance & API
+
+- **Typed component cache on the uGUI diff path**: adapters cache
+  Graphic/Image/Selectable/control references on the node tag at create
+  time; per-frame prop writes are a field read plus a property set — the
+  same cost model as UI Toolkit's typed VisualElement writes. GetComponent
+  survives only as cache-miss fallback and on cold paths.
+- **`AnimationTicker` is now public** (`ReactiveUITK.Core.Animation`): the
+  host-agnostic per-frame tick source (editor and player) for backends with
+  no per-element scheduler; `Subscribe(Action)` returns the disposer.
+
+### Samples & docs
+
+- **`UguiStressTest`** — the stress test as a `.uitkx` `@backend ugui`
+  component mirroring the UI Toolkit `StressTest` hook-for-hook (same
+  seed-42 physics, keyed box field, `AnimationTicker` in place of
+  `schedule.Every(16)`), so backend throughput compares like for like.
+  Mounted by `RuntimeUguiStressTestDemo`; `RuntimeUguiGalleryDemo` walks the
+  element vocabulary; an EditMode suite (`Ugui/Tests`) pins mount, diff,
+  keyed-reorder, and pool-churn behavior.
+- Root README and Samples README now cover the uGUI backend (directory map,
+  `@backend ugui` example, element vocabulary, islands, docs link).
+
+Remaining follow-ups in `Plans~/REMAINING_WORK.md` §11 (markup-level
+driven-rect diagnostic, ugui Animate adapter, sample gallery).
+
 ## [0.10.0] - 2026-07-18
 
 ### Changed — License: PolyForm Shield 1.0.0 → ReactiveUI Community License 1.0

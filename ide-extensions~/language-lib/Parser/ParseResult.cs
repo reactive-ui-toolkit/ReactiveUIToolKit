@@ -490,6 +490,15 @@ namespace ReactiveUITK.Language.Parser
         /// new-mode (<c>false</c>).
         /// </summary>
         public bool UsesLegacySyntax { get; init; } = false;
+
+        /// <summary>
+        /// The render backend this file targets, from the <c>@backend</c>
+        /// directive: <c>"ugui"</c> for the uGUI vocabulary, <c>null</c> for
+        /// the default UI Toolkit vocabulary (an explicit <c>@backend uitk</c>
+        /// normalizes to null). Selects the tag-resolution table, factory
+        /// class, and schema used by the emitters and IDE tooling.
+        /// </summary>
+        public string? Backend { get; init; } = null;
     };
 
     // ── Full parse result ─────────────────────────────────────────────────────

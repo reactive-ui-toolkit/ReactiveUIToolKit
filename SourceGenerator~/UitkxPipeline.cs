@@ -68,6 +68,12 @@ namespace ReactiveUITK.SourceGenerator
 
             ct.ThrowIfCancellationRequested();
 
+            // ── Stage 1b2: cross-backend import guard (UITKX2113) ─────────────
+            // A file renders through exactly one backend; importing across the
+            // @backend boundary produces code that cannot mount. Unconditional
+            // (not gated on StrictImports) — this is a correctness error.
+            AppendCrossBackendImportDiags(directives, filePath, peerExports, parseDiags);
+
             // ── Stage 1c: strict import diagnostics (StrictImports seam, §6) ──
             // Import validation (2300/2301/2308/2314) + reference detector (2305/2307) + unused import
             // (2304) + value-import cycle (2306). Runs for ALL files (component AND hook/module) BEFORE
@@ -359,7 +365,13 @@ namespace ReactiveUITK.SourceGenerator
 
             // ── Stage 3: PropsResolver ────────────────────────────────────────
             var (starNsMap, aliasTypeMap) = BuildImportAliasTagMaps(directives, filePath, peerExports);
-            var resolver = new PropsResolver(compilation, peerComponents, starNsMap, aliasTypeMap);
+            var resolver = new PropsResolver(
+                compilation,
+                peerComponents,
+                starNsMap,
+                aliasTypeMap,
+                directives.Backend
+            );
 
             ct.ThrowIfCancellationRequested();
 
@@ -1011,6 +1023,55 @@ namespace ReactiveUITK.SourceGenerator
                 }
             }
             return (starNs, aliasType);
+        }
+
+        /// <summary>
+        /// UITKX2113: an import whose target file declares a different <c>@backend</c>
+        /// than the importer. Uses the same specifier resolution as
+        /// <see cref="BuildImportAliasTagMaps"/>; imports whose target is not in the
+        /// peer-exports table (legacy files, unresolved paths) are skipped — legacy
+        /// files predate backends and are UI Toolkit by definition, which the null
+        /// Backend on their absent entry cannot express, so only NEW-MODE peers are
+        /// compared.
+        /// </summary>
+        private static void AppendCrossBackendImportDiags(
+            DirectiveSet directives,
+            string filePath,
+            ImmutableArray<PeerExportsInfo>? peerExports,
+            List<ParseDiagnostic> parseDiags)
+        {
+            if (directives.Imports.IsDefaultOrEmpty || peerExports == null || peerExports.Value.IsDefaultOrEmpty)
+                return;
+
+            var backendByPath = new Dictionary<string, string?>(StringComparer.OrdinalIgnoreCase);
+            foreach (var pe in peerExports.Value)
+                backendByPath[NormalizeAbs(pe.SourceFilePath)] = pe.Backend;
+
+            string importerDir = NormalizeAbs(Path.GetDirectoryName(filePath));
+            string rootDir = EffectiveNamespace.UiSourceRootDir(filePath) ?? importerDir;
+
+            foreach (var imp in directives.Imports)
+            {
+                string? candidate = ImportResolver.MapSpecifierToPath(
+                    importerDir, imp.Specifier, rootDir, out _);
+                if (candidate == null || !backendByPath.TryGetValue(NormalizeAbs(candidate), out var peerBackend))
+                    continue;
+                if (string.Equals(peerBackend, directives.Backend, StringComparison.Ordinal))
+                    continue;
+
+                string mine = directives.Backend ?? "uitk";
+                string theirs = peerBackend ?? "uitk";
+                parseDiags.Add(new ParseDiagnostic
+                {
+                    Code = "UITKX2113",
+                    Severity = ParseSeverity.Error,
+                    SourceLine = imp.Line,
+                    Message =
+                        $"Cross-backend import: '{imp.Specifier}' is a '@backend {theirs}' file but this file targets '{mine}'. "
+                        + "A mount renders exactly one backend - move the component to the matching backend, or embed it "
+                        + "through an island (UguiHost inside UI Toolkit trees, UitkHost inside uGUI trees).",
+                });
+            }
         }
 
         /// <summary>True when any import carries an <c>as</c>-rename or is a default import —
