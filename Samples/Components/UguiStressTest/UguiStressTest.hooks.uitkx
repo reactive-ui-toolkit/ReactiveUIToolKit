@@ -1,0 +1,134 @@
+@backend ugui
+
+export (
+  List<(string id, float x, float y, float size, float vx, float vy, Color color)> boxes,
+  float avgFps,
+  float elapsed,
+  int totalFrames,
+  bool finished
+) useStressTestLoop(Ref<RectTransform?> areaRef, Vector2 areaSize, int boxCount, float duration, bool running, int version) {
+  var emptyBoxes = new List<(string id, float x, float y, float size, float vx, float vy, Color color)>();
+  var (boxes, setBoxes) = useState(emptyBoxes);
+
+  var (avgFps, setAvgFps) = useState(0f);
+  var (elapsed, setElapsed) = useState(0f);
+  var (totalFrames, setTotalFrames) = useState(0);
+  var (finished, setFinished) = useState(false);
+
+  var lastTime = useRef(-1f);
+  var totalTimeRef = useRef(0f);
+  var totalFramesRef = useRef(0);
+  var boxCountRef = useRef(boxCount);
+  var versionRef = useRef(version);
+  var runningRef = useRef(running);
+  var durationRef = useRef(duration);
+  var needsRegen = useRef(true);
+  var elapsedRef = useRef(0f);
+
+  runningRef.Current = running;
+  durationRef.Current = duration;
+
+  if (boxCountRef.Current != boxCount || versionRef.Current != version) {
+    boxCountRef.Current = boxCount;
+    versionRef.Current = version;
+    needsRegen.Current = true;
+  }
+
+  var boxesRef = useRef<List<(string id, float x, float y, float size, float vx, float vy, Color color)>>(emptyBoxes);
+
+  useEffect(() => {
+    var rt = areaRef?.Current;
+    if (rt == null) return null;
+    if (areaSize.x <= 0 || areaSize.y <= 0) return null;
+
+    float w = areaSize.x;
+    float h = areaSize.y;
+    lastTime.Current = -1f;
+    totalTimeRef.Current = 0f;
+    totalFramesRef.Current = 0;
+    elapsedRef.Current = 0f;
+    needsRegen.Current = true;
+
+    // AnimationTicker fires every frame; gate to ~16ms so the commit
+    // cadence matches the UITK StressTest's schedule.Every(16) ticker.
+    float lastTickAt = -1f;
+    Action ticker = AnimationTicker.Subscribe(() => {
+      float frameNow = Time.realtimeSinceStartup;
+      if (lastTickAt >= 0 && frameNow - lastTickAt < 0.016f) return;
+      lastTickAt = frameNow;
+      if (!runningRef.Current) return;
+
+      // Regenerate boxes if needed
+      if (needsRegen.Current) {
+        needsRegen.Current = false;
+        int count = boxCountRef.Current;
+        var rng2 = new System.Random(42);
+        var fresh = new List<(string id, float x, float y, float size, float vx, float vy, Color color)>(count);
+        for (int j = 0; j < count; j++) {
+          float fs = 8f + (float)(rng2.NextDouble() * 16.0);
+          float fh = (float)rng2.NextDouble();
+          Color fc = Color.HSVToRGB(fh, 0.7f, 0.9f);
+          fresh.Add(($"b{j}", (float)(rng2.NextDouble() * 600.0), (float)(rng2.NextDouble() * 400.0), fs, 60f + (float)(rng2.NextDouble() * 120.0) * (rng2.NextDouble() > 0.5 ? 1f : -1f), 60f + (float)(rng2.NextDouble() * 120.0) * (rng2.NextDouble() > 0.5 ? 1f : -1f), fc));
+        }
+        boxesRef.Current = fresh;
+        setBoxes(fresh);
+        setElapsed(0f);
+        setAvgFps(0f);
+        setTotalFrames(0);
+        setFinished(false);
+        lastTime.Current = -1f;
+        totalTimeRef.Current = 0f;
+        totalFramesRef.Current = 0;
+        elapsedRef.Current = 0f;
+        return;
+      }
+
+      float now = Time.realtimeSinceStartup;
+      if (lastTime.Current < 0) { lastTime.Current = now; return; }
+      float dt = now - lastTime.Current;
+      lastTime.Current = now;
+
+      totalFramesRef.Current++;
+      totalTimeRef.Current += dt;
+      elapsedRef.Current += dt;
+
+      float curAvgFps = totalTimeRef.Current > 0 ? totalFramesRef.Current / totalTimeRef.Current : 0f;
+
+      // Check duration
+      if (elapsedRef.Current >= durationRef.Current) {
+        setAvgFps(curAvgFps);
+        setElapsed(elapsedRef.Current);
+        setTotalFrames(totalFramesRef.Current);
+        setFinished(true);
+        return;
+      }
+
+      setAvgFps(curAvgFps);
+      setElapsed(elapsedRef.Current);
+      setTotalFrames(totalFramesRef.Current);
+
+      var current = boxesRef.Current;
+      var next = new List<(string id, float x, float y, float size, float vx, float vy, Color color)>(current.Count);
+      for (int i = 0; i < current.Count; i++) {
+        var b = current[i];
+        float nx = b.x + b.vx * dt;
+        float ny = b.y + b.vy * dt;
+        float nvx = b.vx;
+        float nvy = b.vy;
+
+        if (nx < 0) { nx = 0; nvx = -nvx; }
+        else if (nx + b.size > w) { nx = w - b.size; nvx = -nvx; }
+        if (ny < 0) { ny = 0; nvy = -nvy; }
+        else if (ny + b.size > h) { ny = h - b.size; nvy = -nvy; }
+
+        next.Add((b.id, nx, ny, b.size, nvx, nvy, b.color));
+      }
+      boxesRef.Current = next;
+      setBoxes(next);
+    });
+
+    return () => ticker();
+  }, new object[] { areaRef?.Current, areaSize });
+
+  return (boxes, avgFps, elapsed, totalFrames, finished);
+}

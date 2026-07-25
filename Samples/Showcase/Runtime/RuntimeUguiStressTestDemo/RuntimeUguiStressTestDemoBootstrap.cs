@@ -1,352 +1,68 @@
-using System.Collections.Generic;
 using ReactiveUITK.Core;
-using ReactiveUITK.Signals;
+using ReactiveUITK.Samples.Components.UguiStressTest.UguiStressTest;
 using ReactiveUITK.Ugui;
 using UnityEngine;
 
 namespace ReactiveUITK.Samples.Showcase.Runtime
 {
     /// <summary>
-    /// The uGUI port of Samples/Components/StressTest: N boxes animated for a
-    /// chosen duration with a live average-FPS readout. The bootstrap's
-    /// Update drives a time signal while running; every tick re-renders the
-    /// whole box field through the reconciler — that sustained full-tree diff
-    /// IS the stress. Scene setup: Canvas + EventSystem + a stretched
+    /// Mounts the UguiStressTest component — the uGUI twin of
+    /// Samples/Components/StressTest, written in .uitkx with the same
+    /// hook-driven flow (useState boxes + a ticker effect integrating
+    /// seed-42 physics). Scene setup: Canvas + EventSystem + a stretched
     /// RectTransform with a UguiRootRenderer and this component.
     /// </summary>
     [RequireComponent(typeof(UguiRootRenderer))]
     public sealed class RuntimeUguiStressTestDemoBootstrap : MonoBehaviour
     {
-        // Created in Start, never in field initializers: SignalFactory boots
-        // the signals runtime host, which Unity forbids during MonoBehaviour
-        // construction (type initializers run in constructor context).
-        private static Signal<float> s_time;
-        private static Signal<bool> s_running;
-        private static Signal<string> s_status;
-
-        private static int s_boxCount = 300;
-        private static float s_duration = 10f;
-
-        // Diagnostic: the area element assigns this ref on mount so Update
-        // can report whether box children actually reach the hierarchy.
-        private static readonly Ref<RectTransform> s_areaRef = new Ref<RectTransform>();
-
-        private float _elapsed;
-        private int _frames;
-        private int _lastReportedSecond = -1;
-
-        // Honest throughput split: the game loop can tick far faster than the
-        // UI actually commits (large passes span multiple sliced frames, and
-        // mid-pass updates coalesce). Frame FPS alone overstates the stress
-        // result — UI Hz is the number comparable across backends.
-        private static int s_renders;
-        private int _uiHz;
-        private int _lastRenderCount;
-
-        // Same box model as Samples/Components/StressTest: per-box random
-        // size/position/velocity (seed 42), dt-integrated with edge bounce.
-        private struct Box
+        private void Awake()
         {
-            public float X;
-            public float Y;
-            public float Size;
-            public float Vx;
-            public float Vy;
-            public Color Color;
+            Application.targetFrameRate = -1;
+            QualitySettings.vSyncCount = 0;
         }
-
-        private Box[] _boxes = System.Array.Empty<Box>();
-        private float _areaW = 900f;
-        private float _areaH = 500f;
 
         private void Start()
         {
-            s_time ??= SignalFactory.Get<float>("UguiStress.Time", 0f);
-            s_running ??= SignalFactory.Get<bool>("UguiStress.Running", false);
-            s_status ??= SignalFactory.Get<string>(
-                "UguiStress.Status",
-                "uGUI Stress Test — Ready"
-            );
-            GetComponent<UguiRootRenderer>().Render(V.Func(StressTest));
+            GetComponent<UguiRootRenderer>().Render(V.Func(UguiStressTest.Render));
         }
+
+#if UNITY_EDITOR
+        private int _lastReportedSecond = -1;
 
         private void Update()
         {
-            if (s_running == null || !s_running.Value)
+            int second = Mathf.FloorToInt(Time.unscaledTime);
+            if (second == _lastReportedSecond)
             {
                 return;
             }
-            _elapsed += Time.deltaTime;
-            _frames++;
-            float avgFps = _frames / Mathf.Max(0.0001f, _elapsed);
-            StepBoxes(Time.deltaTime);
-
-            int second = Mathf.FloorToInt(_elapsed);
-            if (second != _lastReportedSecond)
+            _lastReportedSecond = second;
+            int ops =
+                UguiHostConfig.DebugCreated
+                + UguiHostConfig.DebugAppended
+                + UguiHostConfig.DebugInserted
+                + UguiHostConfig.DebugRemoved;
+            if (ops == 0)
             {
-                _lastReportedSecond = second;
-                _uiHz = s_renders - _lastRenderCount;
-                _lastRenderCount = s_renders;
-                var areaRt = s_areaRef.Current;
-#if UNITY_EDITOR
-                int staging =
-                    UguiHostConfig.DebugStagingRoot != null
-                        ? UguiHostConfig.DebugStagingRoot.childCount
-                        : -1;
-                // totalImages counts every Image under the mount (boxes + a
-                // handful of chrome) — a duplicated box subtree shows up as
-                // roughly double the box count here even when the area ref
-                // went stale.
-                int totalImages = GetComponentsInChildren<UnityEngine.UI.Image>(true).Length;
-                Debug.Log(
-                    $"[UguiStress] t={_elapsed:F1}s area={(areaRt != null ? areaRt.name : "NULL")} "
-                        + $"children={(areaRt != null ? areaRt.childCount : -1)} staging={staging} "
-                        + $"totalImages={totalImages} | "
-                        + $"created={UguiHostConfig.DebugCreated} appended={UguiHostConfig.DebugAppended} "
-                        + $"inserted={UguiHostConfig.DebugInserted} removed={UguiHostConfig.DebugRemoved} "
-                        + $"pooled={UguiHostConfig.DebugPooled} destroyed={UguiHostConfig.DebugDestroyed}"
-                );
-                UguiHostConfig.DebugCreated = 0;
-                UguiHostConfig.DebugAppended = 0;
-                UguiHostConfig.DebugInserted = 0;
-                UguiHostConfig.DebugRemoved = 0;
-                UguiHostConfig.DebugPooled = 0;
-                UguiHostConfig.DebugDestroyed = 0;
-#else
-                Debug.Log(
-                    $"[UguiStress] t={_elapsed:F1}s area={(areaRt != null ? areaRt.name : "NULL")} "
-                        + $"children={(areaRt != null ? areaRt.childCount : -1)}"
-                );
+                return;
+            }
+            int staging =
+                UguiHostConfig.DebugStagingRoot != null
+                    ? UguiHostConfig.DebugStagingRoot.childCount
+                    : -1;
+            Debug.Log(
+                $"[UguiStress] staging={staging} created={UguiHostConfig.DebugCreated} "
+                    + $"appended={UguiHostConfig.DebugAppended} inserted={UguiHostConfig.DebugInserted} "
+                    + $"removed={UguiHostConfig.DebugRemoved} pooled={UguiHostConfig.DebugPooled} "
+                    + $"destroyed={UguiHostConfig.DebugDestroyed}"
+            );
+            UguiHostConfig.DebugCreated = 0;
+            UguiHostConfig.DebugAppended = 0;
+            UguiHostConfig.DebugInserted = 0;
+            UguiHostConfig.DebugRemoved = 0;
+            UguiHostConfig.DebugPooled = 0;
+            UguiHostConfig.DebugDestroyed = 0;
+        }
 #endif
-            }
-
-            if (_elapsed >= s_duration)
-            {
-                s_running.Set(false);
-                float avgUiHz = s_renders / Mathf.Max(0.0001f, _elapsed);
-                s_status.Set(
-                    $"DONE — {s_boxCount} boxes | Frame FPS: {avgFps:F1} | "
-                        + $"UI: {avgUiHz:F1} Hz | Duration: {_elapsed:F1}s | Frames: {_frames}"
-                );
-                return;
-            }
-
-            s_status.Set(
-                $"uGUI Stress — {s_boxCount} boxes | Frame FPS: {avgFps:F1} | "
-                    + $"UI: {_uiHz} Hz | Elapsed: {_elapsed:F1}s / {s_duration:F0}s"
-            );
-            s_time.Set(_elapsed);
-        }
-
-        private void StartRun()
-        {
-            Debug.Log($"[UguiStress] Run started — {s_boxCount} boxes for {s_duration:F0}s");
-            RefreshAreaSize();
-            var rng = new System.Random(42);
-            _boxes = new Box[s_boxCount];
-            for (int j = 0; j < s_boxCount; j++)
-            {
-                float size = 8f + (float)(rng.NextDouble() * 16.0);
-                Color color = Color.HSVToRGB((float)rng.NextDouble(), 0.7f, 0.9f);
-                _boxes[j] = new Box
-                {
-                    X = (float)(rng.NextDouble() * _areaW),
-                    Y = (float)(rng.NextDouble() * _areaH),
-                    Size = size,
-                    Vx =
-                        (60f + (float)(rng.NextDouble() * 120.0))
-                        * (rng.NextDouble() > 0.5 ? 1f : -1f),
-                    Vy =
-                        (60f + (float)(rng.NextDouble() * 120.0))
-                        * (rng.NextDouble() > 0.5 ? 1f : -1f),
-                    Color = color,
-                };
-            }
-            _elapsed = 0f;
-            _frames = 0;
-            s_time.Set(0f);
-            s_running.Set(true);
-        }
-
-        private void RefreshAreaSize()
-        {
-            var areaRt = s_areaRef.Current;
-            if (areaRt != null && areaRt.rect.width > 0f && areaRt.rect.height > 0f)
-            {
-                _areaW = areaRt.rect.width;
-                _areaH = areaRt.rect.height;
-            }
-        }
-
-        private void StepBoxes(float dt)
-        {
-            RefreshAreaSize();
-            for (int i = 0; i < _boxes.Length; i++)
-            {
-                var b = _boxes[i];
-                float nx = b.X + b.Vx * dt;
-                float ny = b.Y + b.Vy * dt;
-
-                if (nx < 0f)
-                {
-                    nx = 0f;
-                    b.Vx = -b.Vx;
-                }
-                else if (nx + b.Size > _areaW)
-                {
-                    nx = _areaW - b.Size;
-                    b.Vx = -b.Vx;
-                }
-                if (ny < 0f)
-                {
-                    ny = 0f;
-                    b.Vy = -b.Vy;
-                }
-                else if (ny + b.Size > _areaH)
-                {
-                    ny = _areaH - b.Size;
-                    b.Vy = -b.Vy;
-                }
-
-                b.X = nx;
-                b.Y = ny;
-                _boxes[i] = b;
-            }
-        }
-
-        private static string CleanNumeric(string raw)
-        {
-            if (string.IsNullOrEmpty(raw))
-            {
-                return string.Empty;
-            }
-            return raw.Replace("\u200B", string.Empty).Trim();
-        }
-
-        private static VirtualNode HeaderLabel(string text)
-        {
-            var props = UguiBaseProps.__Rent<UguiTextProps>();
-            props.Text = text;
-            props.FontSize = 14f;
-            props.Alignment = TMPro.TextAlignmentOptions.Midline;
-            props.LayoutElement = new UguiLayoutElement { MinWidth = 44f };
-            return U.Text(props);
-        }
-
-        private static VirtualNode ButtonLabel(string text)
-        {
-            var props = UguiBaseProps.__Rent<UguiTextProps>();
-            props.Text = text;
-            props.FontSize = 14f;
-            props.Color = new Color(0.13f, 0.13f, 0.15f);
-            props.Alignment = TMPro.TextAlignmentOptions.Center;
-            props.Anchors = UguiAnchorPreset.Stretch;
-            props.OffsetMin = Vector2.zero;
-            props.OffsetMax = Vector2.zero;
-            return U.Text(props);
-        }
-
-        private VirtualNode StressTest(IProps props, IReadOnlyList<VirtualNode> children)
-        {
-            s_renders++;
-            float t = Hooks.UseSignal(s_time);
-            bool running = Hooks.UseSignal(s_running);
-            string status = Hooks.UseSignal(s_status);
-            var (countText, setCountText) = Hooks.UseState("300");
-            var (durationText, setDurationText) = Hooks.UseState("10");
-
-            var root = UguiBaseProps.__Rent<UguiPanelProps>();
-
-            var header = UguiBaseProps.__Rent<UguiHorizontalLayoutGroupProps>();
-            header.Anchors = UguiAnchorPreset.TopStretch;
-            header.SizeDelta = new Vector2(0f, 44f);
-            header.Spacing = 8f;
-            header.PaddingLeft = 8;
-            header.PaddingRight = 8;
-            header.PaddingTop = 8;
-            header.ChildControlWidth = true;
-            header.ChildControlHeight = true;
-            header.ChildForceExpandWidth = false;
-
-            var statusProps = UguiBaseProps.__Rent<UguiTextProps>();
-            statusProps.Text = status;
-            statusProps.FontSize = 16f;
-            statusProps.Alignment = TMPro.TextAlignmentOptions.MidlineLeft;
-            statusProps.LayoutElement = new UguiLayoutElement { FlexibleWidth = 1f };
-
-            var boxesInput = UguiBaseProps.__Rent<UguiInputFieldProps>();
-            boxesInput.Text = countText;
-            boxesInput.OnValueChanged = v => setCountText(v);
-            boxesInput.LayoutElement = new UguiLayoutElement { MinWidth = 80f, MinHeight = 28f };
-
-            var durationInput = UguiBaseProps.__Rent<UguiInputFieldProps>();
-            durationInput.Text = durationText;
-            durationInput.OnValueChanged = v => setDurationText(v);
-            durationInput.LayoutElement = new UguiLayoutElement { MinWidth = 60f, MinHeight = 28f };
-
-            var start = UguiBaseProps.__Rent<UguiButtonProps>();
-            start.Interactable = !running;
-            start.OnClick = () =>
-            {
-                if (running)
-                {
-                    return;
-                }
-                // TMP input fields can smuggle a zero-width space (U+200B)
-                // into .text; strip it before parsing or TryParse fails
-                // silently and the click looks dead.
-                string countClean = CleanNumeric(countText);
-                string durationClean = CleanNumeric(durationText);
-                bool okCount = int.TryParse(countClean, out int n) && n > 0 && n <= 10000;
-                bool okDuration = float.TryParse(durationClean, out float dur) && dur > 0f;
-                Debug.Log(
-                    $"[UguiStress] Start clicked — boxes '{countClean}' parsed={okCount}, "
-                        + $"seconds '{durationClean}' parsed={okDuration}"
-                );
-                if (okCount && okDuration)
-                {
-                    s_boxCount = n;
-                    s_duration = dur;
-                    StartRun();
-                }
-            };
-            start.LayoutElement = new UguiLayoutElement { MinWidth = 90f, MinHeight = 28f };
-
-            var area = UguiBaseProps.__Rent<UguiImageProps>();
-            area.Ref = s_areaRef;
-            area.Anchors = UguiAnchorPreset.Stretch;
-            area.OffsetMin = new Vector2(0f, 0f);
-            area.OffsetMax = new Vector2(0f, -52f);
-            area.Color = new Color(0.09f, 0.1f, 0.13f);
-
-            int boxCount = running ? Mathf.Min(s_boxCount, _boxes.Length) : 0;
-            var boxes = new VirtualNode[boxCount];
-            for (int i = 0; i < boxCount; i++)
-            {
-                var b = _boxes[i];
-                var box = UguiBaseProps.__Rent<UguiImageProps>();
-                box.Anchors = UguiAnchorPreset.BottomLeft;
-                box.SizeDelta = new Vector2(b.Size, b.Size);
-                box.AnchoredPosition = new Vector2(b.X, b.Y);
-                box.Color = b.Color;
-                boxes[i] = U.Image(box, $"box-{i}");
-            }
-
-            return U.Panel(
-                root,
-                null,
-                U.HorizontalLayoutGroup(
-                    header,
-                    "header",
-                    U.Text(statusProps),
-                    HeaderLabel("Boxes:"),
-                    U.InputField(boxesInput),
-                    HeaderLabel("Sec:"),
-                    U.InputField(durationInput),
-                    U.Button(start, null, ButtonLabel(running ? "Running..." : "Start"))
-                ),
-                U.Image(area, "area", boxes)
-            );
-        }
     }
 }
