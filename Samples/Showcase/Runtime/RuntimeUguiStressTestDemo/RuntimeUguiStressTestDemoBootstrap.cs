@@ -198,6 +198,12 @@ namespace ReactiveUITK.Samples.Showcase.Runtime
             area.Color = new Color(0.09f, 0.1f, 0.13f);
 
             int boxCount = running ? s_boxCount : 0;
+            if (Time.frameCount % 60 == 0)
+            {
+                Debug.Log(
+                    $"[UguiStress] render: running={running} boxCount={boxCount} t={t:F2}"
+                );
+            }
             var boxes = new VirtualNode[boxCount];
             for (int i = 0; i < boxCount; i++)
             {
