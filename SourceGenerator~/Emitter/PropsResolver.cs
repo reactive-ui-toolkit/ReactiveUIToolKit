@@ -43,7 +43,11 @@ namespace ReactiveUITK.SourceGenerator.Emitter
 
         // ── Roslyn type-name constants ────────────────────────────────────────
         private const string VTypeName = "ReactiveUITK.V";
+        private const string UTypeName = "ReactiveUITK.Ugui.U";
         private const string VirtualNodeName = "VirtualNode";
+
+        /// <summary>File backend ("ugui" or null for UI Toolkit) — selects the vocabulary.</summary>
+        private readonly string? _backend;
 
         // ── Well-known component tag aliases ────────────────────────────────────
         // Single source of truth lives in Shared/Core/Router/RouterTagAliases.cs
@@ -57,6 +61,10 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         private static readonly IReadOnlyDictionary<string, TagResolution> s_fallbackMap =
             BuildFallbackMap();
 
+        // ── Fallback hard-coded map for the ugui vocabulary (U not resolvable) ─
+        private static readonly IReadOnlyDictionary<string, TagResolution> s_uguiFallbackMap =
+            BuildUguiFallbackMap();
+
         // ── Import-alias tag maps (ES-modules campaign, U-05/U-03) ────────────
         // starImportNamespaces: `* as X` binding → target file's effective namespace, so a
         // dotted tag <X.Comp/> resolves as {ns}.Comp. importAliasTypeMap: bound component
@@ -69,10 +77,12 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             Compilation compilation,
             ImmutableArray<PeerComponentInfo>? peerComponents = null,
             IReadOnlyDictionary<string, string>? starImportNamespaces = null,
-            IReadOnlyDictionary<string, string>? importAliasTypeMap = null
+            IReadOnlyDictionary<string, string>? importAliasTypeMap = null,
+            string? backend = null
         )
         {
             _compilation = compilation;
+            _backend = backend;
             var resolvedPeerComponents = peerComponents ?? ImmutableArray<PeerComponentInfo>.Empty;
             _peerComponentsByMetadataName = resolvedPeerComponents.ToImmutableDictionary(
                 p => p.MetadataTypeName,
@@ -83,7 +93,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 ?? System.Collections.Immutable.ImmutableDictionary<string, string>.Empty;
             _importAliasTypeMap = importAliasTypeMap
                 ?? System.Collections.Immutable.ImmutableDictionary<string, string>.Empty;
-            _builtinMap = BuildBuiltinMapFromCompilation(compilation);
+            _builtinMap = BuildBuiltinMapFromCompilation(compilation, backend);
         }
 
         // ── Public API ────────────────────────────────────────────────────────
@@ -437,7 +447,11 @@ namespace ReactiveUITK.SourceGenerator.Emitter
 
         // GetPublicPropertyNames — used by CSharpEmitter for UITKX0109 attribute validation
 
-        private static readonly string[] s_propsNamespaces = { "ReactiveUITK.Props.Typed" };
+        private static readonly string[] s_propsNamespaces =
+        {
+            "ReactiveUITK.Props.Typed",
+            "ReactiveUITK.Ugui",
+        };
 
         private static HashSet<string> CollectPropertyNames(INamedTypeSymbol type)
         {
@@ -777,16 +791,19 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         // ── Build built-in map from Roslyn V type ─────────────────────────────
 
         private static Dictionary<string, TagResolution> BuildBuiltinMapFromCompilation(
-            Compilation compilation
+            Compilation compilation,
+            string? backend = null
         )
         {
-            var vType = compilation.GetTypeByMetadataName(VTypeName);
+            bool isUgui = backend == "ugui";
+            var vType = compilation.GetTypeByMetadataName(isUgui ? UTypeName : VTypeName);
             if (vType == null)
             {
-                // Compilation doesn't yet contain the shared assembly (first load).
-                // Fall back to hardcoded map.
+                // Compilation doesn't yet contain the shared (or ugui) assembly
+                // (first load). Fall back to the hardcoded map for the backend.
+                var fallback = isUgui ? s_uguiFallbackMap : s_fallbackMap;
                 return new Dictionary<string, TagResolution>(
-                    s_fallbackMap.ToDictionary(kv => kv.Key, kv => kv.Value),
+                    fallback.ToDictionary(kv => kv.Key, kv => kv.Value),
                     StringComparer.OrdinalIgnoreCase
                 );
             }
@@ -907,7 +924,8 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             // First param is object — the scanner skips it, so register manually.
             // Emitted via the dictionary code path (the runtime accepts a Dictionary<string,object>
             // as the object argument and extracts style + safe-area insets).
-            if (!map.ContainsKey("visualelementsafe"))
+            // UITK-only: the ugui vocabulary has no dictionary-path factory.
+            if (!isUgui && !map.ContainsKey("visualelementsafe"))
                 map["visualelementsafe"] = new TagResolution(
                     TagResolutionKind.BuiltinDictionary,
                     "VisualElementSafe",
@@ -919,6 +937,61 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         }
 
         // ── Fallback hardcoded map ────────────────────────────────────────────
+
+        private static IReadOnlyDictionary<string, TagResolution> BuildUguiFallbackMap()
+        {
+            static TagResolution Typed(string name, string props, bool children = true) =>
+                new TagResolution(TagResolutionKind.BuiltinTyped, name, props, children);
+
+            return new Dictionary<string, TagResolution>(StringComparer.OrdinalIgnoreCase)
+            {
+                ["canvas"] = Typed("Canvas", "UguiCanvasProps"),
+                ["panel"] = Typed("Panel", "UguiPanelProps"),
+                ["image"] = Typed("Image", "UguiImageProps"),
+                ["rawimage"] = Typed("RawImage", "UguiRawImageProps"),
+                ["button"] = Typed("Button", "UguiButtonProps"),
+                ["horizontallayoutgroup"] = Typed(
+                    "HorizontalLayoutGroup",
+                    "UguiHorizontalLayoutGroupProps"
+                ),
+                ["verticallayoutgroup"] = Typed(
+                    "VerticalLayoutGroup",
+                    "UguiVerticalLayoutGroupProps"
+                ),
+                ["gridlayoutgroup"] = Typed("GridLayoutGroup", "UguiGridLayoutGroupProps"),
+                ["toggle"] = Typed("Toggle", "UguiToggleProps"),
+                ["togglegroup"] = Typed("ToggleGroup", "UguiToggleGroupProps"),
+                ["slider"] = Typed("Slider", "UguiSliderProps"),
+                ["scrollbar"] = Typed("Scrollbar", "UguiScrollbarProps"),
+                ["scrollrect"] = Typed("ScrollRect", "UguiScrollRectProps"),
+                ["dropdown"] = Typed("Dropdown", "UguiDropdownProps"),
+                ["inputfield"] = Typed("InputField", "UguiInputFieldProps"),
+                ["prefab"] = Typed("Prefab", "UguiPrefabProps", children: false),
+                ["uitkhost"] = Typed("UitkHost", "UguiUitkHostProps", children: false),
+
+                // Matches the scanner's typed-overload preference: U.Text has both
+                // a UguiTextProps overload (wins) and a string sugar overload.
+                ["text"] = Typed("Text", "UguiTextProps"),
+                ["fragment"] = new TagResolution(
+                    TagResolutionKind.Fragment,
+                    "Fragment",
+                    null,
+                    true
+                ),
+                ["suspense"] = new TagResolution(
+                    TagResolutionKind.BuiltinSuspense,
+                    "Suspense",
+                    null,
+                    AcceptsChildren: true
+                ),
+                ["portal"] = new TagResolution(
+                    TagResolutionKind.BuiltinPortal,
+                    "Portal",
+                    null,
+                    AcceptsChildren: true
+                ),
+            };
+        }
 
         private static IReadOnlyDictionary<string, TagResolution> BuildFallbackMap()
         {

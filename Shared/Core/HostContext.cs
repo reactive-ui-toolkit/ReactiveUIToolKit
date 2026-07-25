@@ -70,12 +70,28 @@ namespace ReactiveUITK.Core
         public ElementRegistry ElementRegistry { get; }
         public Dictionary<string, object> Environment { get; } = new();
 
+        /// <summary>
+        /// The host backend this context renders through. Defaults to the
+        /// UI Toolkit backend built over <see cref="ElementRegistry"/>; a
+        /// different backend (e.g. uGUI) is supplied via the two-argument
+        /// constructor. One mount owns exactly one backend for its lifetime.
+        /// </summary>
+        public Fiber.FiberHostConfig HostConfig { get; }
+
         private ContextFrame currentFrame;
         private int nextProviderId = 1;
 
         public HostContext(ElementRegistry elementRegistry)
         {
             ElementRegistry = elementRegistry;
+            HostConfig = new Fiber.UitkHostConfig(elementRegistry);
+            currentFrame = null;
+        }
+
+        public HostContext(ElementRegistry elementRegistry, Fiber.FiberHostConfig hostConfig)
+        {
+            ElementRegistry = elementRegistry;
+            HostConfig = hostConfig ?? new Fiber.UitkHostConfig(elementRegistry);
             currentFrame = null;
         }
 

@@ -4,7 +4,6 @@ using System.Diagnostics;
 using ReactiveUITK.Core;
 using UnityEngine;
 using UnityEngine.Profiling;
-using UnityEngine.UIElements;
 
 namespace ReactiveUITK.Core.Fiber
 {
@@ -21,6 +20,7 @@ namespace ReactiveUITK.Core.Fiber
         private FiberHostConfig _hostConfig;
         private IScheduler _scheduler;
         private bool _isCommitting; // Track if we're in the commit phase
+        private bool _isReplayingDeferred; // CommitRoot is draining _deferredUpdates — replayed updates must coalesce into the WIP, not re-defer
         private bool _hasDeletions; // Set during reconciliation when any fiber records deletions
         private List<FiberNode> _pendingPassiveEffects; // Collected during CommitWork, flushed two-pass after tree swap
 
@@ -78,7 +78,8 @@ namespace ReactiveUITK.Core.Fiber
         public FiberReconciler(HostContext hostContext)
         {
             _hostContext = hostContext;
-            _hostConfig = new FiberHostConfig(hostContext.ElementRegistry);
+            _hostConfig =
+                hostContext.HostConfig ?? new UitkHostConfig(hostContext.ElementRegistry);
 
             if (
                 hostContext?.Environment != null
@@ -93,7 +94,7 @@ namespace ReactiveUITK.Core.Fiber
         /// <summary>
         /// Create a fiber root and mount a virtual node tree
         /// </summary>
-        public FiberRoot CreateRoot(VisualElement container, VirtualNode vnode)
+        public FiberRoot CreateRoot(object container, VirtualNode vnode)
         {
             // Create root fiber
             var rootFiber = new FiberNode
@@ -252,9 +253,31 @@ namespace ReactiveUITK.Core.Fiber
                 }
                 else if (_root.Current.Alternate != null && rootCurrent == _root.Current.Alternate)
                 {
-                    // Found the alternate root (which is not currently set as WIP).
-                    // This is valid during a commit phase or if we are interacting with a tree that is being committed.
-                    // We allow it to proceed, as it will create a WIP from this root.
+                    // The scheduling fiber belongs to the SUPERSEDED tree — the
+                    // typical case for deferred updates captured mid-pass and
+                    // replayed after the pass committed. Building the WIP from
+                    // this stale root would reconcile against pre-commit
+                    // children: subtrees the last commit already placed get
+                    // re-mounted as duplicates while the committed ones are
+                    // orphaned with no deletion (frozen ghost elements).
+                    // Redirect to the live root and re-mark the pending-update
+                    // flags on the live counterpart so the render cannot bail
+                    // out past the updated component.
+                    var liveFiber = fiber?.Alternate ?? fiber;
+                    if (liveFiber != null)
+                    {
+                        liveFiber.HasPendingStateUpdate = true;
+                        var walkUp = liveFiber;
+                        while (walkUp != null)
+                        {
+                            if (walkUp.Parent != null)
+                            {
+                                walkUp.Parent.SubtreeHasUpdates = true;
+                            }
+                            walkUp = walkUp.Parent;
+                        }
+                    }
+                    rootCurrent = _root.Current;
                 }
                 else
                 {
@@ -281,6 +304,22 @@ namespace ReactiveUITK.Core.Fiber
             if (_isCommitting)
             {
                 // Queue the specific fiber update to replay it after commit
+                _deferredUpdates.Enqueue((fiber, vnode));
+                return;
+            }
+
+            // If a render pass is in flight (parked between time slices, or a
+            // reentrant update fired during a synchronous WorkLoop), defer
+            // instead of discarding the pass. Restarting on every update
+            // starves large trees under sustained per-frame updates (signals
+            // ticking every frame): the pass never reaches commit, and hosts
+            // already created by the aborted walk leak — for GameObject-backed
+            // backends that is a hard resource leak, not just GC pressure.
+            // The deferred update replays from CommitRoot's finally block,
+            // coalescing everything that arrived during the pass into ONE
+            // follow-up render.
+            if (_nextUnitOfWork != null && !_isReplayingDeferred)
+            {
                 _deferredUpdates.Enqueue((fiber, vnode));
                 return;
             }
@@ -608,7 +647,7 @@ namespace ReactiveUITK.Core.Fiber
                     }
                     else if (
                         fiber.PendingHostProps != null
-                            ? !fiber.PendingHostProps.ShallowEquals(fiber.HostProps)
+                            ? !fiber.PendingHostProps.HostShallowEquals(fiber.HostProps)
                             : !AreHostPropsEqual(fiber.PendingProps, fiber.Props)
                     )
                     {
@@ -706,7 +745,7 @@ namespace ReactiveUITK.Core.Fiber
 
             // Update props for new render
             workInProgress.PendingProps = ExtractProps(vnode);
-            workInProgress.PendingHostProps = vnode?.HostProps ?? current.PendingHostProps;
+            workInProgress.PendingHostProps = vnode?._hostProps ?? current.PendingHostProps;
             // The passed vnode IS the child of the root, so we wrap it in a list
             // Fix: If vnode is null (state update), preserve existing children to avoid wiping the tree
             workInProgress.Children = vnode != null ? new[] { vnode } : current.Children;
@@ -779,11 +818,12 @@ namespace ReactiveUITK.Core.Fiber
                 // Safe before passive effects because _isCommitting defers all state updates.
                 CommitPropsAndClearFlags(_root.Current);
 
-                // Flush pooled Style/BaseProps returns accumulated during commit.
-                // Must happen after the full tree walk so no fiber still references
-                // an object that's being returned to the pool.
-                Props.Typed.Style.__FlushReturns();
-                Props.Typed.BaseProps.__FlushReturns();
+                // Flush pooled props returns accumulated during commit (every
+                // registered backend family; UITK's flusher returns Style then
+                // BaseProps in the original order). Must happen after the full
+                // tree walk so no fiber still references an object that's
+                // being returned to a pool.
+                Props.Typed.HostPropsBase.__FlushAllFamilies();
 
                 // Flush passive effects in two passes: all cleanups first, then all setups.
                 // This preserves React's invariant that no component's setup runs before all
@@ -842,6 +882,7 @@ namespace ReactiveUITK.Core.Fiber
 
                 // Process any deferred updates scheduled during commit
                 bool pendingUpdates = false;
+                _isReplayingDeferred = true;
                 while (_deferredUpdates.Count > 0)
                 {
                     var (fiber, vnode) = _deferredUpdates.Dequeue();
@@ -849,6 +890,7 @@ namespace ReactiveUITK.Core.Fiber
                     ScheduleUpdateOnFiber(fiber, vnode, scheduleWork: false);
                     pendingUpdates = true;
                 }
+                _isReplayingDeferred = false;
 
                 // Now that all deferred updates are processed and flags are set/merged,
                 // schedule the work loop ONCE.
@@ -986,7 +1028,7 @@ namespace ReactiveUITK.Core.Fiber
         /// descent at host fibers (whose VE subtree comes along automatically)
         /// and at nested HostPortal fibers (which own their own target).
         /// </summary>
-        private void ReparentTopLevelHostChildren(FiberNode parent, VisualElement newTarget)
+        private void ReparentTopLevelHostChildren(FiberNode parent, object newTarget)
         {
             var child = parent.Child;
             while (child != null)
@@ -997,7 +1039,7 @@ namespace ReactiveUITK.Core.Fiber
                 }
                 else if (child.HostElement != null)
                 {
-                    if (!ReferenceEquals(child.HostElement.parent, newTarget))
+                    if (!ReferenceEquals(_hostConfig.GetParent(child.HostElement), newTarget))
                     {
                         _hostConfig.AppendChild(newTarget, child.HostElement);
                     }
@@ -1029,7 +1071,7 @@ namespace ReactiveUITK.Core.Fiber
                 }
                 else if (child.HostElement != null)
                 {
-                    var current = child.HostElement.parent;
+                    var current = _hostConfig.GetParent(child.HostElement);
                     if (current != null)
                     {
                         _hostConfig.RemoveChild(current, child.HostElement);
@@ -1072,7 +1114,21 @@ namespace ReactiveUITK.Core.Fiber
 
             if (parentFiber?.HostElement != null)
             {
-                if (_hostConfig.GetParent(fiber.HostElement) == null)
+                if (_hostConfig.GetParent(fiber.HostElement) != null)
+                {
+                    // Move placement (keyed reorder): the host is already
+                    // parented — reposition it before its stable anchor. Props
+                    // are NOT re-applied here; a changed-props move also
+                    // carries an Update effect, which CommitWork runs right
+                    // after this placement.
+                    var moveAnchor = GetHostSibling(fiber);
+                    _hostConfig.InsertBefore(
+                        parentFiber.HostElement,
+                        fiber.HostElement,
+                        moveAnchor
+                    );
+                }
+                else
                 {
                     // Apply initial properties before inserting
                     if (fiber.PendingHostProps != null)
@@ -1130,7 +1186,7 @@ namespace ReactiveUITK.Core.Fiber
                     {
                         if (FiberConfig.EnableFiberLogging)
                             UnityEngine.Debug.Log(
-                                $"[Fiber] InsertBefore {fiber.ElementType} before {before.name}"
+                                $"[Fiber] InsertBefore {fiber.ElementType} before {_hostConfig.GetDebugName(before)}"
                             );
                         _hostConfig.InsertBefore(
                             parentFiber.HostElement,
@@ -1169,7 +1225,7 @@ namespace ReactiveUITK.Core.Fiber
         /// such as Fragments and FunctionComponents) until a stable host node
         /// is found, or we run out of siblings within the same host-parent.
         /// </summary>
-        private static VisualElement GetHostSibling(FiberNode fiber)
+        private static object GetHostSibling(FiberNode fiber)
         {
             FiberNode node = fiber;
 
@@ -1281,8 +1337,7 @@ namespace ReactiveUITK.Core.Fiber
                 // Schedule old props/style for pool return (only if actually replaced)
                 if (oldHostProps != null && !ReferenceEquals(oldHostProps, fiber.HostProps))
                 {
-                    Props.Typed.Style.__ScheduleReturn(oldHostProps.Style);
-                    Props.Typed.BaseProps.__ScheduleReturn(oldHostProps);
+                    oldHostProps.__ScheduleReturnToFamilyPool();
                 }
             }
             else
@@ -1369,8 +1424,7 @@ namespace ReactiveUITK.Core.Fiber
             // If this fiber has a HostElement, remove it from its parent
             if (fiber.HostElement != null)
             {
-                // Clean up previousStyles tracking to prevent memory leak (P0-5)
-                ReactiveUITK.Props.PropsApplier.NotifyElementRemoved(fiber.HostElement);
+                _hostConfig.OnHostRemoved(fiber.HostElement);
 
                 var parentFiber = fiber.Parent;
                 while (parentFiber != null && parentFiber.HostElement == null)
@@ -1386,8 +1440,7 @@ namespace ReactiveUITK.Core.Fiber
                 // Return deleted fiber's props/style to pool
                 if (fiber.HostProps != null)
                 {
-                    Props.Typed.Style.__ScheduleReturn(fiber.HostProps.Style);
-                    Props.Typed.BaseProps.__ScheduleReturn(fiber.HostProps);
+                    fiber.HostProps.__ScheduleReturnToFamilyPool();
                 }
             }
         }

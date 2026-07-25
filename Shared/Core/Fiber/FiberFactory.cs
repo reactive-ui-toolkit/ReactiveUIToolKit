@@ -25,7 +25,7 @@ namespace ReactiveUITK.Core.Fiber
                 Parent = parent,
                 Index = index,
                 PendingProps = ExtractProps(vnode),
-                PendingHostProps = vnode.HostProps,
+                PendingHostProps = vnode._hostProps,
                 Children = vnode.Children,
                 EffectTag = EffectFlags.Placement, // New fiber needs to be placed
 
@@ -66,8 +66,8 @@ namespace ReactiveUITK.Core.Fiber
 
                 case VirtualNodeType.Portal:
                     fiber.Tag = FiberTag.HostPortal;
-                    fiber.PortalTarget = vnode.PortalTarget;
-                    fiber.HostElement = vnode.PortalTarget;
+                    fiber.PortalTarget = vnode.PortalTargetHost;
+                    fiber.HostElement = vnode.PortalTargetHost;
                     fiber.EffectTag = EffectFlags.None;
                     break;
 
@@ -120,7 +120,7 @@ namespace ReactiveUITK.Core.Fiber
             clone.Props = current.Props;
             clone.PendingProps = newVNode != null ? ExtractProps(newVNode) : current.PendingProps;
             clone.HostProps = current.HostProps;
-            clone.PendingHostProps = newVNode?.HostProps ?? current.PendingHostProps;
+            clone.PendingHostProps = newVNode?._hostProps ?? current.PendingHostProps;
             clone.Children = newVNode != null ? newVNode.Children : current.Children;
 
             // === Host/DOM ===
@@ -191,8 +191,8 @@ namespace ReactiveUITK.Core.Fiber
                     && newVNode.NodeType == VirtualNodeType.Portal
                 )
                 {
-                    clone.PortalTarget = newVNode.PortalTarget;
-                    clone.HostElement = newVNode.PortalTarget;
+                    clone.PortalTarget = newVNode.PortalTargetHost;
+                    clone.HostElement = newVNode.PortalTargetHost;
                 }
                 else
                 {

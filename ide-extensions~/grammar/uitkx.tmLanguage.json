@@ -209,7 +209,7 @@
     "directive-declaration": {
       "comment": "Handles @namespace X, @component X, @using X, @props X, @key X, @inject T N",
       "name": "meta.directive.uitkx",
-      "match": "^(@)(namespace|component|using|props|key|inject)\\b(.*)$",
+      "match": "^(@)(namespace|component|using|props|key|inject|backend)\\b(.*)$",
       "captures": {
         "1": {
           "name": "keyword.other.directive.uitkx"

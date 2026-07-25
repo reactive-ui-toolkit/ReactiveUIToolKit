@@ -2,7 +2,8 @@
   "name": "ReactiveUITK.Editor",
   "references": [
     "ReactiveUITK.Shared",
-    "ReactiveUITK.Runtime"
+    "ReactiveUITK.Runtime",
+    "ReactiveUITK.Ugui"
   ],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],

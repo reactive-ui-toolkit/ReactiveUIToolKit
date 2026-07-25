@@ -15,6 +15,7 @@ public sealed class PropsTypeAdapter : IPropsTypeProvider
 {
     private readonly UitkxSchema _schema;
     private readonly WorkspaceIndex _index;
+    private readonly string? _backend;
 
     /// <summary>
     /// Universal attribute names that exist on every element but are NOT
@@ -30,17 +31,26 @@ public sealed class PropsTypeAdapter : IPropsTypeProvider
             "className",
         };
 
-    public PropsTypeAdapter(UitkxSchema schema, WorkspaceIndex index)
+    public PropsTypeAdapter(UitkxSchema schema, WorkspaceIndex index, string? backend = null)
     {
         _schema = schema ?? throw new ArgumentNullException(nameof(schema));
         _index = index ?? throw new ArgumentNullException(nameof(index));
+        _backend = backend;
     }
+
+    /// <summary>
+    /// Returns a provider scoped to the given file backend (<c>@backend</c>
+    /// directive value); returns this instance unchanged when the backend
+    /// already matches.
+    /// </summary>
+    public PropsTypeAdapter ForBackend(string? backend) =>
+        backend == _backend ? this : new PropsTypeAdapter(_schema, _index, backend);
 
     /// <inheritdoc/>
     public string? GetPropsType(string elementName)
     {
         // 1. Try the static schema first (built-in elements)
-        var schemaEl = _schema.TryGetElement(elementName);
+        var schemaEl = _schema.TryGetElement(elementName, _backend);
         if (schemaEl != null && !string.IsNullOrEmpty(schemaEl.PropsType))
             return schemaEl.PropsType;
 
@@ -67,7 +77,7 @@ public sealed class PropsTypeAdapter : IPropsTypeProvider
             return null;
 
         // 1. Try the static schema
-        var schemaEl = _schema.TryGetElement(elementName);
+        var schemaEl = _schema.TryGetElement(elementName, _backend);
         if (schemaEl != null && !string.IsNullOrEmpty(schemaEl.PropsType))
         {
             var attr = schemaEl.Attributes
@@ -104,7 +114,7 @@ public sealed class PropsTypeAdapter : IPropsTypeProvider
             return null;
 
         // 1. Try the static schema (built-in elements)
-        var schemaEl = _schema.TryGetElement(elementName);
+        var schemaEl = _schema.TryGetElement(elementName, _backend);
         if (schemaEl != null && !string.IsNullOrEmpty(schemaEl.PropsType))
         {
             var attr = schemaEl.Attributes

@@ -9,27 +9,23 @@ namespace ReactiveUITK.Props.Typed
     /// Base class for all Props that wrap a VisualElement.
     /// Provides the common set of properties that every VisualElement supports.
     /// </summary>
-    public abstract class BaseProps : global::ReactiveUITK.Core.IProps
+    public abstract class BaseProps : HostPropsBase
     {
-        // ═══════════════════════════════════════════════════════════════════
-        //  Pool generation stamp
-        //  0 = user-created via new — never pooled
-        //  >0 = rented from pool via __Rent<T>()
-        // ═══════════════════════════════════════════════════════════════════
-        internal uint _generation;
-
-        // Idempotent return guard: true when this instance is currently in the
-        // s_pendingReturn list waiting to be moved to the pool. Prevents the
-        // same instance from being scheduled twice in one flush window
-        // (which would push it into the pool twice and let two future Rents
-        // hand out the same instance — the cross-wired "disco" style bug).
-        internal bool _isPendingReturn;
+        static BaseProps()
+        {
+            // Family flusher: Style pool first, then the props pool — the
+            // exact order the reconciler used when it called both directly.
+            HostPropsBase.__RegisterFamilyFlusher(() =>
+            {
+                Style.__FlushReturns();
+                __FlushReturns();
+            });
+        }
 
         // --- Identity / structure ---
-        public string Name { get; set; }
+        // Name and Ref live on HostPropsBase (shared by all backend families).
         public string ClassName { get; set; }
         public Style Style { get; set; }
-        public object Ref { get; set; }
         public Dictionary<string, object> ContentContainer { get; set; }
 
         // --- Visibility / enabled ---
@@ -603,6 +599,26 @@ namespace ReactiveUITK.Props.Typed
         /// that are not covered by the typed properties above.
         /// </summary>
         public Dictionary<string, object> ExtraProps { get; set; }
+
+        /// <summary>
+        /// Cross-family dispatch into the UI Toolkit family's
+        /// <see cref="ShallowEquals(BaseProps)"/> chain.
+        /// </summary>
+        public override bool HostShallowEquals(HostPropsBase other)
+        {
+            return other is BaseProps bp && ShallowEquals(bp);
+        }
+
+        /// <summary>
+        /// Schedules this instance's Style and then the instance itself for
+        /// pool return — the exact pair of calls the reconciler previously
+        /// made inline in CommitUpdate/CommitDeletion.
+        /// </summary>
+        internal override void __ScheduleReturnToFamilyPool()
+        {
+            Style.__ScheduleReturn(Style);
+            __ScheduleReturn(this);
+        }
 
         /// <summary>
         /// Field-by-field equality check for host element bailout.

@@ -339,6 +339,10 @@
     {
       "name": "uss",
       "description": "Attaches a USS stylesheet to the component root element. Path is relative to the .uitkx file."
+    },
+    {
+      "name": "backend",
+      "description": "Selects the render backend for this file: 'ugui' for the uGUI vocabulary (RectTransform anchors, sprites, TMP text), or 'uitk' (the default UI Toolkit vocabulary). One per file, before any declaration."
     }
   ],
   "controlFlow": [
@@ -2777,6 +2781,358 @@
           "type": "object",
           "description": "Visual input sub-element props."
         }
+      ]
+    }
+  },
+  "uguiIntrinsicAttributes": [
+    { "name": "name", "type": "string", "description": "GameObject.name." },
+    { "name": "ref", "type": "object", "description": "Ref to the GameObject / RectTransform / a Component type." },
+    { "name": "anchors", "type": "UguiAnchorPreset", "description": "Anchor preset (the RectTransform preset widget): topLeft, topCenter, topRight, middleLeft, middleCenter, middleRight, bottomLeft, bottomCenter, bottomRight, topStretch, middleStretch, bottomStretch, stretchLeft, stretchCenter, stretchRight, stretch." },
+    { "name": "anchorMin", "type": "Vector2", "description": "RectTransform.anchorMin (overrides the preset)." },
+    { "name": "anchorMax", "type": "Vector2", "description": "RectTransform.anchorMax (overrides the preset)." },
+    { "name": "pivot", "type": "Vector2", "description": "RectTransform.pivot (overrides the preset)." },
+    { "name": "anchoredPosition", "type": "Vector2", "description": "RectTransform.anchoredPosition." },
+    { "name": "sizeDelta", "type": "Vector2", "description": "RectTransform.sizeDelta." },
+    { "name": "offsetMin", "type": "Vector2", "description": "RectTransform.offsetMin (margins from the anchor rect)." },
+    { "name": "offsetMax", "type": "Vector2", "description": "RectTransform.offsetMax." },
+    { "name": "rotationZ", "type": "float", "description": "Local Z rotation in degrees." },
+    { "name": "rotation", "type": "Vector3", "description": "Full local Euler rotation (overrides rotationZ)." },
+    { "name": "scale", "type": "Vector3", "description": "RectTransform.localScale." },
+    { "name": "localPositionZ", "type": "float", "description": "localPosition.z depth offset." },
+    { "name": "active", "type": "bool", "description": "GameObject.SetActive." },
+    { "name": "layer", "type": "int", "description": "GameObject.layer." },
+    { "name": "tag", "type": "string", "description": "GameObject.tag." },
+    { "name": "layoutElement", "type": "UguiLayoutElement", "description": "LayoutElement prop group: min/preferred/flexible width and height, ignoreLayout, layoutPriority." },
+    { "name": "contentSizeFitter", "type": "UguiContentSizeFitter", "description": "ContentSizeFitter prop group: horizontalFit, verticalFit." },
+    { "name": "aspectRatioFitter", "type": "UguiAspectRatioFitter", "description": "AspectRatioFitter prop group: aspectMode, aspectRatio." },
+    { "name": "pointer", "type": "UguiPointerEvents", "description": "Low-level pointer/drag/scroll handlers attached via a lazily added bridge component." },
+    { "name": "canvasGroup", "type": "UguiCanvasGroup", "description": "CanvasGroup prop group: alpha, interactable, blocksRaycasts, ignoreParentGroups." },
+    { "name": "mask", "type": "UguiMask", "description": "Stencil Mask prop group (requires a Graphic): showMaskGraphic." },
+    { "name": "rectMask2D", "type": "UguiRectMask2D", "description": "RectMask2D prop group: padding, softness." },
+    { "name": "shadow", "type": "UguiShadowEffect", "description": "Shadow vertex effect: effectColor, effectDistance, useGraphicAlpha." },
+    { "name": "outline", "type": "UguiShadowEffect", "description": "Outline vertex effect: effectColor, effectDistance, useGraphicAlpha." }
+  ],
+  "uguiElements": {
+    "Canvas": {
+      "propsType": "UguiCanvasProps",
+      "description": "Canvas + CanvasScaler + GraphicRaycaster as one element. Nested canvases isolate batching.",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "renderMode", "type": "RenderMode", "description": "Canvas.renderMode (ignored on nested canvases)." },
+        { "name": "sortingOrder", "type": "int", "description": "Canvas.sortingOrder." },
+        { "name": "sortingLayerName", "type": "string", "description": "Canvas.sortingLayerName." },
+        { "name": "targetDisplay", "type": "int", "description": "Canvas.targetDisplay." },
+        { "name": "additionalShaderChannels", "type": "AdditionalCanvasShaderChannels", "description": "Extra vertex channels (TexCoord1..3, Normal, Tangent)." },
+        { "name": "pixelPerfect", "type": "bool", "description": "Canvas.pixelPerfect." },
+        { "name": "overrideSorting", "type": "bool", "description": "Canvas.overrideSorting (nested canvases)." },
+        { "name": "worldCamera", "type": "Camera", "description": "Canvas.worldCamera." },
+        { "name": "planeDistance", "type": "float", "description": "Canvas.planeDistance." },
+        { "name": "uiScaleMode", "type": "CanvasScaler.ScaleMode", "description": "CanvasScaler.uiScaleMode." },
+        { "name": "referenceResolution", "type": "Vector2", "description": "CanvasScaler.referenceResolution." },
+        { "name": "screenMatchMode", "type": "CanvasScaler.ScreenMatchMode", "description": "CanvasScaler.screenMatchMode." },
+        { "name": "matchWidthOrHeight", "type": "float", "description": "CanvasScaler.matchWidthOrHeight (0..1)." },
+        { "name": "scaleFactor", "type": "float", "description": "CanvasScaler.scaleFactor." },
+        { "name": "blockingObjects", "type": "GraphicRaycaster.BlockingObjects", "description": "GraphicRaycaster.blockingObjects." },
+        { "name": "ignoreReversedGraphics", "type": "bool", "description": "GraphicRaycaster.ignoreReversedGraphics." }
+      ]
+    },
+    "Panel": {
+      "propsType": "UguiPanelProps",
+      "description": "Plain RectTransform container (no Graphic, zero draw cost). Created full-stretch.",
+      "acceptsChildren": true,
+      "attributes": []
+    },
+    "Image": {
+      "propsType": "UguiImageProps",
+      "description": "UnityEngine.UI.Image. raycastTarget defaults to false (raycast hygiene).",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "sprite", "type": "Sprite", "description": "Image.sprite." },
+        { "name": "type", "type": "Image.Type", "description": "simple, sliced, tiled, filled." },
+        { "name": "fillMethod", "type": "Image.FillMethod", "description": "Fill method for filled images." },
+        { "name": "fillAmount", "type": "float", "description": "Image.fillAmount (0..1)." },
+        { "name": "fillOrigin", "type": "int", "description": "Image.fillOrigin." },
+        { "name": "fillClockwise", "type": "bool", "description": "Image.fillClockwise." },
+        { "name": "fillCenter", "type": "bool", "description": "Image.fillCenter (sliced/tiled)." },
+        { "name": "preserveAspect", "type": "bool", "description": "Image.preserveAspect." },
+        { "name": "pixelsPerUnitMultiplier", "type": "float", "description": "Image.pixelsPerUnitMultiplier." },
+        { "name": "useSpriteMesh", "type": "bool", "description": "Image.useSpriteMesh." },
+        { "name": "color", "type": "Color", "description": "Graphic.color." },
+        { "name": "material", "type": "Material", "description": "Custom material (UI shaders)." },
+        { "name": "raycastTarget", "type": "bool", "description": "Graphic.raycastTarget." },
+        { "name": "raycastPadding", "type": "Vector4", "description": "Graphic.raycastPadding." },
+        { "name": "maskable", "type": "bool", "description": "MaskableGraphic.maskable." }
+      ]
+    },
+    "RawImage": {
+      "propsType": "UguiRawImageProps",
+      "description": "UnityEngine.UI.RawImage (textures, render textures).",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "texture", "type": "Texture", "description": "RawImage.texture." },
+        { "name": "uvRect", "type": "Rect", "description": "RawImage.uvRect." },
+        { "name": "color", "type": "Color", "description": "Graphic.color." },
+        { "name": "material", "type": "Material", "description": "Custom material." },
+        { "name": "raycastTarget", "type": "bool", "description": "Graphic.raycastTarget." }
+      ]
+    },
+    "Text": {
+      "propsType": "UguiTextProps",
+      "description": "TextMeshProUGUI text. raycastTarget defaults to false.",
+      "acceptsChildren": false,
+      "attributes": [
+        { "name": "text", "type": "string", "description": "TMP_Text.text." },
+        { "name": "font", "type": "TMP_FontAsset", "description": "TMP_Text.font." },
+        { "name": "fontSize", "type": "float", "description": "TMP_Text.fontSize." },
+        { "name": "autoSize", "type": "bool", "description": "TMP_Text.enableAutoSizing." },
+        { "name": "fontSizeMin", "type": "float", "description": "Auto-size minimum." },
+        { "name": "fontSizeMax", "type": "float", "description": "Auto-size maximum." },
+        { "name": "fontStyle", "type": "FontStyles", "description": "Bold, italic, underline, ..." },
+        { "name": "alignment", "type": "TextAlignmentOptions", "description": "TMP alignment." },
+        { "name": "wrapping", "type": "TextWrappingModes", "description": "TMP_Text.textWrappingMode." },
+        { "name": "overflow", "type": "TextOverflowModes", "description": "TMP_Text.overflowMode." },
+        { "name": "richText", "type": "bool", "description": "TMP_Text.richText." },
+        { "name": "characterSpacing", "type": "float", "description": "TMP_Text.characterSpacing." },
+        { "name": "wordSpacing", "type": "float", "description": "TMP_Text.wordSpacing." },
+        { "name": "lineSpacing", "type": "float", "description": "TMP_Text.lineSpacing." },
+        { "name": "paragraphSpacing", "type": "float", "description": "TMP_Text.paragraphSpacing." },
+        { "name": "margin", "type": "Vector4", "description": "TMP_Text.margin." },
+        { "name": "gradient", "type": "VertexGradient", "description": "Four-corner vertex color gradient." },
+        { "name": "gradientPreset", "type": "TMP_ColorGradient", "description": "Color gradient preset asset." },
+        { "name": "extraPadding", "type": "bool", "description": "TMP_Text.extraPadding." },
+        { "name": "outlineWidth", "type": "float", "description": "TMP outline width (instantiates the material)." },
+        { "name": "outlineColor", "type": "Color32", "description": "TMP outline color." },
+        { "name": "styleSheet", "type": "TMP_StyleSheet", "description": "TMP style sheet asset." },
+        { "name": "spriteAsset", "type": "TMP_SpriteAsset", "description": "TMP sprite asset for inline sprites." },
+        { "name": "color", "type": "Color", "description": "Graphic.color." }
+      ]
+    },
+    "Button": {
+      "propsType": "UguiButtonProps",
+      "description": "Button + background Image on one GameObject (the menu Button shape). Children are the label content.",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "onClick", "type": "Action", "description": "Button.onClick (single subscription, delegate-field diffs)." },
+        { "name": "interactable", "type": "bool", "description": "Selectable.interactable." },
+        { "name": "transition", "type": "Selectable.Transition", "description": "colorTint, spriteSwap, animation." },
+        { "name": "colors", "type": "ColorBlock", "description": "Selectable.colors." },
+        { "name": "spriteState", "type": "SpriteState", "description": "Selectable.spriteState." },
+        { "name": "navigationMode", "type": "Navigation.Mode", "description": "Selectable.navigation.mode." },
+        { "name": "selectOnUp", "type": "object", "description": "Explicit navigation target (Selectable or Ref)." },
+        { "name": "selectOnDown", "type": "object", "description": "Explicit navigation target." },
+        { "name": "selectOnLeft", "type": "object", "description": "Explicit navigation target." },
+        { "name": "selectOnRight", "type": "object", "description": "Explicit navigation target." },
+        { "name": "animationTriggers", "type": "UguiAnimationTriggers", "description": "Animation-transition trigger names (normal/highlighted/pressed/selected/disabled)." },
+        { "name": "sprite", "type": "Sprite", "description": "Background Image.sprite." },
+        { "name": "color", "type": "Color", "description": "Background color." },
+        { "name": "type", "type": "Image.Type", "description": "Background image type (sliced for 9-slice)." }
+      ]
+    },
+    "HorizontalLayoutGroup": {
+      "propsType": "UguiHorizontalLayoutGroupProps",
+      "description": "HorizontalLayoutGroup container.",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "spacing", "type": "float", "description": "Spacing between children." },
+        { "name": "paddingLeft", "type": "int", "description": "Padding.left." },
+        { "name": "paddingRight", "type": "int", "description": "Padding.right." },
+        { "name": "paddingTop", "type": "int", "description": "Padding.top." },
+        { "name": "paddingBottom", "type": "int", "description": "Padding.bottom." },
+        { "name": "childAlignment", "type": "TextAnchor", "description": "Child alignment." },
+        { "name": "reverseArrangement", "type": "bool", "description": "Reverse child order." },
+        { "name": "childControlWidth", "type": "bool", "description": "Group drives child widths." },
+        { "name": "childControlHeight", "type": "bool", "description": "Group drives child heights." },
+        { "name": "childScaleWidth", "type": "bool", "description": "Use child scale in width." },
+        { "name": "childScaleHeight", "type": "bool", "description": "Use child scale in height." },
+        { "name": "childForceExpandWidth", "type": "bool", "description": "Force-expand child widths." },
+        { "name": "childForceExpandHeight", "type": "bool", "description": "Force-expand child heights." }
+      ]
+    },
+    "VerticalLayoutGroup": {
+      "propsType": "UguiVerticalLayoutGroupProps",
+      "description": "VerticalLayoutGroup container.",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "spacing", "type": "float", "description": "Spacing between children." },
+        { "name": "paddingLeft", "type": "int", "description": "Padding.left." },
+        { "name": "paddingRight", "type": "int", "description": "Padding.right." },
+        { "name": "paddingTop", "type": "int", "description": "Padding.top." },
+        { "name": "paddingBottom", "type": "int", "description": "Padding.bottom." },
+        { "name": "childAlignment", "type": "TextAnchor", "description": "Child alignment." },
+        { "name": "reverseArrangement", "type": "bool", "description": "Reverse child order." },
+        { "name": "childControlWidth", "type": "bool", "description": "Group drives child widths." },
+        { "name": "childControlHeight", "type": "bool", "description": "Group drives child heights." },
+        { "name": "childScaleWidth", "type": "bool", "description": "Use child scale in width." },
+        { "name": "childScaleHeight", "type": "bool", "description": "Use child scale in height." },
+        { "name": "childForceExpandWidth", "type": "bool", "description": "Force-expand child widths." },
+        { "name": "childForceExpandHeight", "type": "bool", "description": "Force-expand child heights." }
+      ]
+    },
+    "GridLayoutGroup": {
+      "propsType": "UguiGridLayoutGroupProps",
+      "description": "GridLayoutGroup container.",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "cellSize", "type": "Vector2", "description": "Grid cell size." },
+        { "name": "spacing", "type": "Vector2", "description": "Grid spacing." },
+        { "name": "startCorner", "type": "GridLayoutGroup.Corner", "description": "First cell corner." },
+        { "name": "startAxis", "type": "GridLayoutGroup.Axis", "description": "Fill axis." },
+        { "name": "constraint", "type": "GridLayoutGroup.Constraint", "description": "flexible, fixedColumnCount, fixedRowCount." },
+        { "name": "constraintCount", "type": "int", "description": "Column/row count for fixed constraints." },
+        { "name": "paddingLeft", "type": "int", "description": "Padding.left." },
+        { "name": "paddingRight", "type": "int", "description": "Padding.right." },
+        { "name": "paddingTop", "type": "int", "description": "Padding.top." },
+        { "name": "paddingBottom", "type": "int", "description": "Padding.bottom." },
+        { "name": "childAlignment", "type": "TextAnchor", "description": "Child alignment." }
+      ]
+    },
+    "Toggle": {
+      "propsType": "UguiToggleProps",
+      "description": "Toggle with Background/Checkmark parts. Controlled: isOn writes without notify.",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "isOn", "type": "bool", "description": "Toggle.isOn (SetIsOnWithoutNotify)." },
+        { "name": "onValueChanged", "type": "Action<bool>", "description": "Toggle.onValueChanged." },
+        { "name": "checkmarkSprite", "type": "Sprite", "description": "Checkmark Image.sprite." },
+        { "name": "checkmarkColor", "type": "Color", "description": "Checkmark color." },
+        { "name": "group", "type": "ToggleGroup", "description": "Explicit ToggleGroup reference." },
+        { "name": "joinGroup", "type": "bool", "description": "Auto-join the nearest ancestor ToggleGroup element." },
+        { "name": "toggleTransition", "type": "Toggle.ToggleTransition", "description": "Checkmark fade transition (none/fade)." },
+        { "name": "interactable", "type": "bool", "description": "Selectable.interactable." },
+        { "name": "sprite", "type": "Sprite", "description": "Background Image.sprite." },
+        { "name": "color", "type": "Color", "description": "Background color." }
+      ]
+    },
+    "ToggleGroup": {
+      "propsType": "UguiToggleGroupProps",
+      "description": "ToggleGroup container (full-stretch rect).",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "allowSwitchOff", "type": "bool", "description": "ToggleGroup.allowSwitchOff." }
+      ]
+    },
+    "Slider": {
+      "propsType": "UguiSliderProps",
+      "description": "Menu-identical Slider skeleton (Background / Fill / Handle). Controlled: value writes without notify.",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "value", "type": "float", "description": "Slider.value (SetValueWithoutNotify)." },
+        { "name": "minValue", "type": "float", "description": "Slider.minValue." },
+        { "name": "maxValue", "type": "float", "description": "Slider.maxValue." },
+        { "name": "wholeNumbers", "type": "bool", "description": "Slider.wholeNumbers." },
+        { "name": "direction", "type": "Slider.Direction", "description": "Slider.direction." },
+        { "name": "onValueChanged", "type": "Action<float>", "description": "Slider.onValueChanged." },
+        { "name": "backgroundSprite", "type": "Sprite", "description": "Background part sprite." },
+        { "name": "backgroundColor", "type": "Color", "description": "Background part color." },
+        { "name": "fillSprite", "type": "Sprite", "description": "Fill part sprite." },
+        { "name": "fillColor", "type": "Color", "description": "Fill part color." },
+        { "name": "handleSprite", "type": "Sprite", "description": "Handle part sprite." },
+        { "name": "handleColor", "type": "Color", "description": "Handle part color." },
+        { "name": "interactable", "type": "bool", "description": "Selectable.interactable." }
+      ]
+    },
+    "Scrollbar": {
+      "propsType": "UguiScrollbarProps",
+      "description": "Menu-identical Scrollbar skeleton. Controlled: value writes without notify.",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "value", "type": "float", "description": "Scrollbar.value." },
+        { "name": "size", "type": "float", "description": "Scrollbar.size (handle fraction)." },
+        { "name": "numberOfSteps", "type": "int", "description": "Scrollbar.numberOfSteps." },
+        { "name": "direction", "type": "Scrollbar.Direction", "description": "Scrollbar.direction." },
+        { "name": "onValueChanged", "type": "Action<float>", "description": "Scrollbar.onValueChanged." },
+        { "name": "handleSprite", "type": "Sprite", "description": "Handle sprite." },
+        { "name": "handleColor", "type": "Color", "description": "Handle color." },
+        { "name": "interactable", "type": "bool", "description": "Selectable.interactable." }
+      ]
+    },
+    "ScrollRect": {
+      "propsType": "UguiScrollRectProps",
+      "description": "ScrollRect with a RectMask2D viewport. The FIRST child is the scroll content (typically a VerticalLayoutGroup with a contentSizeFitter prop group).",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "horizontal", "type": "bool", "description": "ScrollRect.horizontal." },
+        { "name": "vertical", "type": "bool", "description": "ScrollRect.vertical." },
+        { "name": "movementType", "type": "ScrollRect.MovementType", "description": "unrestricted, elastic, clamped." },
+        { "name": "elasticity", "type": "float", "description": "ScrollRect.elasticity." },
+        { "name": "inertia", "type": "bool", "description": "ScrollRect.inertia." },
+        { "name": "decelerationRate", "type": "float", "description": "ScrollRect.decelerationRate." },
+        { "name": "scrollSensitivity", "type": "float", "description": "ScrollRect.scrollSensitivity." },
+        { "name": "showHorizontalScrollbar", "type": "bool", "description": "Generate/toggle a wired horizontal scrollbar (auto-hide-and-expand)." },
+        { "name": "showVerticalScrollbar", "type": "bool", "description": "Generate/toggle a wired vertical scrollbar (auto-hide-and-expand)." },
+        { "name": "horizontalScrollbarSpacing", "type": "float", "description": "ScrollRect.horizontalScrollbarSpacing." },
+        { "name": "verticalScrollbarSpacing", "type": "float", "description": "ScrollRect.verticalScrollbarSpacing." },
+        { "name": "onValueChanged", "type": "Action<Vector2>", "description": "ScrollRect.onValueChanged." }
+      ]
+    },
+    "Dropdown": {
+      "propsType": "UguiDropdownProps",
+      "description": "TMP_Dropdown on the exact menu template (Label/Arrow/Template/Item). Controlled: value writes without notify.",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "options", "type": "IReadOnlyList<string>", "description": "Option labels." },
+        { "name": "value", "type": "int", "description": "Selected index." },
+        { "name": "onValueChanged", "type": "Action<int>", "description": "TMP_Dropdown.onValueChanged." },
+        { "name": "labelFontSize", "type": "float", "description": "Caption label font size." },
+        { "name": "labelColor", "type": "Color", "description": "Caption label color." },
+        { "name": "optionSprites", "type": "IReadOnlyList<Sprite>", "description": "Per-option icons (index-aligned with options)." },
+        { "name": "arrowSprite", "type": "Sprite", "description": "Arrow part sprite." },
+        { "name": "arrowColor", "type": "Color", "description": "Arrow part color." },
+        { "name": "templateSprite", "type": "Sprite", "description": "Template background sprite." },
+        { "name": "templateColor", "type": "Color", "description": "Template background color." },
+        { "name": "itemFontSize", "type": "float", "description": "Item label font size." },
+        { "name": "itemColor", "type": "Color", "description": "Item label color." },
+        { "name": "alphaFadeSpeed", "type": "float", "description": "TMP_Dropdown.alphaFadeSpeed." },
+        { "name": "interactable", "type": "bool", "description": "Selectable.interactable." }
+      ]
+    },
+    "InputField": {
+      "propsType": "UguiInputFieldProps",
+      "description": "TMP_InputField on the exact menu template. Controlled: text writes via SetTextWithoutNotify.",
+      "acceptsChildren": true,
+      "attributes": [
+        { "name": "text", "type": "string", "description": "TMP_InputField.text (without notify)." },
+        { "name": "placeholder", "type": "string", "description": "Placeholder text." },
+        { "name": "characterLimit", "type": "int", "description": "TMP_InputField.characterLimit." },
+        { "name": "contentType", "type": "TMP_InputField.ContentType", "description": "standard, integerNumber, password, ..." },
+        { "name": "lineType", "type": "TMP_InputField.LineType", "description": "singleLine, multiLineSubmit, multiLineNewline." },
+        { "name": "readOnly", "type": "bool", "description": "TMP_InputField.readOnly." },
+        { "name": "fontSize", "type": "float", "description": "Input text point size." },
+        { "name": "textColor", "type": "Color", "description": "Input text color." },
+        { "name": "placeholderColor", "type": "Color", "description": "Placeholder color." },
+        { "name": "caretBlinkRate", "type": "float", "description": "TMP_InputField.caretBlinkRate." },
+        { "name": "inputType", "type": "TMP_InputField.InputType", "description": "Standard/AutoCorrect/Password." },
+        { "name": "keyboardType", "type": "TouchScreenKeyboardType", "description": "On-screen keyboard type." },
+        { "name": "characterValidation", "type": "TMP_InputField.CharacterValidation", "description": "Per-character validation rule." },
+        { "name": "caretWidth", "type": "int", "description": "TMP_InputField.caretWidth." },
+        { "name": "customCaretColor", "type": "bool", "description": "Use caretColor instead of the text color." },
+        { "name": "caretColor", "type": "Color", "description": "Caret color (with customCaretColor)." },
+        { "name": "onSelect", "type": "Action<string>", "description": "Field gained focus." },
+        { "name": "onDeselect", "type": "Action<string>", "description": "Field lost focus." },
+        { "name": "selectionColor", "type": "Color", "description": "TMP_InputField.selectionColor." },
+        { "name": "onValueChanged", "type": "Action<string>", "description": "Per-keystroke change." },
+        { "name": "onEndEdit", "type": "Action<string>", "description": "Focus-loss / submit end." },
+        { "name": "onSubmit", "type": "Action<string>", "description": "Explicit submit." },
+        { "name": "interactable", "type": "bool", "description": "Selectable.interactable." }
+      ]
+    },
+    "Prefab": {
+      "propsType": "UguiPrefabProps",
+      "description": "Migration bridge: instantiates an existing uGUI prefab inside the reactive tree (full-stretch holder).",
+      "acceptsChildren": false,
+      "attributes": [
+        { "name": "source", "type": "GameObject", "description": "Prefab asset to instantiate; change swaps the instance." },
+        { "name": "bind", "type": "object", "description": "Delivered to every IReactivePrefab.Bind on the instance root when changed." },
+        { "name": "onInstantiated", "type": "Action<GameObject>", "description": "Called with the fresh instance." }
+      ]
+    },
+    "UitkHost": {
+      "propsType": "UguiUitkHostProps",
+      "description": "Island: a UI Toolkit subtree rendered to a RenderTexture inside this uGUI tree, with pointer input forwarded.",
+      "acceptsChildren": false,
+      "attributes": [
+        { "name": "content", "type": "Func<VirtualNode>", "description": "The UITK subtree factory." },
+        { "name": "panel", "type": "PanelSettings", "description": "Themed PanelSettings asset (recommended); a minimal runtime one is created when omitted." }
       ]
     }
   },

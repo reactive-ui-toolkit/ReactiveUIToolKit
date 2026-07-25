@@ -19,6 +19,15 @@ Syntax highlighting + language intelligence for `.uitkx` markup (ReactiveUIToolK
 
 ## Changelog
 
+### [1.7.0] - 2026-07-25
+- Feature: @backend ugui — the uGUI element vocabulary across the toolchain (pairs with Unity package 0.11.0). A .uitkx file that opts in with the @backend ugui preamble directive switches to the 18-tag uGUI vocabulary (Canvas, Panel, Image, RawImage, Text, Button, the three LayoutGroups, Toggle/ToggleGroup, Slider, Scrollbar, ScrollRect, Dropdown, InputField, Prefab, UitkHost) with backend-aware completions, hover, diagnostics, and virtual-document IntelliSense.
+
+New: UITKX2111 flags unknown or duplicate @backend values; UITKX2112 warns that @uss has no effect in a ugui file; UITKX2113 flags cross-backend imports in both directions.
+
+UI Toolkit files are untouched — IDE behavior and generated code are byte-identical when the directive is absent.
+
+SG suite 1744/1744, LSP suite 152/152.
+
 ### [1.6.0] - 2026-07-18
 - Field-testing wave on the 0.9.0 ES-modules surface (pairs with Unity package 0.10.0).
 

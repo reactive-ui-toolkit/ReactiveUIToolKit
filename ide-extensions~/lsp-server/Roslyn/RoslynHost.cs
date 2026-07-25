@@ -230,7 +230,7 @@ namespace UitkxLanguageServer.Roslyn
         private readonly RoslynSemanticTokensProvider _roslynTokensProvider =
             new RoslynSemanticTokensProvider();
         private readonly ILanguageServerFacade _server;
-        private readonly IPropsTypeProvider _propsTypes;
+        private readonly PropsTypeAdapter _propsTypes;
         private readonly DocumentStore? _documentStore;
 
         private string? _workspaceRoot;
@@ -1066,7 +1066,7 @@ namespace UitkxLanguageServer.Roslyn
                     enriched,
                     source,
                     uitkxFilePath,
-                    _propsTypes
+                    _propsTypes.ForBackend(parseResult.Directives.Backend)
                 );
                 UpdateWorkspace(state, uitkxFilePath, virtualDoc, ct);
                 state.VirtualDoc = virtualDoc;
@@ -1115,7 +1115,7 @@ namespace UitkxLanguageServer.Roslyn
                     enriched,
                     source,
                     uitkxFilePath,
-                    _propsTypes
+                    _propsTypes.ForBackend(parseResult.Directives.Backend)
                 );
 
                 // 2. Update (or create) the AdhocWorkspace for this file
@@ -1706,7 +1706,7 @@ namespace UitkxLanguageServer.Roslyn
                         peerParseResult,
                         peerSource,
                         peerPath,
-                        _propsTypes
+                        _propsTypes.ForBackend(peerDirectives.Backend)
                     );
 
                     var docInfo = DocumentInfo.Create(
@@ -1777,7 +1777,7 @@ namespace UitkxLanguageServer.Roslyn
                         peerParseResult,
                         peerSource,
                         peerPath,
-                        _propsTypes
+                        _propsTypes.ForBackend(peerDirectives.Backend)
                     );
 
                     var newDocId = DocumentId.CreateNewId(projectId, debugName: peerPath + ".peer");
