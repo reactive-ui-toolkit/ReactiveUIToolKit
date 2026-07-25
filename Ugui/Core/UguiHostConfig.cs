@@ -153,6 +153,14 @@ namespace ReactiveUITK.Ugui
             if (host == null)
                 return;
 
+            // Same-parent move (keyed reorder): detach first so the anchor
+            // index is computed on the post-removal sibling list (DOM
+            // insertBefore semantics).
+            if (childGo.transform.parent == host)
+            {
+                childGo.transform.SetParent(StagingRoot, false);
+            }
+
             var beforeGo = (GameObject)beforeChild;
             if (beforeGo == null || beforeGo.transform.parent != host)
             {

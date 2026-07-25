@@ -168,6 +168,13 @@ namespace ReactiveUITK.Core.Fiber
 
             FiberNode previousNewFiber = null;
 
+            // React's lastPlacedIndex algorithm: a reused fiber whose OLD index
+            // is behind the highest already-placed old index has moved rightward
+            // and needs a physical reposition in the commit phase. Without this,
+            // keyed reorders update the fiber tree but never move the host
+            // elements — the on-screen order silently stays stale.
+            int lastPlacedIndex = 0;
+
             for (int newIdx = 0; newIdx < newChildren.Count; newIdx++)
             {
                 var newChild = newChildren[newIdx];
@@ -181,10 +188,19 @@ namespace ReactiveUITK.Core.Fiber
                     // Attempt to reuse the old fiber for this key.
                     // Only remove from the lookup map if reuse succeeds;
                     // otherwise keep it so that it can be deleted later.
+                    int oldIndex = oldFiber.Index;
                     newFiber = UpdateSlot(oldFiber, newChild);
                     if (newFiber != null)
                     {
                         existingChildren.Remove(key);
+                        if (oldIndex < lastPlacedIndex)
+                        {
+                            newFiber.EffectTag |= EffectFlags.Placement;
+                        }
+                        else
+                        {
+                            lastPlacedIndex = oldIndex;
+                        }
                     }
                 }
 

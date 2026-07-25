@@ -105,8 +105,11 @@ namespace ReactiveUITK.Ugui.Tests
             for (int cycle = 0; cycle < Cycles; cycle++)
             {
                 // Membership oscillates so unmounted boxes flow through the
-                // pool and come back on later cycles.
-                int count = cycle % 2 == 0 ? BoxCount : BoxCount / 3;
+                // pool and come back on later cycles. The churn amplitude
+                // (100) stays under the per-adapter pool capacity (128) so
+                // every unmounted box is poolable — the reuse bound below is
+                // then exact, not capacity-diluted.
+                int count = cycle % 2 == 0 ? BoxCount : BoxCount - 100;
                 _renderer.Render(BoxField(count, cycle * 0.25f));
 
                 var area = _mountRect.GetChild(0);
@@ -117,13 +120,14 @@ namespace ReactiveUITK.Ugui.Tests
                 }
             }
 
-            // Pooling bound: distinct Image instances across the whole run must
-            // stay well under total mounts (Cycles/2 * BoxCount would be the
-            // no-pooling worst case). Peak live is BoxCount; pool capacity per
-            // adapter is 128, so the ceiling is peak + capacity + slack.
+            // Pooling bound: with churn amplitude under the pool capacity,
+            // every removed box returns to the pool and comes back — distinct
+            // Image instances across the whole run must stay at peak-live
+            // plus a small slack (the no-pooling worst case would be
+            // Cycles/2 * 100 extra instances).
             Assert.LessOrEqual(
                 seenBoxes.Count,
-                BoxCount + 200,
+                BoxCount + 50,
                 "membership churn must reuse pooled instances instead of leaking new ones"
             );
         }

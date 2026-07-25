@@ -20,6 +20,7 @@ namespace ReactiveUITK.Core.Fiber
         private FiberHostConfig _hostConfig;
         private IScheduler _scheduler;
         private bool _isCommitting; // Track if we're in the commit phase
+        private bool _isReplayingDeferred; // CommitRoot is draining _deferredUpdates — replayed updates must coalesce into the WIP, not re-defer
         private bool _hasDeletions; // Set during reconciliation when any fiber records deletions
         private List<FiberNode> _pendingPassiveEffects; // Collected during CommitWork, flushed two-pass after tree swap
 
@@ -281,6 +282,22 @@ namespace ReactiveUITK.Core.Fiber
             if (_isCommitting)
             {
                 // Queue the specific fiber update to replay it after commit
+                _deferredUpdates.Enqueue((fiber, vnode));
+                return;
+            }
+
+            // If a render pass is in flight (parked between time slices, or a
+            // reentrant update fired during a synchronous WorkLoop), defer
+            // instead of discarding the pass. Restarting on every update
+            // starves large trees under sustained per-frame updates (signals
+            // ticking every frame): the pass never reaches commit, and hosts
+            // already created by the aborted walk leak — for GameObject-backed
+            // backends that is a hard resource leak, not just GC pressure.
+            // The deferred update replays from CommitRoot's finally block,
+            // coalescing everything that arrived during the pass into ONE
+            // follow-up render.
+            if (_nextUnitOfWork != null && !_isReplayingDeferred)
+            {
                 _deferredUpdates.Enqueue((fiber, vnode));
                 return;
             }
@@ -843,6 +860,7 @@ namespace ReactiveUITK.Core.Fiber
 
                 // Process any deferred updates scheduled during commit
                 bool pendingUpdates = false;
+                _isReplayingDeferred = true;
                 while (_deferredUpdates.Count > 0)
                 {
                     var (fiber, vnode) = _deferredUpdates.Dequeue();
@@ -850,6 +868,7 @@ namespace ReactiveUITK.Core.Fiber
                     ScheduleUpdateOnFiber(fiber, vnode, scheduleWork: false);
                     pendingUpdates = true;
                 }
+                _isReplayingDeferred = false;
 
                 // Now that all deferred updates are processed and flags are set/merged,
                 // schedule the work loop ONCE.
@@ -1073,7 +1092,21 @@ namespace ReactiveUITK.Core.Fiber
 
             if (parentFiber?.HostElement != null)
             {
-                if (_hostConfig.GetParent(fiber.HostElement) == null)
+                if (_hostConfig.GetParent(fiber.HostElement) != null)
+                {
+                    // Move placement (keyed reorder): the host is already
+                    // parented — reposition it before its stable anchor. Props
+                    // are NOT re-applied here; a changed-props move also
+                    // carries an Update effect, which CommitWork runs right
+                    // after this placement.
+                    var moveAnchor = GetHostSibling(fiber);
+                    _hostConfig.InsertBefore(
+                        parentFiber.HostElement,
+                        fiber.HostElement,
+                        moveAnchor
+                    );
+                }
+                else
                 {
                     // Apply initial properties before inserting
                     if (fiber.PendingHostProps != null)

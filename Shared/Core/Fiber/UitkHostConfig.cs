@@ -84,6 +84,16 @@ namespace ReactiveUITK.Core.Fiber
         {
             var parentVe = (VisualElement)parent;
             var childVe = (VisualElement)child;
+
+            // Same-parent move (keyed reorder): detach first so the anchor
+            // index is computed on the post-removal list — DOM insertBefore
+            // semantics; VisualElement.Insert's internal remove would
+            // otherwise shift the index and land the child after the anchor.
+            if (childVe.parent == parentVe)
+            {
+                parentVe.Remove(childVe);
+            }
+
             if (beforeChild == null)
             {
                 parentVe.Add(childVe);
