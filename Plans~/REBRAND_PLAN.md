@@ -1,6 +1,8 @@
 # REBRAND PLAN v2 — Unity leg (`ReactiveUIToolKit` → org `reactive-ui-toolkit`, repo `ruitk-unity`)
 
-**Status: PLANNED — v2, census re-measured 2026-07-28 @ `dev` (`db2470a6`), tree clean.**
+**Status: PLANNED + FULLY RATIFIED — v2. All U-Q questions resolved (2026-07-28, §5);
+census re-measured 2026-07-28 @ `dev` (`db2470a6`), tree clean. Blocked only on the §2
+gates (org transfer + Godot-first ordering).**
 **v2 supersedes v1 entirely.** v1 recommended keeping the `ReactiveUITK` identifier root; the
 owner overruled on 2026-07-28: **"yes rename — to the same one Godot uses… no half-assing."**
 So this leg is now a **FULL breaking rename**: namespace/assembly root **`ReactiveUITK` →
@@ -50,7 +52,7 @@ Written for a **lesser-model executor**. The contract in §1 is binding.
 |---|---|---|
 | G1 | Org `reactive-ui-toolkit` exists; repo transferred + renamed `ruitk-unity` (issues/PRs/stars/secrets survive; git+web URLs redirect; never reuse the freed name) | OWNER |
 | G2 | Godot leg executed first (family ordering) | OWNER |
-| G3 | U-Q3 sequencing answered (§5) | OWNER |
+| G3 | ~~U-Q3 sequencing~~ — RESOLVED, no gate (0.11.0 already shipped; §5) | — |
 | G4 | CI secrets present post-transfer (`UNITY_EMAIL`/`UNITY_PASSWORD`, marketplace PATs) | OWNER |
 
 ---
@@ -111,15 +113,23 @@ git grep -nIi "yanivkalfa" | wc -l             #    8   (lines; 10 occ / 5 files
 
 ---
 
-## 5. Open questions (U-Q1/U-Q2 are RATIFIED — only new ones remain)
+## 5. Open questions — ALL RESOLVED (owner, 2026-07-28)
 
-- **U-Q3 — 0.11.0 is currently UNRELEASED.** `package.json` says `0.11.0` and `CHANGELOG.md`'s
-  top section is `## [0.11.0] - Unreleased`. REC: release 0.11.0 first (its content is done),
-  then ship the rebrand as a clean "0.12.0 = the rename, nothing else". ALT: fold both into
-  one 0.12.0.
-- **U-Q4 — `Plans~/codebase-index.json`** (462 folder-casing tokens; a generated index). REC:
-  sweep it with everything else so it indexes the post-rename tree; regenerate instead if its
-  generator turns up during execution.
+- **U-Q3 — RESOLVED (moot): 0.11.0 IS released and published** (GitHub release
+  `ReactiveUIToolKit 0.11.0`, tag `v0.11.0` @ `899c938`, `.unitypackage` attached,
+  2026-07-26). The wave ships as a clean "0.12.0 = the rename, nothing else".
+  **Stale-heading bug found while verifying:** `CHANGELOG.md` and
+  `Plans~/DISCORD_CHANGELOG.md` on `dev` still head their top sections
+  `## [0.11.0] - Unreleased` — date both to the actual release date as a §9 housekeeping
+  step (or a separate hotfix before the wave).
+- **U-Q4 — RESOLVED: sweep `Plans~/codebase-index.json`** with everything else (it indexes
+  the post-rename tree; regenerate instead only if its generator turns up during execution).
+- **Family license ruling (UE-Q5, applies to ALL THREE repos):** the license document itself
+  renames + version-bumps — `ReactiveUI Community License 1.0` → **`Reactive UI Toolkit
+  Community License 1.1`** — product references inside updated, credit-line clause → `Made
+  with Reactive UI Toolkit`, legal terms otherwise unchanged, copyright holder stays;
+  licensees under 1.0 keep their 1.0 terms. For THIS repo: retitle `LICENSE.md`, matching
+  labels in `LICENSE-COMMERCIAL.md`, and the docs Licensing page copy (§7.B4 executes it).
 
 ---
 
@@ -168,8 +178,11 @@ Then `git remote set-url origin https://github.com/reactive-ui-toolkit/ruitk-uni
    NEW `"displayName": "Reactive UI Toolkit — Unity",` (the broken string dies here).
 2. `.github/ISSUE_TEMPLATE/bug_report.yml:2` description → U-N3 phrasing.
 3. `README.md` H1 + product-name prose → U-N3 on first mention, "the toolkit" after.
-4. License labels: `git grep -n "ReactiveUIToolKit\|Reactive UI" LICENSE.md LICENSE-COMMERCIAL.md THIRDPARTY.md`
-   → product-label hits → U-N3. License TERMS unchanged. Ambiguous hit → STOP-list it.
+4. Licenses — **the full license-1.1 rewrite (family ruling, §5):** retitle `LICENSE.md`
+   `ReactiveUI Community License 1.0` → `Reactive UI Toolkit Community License 1.1`, version
+   refs `1.0` → `1.1` throughout, product references + credit-line clause updated, terms
+   otherwise unchanged; matching labels in `LICENSE-COMMERCIAL.md` + `THIRDPARTY.md` + the
+   docs Licensing page. Ambiguous hit → STOP-list it.
 5. MenuItem root sweep: `"ReactiveUITK/` → `"Reactive UI Toolkit/` — exactly 53 sites, all
    inside `MenuItem(`/`GetWindow` attribute strings; verify the count before and after.
 6. `Diagnostics/Benchmark/BenchEditorHost.cs:29` `"ReactiveUITK Bench"` →
@@ -271,8 +284,9 @@ CHANGELOG/Discord old bodies, and the §7.E1 identity-frozen lines.
 2. `MIGRATION-0.12.md` at repo root: delete-old-folder instruction (with the Linux
    both-folders callout), the codemod command, the "EditorPrefs value resets" cosmetic note,
    the C1/C2 rules verbatim for hand-migration, the U-N15 version table.
-3. `CHANGELOG.md`: new `## [0.12.0]` BREAKING section on top (placement per U-Q3). Old bodies
-   frozen.
+3. `CHANGELOG.md`: new `## [0.12.0]` BREAKING section on top; ALSO date the stale
+   `## [0.11.0] - Unreleased` headings (CHANGELOG + DISCORD) to the actual 0.11.0 release
+   date — §5 U-Q3 bug. Old bodies otherwise frozen.
 
 ### 7.H Group H — expected-leftovers audit (defines DONE)
 
