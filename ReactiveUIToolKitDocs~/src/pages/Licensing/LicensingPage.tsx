@@ -99,7 +99,7 @@ export const LicensingPage: FC = () => (
       license certificate PDF, the document your producer files for publisher and platform
       paperwork. The full texts live in the repository:{' '}
       <a
-        href="https://github.com/yanivkalfa/ReactiveUIToolKit/blob/master/LICENSE.md"
+        href="https://github.com/reactive-ui-toolkit/ruitk-unity/blob/master/LICENSE.md"
         target="_blank"
         rel="noreferrer"
       >
@@ -107,7 +107,7 @@ export const LicensingPage: FC = () => (
       </a>{' '}
       and{' '}
       <a
-        href="https://github.com/yanivkalfa/ReactiveUIToolKit/blob/master/LICENSE-COMMERCIAL.md"
+        href="https://github.com/reactive-ui-toolkit/ruitk-unity/blob/master/LICENSE-COMMERCIAL.md"
         target="_blank"
         rel="noreferrer"
       >

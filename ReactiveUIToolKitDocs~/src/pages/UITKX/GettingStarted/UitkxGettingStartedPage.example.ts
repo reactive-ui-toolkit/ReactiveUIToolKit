@@ -1,4 +1,4 @@
-export const UITKX_INSTALL_URL = 'https://github.com/yanivkalfa/ReactiveUIToolKit.git#dist'
+export const UITKX_INSTALL_URL = 'https://github.com/reactive-ui-toolkit/ruitk-unity.git#dist'
 
 export const UITKX_HELLO_WORLD_COMPONENT = `// Assets/UI/HelloWorld.uitkx
 export VirtualNode HelloWorld() {

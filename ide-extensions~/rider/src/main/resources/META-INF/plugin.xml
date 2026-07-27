@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>com.reactiveuitk.uitkx</id>
   <name>UITKX</name>
-  <vendor url="https://github.com/your-org/ReactiveUIToolKit">ReactiveUITK</vendor>
+  <vendor url="https://github.com/reactive-ui-toolkit/ruitk-unity">ReactiveUITK</vendor>
   <description>
     <![CDATA[
     <p>Language support for <b>.uitkx</b> ReactiveUIToolKit component templates.</p>

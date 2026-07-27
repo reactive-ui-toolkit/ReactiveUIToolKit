@@ -69,7 +69,7 @@ Each job auto-tags on success (e.g. `v0.2.24`, `vscode-v1.0.283`, `vs2022-v1.0.5
 | `VSCE_PAT` | Azure DevOps PAT for VS Code Marketplace publishing |
 | `VS_MARKETPLACE_TOKEN` | Azure DevOps PAT for VS 2022 Marketplace publishing |
 
-Monitor progress at: `https://github.com/<org>/ReactiveUIToolKit/actions`
+Monitor progress at: `https://github.com/reactive-ui-toolkit/ruitk-unity/actions`
 
 ---
 

@@ -23,7 +23,7 @@ Adds language support for `.uitkx` ReactiveUIToolKit component templates in **Ri
 3. Click **Install** and restart Rider
 
 ### From disk
-1. Download `uitkx-rider-x.x.x.zip` from the [Releases page](https://github.com/your-org/ReactiveUIToolKit/releases)
+1. Download `uitkx-rider-x.x.x.zip` from the [Releases page](https://github.com/reactive-ui-toolkit/ruitk-unity/releases)
 2. Open **Rider → Settings → Plugins → ⚙ → Install Plugin from Disk…**
 3. Select the zip file and restart Rider
 

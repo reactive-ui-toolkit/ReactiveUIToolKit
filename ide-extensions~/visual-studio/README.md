@@ -17,7 +17,7 @@ Adds language support for `.uitkx` ReactiveUIToolKit component templates in **Vi
 
 ## Installation
 
-1. Download `UitkxVsix.vsix` from the [Releases page](https://github.com/your-org/ReactiveUIToolKit/releases)
+1. Download `UitkxVsix.vsix` from the [Releases page](https://github.com/reactive-ui-toolkit/ruitk-unity/releases)
 2. Double-click the `.vsix` file or run:
    ```powershell
    vsixinstaller.exe UitkxVsix.vsix
