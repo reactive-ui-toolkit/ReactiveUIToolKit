@@ -71,7 +71,7 @@ namespace Ruitk.EditorDiagnostics
         {
             string folder = Path.Combine(
                 Application.dataPath,
-                "ReactiveUIToolKit",
+                "ReactiveUIToolkit",
                 "Diagnostics",
                 "Logs",
                 "Results"

@@ -52,7 +52,7 @@ public sealed class FormatterSnapshotTests
     /// in by the compiler) and runtime.
     /// Layout:  SourceGenerator~/Tests/FormatterSnapshotTests.cs
     ///          ↑ dir         ↑ dir
-    ///          SourceGenerator~/       ReactiveUIToolKit/  ← workspace root
+    ///          SourceGenerator~/       ReactiveUIToolkit/  ← workspace root
     /// </summary>
     private static string WorkspaceRoot([CallerFilePath] string thisFile = "")
     {

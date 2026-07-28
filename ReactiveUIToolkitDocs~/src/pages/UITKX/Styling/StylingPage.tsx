@@ -110,7 +110,7 @@ export const StylingPage: FC = () => {
       Styling
     </Typography>
     <Typography variant="body1" paragraph>
-      ReactiveUIToolKit provides a <strong>typed <code>Style</code> class</strong> with compile-time
+      ReactiveUIToolkit provides a <strong>typed <code>Style</code> class</strong> with compile-time
       checked properties that map directly to Unity UI Toolkit&apos;s inline style system. A
       companion <strong><code>CssHelpers</code></strong> static class provides terse shortcuts for
       lengths, colors, and enum values.

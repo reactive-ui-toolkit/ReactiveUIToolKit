@@ -10,7 +10,7 @@ export const UitkxDifferencesPage: FC = () => (
       Different from React
     </Typography>
     <Typography variant="body1" paragraph>
-      ReactiveUIToolKit borrows React's component-and-hooks mental model, but it runs on Unity UI
+      ReactiveUIToolkit borrows React's component-and-hooks mental model, but it runs on Unity UI
       Toolkit with a C# runtime. This section covers the places where your mental model should be
       adjusted rather than re-explaining core concepts.
     </Typography>
@@ -65,7 +65,7 @@ export const UitkxDifferencesPage: FC = () => (
       </Typography>
       <Typography variant="body1" paragraph>
         React's <code>useCallback</code> returns the same function type you pass in.
-        In ReactiveUIToolKit, <code>{'UseCallback<T>'}</code> always returns{' '}
+        In ReactiveUIToolkit, <code>{'UseCallback<T>'}</code> always returns{' '}
         <code>{'Func<T>'}</code> — a parameterless delegate that returns <code>T</code>.
         If you need a stable <code>Action</code> or <code>{'Action<T>'}</code>, use{' '}
         <code>UseStableCallback</code>, <code>{'UseStableAction<T>'}</code>, or{' '}

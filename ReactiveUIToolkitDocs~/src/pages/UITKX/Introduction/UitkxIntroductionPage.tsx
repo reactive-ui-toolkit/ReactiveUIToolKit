@@ -20,7 +20,7 @@ export const UitkxIntroductionPage: FC = () => (
       Reactive UI Toolkit — Unity
     </Typography>
     <Typography variant="body1" paragraph>
-      ReactiveUIToolKit is a React-like UI framework for Unity, and UITKX is its authoring language.
+      ReactiveUIToolkit is a React-like UI framework for Unity, and UITKX is its authoring language.
       You write function-style components in <code>.uitkx</code> files, use hooks for state and
       effects, and the toolkit reconciles the resulting tree onto Unity{' '}
       <code>VisualElement</code>s. There is no JavaScript engine or bridge layer — everything runs

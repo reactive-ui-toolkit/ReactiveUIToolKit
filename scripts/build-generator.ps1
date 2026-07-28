@@ -7,7 +7,7 @@ Usage:
 
 What this does:
   1) Builds SourceGenerator~/Ruitk.SourceGenerator.csproj.
-  2) The csproj builds to bin/; its PublishGeneratorToAnalyzers post-build target copies the DLLs into Assets/ReactiveUIToolKit/Analyzers/.
+  2) The csproj builds to bin/; its PublishGeneratorToAnalyzers post-build target copies the DLLs into Assets/ReactiveUIToolkit/Analyzers/.
   3) Unity picks up the updated analyzer on refresh/recompile.
 #>
 param(

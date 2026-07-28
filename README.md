@@ -25,7 +25,7 @@ The same components also render to classic **Unity UI (uGUI)**: one fiber reconc
 | `SourceGenerator~/` | Source generator source code + tests |
 | `ide-extensions~/` | IDE extension projects (VS Code, VS2022, Rider, shared LSP server) |
 | `Plans~/` | Design documents and implementation plans |
-| `ReactiveUIToolKitDocs~/` | Documentation website (Vite + React) |
+| `ReactiveUIToolkitDocs~/` | Documentation website (Vite + React) |
 | `scripts/` | Build and publish automation |
 
 ### Key Architectural Decisions
@@ -256,7 +256,7 @@ dotnet publish ide-extensions~/lsp-server -c Release
 
 **Documentation Site**
 ```bash
-cd ReactiveUIToolKitDocs~ && npm run dev
+cd ReactiveUIToolkitDocs~ && npm run dev
 ```
 
 ### Running Tests

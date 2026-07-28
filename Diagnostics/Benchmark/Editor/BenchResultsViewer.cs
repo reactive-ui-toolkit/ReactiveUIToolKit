@@ -775,7 +775,7 @@ namespace Ruitk.Bench.EditorTools
 
             var guess = Path.Combine(
                 Application.dataPath,
-                "ReactiveUIToolKit",
+                "ReactiveUIToolkit",
                 "Diagnostics",
                 "Benchmark",
                 "Results",
@@ -788,7 +788,7 @@ namespace Ruitk.Bench.EditorTools
 
             var guessRoot = Path.Combine(
                 Application.dataPath,
-                "ReactiveUIToolKit",
+                "ReactiveUIToolkit",
                 "Diagnostics",
                 "Benchmark",
                 "Results"

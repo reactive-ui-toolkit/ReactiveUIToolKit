@@ -1,6 +1,6 @@
 # Release Operations Runbook
 
-Step-by-step guide for publishing ReactiveUIToolKit releases.
+Step-by-step guide for publishing ReactiveUIToolkit releases.
 
 ---
 
@@ -80,11 +80,11 @@ Monitor progress at: `https://github.com/reactive-ui-toolkit/ruitk-unity/actions
 1. Open [Unity Publisher Dashboard](https://publisher.unity.com/)
 2. Navigate to your package draft
 3. Upload the latest `.unitypackage`:
-   - In Unity Editor: right-click the `Assets/ReactiveUIToolKit` folder
+   - In Unity Editor: right-click the `Assets/ReactiveUIToolkit` folder
    - Select **Export Package…**
    - Uncheck files listed in `config.json` → `pathsToOmitFromDist`
      (CICD, Diagnostics, scripts, docs, publisher-secrets, PDBs, deps.json)
-   - Export as `ReactiveUIToolKit-v1.0.0.unitypackage`
+   - Export as `ReactiveUIToolkit-v1.0.0.unitypackage`
 4. Fill in / update:
    - Version number
    - Release notes (copy from CHANGELOG.md)
@@ -100,7 +100,7 @@ Gumroad has a REST API that can be automated. For manual uploads:
 1. Log in to [Gumroad Dashboard](https://app.gumroad.com/products)
 2. Navigate to your product (or create one for the first release)
 3. Click **Edit** → **Content** tab
-4. Upload `ReactiveUIToolKit-v1.0.0.unitypackage`
+4. Upload `ReactiveUIToolkit-v1.0.0.unitypackage`
 5. Update the version in the product description
 6. Update the price if needed
 7. Save and publish
@@ -109,7 +109,7 @@ Gumroad has a REST API that can be automated. For manual uploads:
 ```bash
 curl -X PUT https://api.gumroad.com/v2/products/{product_id} \
   -d "access_token=YOUR_TOKEN" \
-  -F "file=@ReactiveUIToolKit-v1.0.0.unitypackage"
+  -F "file=@ReactiveUIToolkit-v1.0.0.unitypackage"
 ```
 
 ### Itch.io
@@ -119,14 +119,14 @@ Itch.io supports automation via the `butler` CLI tool.
 **Manual upload:**
 1. Log in to [Itch.io Dashboard](https://itch.io/dashboard)
 2. Navigate to your project page
-3. Upload `ReactiveUIToolKit-v1.0.0.unitypackage`
+3. Upload `ReactiveUIToolkit-v1.0.0.unitypackage`
 4. Set the download type and pricing
 5. Publish
 
 **Automated upload** (for future CI integration):
 ```bash
 # Install butler: https://itch.io/docs/butler/
-butler push ReactiveUIToolKit-v1.0.0.unitypackage your-account/reactiveuitoolkit:unity --userversion 1.0.0
+butler push ReactiveUIToolkit-v1.0.0.unitypackage your-account/reactiveuitoolkit:unity --userversion 1.0.0
 ```
 
 ---
@@ -137,7 +137,7 @@ The docs site is deployed automatically by `publish.yml` (pushes to the
 `documentations` branch on every publish run). To deploy manually:
 
 ```bash
-cd ReactiveUIToolKitDocs~
+cd ReactiveUIToolkitDocs~
 npm ci
 npm run build
 # The dist/ folder is then pushed to the documentations branch
@@ -152,7 +152,7 @@ Before publishing:
 - [ ] All tests pass: `dotnet test SourceGenerator~/Tests/` (841+ tests)
 - [ ] All LSP tests pass: `dotnet test ide-extensions~/lsp-server/Tests/` (22+ tests)
 - [ ] VS Code extension builds: `cd ide-extensions~/vscode && npm ci && npm run build`
-- [ ] Docs site builds: `cd ReactiveUIToolKitDocs~ && npm ci && npm run build`
+- [ ] Docs site builds: `cd ReactiveUIToolkitDocs~ && npm ci && npm run build`
 - [ ] CHANGELOG.md updated with version and changes
 - [ ] Versions bumped in relevant files (see **Version Files Reference** table above)
 - [ ] No uncommitted changes: `git status` is clean

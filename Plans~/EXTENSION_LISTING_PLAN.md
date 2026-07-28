@@ -16,12 +16,12 @@
 > (`VS2022_PUBLISH_GUIDE.md` + `vscode-publish.md` + `visual-studio-publish.md`) — follow them
 > for every release mechanic. The Rider plugin (JetBrains marketplace) is OUT OF SCOPE here.
 
-## §0 Where every marketplace-visible string lives (researched 2026-07-16; paths relative to `Assets/ReactiveUIToolKit/`)
+## §0 Where every marketplace-visible string lives (researched 2026-07-16; paths relative to `Assets/ReactiveUIToolkit/`)
 
 | Surface | VS Code | VS2022 |
 |---|---|---|
 | List/page title | `ide-extensions~/vscode/package.json` → `displayName` (currently `"UITKX"`, v1.4.2) | `ide-extensions~/visual-studio/UitkxVsix/source.extension.vsixmanifest` → `<DisplayName>` (line ~10, currently `UITKX`, Version 1.4.2) |
-| Short description | package.json `description` — currently the THIN "Language support for .uitkx ReactiveUIToolKit component templates" (rewrite, §1) | vsixmanifest `<Description>` (same thin sentence + one clause — rewrite, §1) |
+| Short description | package.json `description` — currently the THIN "Language support for .uitkx ReactiveUIToolkit component templates" (rewrite, §1) | vsixmanifest `<Description>` (same thin sentence + one clause — rewrite, §1) |
 | Page body | `ide-extensions~/vscode/README.md` (exists: Features/Requirements present, H1 is `# UITKX — VS Code Extension`, no Changelog section) | `UitkxVsix/overview.md` — COMMITTED, generated from `UitkxVsix/overview-template.md` + `ide-extensions~/changelog.json` via `scripts/changelog.mjs extract-overview` (the template is currently THIN — flesh out, §2) |
 | Changelog | `ide-extensions~/changelog.json` is the single source; per-IDE CHANGELOGs + the overview's `## Changelog` section generate from it via `scripts/changelog.mjs` | same |
 | Version | package.json `version` | vsixmanifest `Identity Version` |
@@ -39,7 +39,7 @@ if 1.4.2 went out, bump both to 1.4.3 (listing-only changes still bump — shipp
 | vsixmanifest `<DisplayName>` | `UITKX (Unity - VS2022)` |
 | VS Code body H1 | `# Reactive UI - Unity - VS Code (UITKX)` |
 | VS2022 body H1 (overview-template) | `# Reactive UI - Unity - VS2022 (UITKX)` |
-| package.json `description` | `Syntax highlighting + language intelligence for .uitkx markup (ReactiveUIToolKit for Unity). Completions, hover, diagnostics and formatting from the bundled language server — fully offline, no running Unity editor required. Discord: https://discord.gg/Knedqu4Wyv` |
+| package.json `description` | `Syntax highlighting + language intelligence for .uitkx markup (ReactiveUIToolkit for Unity). Completions, hover, diagnostics and formatting from the bundled language server — fully offline, no running Unity editor required. Discord: https://discord.gg/Knedqu4Wyv` |
 | vsixmanifest `<Description>` | same sentence (post-2026-07-16 update: Unity leg appends the Discord link; family parity with Unreal/Godot not yet reconciled). ⚠ HARD LIMIT: VS Marketplace rejects `<Description>` ≥ 280 chars (VsixPub0024, found the hard way in Publish #109) — repo link deliberately NOT in the description (it lives in the dedicated `repository.url`/`<MoreInfo>` fields both marketplaces already display). |
 
 Body structure (both templates, this exact order): H1 → description paragraph(s) →
@@ -70,7 +70,7 @@ verbatim; the VS2022 template gets fleshed out to the SAME feature list (it is c
      --template ide-extensions~/visual-studio/UitkxVsix/overview-template.md \
      --out ide-extensions~/visual-studio/UitkxVsix/overview.md
    ```
-   (Run from `Assets/ReactiveUIToolKit/`; adjust `--ide` values if this repo's json uses
+   (Run from `Assets/ReactiveUIToolkit/`; adjust `--ide` values if this repo's json uses
    different keys — verify, don't assume.)
 6. `.vscodeignore` — exclude `readme-template.md` from the .vsix (README.md stays included).
 7. `scripts/changelog.mjs` — extend `verify` (if this port has one; otherwise add the check to

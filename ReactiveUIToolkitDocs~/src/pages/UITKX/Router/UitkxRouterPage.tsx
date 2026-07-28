@@ -10,7 +10,7 @@ export const UitkxRouterPage: FC = () => (
       Router
     </Typography>
     <Typography variant="body1" paragraph>
-      ReactiveUIToolKit includes a lightweight, in-memory router inspired by React Router. Routing
+      ReactiveUIToolkit includes a lightweight, in-memory router inspired by React Router. Routing
       is authored directly in markup — you compose <code>{'<Router>'}</code>,{' '}
       <code>{'<Route>'}</code>, links, and routed child components as part of the returned UI tree.
     </Typography>

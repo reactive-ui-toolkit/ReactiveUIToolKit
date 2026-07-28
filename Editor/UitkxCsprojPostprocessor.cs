@@ -110,7 +110,7 @@ namespace Ruitk.Editor
             string[] all = Directory.GetFiles(assetsRoot, "*.uitkx", SearchOption.AllDirectories);
 
             // Filter out any paths whose directory segments contain a "~" suffix
-            // (e.g. SourceGenerator~, ReactiveUIToolKitDocs~).
+            // (e.g. SourceGenerator~, ReactiveUIToolkitDocs~).
             // Those are Unity-ignored tooling folders — their files must never
             // be passed to the compiler as AdditionalFiles.
             var result = new System.Collections.Generic.List<string>(all.Length);

@@ -284,8 +284,8 @@ namespace Ruitk.Editor
         {
             // Application.dataPath = <project>/Assets
             string projectRoot = Path.GetDirectoryName(Application.dataPath);
-            // The package lives inside Assets/ReactiveUIToolKit
-            string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
+            // The package lives inside Assets/ReactiveUIToolkit
+            string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
             string testsDir = Path.Combine(packageRoot, "SourceGenerator~", "Tests");
             return Path.GetFullPath(testsDir);
         }

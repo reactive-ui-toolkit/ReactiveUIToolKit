@@ -5,7 +5,7 @@ description: Rebuild the VS Code and/or Visual Studio 2022 extensions locally fo
 
 # Rebuild IDE extensions for F5
 
-Repo root (Windows, PowerShell): `C:\Yanivs\GameDev\UnityComponents\Assets\ReactiveUIToolKit`
+Repo root (Windows, PowerShell): `C:\Yanivs\GameDev\UnityComponents\Assets\ReactiveUIToolkit`
 
 Use this skill when the user wants to test changes to the VS Code or
 VS 2022 extension by launching an Extension Development Host (F5) or the

@@ -22,7 +22,7 @@ export const FAQPage: FC = () => (
       UITKX is a markup language for authoring Unity UI Toolkit components using
       a React-like model. You write <code>.uitkx</code> files with JSX-style
       markup, hooks, and control flow. A Roslyn source generator compiles them
-      into standard C# that runs on the ReactiveUIToolKit runtime.
+      into standard C# that runs on the ReactiveUIToolkit runtime.
     </Typography>
 
     <Typography variant="body1" sx={Styles.question}>

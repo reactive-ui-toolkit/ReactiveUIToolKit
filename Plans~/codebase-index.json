@@ -4,7 +4,7 @@
     "CICD": 2,
     "Diagnostics": 14,
     "Editor": 9,
-    "ReactiveUIToolKitDocs~": 230,
+    "ReactiveUIToolkitDocs~": 230,
     "Runtime": 4,
     "Samples": 173,
     "Shared": 189,
@@ -45,7 +45,7 @@
     "obj"
   ],
   "excluded_path_prefixes": [
-    "ReactiveUIToolKitDocs~/dist/",
+    "ReactiveUIToolkitDocs~/dist/",
     "ide-extensions~/vscode/out/",
     "ide-extensions~/vscode/server/",
     "ide-extensions~/visual-studio/UitkxVsix/server/",
@@ -569,8 +569,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/.gitignore",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/.gitignore",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": "<noext>",
       "lines": 25,
       "namespace": null,
@@ -579,8 +579,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/eslint.config.js",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/eslint.config.js",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".js",
       "lines": 24,
       "namespace": null,
@@ -589,8 +589,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/index.html",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/index.html",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".html",
       "lines": 17,
       "namespace": null,
@@ -599,8 +599,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/package-lock.json",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/package-lock.json",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".json",
       "lines": 4081,
       "namespace": null,
@@ -609,8 +609,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/package.json",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/package.json",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".json",
       "lines": 40,
       "namespace": null,
@@ -619,8 +619,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/postcss.config.cjs",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/postcss.config.cjs",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".cjs",
       "lines": 5,
       "namespace": null,
@@ -629,8 +629,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/public/CNAME",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/public/CNAME",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": "<noext>",
       "lines": 1,
       "namespace": null,
@@ -639,8 +639,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/App.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/App.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 10,
       "namespace": null,
@@ -649,8 +649,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/App.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/App.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 37,
       "namespace": null,
@@ -662,8 +662,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/CodeBlock/CodeBlock.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/CodeBlock/CodeBlock.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 76,
       "namespace": null,
@@ -672,8 +672,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/CodeBlock/CodeBlock.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/CodeBlock/CodeBlock.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 88,
       "namespace": null,
@@ -684,8 +684,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/Pager/Pager.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/Pager/Pager.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 8,
       "namespace": null,
@@ -694,8 +694,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/Pager/Pager.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/Pager/Pager.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 21,
       "namespace": null,
@@ -706,8 +706,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/SearchModal/SearchModal.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/SearchModal/SearchModal.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 11,
       "namespace": null,
@@ -716,8 +716,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/SearchModal/SearchModal.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/SearchModal/SearchModal.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 58,
       "namespace": null,
@@ -730,8 +730,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/Sidebar/Sidebar.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/Sidebar/Sidebar.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 43,
       "namespace": null,
@@ -740,8 +740,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/Sidebar/Sidebar.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/Sidebar/Sidebar.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 101,
       "namespace": null,
@@ -753,8 +753,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/TopBar/TopBar.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/TopBar/TopBar.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 26,
       "namespace": null,
@@ -765,8 +765,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/TopBar/TopBar.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/TopBar/TopBar.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 43,
       "namespace": null,
@@ -777,8 +777,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/UnityDocsSection/UnityDocsSection.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/UnityDocsSection/UnityDocsSection.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 35,
       "namespace": null,
@@ -791,8 +791,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/components/UnityDocsSection/unityDocLinks.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/components/UnityDocsSection/unityDocLinks.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 172,
       "namespace": null,
@@ -806,8 +806,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/main.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/main.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 13,
       "namespace": null,
@@ -818,8 +818,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 696,
       "namespace": null,
@@ -832,8 +832,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/API/APIPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/API/APIPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 21,
       "namespace": null,
@@ -842,8 +842,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/API/APIPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/API/APIPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 276,
       "namespace": null,
@@ -859,8 +859,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Animate/AnimatePage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Animate/AnimatePage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 54,
       "namespace": null,
@@ -874,8 +874,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Animate/AnimatePage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Animate/AnimatePage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -884,8 +884,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Animate/AnimatePage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Animate/AnimatePage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 48,
       "namespace": null,
@@ -896,8 +896,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/BoundsField/BoundsFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/BoundsField/BoundsFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 44,
       "namespace": null,
@@ -912,8 +912,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/BoundsField/BoundsFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/BoundsField/BoundsFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -922,8 +922,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/BoundsField/BoundsFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/BoundsField/BoundsFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 75,
       "namespace": null,
@@ -934,8 +934,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/BoundsIntField/BoundsIntFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/BoundsIntField/BoundsIntFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 44,
       "namespace": null,
@@ -950,8 +950,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/BoundsIntField/BoundsIntFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/BoundsIntField/BoundsIntFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -960,8 +960,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/BoundsIntField/BoundsIntFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/BoundsIntField/BoundsIntFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 63,
       "namespace": null,
@@ -972,8 +972,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Box/BoxPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Box/BoxPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 46,
       "namespace": null,
@@ -986,8 +986,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Box/BoxPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Box/BoxPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -996,8 +996,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Box/BoxPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Box/BoxPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 62,
       "namespace": null,
@@ -1006,8 +1006,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Button/ButtonPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Button/ButtonPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 40,
       "namespace": null,
@@ -1021,8 +1021,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Button/ButtonPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Button/ButtonPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1031,8 +1031,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Button/ButtonPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Button/ButtonPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 41,
       "namespace": null,
@@ -1043,8 +1043,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ColorField/ColorFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ColorField/ColorFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 44,
       "namespace": null,
@@ -1059,8 +1059,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ColorField/ColorFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ColorField/ColorFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1069,8 +1069,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ColorField/ColorFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ColorField/ColorFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 46,
       "namespace": null,
@@ -1079,8 +1079,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/DoubleField/DoubleFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/DoubleField/DoubleFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 40,
       "namespace": null,
@@ -1095,8 +1095,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/DoubleField/DoubleFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/DoubleField/DoubleFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1105,8 +1105,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/DoubleField/DoubleFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/DoubleField/DoubleFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 46,
       "namespace": null,
@@ -1115,8 +1115,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/DropdownField/DropdownFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/DropdownField/DropdownFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 44,
       "namespace": null,
@@ -1131,8 +1131,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/DropdownField/DropdownFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/DropdownField/DropdownFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1141,8 +1141,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/DropdownField/DropdownFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/DropdownField/DropdownFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 45,
       "namespace": null,
@@ -1151,8 +1151,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/EnumField/EnumFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/EnumField/EnumFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 49,
       "namespace": null,
@@ -1168,8 +1168,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/EnumField/EnumFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/EnumField/EnumFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1178,8 +1178,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/EnumField/EnumFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/EnumField/EnumFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 46,
       "namespace": null,
@@ -1190,8 +1190,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/EnumFlagsField/EnumFlagsFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/EnumFlagsField/EnumFlagsFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 50,
       "namespace": null,
@@ -1207,8 +1207,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/EnumFlagsField/EnumFlagsFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/EnumFlagsField/EnumFlagsFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1217,8 +1217,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/EnumFlagsField/EnumFlagsFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/EnumFlagsField/EnumFlagsFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 46,
       "namespace": null,
@@ -1227,8 +1227,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ErrorBoundary/ErrorBoundaryPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ErrorBoundary/ErrorBoundaryPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 62,
       "namespace": null,
@@ -1242,8 +1242,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ErrorBoundary/ErrorBoundaryPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ErrorBoundary/ErrorBoundaryPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1252,8 +1252,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ErrorBoundary/ErrorBoundaryPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ErrorBoundary/ErrorBoundaryPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 31,
       "namespace": null,
@@ -1262,8 +1262,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/FloatField/FloatFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/FloatField/FloatFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 40,
       "namespace": null,
@@ -1278,8 +1278,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/FloatField/FloatFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/FloatField/FloatFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1288,8 +1288,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/FloatField/FloatFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/FloatField/FloatFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 46,
       "namespace": null,
@@ -1298,8 +1298,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Foldout/FoldoutPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Foldout/FoldoutPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 54,
       "namespace": null,
@@ -1314,8 +1314,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Foldout/FoldoutPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Foldout/FoldoutPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1324,8 +1324,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Foldout/FoldoutPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Foldout/FoldoutPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 74,
       "namespace": null,
@@ -1336,8 +1336,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/GroupBox/GroupBoxPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/GroupBox/GroupBoxPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 57,
       "namespace": null,
@@ -1350,8 +1350,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/GroupBox/GroupBoxPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/GroupBox/GroupBoxPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1360,8 +1360,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/GroupBox/GroupBoxPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/GroupBox/GroupBoxPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 61,
       "namespace": null,
@@ -1370,8 +1370,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Hash128Field/Hash128FieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Hash128Field/Hash128FieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 40,
       "namespace": null,
@@ -1386,8 +1386,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Hash128Field/Hash128FieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Hash128Field/Hash128FieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1396,8 +1396,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Hash128Field/Hash128FieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Hash128Field/Hash128FieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -1406,8 +1406,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/HelpBox/HelpBoxPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/HelpBox/HelpBoxPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 26,
       "namespace": null,
@@ -1420,8 +1420,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/HelpBox/HelpBoxPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/HelpBox/HelpBoxPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1430,8 +1430,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/HelpBox/HelpBoxPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/HelpBox/HelpBoxPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -1440,8 +1440,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/IMGUIContainer/IMGUIContainerPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/IMGUIContainer/IMGUIContainerPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 33,
       "namespace": null,
@@ -1455,8 +1455,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/IMGUIContainer/IMGUIContainerPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/IMGUIContainer/IMGUIContainerPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1465,8 +1465,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/IMGUIContainer/IMGUIContainerPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/IMGUIContainer/IMGUIContainerPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 35,
       "namespace": null,
@@ -1475,8 +1475,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Image/ImagePage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Image/ImagePage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 31,
       "namespace": null,
@@ -1489,8 +1489,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Image/ImagePage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Image/ImagePage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1499,8 +1499,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Image/ImagePage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Image/ImagePage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -1509,8 +1509,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/IntegerField/IntegerFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/IntegerField/IntegerFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 39,
       "namespace": null,
@@ -1525,8 +1525,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/IntegerField/IntegerFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/IntegerField/IntegerFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1535,8 +1535,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/IntegerField/IntegerFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/IntegerField/IntegerFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 33,
       "namespace": null,
@@ -1545,8 +1545,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Label/LabelPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Label/LabelPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 27,
       "namespace": null,
@@ -1559,8 +1559,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Label/LabelPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Label/LabelPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1569,8 +1569,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Label/LabelPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Label/LabelPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -1581,8 +1581,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ListView/ListViewPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ListView/ListViewPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 50,
       "namespace": null,
@@ -1595,8 +1595,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ListView/ListViewPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ListView/ListViewPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1605,8 +1605,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ListView/ListViewPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ListView/ListViewPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 35,
       "namespace": null,
@@ -1615,8 +1615,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/LongField/LongFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/LongField/LongFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 39,
       "namespace": null,
@@ -1631,8 +1631,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/LongField/LongFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/LongField/LongFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1641,8 +1641,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/LongField/LongFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/LongField/LongFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 33,
       "namespace": null,
@@ -1651,8 +1651,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/MinMaxSlider/MinMaxSliderPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/MinMaxSlider/MinMaxSliderPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 37,
       "namespace": null,
@@ -1666,8 +1666,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/MinMaxSlider/MinMaxSliderPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/MinMaxSlider/MinMaxSliderPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1676,8 +1676,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/MinMaxSlider/MinMaxSliderPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/MinMaxSlider/MinMaxSliderPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -1686,8 +1686,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/MultiColumnListView/MultiColumnListViewPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/MultiColumnListView/MultiColumnListViewPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 57,
       "namespace": null,
@@ -1703,8 +1703,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/MultiColumnListView/MultiColumnListViewPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/MultiColumnListView/MultiColumnListViewPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1713,8 +1713,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/MultiColumnListView/MultiColumnListViewPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/MultiColumnListView/MultiColumnListViewPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 50,
       "namespace": null,
@@ -1723,8 +1723,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/MultiColumnTreeView/MultiColumnTreeViewPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/MultiColumnTreeView/MultiColumnTreeViewPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 64,
       "namespace": null,
@@ -1739,8 +1739,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/MultiColumnTreeView/MultiColumnTreeViewPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/MultiColumnTreeView/MultiColumnTreeViewPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1749,8 +1749,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/MultiColumnTreeView/MultiColumnTreeViewPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/MultiColumnTreeView/MultiColumnTreeViewPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 50,
       "namespace": null,
@@ -1759,8 +1759,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ObjectField/ObjectFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ObjectField/ObjectFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 36,
       "namespace": null,
@@ -1774,8 +1774,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ObjectField/ObjectFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ObjectField/ObjectFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1784,8 +1784,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ObjectField/ObjectFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ObjectField/ObjectFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -1794,8 +1794,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ProgressBar/ProgressBarPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ProgressBar/ProgressBarPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 66,
       "namespace": null,
@@ -1809,8 +1809,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ProgressBar/ProgressBarPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ProgressBar/ProgressBarPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1819,8 +1819,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ProgressBar/ProgressBarPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ProgressBar/ProgressBarPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 56,
       "namespace": null,
@@ -1829,8 +1829,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/PropertyInspector/PropertyInspectorPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/PropertyInspector/PropertyInspectorPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 49,
       "namespace": null,
@@ -1845,8 +1845,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/PropertyInspector/PropertyInspectorPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/PropertyInspector/PropertyInspectorPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1855,8 +1855,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/PropertyInspector/PropertyInspectorPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/PropertyInspector/PropertyInspectorPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -1865,8 +1865,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RadioButton/RadioButtonPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RadioButton/RadioButtonPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 35,
       "namespace": null,
@@ -1881,8 +1881,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RadioButton/RadioButtonPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RadioButton/RadioButtonPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1891,8 +1891,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RadioButton/RadioButtonPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RadioButton/RadioButtonPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -1901,8 +1901,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RadioButtonGroup/RadioButtonGroupPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RadioButtonGroup/RadioButtonGroupPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 41,
       "namespace": null,
@@ -1917,8 +1917,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RadioButtonGroup/RadioButtonGroupPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RadioButtonGroup/RadioButtonGroupPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1927,8 +1927,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RadioButtonGroup/RadioButtonGroupPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RadioButtonGroup/RadioButtonGroupPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -1937,8 +1937,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RectField/RectFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RectField/RectFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 38,
       "namespace": null,
@@ -1953,8 +1953,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RectField/RectFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RectField/RectFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1963,8 +1963,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RectField/RectFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RectField/RectFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -1973,8 +1973,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RectIntField/RectIntFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RectIntField/RectIntFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 38,
       "namespace": null,
@@ -1989,8 +1989,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RectIntField/RectIntFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RectIntField/RectIntFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -1999,8 +1999,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RectIntField/RectIntFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RectIntField/RectIntFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2009,8 +2009,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RepeatButton/RepeatButtonPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RepeatButton/RepeatButtonPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 33,
       "namespace": null,
@@ -2024,8 +2024,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RepeatButton/RepeatButtonPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RepeatButton/RepeatButtonPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2034,8 +2034,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/RepeatButton/RepeatButtonPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/RepeatButton/RepeatButtonPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2044,8 +2044,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ScrollView/ScrollViewPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ScrollView/ScrollViewPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 42,
       "namespace": null,
@@ -2058,8 +2058,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ScrollView/ScrollViewPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ScrollView/ScrollViewPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2068,8 +2068,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ScrollView/ScrollViewPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ScrollView/ScrollViewPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2078,8 +2078,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Scroller/ScrollerPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Scroller/ScrollerPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 41,
       "namespace": null,
@@ -2094,8 +2094,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Scroller/ScrollerPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Scroller/ScrollerPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2104,8 +2104,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Scroller/ScrollerPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Scroller/ScrollerPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2114,8 +2114,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Slider/SliderPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Slider/SliderPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 61,
       "namespace": null,
@@ -2130,8 +2130,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Slider/SliderPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Slider/SliderPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2140,8 +2140,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Slider/SliderPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Slider/SliderPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 37,
       "namespace": null,
@@ -2150,8 +2150,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/SliderInt/SliderIntPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/SliderInt/SliderIntPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 36,
       "namespace": null,
@@ -2166,8 +2166,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/SliderInt/SliderIntPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/SliderInt/SliderIntPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2176,8 +2176,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/SliderInt/SliderIntPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/SliderInt/SliderIntPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 33,
       "namespace": null,
@@ -2186,8 +2186,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Tab/TabPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Tab/TabPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 25,
       "namespace": null,
@@ -2200,8 +2200,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Tab/TabPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Tab/TabPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2210,8 +2210,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Tab/TabPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Tab/TabPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 35,
       "namespace": null,
@@ -2220,8 +2220,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TabView/TabViewPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TabView/TabViewPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 43,
       "namespace": null,
@@ -2235,8 +2235,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TabView/TabViewPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TabView/TabViewPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2245,8 +2245,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TabView/TabViewPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TabView/TabViewPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 35,
       "namespace": null,
@@ -2255,8 +2255,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TemplateContainer/TemplateContainerPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TemplateContainer/TemplateContainerPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 37,
       "namespace": null,
@@ -2270,8 +2270,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TemplateContainer/TemplateContainerPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TemplateContainer/TemplateContainerPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2280,8 +2280,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TemplateContainer/TemplateContainerPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TemplateContainer/TemplateContainerPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2290,8 +2290,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TextElement/TextElementPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TextElement/TextElementPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 31,
       "namespace": null,
@@ -2305,8 +2305,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TextElement/TextElementPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TextElement/TextElementPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2315,8 +2315,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TextElement/TextElementPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TextElement/TextElementPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 33,
       "namespace": null,
@@ -2325,8 +2325,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TextField/TextFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TextField/TextFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 41,
       "namespace": null,
@@ -2341,8 +2341,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TextField/TextFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TextField/TextFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2351,8 +2351,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TextField/TextFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TextField/TextFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 35,
       "namespace": null,
@@ -2361,8 +2361,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Toggle/TogglePage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Toggle/TogglePage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 41,
       "namespace": null,
@@ -2377,8 +2377,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Toggle/TogglePage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Toggle/TogglePage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2387,8 +2387,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Toggle/TogglePage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Toggle/TogglePage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 33,
       "namespace": null,
@@ -2397,8 +2397,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ToggleButtonGroup/ToggleButtonGroupPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ToggleButtonGroup/ToggleButtonGroupPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 56,
       "namespace": null,
@@ -2412,8 +2412,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ToggleButtonGroup/ToggleButtonGroupPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ToggleButtonGroup/ToggleButtonGroupPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2422,8 +2422,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/ToggleButtonGroup/ToggleButtonGroupPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/ToggleButtonGroup/ToggleButtonGroupPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 35,
       "namespace": null,
@@ -2432,8 +2432,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Toolbar/ToolbarPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Toolbar/ToolbarPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 32,
       "namespace": null,
@@ -2446,8 +2446,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Toolbar/ToolbarPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Toolbar/ToolbarPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2456,8 +2456,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Toolbar/ToolbarPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Toolbar/ToolbarPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 35,
       "namespace": null,
@@ -2466,8 +2466,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TreeView/TreeViewPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TreeView/TreeViewPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 52,
       "namespace": null,
@@ -2481,8 +2481,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TreeView/TreeViewPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TreeView/TreeViewPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2491,8 +2491,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TreeView/TreeViewPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TreeView/TreeViewPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 35,
       "namespace": null,
@@ -2501,8 +2501,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TwoPaneSplitView/TwoPaneSplitViewPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TwoPaneSplitView/TwoPaneSplitViewPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 31,
       "namespace": null,
@@ -2516,8 +2516,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TwoPaneSplitView/TwoPaneSplitViewPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TwoPaneSplitView/TwoPaneSplitViewPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2526,8 +2526,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/TwoPaneSplitView/TwoPaneSplitViewPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/TwoPaneSplitView/TwoPaneSplitViewPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2536,8 +2536,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/UnsignedIntegerField/UnsignedIntegerFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/UnsignedIntegerField/UnsignedIntegerFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 40,
       "namespace": null,
@@ -2552,8 +2552,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/UnsignedIntegerField/UnsignedIntegerFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/UnsignedIntegerField/UnsignedIntegerFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2562,8 +2562,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/UnsignedIntegerField/UnsignedIntegerFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/UnsignedIntegerField/UnsignedIntegerFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2572,8 +2572,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/UnsignedLongField/UnsignedLongFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/UnsignedLongField/UnsignedLongFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 40,
       "namespace": null,
@@ -2588,8 +2588,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/UnsignedLongField/UnsignedLongFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/UnsignedLongField/UnsignedLongFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2598,8 +2598,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/UnsignedLongField/UnsignedLongFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/UnsignedLongField/UnsignedLongFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2608,8 +2608,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector2Field/Vector2FieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector2Field/Vector2FieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 41,
       "namespace": null,
@@ -2624,8 +2624,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector2Field/Vector2FieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector2Field/Vector2FieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2634,8 +2634,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector2Field/Vector2FieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector2Field/Vector2FieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2644,8 +2644,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector2IntField/Vector2IntFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector2IntField/Vector2IntFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 35,
       "namespace": null,
@@ -2660,8 +2660,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector2IntField/Vector2IntFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector2IntField/Vector2IntFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2670,8 +2670,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector2IntField/Vector2IntFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector2IntField/Vector2IntFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2680,8 +2680,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector3Field/Vector3FieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector3Field/Vector3FieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 41,
       "namespace": null,
@@ -2696,8 +2696,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector3Field/Vector3FieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector3Field/Vector3FieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2706,8 +2706,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector3Field/Vector3FieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector3Field/Vector3FieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2716,8 +2716,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector3IntField/Vector3IntFieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector3IntField/Vector3IntFieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 35,
       "namespace": null,
@@ -2732,8 +2732,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector3IntField/Vector3IntFieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector3IntField/Vector3IntFieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2742,8 +2742,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector3IntField/Vector3IntFieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector3IntField/Vector3IntFieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2752,8 +2752,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector4Field/Vector4FieldPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector4Field/Vector4FieldPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 41,
       "namespace": null,
@@ -2768,8 +2768,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector4Field/Vector4FieldPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector4Field/Vector4FieldPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2778,8 +2778,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/Vector4Field/Vector4FieldPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/Vector4Field/Vector4FieldPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 34,
       "namespace": null,
@@ -2788,8 +2788,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/VisualElement/VisualElementPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/VisualElement/VisualElementPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 46,
       "namespace": null,
@@ -2803,8 +2803,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/VisualElement/VisualElementPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/VisualElement/VisualElementPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2813,8 +2813,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/VisualElement/VisualElementPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/VisualElement/VisualElementPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 35,
       "namespace": null,
@@ -2826,8 +2826,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/VisualElementSafe/VisualElementSafePage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/VisualElementSafe/VisualElementSafePage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 41,
       "namespace": null,
@@ -2841,8 +2841,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/VisualElementSafe/VisualElementSafePage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/VisualElementSafe/VisualElementSafePage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 17,
       "namespace": null,
@@ -2851,8 +2851,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Components/VisualElementSafe/VisualElementSafePage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Components/VisualElementSafe/VisualElementSafePage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 39,
       "namespace": null,
@@ -2863,8 +2863,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Concepts/ConceptsPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Concepts/ConceptsPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 21,
       "namespace": null,
@@ -2873,8 +2873,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Concepts/ConceptsPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Concepts/ConceptsPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 135,
       "namespace": null,
@@ -2886,8 +2886,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Differences/DifferencesPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Differences/DifferencesPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 75,
       "namespace": null,
@@ -2900,8 +2900,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Differences/DifferencesPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Differences/DifferencesPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 21,
       "namespace": null,
@@ -2910,8 +2910,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Differences/DifferencesPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Differences/DifferencesPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 92,
       "namespace": null,
@@ -2922,8 +2922,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/GettingStarted/GettingStartedPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/GettingStarted/GettingStartedPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 60,
       "namespace": null,
@@ -2937,8 +2937,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/GettingStarted/GettingStartedPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/GettingStarted/GettingStartedPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 9,
       "namespace": null,
@@ -2947,8 +2947,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/GettingStarted/GettingStartedPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/GettingStarted/GettingStartedPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 33,
       "namespace": null,
@@ -2957,8 +2957,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Introduction/IntroductionPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Introduction/IntroductionPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 9,
       "namespace": null,
@@ -2967,8 +2967,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Introduction/IntroductionPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Introduction/IntroductionPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 44,
       "namespace": null,
@@ -2981,8 +2981,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/KnownIssues/KnownIssuesPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/KnownIssues/KnownIssuesPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 21,
       "namespace": null,
@@ -2991,8 +2991,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/KnownIssues/KnownIssuesPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/KnownIssues/KnownIssuesPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 16,
       "namespace": null,
@@ -3001,8 +3001,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Roadmap/RoadmapPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Roadmap/RoadmapPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 21,
       "namespace": null,
@@ -3011,8 +3011,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Roadmap/RoadmapPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Roadmap/RoadmapPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 15,
       "namespace": null,
@@ -3021,8 +3021,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Router/RouterPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Router/RouterPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 244,
       "namespace": null,
@@ -3039,8 +3039,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Router/RouterPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Router/RouterPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 16,
       "namespace": null,
@@ -3049,8 +3049,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Router/RouterPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Router/RouterPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 139,
       "namespace": null,
@@ -3061,8 +3061,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Signals/SignalsPage.example.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Signals/SignalsPage.example.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 62,
       "namespace": null,
@@ -3077,8 +3077,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Signals/SignalsPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Signals/SignalsPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 16,
       "namespace": null,
@@ -3087,8 +3087,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Signals/SignalsPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Signals/SignalsPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 86,
       "namespace": null,
@@ -3099,8 +3099,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/SpecialHooks/AnimationHooksPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/SpecialHooks/AnimationHooksPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 21,
       "namespace": null,
@@ -3109,8 +3109,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/SpecialHooks/AnimationHooksPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/SpecialHooks/AnimationHooksPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 129,
       "namespace": null,
@@ -3126,8 +3126,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/SpecialHooks/RouterHooksPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/SpecialHooks/RouterHooksPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 21,
       "namespace": null,
@@ -3136,8 +3136,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/SpecialHooks/RouterHooksPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/SpecialHooks/RouterHooksPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 155,
       "namespace": null,
@@ -3151,8 +3151,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/SpecialHooks/SafeAreaHooksPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/SpecialHooks/SafeAreaHooksPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 21,
       "namespace": null,
@@ -3161,8 +3161,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/SpecialHooks/SafeAreaHooksPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/SpecialHooks/SafeAreaHooksPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 86,
       "namespace": null,
@@ -3176,8 +3176,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/SpecialHooks/SignalsHooksPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/SpecialHooks/SignalsHooksPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 21,
       "namespace": null,
@@ -3186,8 +3186,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/SpecialHooks/SignalsHooksPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/SpecialHooks/SignalsHooksPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 114,
       "namespace": null,
@@ -3201,8 +3201,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Tooling/ToolingOverviewPage.style.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Tooling/ToolingOverviewPage.style.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 9,
       "namespace": null,
@@ -3211,8 +3211,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/pages/Tooling/ToolingOverviewPage.tsx",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/pages/Tooling/ToolingOverviewPage.tsx",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".tsx",
       "lines": 16,
       "namespace": null,
@@ -3223,8 +3223,8 @@
       ]
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/propsDocs.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/propsDocs.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 9,
       "namespace": null,
@@ -3233,8 +3233,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/theme.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/theme.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 59,
       "namespace": null,
@@ -3243,8 +3243,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/src/version.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/src/version.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 5,
       "namespace": null,
@@ -3253,8 +3253,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/tsconfig.app.json",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/tsconfig.app.json",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".json",
       "lines": 29,
       "namespace": null,
@@ -3263,8 +3263,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/tsconfig.json",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/tsconfig.json",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".json",
       "lines": 8,
       "namespace": null,
@@ -3273,8 +3273,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/tsconfig.node.json",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/tsconfig.node.json",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".json",
       "lines": 27,
       "namespace": null,
@@ -3283,8 +3283,8 @@
       "tags": []
     },
     {
-      "path": "ReactiveUIToolKitDocs~/vite.config.ts",
-      "root": "ReactiveUIToolKitDocs~",
+      "path": "ReactiveUIToolkitDocs~/vite.config.ts",
+      "root": "ReactiveUIToolkitDocs~",
       "ext": ".ts",
       "lines": 75,
       "namespace": null,

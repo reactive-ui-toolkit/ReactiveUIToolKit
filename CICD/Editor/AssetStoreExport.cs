@@ -10,7 +10,7 @@ namespace Ruitk.CICD
     /// <summary>
     /// Headless Asset Store package export (Tier A of Plans~/ASSET_STORE_PUBLISHING_PLAN.md).
     ///
-    /// Runs inside a SHELL project whose Assets/ReactiveUIToolKit holds the store-shaped
+    /// Runs inside a SHELL project whose Assets/ReactiveUIToolkit holds the store-shaped
     /// content (the dist omit-list applied, Samples kept visible, plus CICD/ so this method
     /// exists to be called):
     ///
@@ -26,7 +26,7 @@ namespace Ruitk.CICD
     /// </summary>
     internal static class AssetStoreExport
     {
-        private const string PackageRoot = "Assets/ReactiveUIToolKit";
+        private const string PackageRoot = "Assets/ReactiveUIToolkit";
 
         public static void Run()
         {
@@ -37,7 +37,7 @@ namespace Ruitk.CICD
                 {
                     outPath = Path.Combine(
                         Directory.GetCurrentDirectory(),
-                        "ReactiveUIToolKit.unitypackage"
+                        "ReactiveUIToolkit.unitypackage"
                     );
                 }
 

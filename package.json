@@ -6,7 +6,7 @@
   "license": "SEE LICENSE IN LICENSE.md",
   "description": "Lightweight React-inspired component model for Unity UI Toolkit. Supports function components (V.Func), hooks (state, reducer, memo, effect, layoutEffect, context, deferred value, imperative handle), portals, suspense, snapshots, and a typed props model.",
   "author": {
-    "name": "ReactiveUIToolKit"
+    "name": "ReactiveUIToolkit"
   },
   "keywords": [
     "ui",

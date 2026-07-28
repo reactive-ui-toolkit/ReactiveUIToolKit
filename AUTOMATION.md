@@ -41,14 +41,14 @@ The skill is at `.claude/skills/add-unity-version/SKILL.md`.
 | `automation~/diff-reports/` | Generated JSON reports (gitignored) | Both |
 | `automation~/README.md` | Detailed usage docs | Both |
 | `Plans~/VERSIONING_PROCESS.md` | Full reference: sources, checklists, matrix | Human |
-| `ReactiveUIToolKitDocs~/src/versionManifest.ts` | Docs version manifest (single source of truth) | Both |
+| `ReactiveUIToolkitDocs~/src/versionManifest.ts` | Docs version manifest (single source of truth) | Both |
 
 ---
 
 ## Documentation Website Versioning
 
 The docs site (`reactiveuitoolkit.info`) has a version-aware system driven by
-`ReactiveUIToolKitDocs~/src/versionManifest.ts`.
+`ReactiveUIToolkitDocs~/src/versionManifest.ts`.
 
 ### How it works
 
@@ -69,7 +69,7 @@ The docs site (`reactiveuitoolkit.info`) has a version-aware system driven by
 6. Add entries to `PAGE_VERSIONS` for any new doc pages
 7. If new elements were added, create a **full component page** with usage
    examples, props table, and `sinceUnity` set — not just a table entry
-8. Verify: `cd ReactiveUIToolKitDocs~ && npm run build`
+8. Verify: `cd ReactiveUIToolkitDocs~ && npm run build`
 
 ### Conventions
 
@@ -96,11 +96,11 @@ versionManifest.ts       ──>  version filtering
 
 | File | Purpose |
 |------|------|
-| `ReactiveUIToolKitDocs~/src/pages/UITKX/Styling/stylePropertyCatalog.ts` | **Single source of truth** for all style properties shown on the page. Array of `PropertyCard` objects with: `key` (camelCase), `name` (PascalCase), `type`, `description`, `typedExample`, `untypedExample`, `helpers?`, `category`, `sinceUnity?`, `shorthand?` |
-| `ReactiveUIToolKitDocs~/src/pages/UITKX/Styling/StylingPage.tsx` | Renders the page. Filters the catalog by selected Unity version, applies search, renders collapsible MUI Accordion cards. Has anchor sections: `#patterns`, `#type-reference`, `#csshelpers-reference`, `#enum-shortcuts` |
-| `ReactiveUIToolKitDocs~/src/pages/UITKX/Styling/StylingPage.example.ts` | Large code example constants used by the page (setup, patterns, inline, both APIs) |
+| `ReactiveUIToolkitDocs~/src/pages/UITKX/Styling/stylePropertyCatalog.ts` | **Single source of truth** for all style properties shown on the page. Array of `PropertyCard` objects with: `key` (camelCase), `name` (PascalCase), `type`, `description`, `typedExample`, `untypedExample`, `helpers?`, `category`, `sinceUnity?`, `shorthand?` |
+| `ReactiveUIToolkitDocs~/src/pages/UITKX/Styling/StylingPage.tsx` | Renders the page. Filters the catalog by selected Unity version, applies search, renders collapsible MUI Accordion cards. Has anchor sections: `#patterns`, `#type-reference`, `#csshelpers-reference`, `#enum-shortcuts` |
+| `ReactiveUIToolkitDocs~/src/pages/UITKX/Styling/StylingPage.example.ts` | Large code example constants used by the page (setup, patterns, inline, both APIs) |
 | `Shared/Props/Typed/StyleKeys.cs` | C# `const string` definitions — **must have a 1:1 match** with the catalog. Every `name` in the catalog must exist as a `StyleKeys.{Name}` constant. 6.3+ keys use `#if UNITY_6000_3_OR_NEWER` guards. |
-| `ReactiveUIToolKitDocs~/src/versionManifest.ts` | Provides `isAvailableIn()` used to filter cards by version. Properties with `sinceUnity` are hidden when the user selects an older version. |
+| `ReactiveUIToolkitDocs~/src/versionManifest.ts` | Provides `isAvailableIn()` used to filter cards by version. Properties with `sinceUnity` are hidden when the user selects an older version. |
 
 **How cards render:**
 

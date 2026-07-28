@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LicenseRef-ReactiveUI-Community-1.0
-// ReactiveUIToolKit — see THIRDPARTY.md
+// ReactiveUIToolkit — see THIRDPARTY.md
 //
 //  HookRegistryTests
 //

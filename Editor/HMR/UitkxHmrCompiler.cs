@@ -3320,7 +3320,7 @@ namespace Ruitk.EditorSupport.HMR
             if (guids.Length > 0)
             {
                 string scriptPath = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                // scriptPath is like "Assets/ReactiveUIToolKit/Editor/HMR/UitkxHmrCompiler.cs"
+                // scriptPath is like "Assets/ReactiveUIToolkit/Editor/HMR/UitkxHmrCompiler.cs"
                 // Walk up to package root then into Analyzers/
                 string dir = Path.GetDirectoryName(scriptPath); // Editor/HMR
                 dir = Path.GetDirectoryName(dir); // Editor
@@ -3336,13 +3336,13 @@ namespace Ruitk.EditorSupport.HMR
 
             // Fallback: try the well-known path
             string packageRoot = Path.GetFullPath(
-                Path.Combine(Application.dataPath, "ReactiveUIToolKit")
+                Path.Combine(Application.dataPath, "ReactiveUIToolkit")
             );
             string fallback = Path.Combine(packageRoot, "Analyzers");
             if (Directory.Exists(fallback))
                 return fallback;
 
-            // Fallback 2: search all Assets subfolders for ReactiveUIToolKit/Analyzers
+            // Fallback 2: search all Assets subfolders for ReactiveUIToolkit/Analyzers
             string assetsDir = Application.dataPath;
             foreach (
                 var candidate in Directory.GetDirectories(

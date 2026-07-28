@@ -185,7 +185,7 @@ export const EventsPage: FC = () => (
       Events &amp; Input Handling
     </Typography>
     <Typography variant="body1" paragraph>
-      Every element in ReactiveUIToolKit inherits a common set of event handler
+      Every element in ReactiveUIToolkit inherits a common set of event handler
       props from <code>BaseProps</code>. Events use reactive wrappers around
       Unity UI Toolkit&apos;s native <code>EventBase</code> types, giving you
       typed access to pointer positions, key codes, modifier keys, and more.

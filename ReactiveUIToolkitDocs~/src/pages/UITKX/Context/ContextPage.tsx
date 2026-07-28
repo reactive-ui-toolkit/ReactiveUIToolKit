@@ -30,7 +30,7 @@ export const ContextPage: FC = () => (
     <Typography variant="body1" paragraph>
       Context lets parent components provide data to any descendant without
       passing it through every intermediate component as props. It is the
-      primary mechanism for dependency injection in ReactiveUIToolKit.
+      primary mechanism for dependency injection in ReactiveUIToolkit.
     </Typography>
 
     {/* ── API ──────────────────────────────────────────────────── */}

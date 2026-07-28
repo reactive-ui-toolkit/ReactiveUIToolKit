@@ -1,5 +1,5 @@
 /**
- * Complete catalog of every style property in ReactiveUIToolKit.
+ * Complete catalog of every style property in ReactiveUIToolkit.
  * Used by StylingPage to render consistent property cards.
  *
  * Each entry has:  key, name, type, description, typed example, untyped example,

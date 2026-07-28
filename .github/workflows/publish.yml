@@ -162,11 +162,11 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        working-directory: ReactiveUIToolKitDocs~
+        working-directory: ReactiveUIToolkitDocs~
         run: npm ci
 
       - name: Build
-        working-directory: ReactiveUIToolKitDocs~
+        working-directory: ReactiveUIToolkitDocs~
         run: npm run build
 
       - name: Deploy to documentations branch
@@ -180,7 +180,7 @@ jobs:
           }
 
           find _docs_branch -mindepth 1 -not -path '*/.git/*' -not -name '.git' -delete
-          cp -r ReactiveUIToolKitDocs~/dist/* _docs_branch/
+          cp -r ReactiveUIToolkitDocs~/dist/* _docs_branch/
 
           cd _docs_branch
           git add -A
@@ -447,7 +447,7 @@ jobs:
   # Assembles the store-shaped content (dist omit-list applied, Samples kept visible)
   # into a shell Unity project, imports it with the FLOOR Unity version (the store
   # derives compatibility from the upload editor; reviewers test on the floor), exports
-  # ReactiveUIToolKit-<version>.unitypackage via CICD/Editor/AssetStoreExport.cs, and
+  # ReactiveUIToolkit-<version>.unitypackage via CICD/Editor/AssetStoreExport.cs, and
   # uploads it as a run artifact. The store upload itself stays manual — Unity ships no
   # publish API — so the last mile is: download artifact (or export locally), then
   # Tools -> Asset Store -> Uploader -> Export and Upload -> Submit for review.
@@ -489,7 +489,7 @@ jobs:
         if: steps.check.outputs.skip == 'false'
         run: |
           set -e
-          STORE_DIR="shell/Assets/ReactiveUIToolKit"
+          STORE_DIR="shell/Assets/ReactiveUIToolkit"
           mkdir -p "$STORE_DIR"
 
           rsync -a \
@@ -603,7 +603,7 @@ jobs:
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          OUT_FILE: out/ReactiveUIToolKit-${{ steps.check.outputs.version }}.unitypackage
+          OUT_FILE: out/ReactiveUIToolkit-${{ steps.check.outputs.version }}.unitypackage
         run: |
           set -e
           mkdir -p out
@@ -630,7 +630,7 @@ jobs:
         if: steps.check.outputs.skip == 'false'
         run: |
           set -e
-          PKG="out/ReactiveUIToolKit-${{ steps.check.outputs.version }}.unitypackage"
+          PKG="out/ReactiveUIToolkit-${{ steps.check.outputs.version }}.unitypackage"
           [ -f "$PKG" ] || { echo "::error::unitypackage missing"; exit 1; }
           SIZE=$(stat -c%s "$PKG")
           COUNT=$(tar -tzf "$PKG" | wc -l)
@@ -642,7 +642,7 @@ jobs:
         if: steps.check.outputs.skip == 'false'
         uses: actions/upload-artifact@v4
         with:
-          name: ReactiveUIToolKit-unitypackage-${{ steps.check.outputs.version }}
+          name: ReactiveUIToolkit-unitypackage-${{ steps.check.outputs.version }}
           path: out/*.unitypackage
 
       # Permanent public copy: run artifacts expire (default 90 days); a GitHub
@@ -660,12 +660,12 @@ jobs:
           if ! gh release view "v$VERSION" >/dev/null 2>&1; then
             if git ls-remote --tags origin "refs/tags/v$VERSION" | grep -q .; then
               gh release create "v$VERSION" \
-                --title "ReactiveUIToolKit $VERSION" \
+                --title "ReactiveUIToolkit $VERSION" \
                 --notes "Unity Asset Store package export (built with floor Unity $UNITY_VERSION; compatible with that version and newer). See CHANGELOG.md for the full $VERSION entry."
             else
               gh release create "v$VERSION" \
                 --target "$GITHUB_SHA" \
-                --title "ReactiveUIToolKit $VERSION" \
+                --title "ReactiveUIToolkit $VERSION" \
                 --notes "Unity Asset Store package export (built with floor Unity $UNITY_VERSION; compatible with that version and newer). See CHANGELOG.md for the full $VERSION entry."
             fi
           fi

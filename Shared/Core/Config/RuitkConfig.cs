@@ -73,7 +73,7 @@ namespace Ruitk.Core.Config
         private static string GetDefaultProjectConfigPath()
         {
             string assets = Application.dataPath;
-            return Path.Combine(assets, "ReactiveUIToolKit", "config.json");
+            return Path.Combine(assets, "ReactiveUIToolkit", "config.json");
         }
 
         private static DiagnosticsConfig.TraceLevel ParseTraceLevel(string value)

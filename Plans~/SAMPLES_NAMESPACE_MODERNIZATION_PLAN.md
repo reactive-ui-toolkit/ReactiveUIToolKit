@@ -97,7 +97,7 @@ dotted segment per folder, casing verbatim, file name excluded.
 
 ### Step 0 — Baseline
 ```bash
-cd c:/Yanivs/GameDev/UnityComponents/Assets/ReactiveUIToolKit
+cd c:/Yanivs/GameDev/UnityComponents/Assets/ReactiveUIToolkit
 git status --short   # expect clean apart from Errors (user scratch — NEVER commit it)
 dotnet test SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj -v q --nologo | tail -2   # expect 1542 green
 dotnet test ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj -v q --nologo | tail -2  # expect 118 green

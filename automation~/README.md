@@ -1,6 +1,6 @@
 # automation~/
 
-Tooling for **AI-assisted and automated workflows** in the ReactiveUIToolKit project.
+Tooling for **AI-assisted and automated workflows** in the ReactiveUIToolkit project.
 
 The `~` suffix means Unity ignores this folder (same convention as `ide-extensions~`,
 `SourceGenerator~`, `Plans~`). Contents are version-controlled.

@@ -5,9 +5,9 @@ dist~/*
 
 /.vscode/*
 
-ReactiveUIToolKitDocs~/**/*.meta
-ReactiveUIToolKitDocs~/dist/*
-ReactiveUIToolKitDocs~/node_modules/*
+ReactiveUIToolkitDocs~/**/*.meta
+ReactiveUIToolkitDocs~/dist/*
+ReactiveUIToolkitDocs~/node_modules/*
 
 # ── Source generator ────────────────────────────────────────────
 # The compiled DLL in Analyzers/ IS committed;

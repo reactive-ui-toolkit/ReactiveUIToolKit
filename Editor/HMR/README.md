@@ -3,7 +3,7 @@
 Hot Module Replacement lets you edit `.uitkx` files and see changes instantly in the Unity
 Editor — without domain reload, without losing component state.
 
-> **Full documentation:** see the [HMR page on the docs site](/tooling/hmr) (`ReactiveUIToolKitDocs~/` → Tooling → Hot Module Replacement).
+> **Full documentation:** see the [HMR page on the docs site](/tooling/hmr) (`ReactiveUIToolkitDocs~/` → Tooling → Hot Module Replacement).
 
 ## Quick Start
 

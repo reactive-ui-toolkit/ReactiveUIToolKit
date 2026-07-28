@@ -385,7 +385,7 @@ ASK); no push.
 
 The canonical verify block (referenced below as **VERIFY-CORE**):
 ```bash
-cd c:/Yanivs/GameDev/UnityComponents/Assets/ReactiveUIToolKit
+cd c:/Yanivs/GameDev/UnityComponents/Assets/ReactiveUIToolkit
 dotnet test SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj -v q --nologo | tail -2
 dotnet test ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj -v q --nologo | tail -2
 node scripts/corpus-hash.mjs --check
@@ -724,7 +724,7 @@ deprecation timeline (0.9.0 warns via 2320/2107, removal in a later minor); esca
 - [ ] `ide-extensions~/changelog.json` — new top entry `{date, versions:{vscode:"1.5.0",
       vs2022:"1.5.0", rider:"1.2.0"}, shared:[…]}`; then `node scripts/changelog.mjs extract --ide vscode --out ide-extensions~/vscode/CHANGELOG.md`,
       `extract` README regen + `extract-overview`, and `node scripts/changelog.mjs verify` → exit 0.
-- [ ] Docs site (`ReactiveUIToolKitDocs~/src/pages/`) — NOTE: the code samples live in sibling
+- [ ] Docs site (`ReactiveUIToolkitDocs~/src/pages/`) — NOTE: the code samples live in sibling
       `*.example.ts` files next to each `*Page.tsx`, and wrapper-keyword syntax appears in **24
       files** (verified by grep), not just the two primary pages. Rewrite
       `UITKX/Imports/UitkxImportsPage.*` + `UITKX/CompanionFiles/CompanionFilesPage.*` (primary);
@@ -733,8 +733,8 @@ deprecation timeline (0.9.0 warns via 2320/2107, removal in a later minor); esca
       divergence notes), Differences, Events, GettingStarted, Guides, Hooks,
       Introduction, Portal, Reference, Router, Signals, Styling, Suspense}` plus
       `Components/Audio`, `Components/Video`, `Tooling/HMR`. Re-run the sweep before closing:
-      `grep -rln "component [A-Z]\|hook use\|module [A-Z]\|export component\|export hook\|export module" ReactiveUIToolKitDocs~/src/pages/`
-      → only intentional "legacy syntax" callouts remain. `cd ReactiveUIToolKitDocs~ && npm run build` → 0 errors.
+      `grep -rln "component [A-Z]\|hook use\|module [A-Z]\|export component\|export hook\|export module" ReactiveUIToolkitDocs~/src/pages/`
+      → only intentional "legacy syntax" callouts remain. `cd ReactiveUIToolkitDocs~ && npm run build` → 0 errors.
 - [ ] `Plans~/MIGRATION_GUIDE.md` §7.2 section.
 - [ ] `.claude/skills/rebuild-ide-extensions/SKILL.md` — reflect grammar/build additions if any
       step changed; `.claude/skills/changelog/SKILL.md` untouched unless conventions moved.

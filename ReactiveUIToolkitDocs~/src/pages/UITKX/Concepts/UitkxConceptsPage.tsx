@@ -9,7 +9,7 @@ export const UitkxConceptsPage: FC = () => (
       Concepts & Environment
     </Typography>
     <Typography variant="body1" paragraph>
-      ReactiveUIToolKit brings a React-like component model to Unity UI Toolkit. You write
+      ReactiveUIToolkit brings a React-like component model to Unity UI Toolkit. You write
       components, use hooks to manage state, and the reconciler diffs and updates the{' '}
       <code>VisualElement</code> hierarchy for you.
     </Typography>
@@ -20,7 +20,7 @@ export const UitkxConceptsPage: FC = () => (
       in core React but are important here.
     </Typography>
     <Typography variant="body1" paragraph>
-      The package ships with a demo set under <code>Assets/ReactiveUIToolKit/Samples</code> (editor
+      The package ships with a demo set under <code>Assets/ReactiveUIToolkit/Samples</code> (editor
       windows and runtime scenes). Import them into your project to see real-world usage of
       components, hooks, routing, signals, and more.
     </Typography>
@@ -95,7 +95,7 @@ export const UitkxConceptsPage: FC = () => (
       </Typography>
       <Typography variant="body2" paragraph>
         Environment labels and diagnostics are configured in{' '}
-        <code>Assets/ReactiveUIToolKit/config.json</code> under the{' '}
+        <code>Assets/ReactiveUIToolkit/config.json</code> under the{' '}
         <code>envVariables</code> object (read once at startup via{' '}
         <code>RuitkConfig.Current</code>) — no scripting define symbols are involved:
       </Typography>

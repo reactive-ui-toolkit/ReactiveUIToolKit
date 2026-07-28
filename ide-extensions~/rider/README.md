@@ -1,6 +1,6 @@
 # UITKX — Rider Plugin
 
-Adds language support for `.uitkx` ReactiveUIToolKit component templates in **Rider 2024.1+**.
+Adds language support for `.uitkx` ReactiveUIToolkit component templates in **Rider 2024.1+**.
 
 💬 Join the community on Discord: https://discord.gg/Knedqu4Wyv
 

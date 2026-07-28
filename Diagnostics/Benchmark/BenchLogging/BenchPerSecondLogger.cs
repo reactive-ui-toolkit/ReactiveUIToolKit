@@ -361,7 +361,7 @@ namespace Ruitk.Bench
 
             string root = Path.Combine(
                 Application.dataPath,
-                "ReactiveUIToolKit",
+                "ReactiveUIToolkit",
                 "Diagnostics",
                 "Benchmark",
                 "Results",

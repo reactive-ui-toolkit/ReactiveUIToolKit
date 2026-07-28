@@ -61,7 +61,7 @@ built-in UI Toolkit APIs.
 
 ---
 
-## Documentation Site (ReactiveUIToolKitDocs)
+## Documentation Site (ReactiveUIToolkitDocs)
 
 | Package | Version | License |
 |---------|---------|---------|

@@ -44,7 +44,7 @@ namespace Ruitk.CICD
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
+                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
                 string distRoot = Path.Combine(packageRoot, "dist~");
 
                 if (!Directory.Exists(packageRoot))
@@ -165,7 +165,7 @@ namespace Ruitk.CICD
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
+                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
 
                 string rootPkg = Path.Combine(packageRoot, "package.json");
                 string bumpedVersion = BumpPatchVersion(rootPkg);
@@ -335,7 +335,7 @@ namespace Ruitk.CICD
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
+                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
                 string extensionDir = Path.Combine(packageRoot, "ide-extensions~", "vscode");
 
                 if (!Directory.Exists(extensionDir))
@@ -501,8 +501,8 @@ namespace Ruitk.CICD
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
-                string docsRoot = Path.Combine(packageRoot, "ReactiveUIToolKitDocs~");
+                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
+                string docsRoot = Path.Combine(packageRoot, "ReactiveUIToolkitDocs~");
                 if (!Directory.Exists(docsRoot))
                 {
                     Debug.LogError("Publish: docs root not found: " + docsRoot);
@@ -515,7 +515,7 @@ namespace Ruitk.CICD
                     Debug.LogError(
                         "Publish: docs dist folder not found: "
                             + docsDist
-                            + ". Run 'npm run build' in ReactiveUIToolKitDocs~ first."
+                            + ". Run 'npm run build' in ReactiveUIToolkitDocs~ first."
                     );
                     return;
                 }

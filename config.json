@@ -17,7 +17,7 @@
     "RELEASE_OPS.md",
     "VERSIONING.md",
     "publisher-secrets.example.json",
-    "ReactiveUIToolKit.code-workspace",
+    "ReactiveUIToolkit.code-workspace",
     ".csharpierignore"
   ],
   "pathsToOmitFromDist": [
@@ -25,7 +25,7 @@
     "dist~/**",
     "Diagnostics/**",
     "scripts/**",
-    "ReactiveUIToolKitDocs~/**",
+    "ReactiveUIToolkitDocs~/**",
     "Analyzers/publish",
     "_docs_branch",
     "Analyzers/Ruitk.Language.pdb",

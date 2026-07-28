@@ -103,7 +103,7 @@ export const CustomRenderingPage: FC = () => (
       </Typography>
       <Typography variant="body1" paragraph>
         Unity only re-runs <code>generateVisualContent</code> when the element is
-        marked dirty. ReactiveUIToolKit handles that for you: the element
+        marked dirty. ReactiveUIToolkit handles that for you: the element
         repaints automatically whenever the callback{' '}
         <strong>reference changes</strong> between renders, or whenever{' '}
         <code>redrawKey</code> changes. A fresh inline lambda is a new reference

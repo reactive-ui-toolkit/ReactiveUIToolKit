@@ -14,7 +14,7 @@ ROOTS = [
     "ide-extensions~",
     "Diagnostics",
     "Samples",
-    "ReactiveUIToolKitDocs~",
+    "ReactiveUIToolkitDocs~",
     "CICD",
     "scripts",
 ]
@@ -30,7 +30,7 @@ EXCLUDED_DIR_NAMES = {
 }
 
 EXCLUDED_PATH_PREFIXES = [
-    "ReactiveUIToolKitDocs~/dist/",
+    "ReactiveUIToolkitDocs~/dist/",
     "ide-extensions~/vscode/out/",
     "ide-extensions~/vscode/server/",
     "ide-extensions~/visual-studio/UitkxVsix/server/",

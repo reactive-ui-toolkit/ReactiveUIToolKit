@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-ReactiveUIToolKit brings a React-like component model (function components, hooks, a virtual node tree, typed props, a Fiber reconciler) to Unity UI Toolkit — all in C# on top of UI Toolkit. The repo is more than a Unity package: it's a monorepo that also contains a Roslyn source generator for the `.uitkx` markup language, a shared language library, a cross-editor LSP server, four IDE extensions, and a docs website. Full docs: http://reactiveuitoolkit.info/
+ReactiveUIToolkit brings a React-like component model (function components, hooks, a virtual node tree, typed props, a Fiber reconciler) to Unity UI Toolkit — all in C# on top of UI Toolkit. The repo is more than a Unity package: it's a monorepo that also contains a Roslyn source generator for the `.uitkx` markup language, a shared language library, a cross-editor LSP server, four IDE extensions, and a docs website. Full docs: http://reactiveuitoolkit.info/
 
 ## The `~` folder convention (read first)
 
@@ -18,7 +18,7 @@ Unity's Asset Database ignores any folder whose name ends in `~`. This is delibe
 | `ide-extensions~/language-lib/` | no | shared language lib, `netstandard2.0` |
 | `ide-extensions~/lsp-server/` | no | LSP server, `net8.0` |
 | `ide-extensions~/{vscode,visual-studio,rider}/` | no | IDE extensions (Node/VSIX) |
-| `ReactiveUIToolKitDocs~/` | no | Vite + React docs site |
+| `ReactiveUIToolkitDocs~/` | no | Vite + React docs site |
 
 ## Architecture
 
@@ -67,7 +67,7 @@ cd ide-extensions~/vscode && npm ci && npm run build      # prebuild copies the 
 ide-extensions~/visual-studio/build-local.ps1
 
 # Docs site
-cd ReactiveUIToolKitDocs~ && npm run dev                  # or: npm run build
+cd ReactiveUIToolkitDocs~ && npm run dev                  # or: npm run build
 ```
 
 ## Conventions

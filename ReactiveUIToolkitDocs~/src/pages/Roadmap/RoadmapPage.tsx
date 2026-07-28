@@ -8,7 +8,7 @@ export const RoadmapPage: FC = () => (
       Roadmap
     </Typography>
     <Typography variant="body1" paragraph>
-      ReactiveUIToolKit is under active development. Below is a high-level view
+      ReactiveUIToolkit is under active development. Below is a high-level view
       of planned areas. Priorities may shift based on community feedback.
     </Typography>
 

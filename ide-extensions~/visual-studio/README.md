@@ -1,6 +1,6 @@
 # UITKX — Visual Studio Extension (VSIX)
 
-Adds language support for `.uitkx` ReactiveUIToolKit component templates in **Visual Studio 2022**.
+Adds language support for `.uitkx` ReactiveUIToolkit component templates in **Visual Studio 2022**.
 
 💬 Join the community on Discord: https://discord.gg/Knedqu4Wyv
 

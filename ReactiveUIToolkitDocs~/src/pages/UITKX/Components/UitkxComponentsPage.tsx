@@ -183,7 +183,7 @@ export const UitkxComponentsPage: FC = () => (
       Components Overview
     </Typography>
     <Typography variant="body1" paragraph>
-      ReactiveUIToolKit wraps every Unity UI Toolkit element as a declarative
+      ReactiveUIToolkit wraps every Unity UI Toolkit element as a declarative
       component you can use in <code>.uitkx</code> markup. Use intrinsic tag
       names for built-in elements and PascalCase names for your own custom
       components.
