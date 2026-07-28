@@ -1,10 +1,10 @@
-using ReactiveUITK.Core;
-using ReactiveUITK.Samples.Components.SimpleUseEffectFunc;
+using Ruitk.Core;
+using Ruitk.Samples.Components.SimpleUseEffectFunc;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Components.SimpleUseEffectFunc.SimpleUseEffectFunc;
+using Ruitk.Samples.Components.SimpleUseEffectFunc.SimpleUseEffectFunc;
 
-namespace ReactiveUITK.Samples.Showcase.Runtime
+namespace Ruitk.Samples.Showcase.Runtime
 {
     [RequireComponent(typeof(RootRenderer))]
     public class RuntimeSimpleUseEffectDemoBootstrap : MonoBehaviour

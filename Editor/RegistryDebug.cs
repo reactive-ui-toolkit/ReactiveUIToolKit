@@ -1,12 +1,12 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-using ReactiveUITK.Elements;
-using ReactiveUITK.Core;
+using Ruitk.Elements;
+using Ruitk.Core;
 
 public static class RegistryDebug
 {
-    [MenuItem("ReactiveUITK/Debug/Check Registry")]
+    [MenuItem("Reactive UI Toolkit/Debug/Check Registry")]
     public static void CheckRegistry()
     {
         var registry = ElementRegistryProvider.GetDefaultRegistry();

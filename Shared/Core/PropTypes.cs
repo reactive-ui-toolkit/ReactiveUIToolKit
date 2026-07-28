@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     public abstract class PropTypeDefinition
     {

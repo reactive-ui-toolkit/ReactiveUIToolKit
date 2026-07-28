@@ -59,9 +59,9 @@
 
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 
-namespace ReactiveUITK.Refresh
+namespace Ruitk.Refresh
 {
     /// <summary>
     /// Process-wide registry of <see cref="Family"/> handles, keyed by stable
@@ -137,7 +137,7 @@ namespace ReactiveUITK.Refresh
             }
 
             UnityEngine.Debug.LogError(
-                $"[ReactiveUITK Refresh] Unresolved Family '{fam.Id}'. " +
+                $"[Ruitk Refresh] Unresolved Family '{fam.Id}'. " +
                 "No [ModuleInitializer] Register call ran for this component " +
                 "and no parent supplied a fallback factory. The next render " +
                 "of any component that references this Family will throw. " +
@@ -547,7 +547,7 @@ namespace ReactiveUITK.Refresh
         /// Fallback-factory overload of <see cref="GetFamily(string)"/>.
         /// Used by SG-emitted parents so that children which lack an
         /// `[ModuleInitializer]` Register call (hand-written components in
-        /// other packages, e.g. <c>ReactiveUITK.Router.Route</c>) still
+        /// other packages, e.g. <c>Ruitk.Router.Route</c>) still
         /// resolve to a real render delegate.
         ///
         /// The <paramref name="fallbackFactory"/> is invoked lazily on

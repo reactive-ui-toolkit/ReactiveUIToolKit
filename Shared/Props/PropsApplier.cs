@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Globalization;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Props
+namespace Ruitk.Props
 {
     public static class PropsApplier
     {

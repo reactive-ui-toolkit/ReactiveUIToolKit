@@ -1,7 +1,7 @@
 using System;
 using UnityEditor;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     /// <summary>
     /// Manages the LockReloadAssemblies / DisallowAutoRefresh lifecycle.

@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core.Animation
+namespace Ruitk.Core.Animation
 {
     public sealed class AnimationHandle
     {

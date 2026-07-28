@@ -1,12 +1,12 @@
 using System.Collections.Generic;
-using ReactiveUITK.Props;
+using Ruitk.Props;
 using UnityEngine;
 using UnityEngine.UIElements;
 #if UNITY_EDITOR
 using UnityEditor.UIElements;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public sealed class ColorFieldElementAdapter : BaseElementAdapter
     {

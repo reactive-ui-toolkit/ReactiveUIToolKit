@@ -1,15 +1,15 @@
 using System.Linq;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// UITKX2316 — unknown-namespace validation for <c>@using</c> / <c>import "@Ns"</c>
     /// (namespace-import unification plan, step 4). The sound namespace analogue of UITKX2300:
     /// a misspelled using now produces a located UITKX2316 on the .uitkx line instead of a raw
     /// CS0246 buried in generated code. The test compilation references only the core assembly,
-    /// so System.* and the stub's ReactiveUITK.Core namespace are "known"; anything else is not.
+    /// so System.* and the stub's Ruitk.Core namespace are "known"; anything else is not.
     /// </summary>
     public sealed class UnknownNamespaceTests
     {

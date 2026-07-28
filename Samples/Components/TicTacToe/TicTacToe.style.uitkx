@@ -1,5 +1,5 @@
-import "@static ReactiveUITK.Props.Typed.StyleKeys"
-import "@static ReactiveUITK.Props.Typed.CssHelpers"
+import "@static Ruitk.Props.Typed.StyleKeys"
+import "@static Ruitk.Props.Typed.CssHelpers"
 
 export Style containerStyle = new Style
 {

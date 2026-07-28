@@ -3,17 +3,17 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using Microsoft.CodeAnalysis;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.Router;
+using Ruitk.Language.Parser;
+using Ruitk.Router;
 
-namespace ReactiveUITK.SourceGenerator.Emitter
+namespace Ruitk.SourceGenerator.Emitter
 {
     /// <summary>
     /// Phase 3 — maps markup tag names to the V.* call pattern that the
     /// <see cref="CSharpEmitter"/> will generate.
     ///
     /// Strategy B (Roslyn symbol inspection):
-    ///   1. Scans the <c>ReactiveUITK.V</c> class at resolver-construction time to
+    ///   1. Scans the <c>Ruitk.V</c> class at resolver-construction time to
     ///      build a lowercase tag-name → <see cref="TagResolution"/> map for all
     ///      built-in elements.
     ///   2. For PascalCase tags (function components), checks whether a type with that
@@ -42,8 +42,8 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         private readonly Dictionary<string, TagResolution> _builtinMap;
 
         // ── Roslyn type-name constants ────────────────────────────────────────
-        private const string VTypeName = "ReactiveUITK.V";
-        private const string UTypeName = "ReactiveUITK.Ugui.U";
+        private const string VTypeName = "Ruitk.V";
+        private const string UTypeName = "Ruitk.Ugui.U";
         private const string VirtualNodeName = "VirtualNode";
 
         /// <summary>File backend ("ugui" or null for UI Toolkit) — selects the vocabulary.</summary>
@@ -52,7 +52,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         // ── Well-known component tag aliases ────────────────────────────────────
         // Single source of truth lives in Shared/Core/Router/RouterTagAliases.cs
         // (linked into this project via <Compile Include="..." Link="..." /> in
-        // ReactiveUITK.SourceGenerator.csproj).  The same alias set is consumed
+        // Ruitk.SourceGenerator.csproj).  The same alias set is consumed
         // by Editor/HMR/HmrCSharpEmitter.cs at runtime via the Shared assembly.
         private static readonly IReadOnlyDictionary<string, string> s_componentTagAliases =
             RouterTagAliases.Map;
@@ -188,10 +188,10 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         {
             string stripped = typeName.TrimEnd('?').Trim();
             return stripped.StartsWith("Ref<", StringComparison.Ordinal)
-                || stripped.StartsWith("ReactiveUITK.Core.Ref<", StringComparison.Ordinal)
+                || stripped.StartsWith("Ruitk.Core.Ref<", StringComparison.Ordinal)
                 || stripped.StartsWith("Hooks.MutableRef<", StringComparison.Ordinal) // [Obsolete] compat
                 || stripped.StartsWith(
-                    "ReactiveUITK.Core.Hooks.MutableRef<",
+                    "Ruitk.Core.Hooks.MutableRef<",
                     StringComparison.Ordinal
                 );
         }
@@ -298,7 +298,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
 
         /// <summary>
         /// Returns <c>true</c> when <paramref name="typeSymbol"/> is the top-level
-        /// <c>Ref&lt;T&gt;</c> from <c>ReactiveUITK.Core</c>, or the deprecated
+        /// <c>Ref&lt;T&gt;</c> from <c>Ruitk.Core</c>, or the deprecated
         /// <c>Hooks.MutableRef&lt;T&gt;</c> type.
         /// Also matches nullable wrappers by unwrapping via Nullable.
         /// </summary>
@@ -322,13 +322,13 @@ namespace ReactiveUITK.SourceGenerator.Emitter
 
             var def = named.ConstructedFrom;
 
-            // Match top-level Ref<T> in ReactiveUITK.Core namespace (not nested)
+            // Match top-level Ref<T> in Ruitk.Core namespace (not nested)
             if (
                 string.Equals(def.Name, "Ref", StringComparison.Ordinal)
                 && def.ContainingType == null
                 && string.Equals(
                     def.ContainingNamespace?.ToDisplayString(),
-                    "ReactiveUITK.Core",
+                    "Ruitk.Core",
                     StringComparison.Ordinal
                 )
             )
@@ -339,7 +339,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 && string.Equals(def.ContainingType?.Name, "Hooks", StringComparison.Ordinal)
                 && string.Equals(
                     def.ContainingNamespace?.ToDisplayString(),
-                    "ReactiveUITK.Core",
+                    "Ruitk.Core",
                     StringComparison.Ordinal
                 );
         }
@@ -449,8 +449,8 @@ namespace ReactiveUITK.SourceGenerator.Emitter
 
         private static readonly string[] s_propsNamespaces =
         {
-            "ReactiveUITK.Props.Typed",
-            "ReactiveUITK.Ugui",
+            "Ruitk.Props.Typed",
+            "Ruitk.Ugui",
         };
 
         private static HashSet<string> CollectPropertyNames(INamedTypeSymbol type)

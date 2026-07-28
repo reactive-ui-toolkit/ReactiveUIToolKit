@@ -1,0 +1,21 @@
+{
+  "name": "Ruitk.Samples",
+  "references": [
+    "Ruitk.Editor",
+    "Ruitk.Shared",
+    "Ruitk.Runtime",
+    "Ruitk.Ugui",
+    "UnityEngine.UI",
+    "Unity.TextMeshPro",
+    "Unity.InputSystem"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

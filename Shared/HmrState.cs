@@ -1,5 +1,5 @@
 #if UNITY_EDITOR
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     /// <summary>
     /// Shared state flag for HMR (Hot Module Replacement).

@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.StressTest;
-using ReactiveUITK.Samples.Components.StressTest.StressTest;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.StressTest;
+using Ruitk.Samples.Components.StressTest.StressTest;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxStressTestDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Stress Test")]
+        [MenuItem("Reactive UI Toolkit/Demos/Stress Test")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxStressTestDemoWindow>("Stress Test Demo");

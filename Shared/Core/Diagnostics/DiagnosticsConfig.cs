@@ -1,10 +1,10 @@
 using System;
 
-namespace ReactiveUITK.Core.Diagnostics
+namespace Ruitk.Core.Diagnostics
 {
     /// <summary>
     /// Global diagnostics configuration, independent of any particular reconciler.
-    /// Backed by ReactiveUITKConfig / BuildDefinesConfig at startup.
+    /// Backed by RuitkConfig / BuildDefinesConfig at startup.
     /// </summary>
     public static class DiagnosticsConfig
     {

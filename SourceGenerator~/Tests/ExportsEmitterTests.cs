@@ -1,8 +1,8 @@
 using System.Linq;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// ES-modules campaign (Plans~/ES_MODULES_EXECUTION_PLAN.md M3, U-02/U-03/§4.2): the SG's

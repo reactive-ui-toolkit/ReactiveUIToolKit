@@ -2,7 +2,7 @@ using System;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Formatting;
-using ReactiveUITK.Language.Formatter;
+using Ruitk.Language.Formatter;
 using CSharpParseOptions = Microsoft.CodeAnalysis.CSharp.CSharpParseOptions;
 
 namespace UitkxLanguageServer.Roslyn

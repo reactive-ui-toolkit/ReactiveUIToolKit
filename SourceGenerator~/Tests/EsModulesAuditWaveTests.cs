@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Formatter;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.Language;
+using Ruitk.Language.Formatter;
+using Ruitk.Language.Parser;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// ES-modules audit wave (Plans~/ES_MODULES_AUDIT_FINDINGS.md): regression pins for the
@@ -722,20 +722,20 @@ namespace ReactiveUITK.SourceGenerator.Tests
             var nodes = UitkxParser.Parse(src, importerPath, ds, diags);
             var pr = new ParseResult(ds, nodes, ImmutableArray.CreateRange(diags));
 
-            var tokens = new ReactiveUITK.Language.SemanticTokens.SemanticTokensProvider()
+            var tokens = new Ruitk.Language.SemanticTokens.SemanticTokensProvider()
                 .GetTokens(pr, src, null, importerPath);
 
             Assert.Contains(tokens, t => t.Line == 0
-                && t.TokenType == ReactiveUITK.Language.SemanticTokens.SemanticTokenTypes.Variable
+                && t.TokenType == Ruitk.Language.SemanticTokens.SemanticTokenTypes.Variable
                 && t.Length == "container".Length);
             Assert.Contains(tokens, t => t.Line == 1
-                && t.TokenType == ReactiveUITK.Language.SemanticTokens.SemanticTokenTypes.Function
+                && t.TokenType == Ruitk.Language.SemanticTokens.SemanticTokenTypes.Function
                 && t.Length == "getSomething".Length);
             Assert.Contains(tokens, t => t.Line == 1
-                && t.TokenType == ReactiveUITK.Language.SemanticTokens.SemanticTokenTypes.Function
+                && t.TokenType == Ruitk.Language.SemanticTokens.SemanticTokenTypes.Function
                 && t.Length == "isSomethingEven".Length);
             Assert.Contains(tokens, t => t.Line == 2
-                && t.TokenType == ReactiveUITK.Language.SemanticTokens.SemanticTokenTypes.Element
+                && t.TokenType == Ruitk.Language.SemanticTokens.SemanticTokenTypes.Element
                 && t.Length == "Card".Length);
         }
 

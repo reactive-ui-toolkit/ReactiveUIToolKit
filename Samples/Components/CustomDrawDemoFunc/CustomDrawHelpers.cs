@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Samples.UITKXComponents
+namespace Ruitk.Samples.UITKXComponents
 {
     /// <summary>
     /// Plain-C# draw helpers for the Custom Drawing demo. The drawing bodies live

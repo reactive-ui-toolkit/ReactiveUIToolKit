@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK.Language.Parser
+namespace Ruitk.Language.Parser
 {
     /// <summary>
     /// Brace- and paren-balanced C# expression extractor.

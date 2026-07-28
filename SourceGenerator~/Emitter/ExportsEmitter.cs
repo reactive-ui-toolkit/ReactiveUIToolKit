@@ -4,9 +4,9 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.SourceGenerator.Emitter
+namespace Ruitk.SourceGenerator.Emitter
 {
     /// <summary>
     /// Emits the per-file <c>__Exports</c> container for a NEW-MODE (plain-declaration) .uitkx
@@ -58,15 +58,15 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using System.Collections.Concurrent;");
             sb.AppendLine("using System.Linq;");
-            sb.AppendLine("using ReactiveUITK;");
-            sb.AppendLine("using ReactiveUITK.Core;");
-            sb.AppendLine("using ReactiveUITK.Core.Animation;");
-            sb.AppendLine("using ReactiveUITK.Router;");
-            sb.AppendLine("using ReactiveUITK.Props.Typed;");
+            sb.AppendLine("using Ruitk;");
+            sb.AppendLine("using Ruitk.Core;");
+            sb.AppendLine("using Ruitk.Core.Animation;");
+            sb.AppendLine("using Ruitk.Router;");
+            sb.AppendLine("using Ruitk.Props.Typed;");
             sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.StyleKeys;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.CssHelpers;");
-            sb.AppendLine("using static ReactiveUITK.AssetHelpers;");
+            sb.AppendLine("using static Ruitk.Props.Typed.StyleKeys;");
+            sb.AppendLine("using static Ruitk.Props.Typed.CssHelpers;");
+            sb.AppendLine("using static Ruitk.AssetHelpers;");
             sb.AppendLine("using UColor = UnityEngine.Color;");
             // User + injected usings go INSIDE the namespace block (below): file-keyed
             // namespaces make every file stem an enclosing-namespace member, which shadows
@@ -96,15 +96,15 @@ namespace ReactiveUITK.SourceGenerator.Emitter
 
             string ns = !string.IsNullOrEmpty(directives.Namespace)
                 ? directives.Namespace!
-                : "ReactiveUITK.Generated";
+                : "Ruitk.Generated";
 
             sb.AppendLine($"namespace {ns}");
             sb.AppendLine("{");
             foreach (var u in directives.Usings)
-                sb.AppendLine($"    using {ReactiveUITK.Language.ImportScopeFacts.GlobalizeUsingPayload(u)};");
+                sb.AppendLine($"    using {Ruitk.Language.ImportScopeFacts.GlobalizeUsingPayload(u)};");
             if (!directives.Usings.IsDefaultOrEmpty)
                 sb.AppendLine();
-            sb.AppendLine($"    [global::ReactiveUITK.UitkxSource(@\"{filePath.Replace("\"", "\"\"")}\")]");
+            sb.AppendLine($"    [global::Ruitk.UitkxSource(@\"{filePath.Replace("\"", "\"\"")}\")]");
             sb.AppendLine("    public static partial class __Exports");
             sb.AppendLine("    {");
 
@@ -211,13 +211,13 @@ namespace ReactiveUITK.SourceGenerator.Emitter
 
         /// <summary>Extracts <c>T</c> from a <c>new T {...}</c> / <c>new T(...)</c> initializer
         /// (G-04 inference sugar). Thin call-through to the language-lib single source
-        /// (<see cref="ReactiveUITK.Language.ImportScopeFacts.ExtractNewInitializerTypeName"/> —
+        /// (<see cref="Ruitk.Language.ImportScopeFacts.ExtractNewInitializerTypeName"/> —
         /// the VDG shares it; HMR keeps a reflective-world mirror pinned by contract test). Null
         /// when the initializer is not new-shaped — the parser already reported UITKX2322 in that
         /// case; the <c>object</c> fallback merely keeps the emitted file syntactically parseable
         /// next to the #error.</summary>
         internal static string? ExtractInitializerTypeName(string initText)
-            => ReactiveUITK.Language.ImportScopeFacts.ExtractNewInitializerTypeName(initText);
+            => Ruitk.Language.ImportScopeFacts.ExtractNewInitializerTypeName(initText);
 
         private static string? NormalizeVoid(string? returnTypeText)
             => string.Equals(returnTypeText?.Trim(), "void", StringComparison.Ordinal)
@@ -241,7 +241,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 byPath[Norm(pe.SourceFilePath)] = pe;
 
             string importerDir = Norm(Path.GetDirectoryName(filePath) ?? string.Empty);
-            string rootDir = ReactiveUITK.Language.EffectiveNamespace.UiSourceRootDir(filePath) ?? importerDir;
+            string rootDir = Ruitk.Language.EffectiveNamespace.UiSourceRootDir(filePath) ?? importerDir;
 
             foreach (var imp in directives.Imports)
             {
@@ -249,7 +249,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 if (!anyAlias && !imp.IsDefault)
                     continue;
 
-                string? target = ReactiveUITK.Language.ImportResolver.MapSpecifierToPath(
+                string? target = Ruitk.Language.ImportResolver.MapSpecifierToPath(
                     importerDir, imp.Specifier, rootDir, out _);
                 if (target == null || !byPath.TryGetValue(Norm(target), out var pe))
                     continue;
@@ -384,7 +384,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 string keysLit = EmitContext.RenderCustomHookFamilyKeysLiteral(
                     HookEmitter.QualifyKeys(hookCustomKeys, hookKeyMap));
                 sb.AppendLine(
-                    "            global::ReactiveUITK.Refresh.RefreshRuntime.RegisterHook(" +
+                    "            global::Ruitk.Refresh.RefreshRuntime.RegisterHook(" +
                     $"\"{EscapeStringLiteral(familyKey)}\", " +
                     $"\"{EscapeStringLiteral(sig)}\", " +
                     $"{keysLit});");

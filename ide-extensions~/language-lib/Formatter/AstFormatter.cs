@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.Language.Formatter
+namespace Ruitk.Language.Formatter
 {
     /// <summary>
     /// AST-based formatter for <c>.uitkx</c> files.
@@ -563,7 +563,7 @@ namespace ReactiveUITK.Language.Formatter
 
                 var m = directives.MemberDeclarations[entry.MemberIndex];
                 string prefix = ExportPrefix(m.Name, m.IsExported, m.IsExportImplied);
-                if (m.Kind == ReactiveUITK.Language.Parser.DeclKind.Value)
+                if (m.Kind == Ruitk.Language.Parser.DeclKind.Value)
                 {
                     string typePart = m.ReturnTypeText != null ? m.ReturnTypeText + " " : "";
                     Ln($"{prefix}{typePart}{m.Name} = {m.BodyText};");

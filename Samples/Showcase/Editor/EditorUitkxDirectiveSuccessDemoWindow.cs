@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.DirectiveSuccessDemo;
-using ReactiveUITK.Samples.Components.DirectiveSuccessDemo.DirectiveSuccessDemo;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.DirectiveSuccessDemo;
+using Ruitk.Samples.Components.DirectiveSuccessDemo.DirectiveSuccessDemo;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxDirectiveSuccessDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Directive Success")]
+        [MenuItem("Reactive UI Toolkit/Demos/Directive Success")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxDirectiveSuccessDemoWindow>("Directive Success");

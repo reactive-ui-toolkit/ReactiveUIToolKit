@@ -1,12 +1,12 @@
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
-using ReactiveUITK.Samples.Shared;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
+using Ruitk.Samples.Shared;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Shared.MediaPlaygroundDemoPage;
+using Ruitk.Samples.Shared.MediaPlaygroundDemoPage;
 
-namespace ReactiveUITK.Samples.UITKXShared
+namespace Ruitk.Samples.UITKXShared
 {
     /// <summary>
     /// Runtime mount for the Media Playground demo. Attach to a GameObject

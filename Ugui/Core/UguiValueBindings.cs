@@ -3,7 +3,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// One-time UnityEvent subscriptions per control; prop diffs are plain

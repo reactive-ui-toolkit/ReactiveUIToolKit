@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using UitkxLanguageServer;
 using Xunit;
 

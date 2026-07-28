@@ -1,6 +1,6 @@
 import "@System.Threading"
 import "@System.Threading.Tasks"
-import "@ReactiveUITK.Core.Fiber"
+import "@Ruitk.Core.Fiber"
 
 export VirtualNode LatestFeaturesDemoFunc() {
   var defaultItems = new string[] { "Alpha", "Bravo", "Charlie", "Delta" };
@@ -155,7 +155,7 @@ export VirtualNode LatestFeaturesDemoFunc() {
       key="latest-demo-root"
       style={new Style { ("padding", 12f), ("flexDirection", "column"), ("gap", 8f) }}
     >
-      <Label text="ReactiveUITK Latest Changes Showcase" />
+      <Label text="Ruitk Latest Changes Showcase" />
       <VisualElement
         key="controls-row"
         style={new Style { ("flexDirection", "row"), ("gap", 6f), ("marginBottom", 6f) }}

@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using NUnit.Framework;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Fiber;
-using ReactiveUITK.Elements;
+using Ruitk.Core;
+using Ruitk.Core.Fiber;
+using Ruitk.Elements;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ReactiveUITK.Ugui.Tests
+namespace Ruitk.Ugui.Tests
 {
     /// <summary>
     /// EditMode runtime tests for the uGUI backend: mounting, prop diffs,
@@ -42,7 +42,7 @@ namespace ReactiveUITK.Ugui.Tests
             _renderer?.Clear();
             if (_canvasGo != null)
                 Object.DestroyImmediate(_canvasGo);
-            var staging = GameObject.Find("ReactiveUITK.Ugui.Staging");
+            var staging = GameObject.Find("Ruitk.Ugui.Staging");
             if (staging != null)
                 Object.DestroyImmediate(staging);
         }

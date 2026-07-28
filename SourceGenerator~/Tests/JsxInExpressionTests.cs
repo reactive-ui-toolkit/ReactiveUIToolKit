@@ -1,7 +1,7 @@
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Phase 1 — JSX literals in arbitrary expression positions.
@@ -84,7 +84,7 @@ public class JsxInExpressionTests
         // attr={x => <Item/>} — lambda body contains JSX.
         // We verify scanner detects bare JSX after `=>` and splices.
         var src = WrapWithSetup(
-            "  System.Func<int, global::ReactiveUITK.Core.VirtualNode> renderItem = i => <label text=\"item\"/>;",
+            "  System.Func<int, global::Ruitk.Core.VirtualNode> renderItem = i => <label text=\"item\"/>;",
             "<box>{renderItem(0)}</box>"
         );
         var result = GeneratorTestHelper.Run(src);
@@ -127,7 +127,7 @@ public class JsxInExpressionTests
     public void NullCoalesceWithJsx_Spliced()
     {
         var src = WrapWithSetup(
-            "  global::ReactiveUITK.Core.VirtualNode? fallback = null;",
+            "  global::Ruitk.Core.VirtualNode? fallback = null;",
             "<box>{fallback ?? <label text=\"fallback\"/>}</box>"
         );
         var result = GeneratorTestHelper.Run(src);
@@ -194,7 +194,7 @@ public class JsxInExpressionTests
         );
         // Null fallback branch
         Assert.True(
-            result.SourceContains(": (global::ReactiveUITK.Core.VirtualNode?)null)"),
+            result.SourceContains(": (global::Ruitk.Core.VirtualNode?)null)"),
             "Expected typed-null fallback branch."
         );
         // Raw `&&` should NOT survive in the emitted code (sanity).
@@ -223,7 +223,7 @@ public class JsxInExpressionTests
             "Expected `((icon != null) ? ` — LHS walker must keep the full comparison."
         );
         Assert.True(
-            result.SourceContains(": (global::ReactiveUITK.Core.VirtualNode?)null)")
+            result.SourceContains(": (global::Ruitk.Core.VirtualNode?)null)")
         );
     }
 
@@ -272,7 +272,7 @@ public class JsxInExpressionTests
         // The LHS of `&&` is just `c`, NOT `a ? b : c`. The walker must stop
         // at the `:` boundary.
         var src = WrapWithSetup(
-            "  bool a = true; global::ReactiveUITK.Core.VirtualNode? b = null; bool c = true;",
+            "  bool a = true; global::Ruitk.Core.VirtualNode? b = null; bool c = true;",
             "<box>{(a ? b : c && <label text=\"x\"/>)}</box>"
         );
         var result = GeneratorTestHelper.Run(src);
@@ -324,7 +324,7 @@ public class JsxInExpressionTests
         // No `&&` desugar should have fired — its hallmark is the typed-null
         // fallback branch, which the user-written `?:` would not produce.
         Assert.False(
-            result.SourceContains("(global::ReactiveUITK.Core.VirtualNode?)null)"),
+            result.SourceContains("(global::Ruitk.Core.VirtualNode?)null)"),
             "Bitwise `&` must not trigger the logical-AND desugar (no typed-null fallback)."
         );
     }

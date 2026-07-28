@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.HookStateQueueDemoFunc;
-using ReactiveUITK.Samples.Components.HookStateQueueDemoFunc.HookStateQueueDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.HookStateQueueDemoFunc;
+using Ruitk.Samples.Components.HookStateQueueDemoFunc.HookStateQueueDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxHookQueueDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(13-17-18-26)/Hook Queue Merge")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(13-17-18-26)/Hook Queue Merge")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxHookQueueDemoWindow>("Hook Queue Merge Demo");

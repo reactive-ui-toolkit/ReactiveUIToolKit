@@ -12,7 +12,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Document;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 using UitkxLanguageServer.Roslyn;
 
 namespace UitkxLanguageServer;
@@ -88,7 +88,7 @@ public sealed class SignatureHelpHandler : ISignatureHelpHandler
         }
 
         // ── 2. Parse and ensure Roslyn workspace ready ────────────────────────
-        var parseDiags = new List<ReactiveUITK.Language.ParseDiagnostic>();
+        var parseDiags = new List<Ruitk.Language.ParseDiagnostic>();
         var directives = DirectiveParser.Parse(text, localPath, parseDiags);
         var nodes      = UitkxParser.Parse(text, localPath, directives, parseDiags);
         var parseResult = new ParseResult(

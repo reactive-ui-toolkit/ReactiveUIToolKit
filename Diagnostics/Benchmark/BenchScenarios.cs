@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 using UnityEngine;
-using static ReactiveUITK.Props.Typed.StyleKeys;
+using static Ruitk.Props.Typed.StyleKeys;
 using UColor = UnityEngine.Color;
 
-namespace ReactiveUITK.Bench
+namespace Ruitk.Bench
 {
     internal static class BenchScenarios
     {

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using ReactiveUITK.SourceGenerator.Tools;
+using Ruitk.SourceGenerator.Tools;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// ES-modules campaign (Plans~/ES_MODULES_EXECUTION_PLAN.md M7, U-09/§7.1): the
@@ -192,7 +192,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             // The imports-leg identity-freezing @namespace stamp is WRONG here: it would pin every
             // migrated file to its pre-migration namespace (with the raw parsed fallback, no
             // less) and defeat G-01's file-keyed derivation. Found live: the first samples run
-            // stamped `@namespace ReactiveUITK.FunctionStyle` into all 165 files.
+            // stamped `@namespace Ruitk.FunctionStyle` into all 165 files.
             var comp = F("Stamp.uitkx", "component Stamp {\n    return (\n        <Box />\n    );\n}\n");
             var changed = Run(out var errors, comp);
 

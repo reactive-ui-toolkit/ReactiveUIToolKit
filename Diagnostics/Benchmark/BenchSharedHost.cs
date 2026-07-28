@@ -1,12 +1,12 @@
 using System;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Fiber;
+using Ruitk.Core;
+using Ruitk.Core.Fiber;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace ReactiveUITK.Bench
+namespace Ruitk.Bench
 {
     public static class BenchSharedHost
     {
@@ -44,8 +44,8 @@ namespace ReactiveUITK.Bench
 
             var title =
                 outputTarget == BenchOutputTarget.Editor
-                    ? "ReactiveUITK Bench (Editor)"
-                    : "ReactiveUITK Bench (Runtime)";
+                    ? "Ruitk Bench (Editor)"
+                    : "Ruitk Bench (Runtime)";
             BenchPerSecondLogger.BeginRun(title, overrides, outputTarget);
 
             IsComplete = false;

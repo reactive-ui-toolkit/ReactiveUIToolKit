@@ -1,5 +1,5 @@
 import "@UnityEngine.UIElements"
-import "@ReactiveUITK.Samples.UITKXComponents"
+import "@Ruitk.Samples.UITKXComponents"
 
 export VirtualNode CustomDrawDemoFunc() {
   var (sides, setSides) = useState(3);

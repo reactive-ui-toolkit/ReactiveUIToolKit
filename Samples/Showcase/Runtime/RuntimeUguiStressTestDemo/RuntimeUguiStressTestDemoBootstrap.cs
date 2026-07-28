@@ -1,9 +1,9 @@
-using ReactiveUITK.Core;
-using ReactiveUITK.Samples.Components.UguiStressTest.UguiStressTest;
-using ReactiveUITK.Ugui;
+using Ruitk.Core;
+using Ruitk.Samples.Components.UguiStressTest.UguiStressTest;
+using Ruitk.Ugui;
 using UnityEngine;
 
-namespace ReactiveUITK.Samples.Showcase.Runtime
+namespace Ruitk.Samples.Showcase.Runtime
 {
     /// <summary>
     /// Mounts the UguiStressTest component — the uGUI twin of

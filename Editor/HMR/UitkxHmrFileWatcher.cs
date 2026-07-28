@@ -5,7 +5,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     /// <summary>
     /// Watches for .uitkx and companion .cs file changes using FileSystemWatcher.

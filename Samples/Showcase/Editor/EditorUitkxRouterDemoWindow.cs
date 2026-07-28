@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.RouterDemoFunc;
-using ReactiveUITK.Samples.Components.RouterDemoFunc.RouterDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.RouterDemoFunc;
+using Ruitk.Samples.Components.RouterDemoFunc.RouterDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxRouterDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Router")]
+        [MenuItem("Reactive UI Toolkit/Demos/Router")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxRouterDemoWindow>("Router Demo");

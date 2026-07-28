@@ -4,15 +4,15 @@ using System.Linq;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.Language.Lowering;
-using ReactiveUITK.Language.Roslyn;
-using ReactiveUITK.Language;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.Language.Parser;
+using Ruitk.Language.Lowering;
+using Ruitk.Language.Roslyn;
+using Ruitk.Language;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 public class DebugDumpTest
 {

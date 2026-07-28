@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.DoomGame;
-using ReactiveUITK.Samples.Components.DoomGame.DoomGame;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.DoomGame;
+using Ruitk.Samples.Components.DoomGame.DoomGame;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxDoomGameDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Doom Game")]
+        [MenuItem("Reactive UI Toolkit/Demos/Doom Game")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxDoomGameDemoWindow>("Doom Game Demo");

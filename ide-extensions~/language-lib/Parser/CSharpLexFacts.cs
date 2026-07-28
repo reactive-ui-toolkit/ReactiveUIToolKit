@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK.Language.Parser
+namespace Ruitk.Language.Parser
 {
     /// <summary>
     /// Canonical C# lexical facts shared by every consumer that needs to skip over string/char

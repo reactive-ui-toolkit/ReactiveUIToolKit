@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     /// <summary>
     /// Central asset registry — maps string keys to Unity asset references.

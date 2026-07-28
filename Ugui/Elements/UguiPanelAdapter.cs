@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Plain RectTransform container, created full-stretch by default (the

@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements.Trackers
+namespace Ruitk.Elements.Trackers
 {
     public sealed class TabViewSelectionState
     {
@@ -226,7 +226,7 @@ namespace ReactiveUITK.Elements.Trackers
             if (!state.DetachHooked)
             {
                 state.DetachHooked = true;
-                ReactiveUITK.Core.PanelDetachGuard.Wire(view, () => DetachHooks(view, state));
+                Ruitk.Core.PanelDetachGuard.Wire(view, () => DetachHooks(view, state));
             }
         }
 

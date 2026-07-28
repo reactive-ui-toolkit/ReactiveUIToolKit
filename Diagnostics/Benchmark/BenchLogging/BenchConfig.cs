@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK.Bench
+namespace Ruitk.Bench
 {
     public enum BenchOutputTarget
     {

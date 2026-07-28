@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.EditorSupport
+namespace Ruitk.EditorSupport
 {
     [InitializeOnLoad]
     public sealed class EditorRenderScheduler : IScheduler
@@ -109,8 +109,8 @@ namespace ReactiveUITK.EditorSupport
             ExecuteQueue(lowPriorityQueue);
             ExecuteQueue(idlePriorityQueue);
             if (
-                ReactiveUITK.Core.Diagnostics.DiagnosticsConfig.CurrentTraceLevel
-                == ReactiveUITK.Core.Diagnostics.DiagnosticsConfig.TraceLevel.Verbose
+                Ruitk.Core.Diagnostics.DiagnosticsConfig.CurrentTraceLevel
+                == Ruitk.Core.Diagnostics.DiagnosticsConfig.TraceLevel.Verbose
             )
             {
                 int h = highPriorityQueue.Count,
@@ -131,8 +131,8 @@ namespace ReactiveUITK.EditorSupport
             {
                 int count = batchedEffectActions.Count;
                 if (
-                    ReactiveUITK.Core.Diagnostics.DiagnosticsConfig.CurrentTraceLevel
-                    == ReactiveUITK.Core.Diagnostics.DiagnosticsConfig.TraceLevel.Verbose
+                    Ruitk.Core.Diagnostics.DiagnosticsConfig.CurrentTraceLevel
+                    == Ruitk.Core.Diagnostics.DiagnosticsConfig.TraceLevel.Verbose
                 )
                 {
                     try

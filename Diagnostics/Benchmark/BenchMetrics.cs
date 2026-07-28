@@ -4,7 +4,7 @@ using UnityEngine;
 using Unity.Profiling;
 #endif
 
-namespace ReactiveUITK.Bench
+namespace Ruitk.Bench
 {
     internal sealed class BenchMetrics
     {

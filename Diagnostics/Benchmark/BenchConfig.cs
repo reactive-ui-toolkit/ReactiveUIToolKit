@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Bench
+namespace Ruitk.Bench
 {
     [Serializable]
     public class ScenarioDef

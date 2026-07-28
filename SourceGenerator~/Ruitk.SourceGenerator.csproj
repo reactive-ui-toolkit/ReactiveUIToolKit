@@ -1,0 +1,157 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <!-- Must target netstandard2.0 — required by Roslyn generator infrastructure -->
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <!-- Roslyn generators must set this to opt into the generator base class verification -->
+    <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+    <IsRoslynComponent>true</IsRoslynComponent>
+    <!--
+      Build output goes into local bin/<Configuration>/.  A separate
+      PublishGeneratorToAnalyzers target (defined below) then copies the
+      generator + its companion DLLs into ..\Analyzers\ for Unity to pick up.
+
+      Why the indirection: when Unity Editor is open, it holds an exclusive
+      lock on Analyzers\*.dll while the AppDomain is alive.  Writing the build
+      output directly into Analyzers/ caused MSB3027 lock failures during dev
+      iteration (and stale TestIso DLLs in the test project, which still uses
+      $(OutputPath) via the ProjectReference's OutputItemType="Analyzer").
+      By keeping $(OutputPath) lock-free we always produce a fresh DLL that
+      the test project consumes; the Analyzers/ publish is best-effort and
+      warns (rather than fails) in Debug, hard-fails in Release.
+    -->
+    <OutputPath>bin\$(Configuration)\</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <!-- Treat the Analyzers/ publish as fatal only in Release (publish.yml path). -->
+    <PublishToAnalyzersContinueOnError Condition=" '$(Configuration)' == 'Release' ">ErrorAndStop</PublishToAnalyzersContinueOnError>
+    <PublishToAnalyzersContinueOnError Condition=" '$(PublishToAnalyzersContinueOnError)' == '' ">WarnAndContinue</PublishToAnalyzersContinueOnError>
+    <!-- Keep intermediate build files local to SourceGenerator~ -->
+    <BaseIntermediateOutputPath>obj\</BaseIntermediateOutputPath>
+    <AssemblyName>Ruitk.SourceGenerator</AssemblyName>
+    <RootNamespace>Ruitk.SourceGenerator</RootNamespace>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+    <!-- RS2008: release-tracking for analyzer rules — not needed for this internal generator -->
+    <NoWarn>RS2008</NoWarn>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Exclude the sibling test project from the generator's own compilation -->
+    <Compile Remove="Tests\**\*.cs" />
+    <!-- Exclude the standalone codemod tool (its own net8.0 Exe project) -->
+    <Compile Remove="Tools\**\*.cs" />
+    <!-- AstNode.cs and Parser/ were moved to language-lib -->
+    <Compile Remove="Nodes\**\*.cs" />
+    <Compile Remove="Parser\**\*.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+      Single-source-of-truth alias map for router markup tags.  Linked from
+      Shared/Core/Router so the source generator and the runtime stay in sync.
+      The file is plain C# with no Unity dependencies; it compiles cleanly into
+      the analyzer DLL.
+    -->
+    <Compile Include="..\Shared\Core\Router\RouterTagAliases.cs" Link="Emitter\RouterTagAliases.cs" />
+    <!--
+      Single-source-of-truth hook metadata registry lives at
+      Shared/Core/HookRegistry.cs.  It is NOT linked here because that would
+      duplicate the type across this assembly and Ruitk.Language.dll
+      (this csproj ProjectReferences UitkxLanguage.csproj below, and the
+      registry is linked there).  SG code consumes HookRegistry via the
+      language-lib reference.
+    -->
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ide-extensions~\language-lib\UitkxLanguage.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <!--
+      Pin to Roslyn 4.3.1 — the exact version Unity 6000.2.6f2 ships in
+      Editor/Data/DotNetSdkRoslyn/Microsoft.CodeAnalysis.CSharp.dll.
+      Using a NEWER version here would cause type-load failures at runtime
+      because Unity's host process provides 4.3.1 and cannot satisfy a
+      binding redirect to a higher version.
+
+      PrivateAssets="all" means the Roslyn DLLs are NOT copied to the output
+      folder — Unity supplies them at compile time from its own install.
+    -->
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.1" PrivateAssets="all" />
+    <!--
+      Pin the same version of System.Collections.Immutable that UitkxLanguage.csproj uses.
+      PrivateAssets="all" keeps it from leaking to downstream consumers, but we still
+      need the NuGet package to be restored so $(NuGetPackageRoot) points at the DLL.
+      The CopyImmutableToOutput target below handles actually placing it in Analyzers/.
+    -->
+    <PackageReference Include="System.Collections.Immutable" Version="6.0.0" PrivateAssets="all" />
+  </ItemGroup>
+
+  <!--
+    After the generator builds, copy Ruitk.Language.dll into the same
+    output folder (Analyzers/).  This is required because:
+      1. Unity must find the DLL next to the generator when loading analyzers.
+      2. LanguageLibResolver.cs resolves the assembly from the generator's own
+         directory at runtime, so both files must be co-located.
+  -->
+  <!--
+    Copy System.Collections.Immutable.dll into Analyzers/ alongside the generator.
+    Ruitk.Language.dll references this assembly, so Unity's analyzer loader
+    must be able to find it in the same folder.  The language-lib project uses
+    PrivateAssets="all" so the DLL is not automatically output — we copy it explicitly.
+    $(NuGetPackageRoot) is the local NuGet cache root (e.g. %USERPROFILE%\.nuget\packages\).
+  -->
+  <Target Name="CopyImmutableToOutput" AfterTargets="Build">
+    <ItemGroup>
+      <_ImmutableDll Include="$(NuGetPackageRoot)system.collections.immutable\6.0.0\lib\netstandard2.0\System.Collections.Immutable.dll" />
+    </ItemGroup>
+    <Copy
+      SourceFiles="@(_ImmutableDll)"
+      DestinationFolder="$(OutputPath)"
+      SkipUnchangedFiles="true" />
+  </Target>
+
+  <Target Name="CopyLanguageLibToOutput" AfterTargets="Build">
+    <MSBuild
+      Projects="..\ide-extensions~\language-lib\UitkxLanguage.csproj"
+      Targets="GetTargetPath"
+      Properties="Configuration=$(Configuration)">
+      <Output TaskParameter="TargetOutputs" ItemName="_LanguageLibDll" />
+    </MSBuild>
+    <Copy
+      SourceFiles="@(_LanguageLibDll)"
+      DestinationFolder="$(OutputPath)"
+      SkipUnchangedFiles="true" />
+  </Target>
+
+  <!--
+    Publish the generator + companion DLLs to ..\Analyzers\ for Unity pickup.
+
+    Runs AFTER the two CopyXxxToOutput targets so $(OutputPath) is fully populated
+    (generator dll, Ruitk.Language.dll, System.Collections.Immutable.dll).
+
+    Failure policy (see PublishToAnalyzersContinueOnError in PropertyGroup):
+      - Debug:   WarnAndContinue — Unity locks are expected during dev iteration.
+                 The test project still gets a fresh DLL from $(OutputPath).
+      - Release: ErrorAndStop    — publish.yml runs on Ubuntu with no Unity, so
+                 any copy failure here means the runner is genuinely broken.
+
+    Retries cover transient locks (antivirus, background indexers) within a window
+    short enough not to mask a real lock contention.
+  -->
+  <Target Name="PublishGeneratorToAnalyzers"
+          AfterTargets="CopyImmutableToOutput;CopyLanguageLibToOutput">
+    <ItemGroup>
+      <_AnalyzersPublishFiles Include="$(OutputPath)Ruitk.SourceGenerator.dll" />
+      <_AnalyzersPublishFiles Include="$(OutputPath)Ruitk.SourceGenerator.pdb" Condition="Exists('$(OutputPath)Ruitk.SourceGenerator.pdb')" />
+      <_AnalyzersPublishFiles Include="$(OutputPath)Ruitk.Language.dll" />
+      <_AnalyzersPublishFiles Include="$(OutputPath)Ruitk.Language.pdb" Condition="Exists('$(OutputPath)Ruitk.Language.pdb')" />
+      <_AnalyzersPublishFiles Include="$(OutputPath)System.Collections.Immutable.dll" />
+    </ItemGroup>
+    <Copy
+      SourceFiles="@(_AnalyzersPublishFiles)"
+      DestinationFolder="..\Analyzers\"
+      SkipUnchangedFiles="true"
+      Retries="3"
+      RetryDelayMilliseconds="200"
+      ContinueOnError="$(PublishToAnalyzersContinueOnError)" />
+  </Target>
+
+</Project>

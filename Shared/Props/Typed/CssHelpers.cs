@@ -1,11 +1,11 @@
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Props.Typed
+namespace Ruitk.Props.Typed
 {
     /// <summary>
     /// Short helpers for typed <see cref="Style"/> properties.
-    /// Import via <c>using static ReactiveUITK.Props.Typed.CssHelpers;</c>
+    /// Import via <c>using static Ruitk.Props.Typed.CssHelpers;</c>
     /// <code>
     /// new Style { Width = Pct(50), Height = Px(100), MaxWidth = Auto }
     /// </code>

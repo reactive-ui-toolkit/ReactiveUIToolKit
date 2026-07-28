@@ -1,7 +1,7 @@
 using UnityEngine;
-using static ReactiveUITK.Samples.Components.DoomGame.DoomTypes;
+using static Ruitk.Samples.Components.DoomGame.DoomTypes;
 
-namespace ReactiveUITK.Samples.Components.DoomGame {
+namespace Ruitk.Samples.Components.DoomGame {
   public struct SpriteEntry {
     public int Id;
     public int SpriteIdx;

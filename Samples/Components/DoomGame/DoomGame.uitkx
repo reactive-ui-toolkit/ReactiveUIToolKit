@@ -1,7 +1,7 @@
 import { DoomGameScreen } from "./DoomGameScreen"
 import { DoomMainMenu } from "./DoomMainMenu"
 import "@UnityEngine.UIElements"
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTypes"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTypes"
 
 export VirtualNode DoomGame() {
   var (screen, setScreen) = useState(GameScreen.MainMenu);

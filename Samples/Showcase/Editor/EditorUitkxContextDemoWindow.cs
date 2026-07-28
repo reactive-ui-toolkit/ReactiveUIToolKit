@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.ContextDemoFunc;
-using ReactiveUITK.Samples.Components.ContextDemoFunc.ContextDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.ContextDemoFunc;
+using Ruitk.Samples.Components.ContextDemoFunc.ContextDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxContextDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Context Demo")]
+        [MenuItem("Reactive UI Toolkit/Demos/Context Demo")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxContextDemoWindow>("Context Demo");

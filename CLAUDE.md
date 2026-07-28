@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-ReactiveUIToolKit brings a React-like component model (function components, hooks, a virtual node tree, typed props, a Fiber reconciler) to Unity UI Toolkit — all in C# on top of UI Toolkit. The repo is more than a Unity package: it's a monorepo that also contains a Roslyn source generator for the `.uitkx` markup language, a shared language library, a cross-editor LSP server, four IDE extensions, and a docs website. Full docs: http://reactiveuitoolkit.info/
+ReactiveUIToolkit brings a React-like component model (function components, hooks, a virtual node tree, typed props, a Fiber reconciler) to Unity UI Toolkit — all in C# on top of UI Toolkit. The repo is more than a Unity package: it's a monorepo that also contains a Roslyn source generator for the `.uitkx` markup language, a shared language library, a cross-editor LSP server, four IDE extensions, and a docs website. Full docs: http://reactiveuitoolkit.info/
 
 ## The `~` folder convention (read first)
 
@@ -18,7 +18,7 @@ Unity's Asset Database ignores any folder whose name ends in `~`. This is delibe
 | `ide-extensions~/language-lib/` | no | shared language lib, `netstandard2.0` |
 | `ide-extensions~/lsp-server/` | no | LSP server, `net8.0` |
 | `ide-extensions~/{vscode,visual-studio,rider}/` | no | IDE extensions (Node/VSIX) |
-| `ReactiveUIToolKitDocs~/` | no | Vite + React docs site |
+| `ReactiveUIToolkitDocs~/` | no | Vite + React docs site |
 
 ## Architecture
 
@@ -38,11 +38,11 @@ Editor-only defenses (e.g. `RootRenderer`'s `UIDocument` host-rebuild polling fo
 
 Since 0.9.0 (ES-modules redesign): a file IS a module. Plain typed `export` declarations (`export VirtualNode Name(...) {…}`, `export (ret) useX(...) {…}`, `export Style x = …;`) replace the deprecated `component`/`hook`/`module` wrapper keywords (UITKX2320 window; classification is signature-driven). Namespaces are FILE-keyed (folder segments + file stem) for new-syntax files; values/utils/hooks emit onto a per-file `public static partial class __Exports`; the full ES import surface is live (`import { a as b }`, `import * as X` + dotted tags, default imports, `export { … }` lists). Companion partial-merging is deprecated (UITKX2107). Emitted usings for new-mode units go INSIDE the namespace block, `global::`-qualified (file-level aliases are shadowed by sibling file-stem namespaces). The codemod is `UitkxMigrateImports --es-modules`.
 
-The actual parser/lexer/AST/lowering/formatter/IntelliSense lives in **`ide-extensions~/language-lib/`** (`ReactiveUITK.Language`), *not* in the generator. Both the generator and the LSP server reference it, so parsing behaves identically in a Unity build and in every editor. `HookRegistry.cs` is the single source of truth for hook metadata and is **`<Compile Include>`-linked** from `Shared/Core/` into the language lib — the generator, analyzer, LSP hover, and Unity runtime all read the same table. There are explicit *parity/contract* tests (`Hmr*ContractTests`, `AsmdefResolverParityTests`) guarding that the HMR emitter and generator emitter stay in lockstep; if you change one emitter, expect to update the other.
+The actual parser/lexer/AST/lowering/formatter/IntelliSense lives in **`ide-extensions~/language-lib/`** (`Ruitk.Language`), *not* in the generator. Both the generator and the LSP server reference it, so parsing behaves identically in a Unity build and in every editor. `HookRegistry.cs` is the single source of truth for hook metadata and is **`<Compile Include>`-linked** from `Shared/Core/` into the language lib — the generator, analyzer, LSP hover, and Unity runtime all read the same table. There are explicit *parity/contract* tests (`Hmr*ContractTests`, `AsmdefResolverParityTests`) guarding that the HMR emitter and generator emitter stay in lockstep; if you change one emitter, expect to update the other.
 
 ### Committed generator DLLs
 
-`Analyzers/ReactiveUITK.SourceGenerator.dll` and `ReactiveUITK.Language.dll` are **checked into the repo** because Unity loads them as analyzers. After changing anything in `SourceGenerator~/` or `language-lib/`, rebuild and re-commit them with `scripts/build-generator.ps1` — the csproj builds to `bin/` and a `PublishGeneratorToAnalyzers` post-build target copies the DLLs into `Analyzers/` (direct-write was abandoned: Unity locks the loaded analyzer, MSB3027). CI (`test.yml`) has an advisory check that warns if the committed DLL drifts from a fresh Release build; `publish.yml` rebuilds fresh on release regardless.
+`Analyzers/Ruitk.SourceGenerator.dll` and `Ruitk.Language.dll` are **checked into the repo** because Unity loads them as analyzers. After changing anything in `SourceGenerator~/` or `language-lib/`, rebuild and re-commit them with `scripts/build-generator.ps1` — the csproj builds to `bin/` and a `PublishGeneratorToAnalyzers` post-build target copies the DLLs into `Analyzers/` (direct-write was abandoned: Unity locks the loaded analyzer, MSB3027). CI (`test.yml`) has an advisory check that warns if the committed DLL drifts from a fresh Release build; `publish.yml` rebuilds fresh on release regardless.
 
 ## Common commands
 
@@ -51,11 +51,11 @@ The actual parser/lexer/AST/lowering/formatter/IntelliSense lives in **`ide-exte
 scripts/build-generator.ps1              # Release; -Debug for Debug
 
 # Tests — the two suites CI runs (net10.0 and net8.0 respectively)
-dotnet test SourceGenerator~/Tests/ReactiveUITK.SourceGenerator.Tests.csproj
+dotnet test SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj
 dotnet test ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj
 
 # Run a single test
-dotnet test SourceGenerator~/Tests/ReactiveUITK.SourceGenerator.Tests.csproj --filter "FullyQualifiedName~ParserTests"
+dotnet test SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj --filter "FullyQualifiedName~ParserTests"
 
 # LSP server (published into each extension's server/ folder)
 dotnet publish ide-extensions~/lsp-server -c Release --self-contained false -o ide-extensions~/vscode/server
@@ -67,13 +67,13 @@ cd ide-extensions~/vscode && npm ci && npm run build      # prebuild copies the 
 ide-extensions~/visual-studio/build-local.ps1
 
 # Docs site
-cd ReactiveUIToolKitDocs~ && npm run dev                  # or: npm run build
+cd ReactiveUIToolkitDocs~ && npm run dev                  # or: npm run build
 ```
 
 ## Conventions
 
-- **Versioning is SemVer, patch by default.** Bump only the last digit unless a change is genuinely additive (minor) or breaking (major); see `VERSIONING.md`. IDE extensions version independently from the Unity package (`package.json`, currently `0.6.x`). Deprecate for one minor with `[Obsolete(...)]` before removing. `CHANGELOG.md` is the source of truth for every version and is generated/assisted by `scripts/changelog.mjs`.
-- **Typed styles:** `Style` is a set-only typed dictionary mapping every UI Toolkit inline style; values are compile-time checked. `CssHelpers` (`Pct()`, `Px()`, `FlexRow`, `Rgba()`, `Hex()`, …) is auto-imported in `.uitkx` files; in `.cs` add `using static ReactiveUITK.Props.Typed.CssHelpers;`. The old `(StyleKeys.Key, value)` tuple form is a still-supported escape hatch.
+- **Versioning is SemVer, patch by default.** Bump only the last digit unless a change is genuinely additive (minor) or breaking (major); see `VERSIONING.md`. IDE extensions version independently from the Unity package (`package.json`, currently `0.12.x`). Deprecate for one minor with `[Obsolete(...)]` before removing. `CHANGELOG.md` is the source of truth for every version and is generated/assisted by `scripts/changelog.mjs`.
+- **Typed styles:** `Style` is a set-only typed dictionary mapping every UI Toolkit inline style; values are compile-time checked. `CssHelpers` (`Pct()`, `Px()`, `FlexRow`, `Rgba()`, `Hex()`, …) is auto-imported in `.uitkx` files; in `.cs` add `using static Ruitk.Props.Typed.CssHelpers;`. The old `(StyleKeys.Key, value)` tuple form is a still-supported escape hatch.
 - `VirtualNode` is pooled (`__Rent`); don't hold references across renders.
 - Git author is the user's alone — do not add a `Co-Authored-By` trailer, and don't stage/commit/push unless explicitly asked.
 

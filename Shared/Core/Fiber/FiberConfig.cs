@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// Global configuration for Fiber reconciler

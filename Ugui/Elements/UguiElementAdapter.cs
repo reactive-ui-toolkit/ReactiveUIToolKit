@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// One adapter per uGUI element type: creates the backing GameObject

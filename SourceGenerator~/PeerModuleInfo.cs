@@ -1,4 +1,4 @@
-namespace ReactiveUITK.SourceGenerator
+namespace Ruitk.SourceGenerator
 {
     /// <summary>
     /// Lightweight descriptor for a <c>module</c> declaration discovered during the pre-scan

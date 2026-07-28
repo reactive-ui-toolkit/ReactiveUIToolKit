@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.UitkxCounterFunc;
-using ReactiveUITK.Samples.Components.UitkxCounterFunc.UitkxCounterFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.UitkxCounterFunc;
+using Ruitk.Samples.Components.UitkxCounterFunc.UitkxCounterFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxCounterDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Counter")]
+        [MenuItem("Reactive UI Toolkit/Demos/Counter")]
         public static void ShowWindow()
         {
             EditorUitkxCounterDemoWindow window = GetWindow<EditorUitkxCounterDemoWindow>(

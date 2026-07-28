@@ -1,7 +1,7 @@
 using System;
-using ReactiveUITK.Core.Util;
+using Ruitk.Core.Util;
 
-namespace ReactiveUITK.Core.Util
+namespace Ruitk.Core.Util
 {
     public static class SnapshotAssert
     {

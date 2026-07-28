@@ -1,6 +1,6 @@
 @backend ugui
 import { useStressTestLoop } from "./UguiStressTest.hooks"
-import "@ReactiveUITK.Ugui"
+import "@Ruitk.Ugui"
 
 export VirtualNode UguiStressTest() {
   var areaRef = useRef<RectTransform?>(null);

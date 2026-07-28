@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     internal sealed class ScrollTracker : IElementStateTracker<ScrollView, object>
     {

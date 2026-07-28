@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>Outcome of resolving an import specifier (import/export grammar, leg 3, plan §6).</summary>
     public enum ImportResolveStatus

@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using ReactiveUITK.Core.Media;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core.Media;
+using Ruitk.Props.Typed;
 using UnityEngine;
 
-namespace ReactiveUITK.Core.Media
+namespace Ruitk.Core.Media
 {
     /// <summary>
     /// Render function for the <c>&lt;Audio&gt;</c> Func-Component. Renders an
@@ -142,7 +142,7 @@ namespace ReactiveUITK.Core.Media
             );
 
             // <Audio> has no visual representation.
-            return ReactiveUITK.V.Fragment();
+            return Ruitk.V.Fragment();
         }
 
         private static void ApplyAll(AudioSource src, AudioProps p)

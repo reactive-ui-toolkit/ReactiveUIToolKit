@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Props;
+using Ruitk.Props.Typed;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public sealed class TreeViewElementAdapter
         : StatefulElementAdapter<TreeView, TreeViewElementAdapter.Cached>
@@ -71,7 +71,7 @@ namespace ReactiveUITK.Elements
 
             try
             {
-                var ops = ReactiveUITK.Elements.TreeViewExpansionOps.Instance;
+                var ops = Ruitk.Elements.TreeViewExpansionOps.Instance;
                 parts.ExpansionTracker.Attach(tv, parts, properties, ops);
             }
             catch { }
@@ -205,7 +205,7 @@ namespace ReactiveUITK.Elements
 
             try
             {
-                var ops = ReactiveUITK.Elements.TreeViewExpansionOps.Instance;
+                var ops = Ruitk.Elements.TreeViewExpansionOps.Instance;
                 parts.ExpansionTracker.Attach(tv, parts, next, ops);
             }
             catch { }
@@ -398,7 +398,7 @@ namespace ReactiveUITK.Elements
 
             try
             {
-                var ops = ReactiveUITK.Elements.TreeViewExpansionOps.Instance;
+                var ops = Ruitk.Elements.TreeViewExpansionOps.Instance;
                 parts.ExpansionTracker.Reapply(view, parts, previous, next, ops);
             }
             catch { }

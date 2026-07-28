@@ -1,6 +1,6 @@
 using UnityEngine.UI;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Prop groups — the declarative twin of "Add Component". A non-null

@@ -6,7 +6,7 @@
 //
 //  becomes:
 //
-//      [global::ReactiveUITK.UitkxHmrSwap]
+//      [global::Ruitk.UitkxHmrSwap]
 //      public static Style Wrapper = new Style { ... };
 //
 //  Why: Mono's JIT inlines the object reference for `ldsfld` against an
@@ -36,12 +36,12 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 #nullable disable
 
-namespace ReactiveUITK.SourceGenerator.Emitter
+namespace Ruitk.SourceGenerator.Emitter
 {
     /// <summary>
     /// Stateless helper that rewrites a single <c>static readonly</c> field
     /// declaration into a plain <c>static</c> field decorated with
-    /// <c>[global::ReactiveUITK.UitkxHmrSwap]</c>.
+    /// <c>[global::Ruitk.UitkxHmrSwap]</c>.
     /// </summary>
     internal static class StaticReadonlyStripper
     {
@@ -49,7 +49,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         /// The fully-qualified attribute name emitted on every stripped
         /// field. Kept in one place so SG, HMR and tests stay in lockstep.
         /// </summary>
-        public const string AttributeQualifiedName = "global::ReactiveUITK.UitkxHmrSwap";
+        public const string AttributeQualifiedName = "global::Ruitk.UitkxHmrSwap";
 
         /// <summary>
         /// Returns <c>true</c> if <paramref name="field"/> is a candidate for

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using ReactiveUITK.Elements;
+using Ruitk.Elements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public static class ElementRegistryProvider
     {

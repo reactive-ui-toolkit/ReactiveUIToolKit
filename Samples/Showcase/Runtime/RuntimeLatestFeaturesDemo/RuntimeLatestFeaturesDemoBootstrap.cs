@@ -1,10 +1,10 @@
-using ReactiveUITK.Core;
-using ReactiveUITK.Samples.Components.LatestFeaturesDemoFunc;
+using Ruitk.Core;
+using Ruitk.Samples.Components.LatestFeaturesDemoFunc;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Components.LatestFeaturesDemoFunc.LatestFeaturesDemoFunc;
+using Ruitk.Samples.Components.LatestFeaturesDemoFunc.LatestFeaturesDemoFunc;
 
-namespace ReactiveUITK.Samples.Showcase.Runtime
+namespace Ruitk.Samples.Showcase.Runtime
 {
     [RequireComponent(typeof(RootRenderer))]
     public class RuntimeLatestFeaturesDemoBootstrap : MonoBehaviour

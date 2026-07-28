@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Language.SemanticTokens
+namespace Ruitk.Language.SemanticTokens
 {
     /// <summary>
     /// A single semantic token ready for LSP integer-delta encoding.

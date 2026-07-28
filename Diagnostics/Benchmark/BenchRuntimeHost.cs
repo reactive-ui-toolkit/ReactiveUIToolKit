@@ -1,10 +1,10 @@
 using System;
 using System.Reflection;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Bench
+namespace Ruitk.Bench
 {
     [RequireComponent(typeof(RootRenderer))]
     public class BenchRuntimeHost : MonoBehaviour, IVNodeHostRenderer

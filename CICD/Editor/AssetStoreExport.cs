@@ -5,17 +5,17 @@ using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace ReactiveUITK.CICD
+namespace Ruitk.CICD
 {
     /// <summary>
     /// Headless Asset Store package export (Tier A of Plans~/ASSET_STORE_PUBLISHING_PLAN.md).
     ///
-    /// Runs inside a SHELL project whose Assets/ReactiveUIToolKit holds the store-shaped
+    /// Runs inside a SHELL project whose Assets/ReactiveUIToolkit holds the store-shaped
     /// content (the dist omit-list applied, Samples kept visible, plus CICD/ so this method
     /// exists to be called):
     ///
     ///   Unity -batchmode -nographics -quit -projectPath &lt;shell&gt;
-    ///         -executeMethod ReactiveUITK.CICD.AssetStoreExport.Run
+    ///         -executeMethod Ruitk.CICD.AssetStoreExport.Run
     ///         [-exportOut &lt;absolute .unitypackage path&gt;]
     ///
     /// CICD/ itself never ships: it is excluded from the collected asset list, and the
@@ -26,7 +26,7 @@ namespace ReactiveUITK.CICD
     /// </summary>
     internal static class AssetStoreExport
     {
-        private const string PackageRoot = "Assets/ReactiveUIToolKit";
+        private const string PackageRoot = "Assets/ReactiveUIToolkit";
 
         public static void Run()
         {
@@ -37,7 +37,7 @@ namespace ReactiveUITK.CICD
                 {
                     outPath = Path.Combine(
                         Directory.GetCurrentDirectory(),
-                        "ReactiveUIToolKit.unitypackage"
+                        "ReactiveUIToolkit.unitypackage"
                     );
                 }
 

@@ -1,4 +1,4 @@
-namespace ReactiveUITK.SourceGenerator.Emitter
+namespace Ruitk.SourceGenerator.Emitter
 {
     /// <summary>
     /// Describes how a markup tag maps to a V.* call in generated code.

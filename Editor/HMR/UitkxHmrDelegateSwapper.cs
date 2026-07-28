@@ -1,12 +1,12 @@
 using System;
 using System.Collections;
 using System.Reflection;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Fiber;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Core.Fiber;
 using UnityEngine;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     /// <summary>
     /// Hook-file HMR delegate swapper.
@@ -21,7 +21,7 @@ namespace ReactiveUITK.EditorSupport.HMR
     ///
     /// <para>
     /// Component swaps no longer live here. As of 0.6.0 component identity
-    /// is carried by <c>ReactiveUITK.Refresh.Family</c> handles published
+    /// is carried by <c>Ruitk.Refresh.Family</c> handles published
     /// from each component's <c>[ModuleInitializer]</c>; the HMR controller
     /// calls <c>RefreshRuntime.PerformRefresh()</c> after a successful
     /// compile to drive the reconciler. See
@@ -156,7 +156,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 ScheduleFullTreeUpdate(vhr.FiberRendererInternal.Root.Current);
             }
 
-            foreach (var uguiRenderer in ReactiveUITK.Ugui.UguiRootRenderer.AllInstances)
+            foreach (var uguiRenderer in Ruitk.Ugui.UguiRootRenderer.AllInstances)
             {
                 var root = uguiRenderer?.FiberRootInternal;
                 if (root?.Current == null)

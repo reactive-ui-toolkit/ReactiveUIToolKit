@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK
+namespace Ruitk
 {
     /// <summary>
     /// Marks a static field as one whose value the UITKX hot-module-reload

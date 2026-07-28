@@ -8,11 +8,11 @@ suggestion). SG 1527/1527, LSP 118/118.
 **Follow-up polish shipped in the same 0.8.0 release** (user-driven, after the core):
 1. **Formatter preamble ordering** — `@namespace` first, then all imports grouped (shared
    `EmitPreamble`). Plus a `--format` batch mode on the codemod CLI.
-2. **`ReactiveUITK.Router` auto-injected** into the baseline (all 7 emit sites +
+2. **`Ruitk.Router` auto-injected** into the baseline (all 7 emit sites +
    `AutoInjectedUsings`) — `RouterHooks` needs no import; an explicit one is 2317-redundant.
 3. **`namespacePrefix` config + asmdef `rootNamespace` default** — project-wide namespace root,
    so `@namespace` can disappear from whole projects. Chain: `@namespace` > `namespacePrefix` >
-   asmdef `rootNamespace` > `ReactiveUITK.Uitkx` (asmdef *name* deliberately excluded). SG/LSP/HMR
+   asmdef `rootNamespace` > `Ruitk.Uitkx` (asmdef *name* deliberately excluded). SG/LSP/HMR
    all route through `EffectiveNamespace.Resolve` (HMR by reflection, signature unchanged).
 4. **Consistent import colour** — `import "@Ns"` scoped identically to a file import.
 
@@ -36,7 +36,7 @@ JustStayOn `GameOverPage.uitkx`):
 import { GameOverPageSidebar } from "./components/GameOverPageSidebar/GameOverPageSidebar"
 import { GameOverStats } from "./components/states/GameOverStats"
 @namespace UI.App
-@using ReactiveUITK.Router
+@using Ruitk.Router
 @using UI.App.Pages.GameOverPage.Components        ← redundant (covered by import #1)
 @using UI.App.Pages.GameOverPage.Components.States ← redundant (covered by import #2)
 @using UnityEngine                                 ← redundant (auto-injected baseline)
@@ -61,7 +61,7 @@ End state:
 ```
 import { GameOverPageSidebar } from "./components/GameOverPageSidebar/GameOverPageSidebar"
 import { GameOverStats } from "./components/states/GameOverStats"
-import "@ReactiveUITK.Router"
+import "@Ruitk.Router"
 import "@UnityEngine.UIElements"
 @namespace UI.App
 ```
@@ -83,8 +83,8 @@ No `Hmr*ContractTests` churn expected (they compare emitter output, which is ide
 ### 2.2 The auto-injected baseline — and its trap
 
 Every generated file already gets (CSharpEmitter ~lines 194–236): `System`,
-`System.Collections.Generic`, `System.Linq`, `ReactiveUITK`, `ReactiveUITK.Core`,
-`ReactiveUITK.Core.Animation`, `ReactiveUITK.Props.Typed`, `UnityEngine`,
+`System.Collections.Generic`, `System.Linq`, `Ruitk`, `Ruitk.Core`,
+`Ruitk.Core.Animation`, `Ruitk.Props.Typed`, `UnityEngine`,
 `static StyleKeys`, `static CssHelpers`, `static AssetHelpers`, plus type aliases
 (`Color`, `Length`, `EasingFunction`, …).
 
@@ -263,7 +263,7 @@ idempotence, static/alias payload passthrough, ordering.
 
 ## 9. Explicitly out of scope (v1) / stretch
 
-- **Braced namespace imports** `import { RouterHooks } from "@ReactiveUITK.Router"` —
+- **Braced namespace imports** `import { RouterHooks } from "@Ruitk.Router"` —
   name-level, verifiable via `GetTypeByMetadataName`, emits a precise `using static`/alias
   instead of a broad using. This is the step that makes unification *semantic* rather than
   cosmetic; reserved grammar space, design after v1 lands.

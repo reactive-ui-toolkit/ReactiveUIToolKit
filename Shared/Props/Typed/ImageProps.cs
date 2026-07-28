@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactiveUITK.Props.Typed
+namespace Ruitk.Props.Typed
 {
     public sealed class ImageProps : BaseProps
     {

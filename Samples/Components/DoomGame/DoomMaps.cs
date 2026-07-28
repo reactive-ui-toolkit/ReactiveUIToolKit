@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using UnityEngine;
-using static ReactiveUITK.Samples.Components.DoomGame.DoomTypes;
-using static ReactiveUITK.Samples.Components.DoomGame.DoomTextures;
+using static Ruitk.Samples.Components.DoomGame.DoomTypes;
+using static Ruitk.Samples.Components.DoomGame.DoomTextures;
 
-namespace ReactiveUITK.Samples.Components.DoomGame {
+namespace Ruitk.Samples.Components.DoomGame {
   public static class DoomMaps {
     public struct LevelStart {
       public MapDef Map;

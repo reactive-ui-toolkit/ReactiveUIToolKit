@@ -2,7 +2,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// ES-modules campaign (Plans~/ES_MODULES_EXECUTION_PLAN.md M4): source-text contract pins for the
@@ -56,7 +56,7 @@ public class HmrExportsParityContractTests
     {
         var src = HmrHookEmitterSource();
         Assert.Contains("public static string EmitExports(object directives, string filePath,", src);
-        Assert.Contains("[global::ReactiveUITK.UitkxHmrSwap]", src);
+        Assert.Contains("[global::Ruitk.UitkxHmrSwap]", src);
         Assert.Contains("__{name}_body({paramsText})", src);
     }
 

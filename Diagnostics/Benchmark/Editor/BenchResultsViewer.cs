@@ -6,11 +6,11 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.Bench.EditorTools
+namespace Ruitk.Bench.EditorTools
 {
     public class BenchResultsViewer : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Diagnostics/Benchmark/Results Viewer")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Benchmark/Results Viewer")]
         public static void Open()
         {
             var w = GetWindow<BenchResultsViewer>();
@@ -775,7 +775,7 @@ namespace ReactiveUITK.Bench.EditorTools
 
             var guess = Path.Combine(
                 Application.dataPath,
-                "ReactiveUIToolKit",
+                "ReactiveUIToolkit",
                 "Diagnostics",
                 "Benchmark",
                 "Results",
@@ -788,7 +788,7 @@ namespace ReactiveUITK.Bench.EditorTools
 
             var guessRoot = Path.Combine(
                 Application.dataPath,
-                "ReactiveUIToolKit",
+                "ReactiveUIToolkit",
                 "Diagnostics",
                 "Benchmark",
                 "Results"

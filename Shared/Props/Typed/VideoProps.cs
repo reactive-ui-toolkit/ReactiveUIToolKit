@@ -1,11 +1,11 @@
 using System;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Media;
+using Ruitk.Core;
+using Ruitk.Core.Media;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Video;
 
-namespace ReactiveUITK.Props.Typed
+namespace Ruitk.Props.Typed
 {
     /// <summary>
     /// Typed props for the <c>&lt;Video&gt;</c> element. Renders as a

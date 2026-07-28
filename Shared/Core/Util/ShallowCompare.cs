@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Core.Util
+namespace Ruitk.Core.Util
 {
     public static class ShallowCompare
     {

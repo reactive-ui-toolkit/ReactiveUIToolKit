@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Hidden bookkeeping component the backend attaches to host GameObjects

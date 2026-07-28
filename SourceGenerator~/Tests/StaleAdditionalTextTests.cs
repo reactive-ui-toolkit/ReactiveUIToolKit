@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Regression coverage for the "cold-compile staleness" bug: under Unity, a
@@ -26,7 +26,7 @@ namespace ReactiveUITK.SourceGenerator.Tests;
 public sealed class StaleAdditionalTextTests
 {
     private const string StubSource =
-        "namespace ReactiveUITK.Core { public abstract class VirtualNode { } }";
+        "namespace Ruitk.Core { public abstract class VirtualNode { } }";
 
     private static string GeneratedFor(AdditionalText addl)
     {
@@ -51,7 +51,7 @@ public sealed class StaleAdditionalTextTests
     }
 
     private static string Component(string labelText) =>
-        "@namespace ReactiveUITK.Samples.FunctionalComponents\n"
+        "@namespace Ruitk.Samples.FunctionalComponents\n"
         + "\n"
         + "component ColdProbe {\n"
         + "  return (\n"

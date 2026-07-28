@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>
     /// Path-derived default namespace for a .uitkx file (import/export grammar, leg 3, plan §4).
@@ -11,15 +11,15 @@ namespace ReactiveUITK.Language
     /// Editor/HMR keeps a byte-for-byte mirror (it cannot reference language-lib) pinned by a
     /// parity contract test — if you change the algorithm here, change the mirror in lockstep.
     ///
-    /// Rule: <c>EffectiveNamespace = @namespace if present, else "ReactiveUITK.Uitkx" +
+    /// Rule: <c>EffectiveNamespace = @namespace if present, else "Ruitk.Uitkx" +
     /// "." + Join('.', Sanitize(seg) for seg in dir-segments(fileDir relative to owning-asmdef dir))</c>.
     /// The file NAME is excluded (files in one folder share a namespace); a file directly beside the
-    /// asmdef derives <c>ReactiveUITK.Uitkx</c> alone. No owning asmdef → caller emits UITKX2310.
+    /// asmdef derives <c>Ruitk.Uitkx</c> alone. No owning asmdef → caller emits UITKX2310.
     /// </summary>
     public static class NamespaceDerivation
     {
         /// <summary>The default root of a path-derived namespace when no prefix is configured.</summary>
-        public const string Root = "ReactiveUITK.Uitkx";
+        public const string Root = "Ruitk.Uitkx";
 
         /// <summary>
         /// Derive the default namespace for <paramref name="fileAbsolutePath"/> given the directory

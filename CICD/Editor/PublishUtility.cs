@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace ReactiveUITK.CICD
+namespace Ruitk.CICD
 {
     internal static class PublishUtility
     {
@@ -39,12 +39,12 @@ namespace ReactiveUITK.CICD
             public string vscePatToken;
         }
 
-        [MenuItem("ReactiveUITK/Publish/Build Dist", priority = 1000)]
+        [MenuItem("Reactive UI Toolkit/Publish/Build Dist", priority = 1000)]
         public static void BuildDist()
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
+                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
                 string distRoot = Path.Combine(packageRoot, "dist~");
 
                 if (!Directory.Exists(packageRoot))
@@ -160,12 +160,12 @@ namespace ReactiveUITK.CICD
             }
         }
 
-        [MenuItem("ReactiveUITK/Publish/Build Dist and Push", priority = 1001)]
+        [MenuItem("Reactive UI Toolkit/Publish/Build Dist and Push", priority = 1001)]
         public static void BuildDistAndPush()
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
+                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
 
                 string rootPkg = Path.Combine(packageRoot, "package.json");
                 string bumpedVersion = BumpPatchVersion(rootPkg);
@@ -330,12 +330,12 @@ namespace ReactiveUITK.CICD
         /// If neither is present the user is asked for a changelog entry and
         /// whether to proceed without marketplace upload.
         /// </summary>
-        [MenuItem("ReactiveUITK/Publish/Build VS Extension and Publish", priority = 1002)]
+        [MenuItem("Reactive UI Toolkit/Publish/Build VS Extension and Publish", priority = 1002)]
         public static void BuildExtensionAndPublish()
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
+                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
                 string extensionDir = Path.Combine(packageRoot, "ide-extensions~", "vscode");
 
                 if (!Directory.Exists(extensionDir))
@@ -496,13 +496,13 @@ namespace ReactiveUITK.CICD
             }
         }
 
-        [MenuItem("ReactiveUITK/Publish/Build Docs and Push", priority = 1100)]
+        [MenuItem("Reactive UI Toolkit/Publish/Build Docs and Push", priority = 1100)]
         public static void BuildDocsAndPush()
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
-                string docsRoot = Path.Combine(packageRoot, "ReactiveUIToolKitDocs~");
+                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
+                string docsRoot = Path.Combine(packageRoot, "ReactiveUIToolkitDocs~");
                 if (!Directory.Exists(docsRoot))
                 {
                     Debug.LogError("Publish: docs root not found: " + docsRoot);
@@ -515,7 +515,7 @@ namespace ReactiveUITK.CICD
                     Debug.LogError(
                         "Publish: docs dist folder not found: "
                             + docsDist
-                            + ". Run 'npm run build' in ReactiveUIToolKitDocs~ first."
+                            + ". Run 'npm run build' in ReactiveUIToolkitDocs~ first."
                     );
                     return;
                 }

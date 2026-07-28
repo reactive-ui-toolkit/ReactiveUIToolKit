@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 using Xunit;
-using static ReactiveUITK.Language.StrictImportDetector;
+using static Ruitk.Language.StrictImportDetector;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// ES-modules campaign (Plans~/ES_MODULES_EXECUTION_PLAN.md M1, U-03/U-04):
-    /// <see cref="ReactiveUITK.Language.StrictImportDetector.ValidateImports"/>'s new full-import-
+    /// <see cref="Ruitk.Language.StrictImportDetector.ValidateImports"/>'s new full-import-
     /// surface checks — alias collision (2325), default-import-without-default-export (2326),
     /// namespace/default/rename against a legacy target (2109, Unity-local), and hook-rename
     /// dropping the 'use' prefix (2110, Unity-local).

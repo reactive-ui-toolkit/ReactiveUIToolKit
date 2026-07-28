@@ -24,10 +24,10 @@ file and how to integrate typed props with reactive data sources.
 ```csharp
 // SimpleCounterFunc.cs
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Samples.FunctionalComponents
+namespace Ruitk.Samples.FunctionalComponents
 {
     public static class SimpleCounterFunc
     {
@@ -274,7 +274,7 @@ From other `.uitkx` markup, pass the parameters as attributes:
 From C#, construct the generated `PlayerHUDProps` and pass it to `V.Func`:
 
 ```csharp
-using ReactiveUITK.Props;
+using Ruitk.Props;
 
 // Create props once (PlayerHUDProps is source-generated from the parameters)
 var props = new PlayerHUDProps { Health = 100, MaxHealth = 100 };

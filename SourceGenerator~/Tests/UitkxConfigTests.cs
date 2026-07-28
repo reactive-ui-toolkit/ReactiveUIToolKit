@@ -1,9 +1,9 @@
 using System;
 using System.IO;
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// The <c>uitkx.config.json "root"</c> key (import/export grammar §9): a directory walk-up

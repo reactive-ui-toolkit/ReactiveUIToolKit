@@ -1,8 +1,8 @@
 using UnityEngine;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 using static Samples.MarioGame.MarioConstants;
 
-namespace ReactiveUITK.Samples.Components.MarioGame.components.GameScreen {
+namespace Ruitk.Samples.Components.MarioGame.components.GameScreen {
   public static class GameScreenStyles {
     public static readonly Style Container = new Style {
       (StyleKeys.Display, "flex"),

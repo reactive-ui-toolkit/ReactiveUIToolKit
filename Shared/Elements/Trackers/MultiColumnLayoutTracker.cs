@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     internal sealed class MultiColumnLayoutTracker<TView, TState>
         : IElementStateTracker<TView, TState>

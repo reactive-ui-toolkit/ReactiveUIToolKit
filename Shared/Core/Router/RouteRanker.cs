@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 
-namespace ReactiveUITK.Router
+namespace Ruitk.Router
 {
     /// <summary>
     /// Port of React Router v6's route-ranking algorithm

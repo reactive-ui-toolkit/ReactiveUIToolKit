@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK.Core.Animation
+namespace Ruitk.Core.Animation
 {
     public enum Ease
     {

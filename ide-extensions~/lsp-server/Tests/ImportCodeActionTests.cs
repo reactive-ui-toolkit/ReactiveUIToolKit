@@ -63,9 +63,9 @@ namespace UitkxLanguageServer.Tests
         public void ConvertUsing_AtUsingForm()
         {
             bool ok = ImportCodeActionHandler.TryBuildConvertUsingToImport(
-                "@using ReactiveUITK.Router", out string repl);
+                "@using Ruitk.Router", out string repl);
             Assert.True(ok);
-            Assert.Equal("import \"@ReactiveUITK.Router\"", repl);
+            Assert.Equal("import \"@Ruitk.Router\"", repl);
         }
 
         [Fact]

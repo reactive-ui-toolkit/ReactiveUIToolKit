@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.Language.Roslyn;
+using Ruitk.Language;
+using Ruitk.Language.Parser;
+using Ruitk.Language.Roslyn;
 using UitkxLanguageServer;
 using Xunit;
 
@@ -47,7 +47,7 @@ namespace UitkxLanguageServer.Tests
             var diags = new List<ParseDiagnostic>();
             var ds = DirectiveParser.Parse(src, path, diags);
             var nodes = UitkxParser.Parse(src, path, ds, diags);
-            var roots = ReactiveUITK.Language.Lowering.CanonicalLowering.LowerToRenderRoots(ds, nodes, path);
+            var roots = Ruitk.Language.Lowering.CanonicalLowering.LowerToRenderRoots(ds, nodes, path);
             return (new ParseResult(ds, roots, System.Collections.Immutable.ImmutableArray.CreateRange(diags)), src);
         }
 

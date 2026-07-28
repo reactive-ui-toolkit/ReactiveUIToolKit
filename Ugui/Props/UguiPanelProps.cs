@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Props for the Panel element — a plain RectTransform container with no

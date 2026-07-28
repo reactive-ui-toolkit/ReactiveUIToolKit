@@ -5,11 +5,11 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// The floor-Unity store gate, run locally: executes the REAL generator over the repo's
-    /// actual bundled Samples via the disk-scan path (assembly <c>ReactiveUITK.Samples</c>,
+    /// actual bundled Samples via the disk-scan path (assembly <c>Ruitk.Samples</c>,
     /// project root walked up from a syntax-tree path) — exactly what a fresh Unity import
     /// does in the Asset-Store CI's <c>build-unitypackage</c> job. Asserts the strict-import
     /// pipeline produces ZERO errors over the whole corpus.
@@ -22,7 +22,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
     public sealed class SamplesCorpusGateTests
     {
         private const string StubSource = """
-            namespace ReactiveUITK.Core
+            namespace Ruitk.Core
             {
                 public abstract class VirtualNode { }
             }
@@ -64,7 +64,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
                     StubSource, path: Path.Combine(tempRoot, "_CorpusGateStub.g.cs"));
 
                 var compilation = CSharpCompilation.Create(
-                    assemblyName: "ReactiveUITK.Samples", // matches the Samples .asmdef → IsOwnedByCompilation
+                    assemblyName: "Ruitk.Samples", // matches the Samples .asmdef → IsOwnedByCompilation
                     syntaxTrees: new[] { stubTree },
                     references: new[] { MetadataReference.CreateFromFile(typeof(object).Assembly.Location) },
                     options: new CSharpCompilationOptions(OutputKind.DynamicallyLinkedLibrary));

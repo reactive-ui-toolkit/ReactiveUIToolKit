@@ -2,16 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine;
 
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// Typed props wrapper for Suspense intrinsic nodes.
     /// Stores extracted data from the VirtualNode so the VNode can be returned to pool.
     /// </summary>
-    internal sealed class SuspenseProps : global::ReactiveUITK.Core.IProps
+    internal sealed class SuspenseProps : global::Ruitk.Core.IProps
     {
         public Func<bool> SuspenseReady { get; set; }
         public Task SuspenseReadyTask { get; set; }
@@ -34,7 +34,7 @@ namespace ReactiveUITK.Core.Fiber
         /// and can reschedule rendering when an async task completes.
         /// </summary>
         public static VirtualNode SuspenseRender(
-            global::ReactiveUITK.Core.IProps rawProps,
+            global::Ruitk.Core.IProps rawProps,
             IReadOnlyList<VirtualNode> children
         )
         {
@@ -65,7 +65,7 @@ namespace ReactiveUITK.Core.Fiber
                 ready = false;
                 try
                 {
-                    Debug.LogWarning($"ReactiveUITK Fiber: Suspense ready function threw: {ex}");
+                    Debug.LogWarning($"Ruitk Fiber: Suspense ready function threw: {ex}");
                 }
                 catch { }
             }
@@ -142,7 +142,7 @@ namespace ReactiveUITK.Core.Fiber
                 try
                 {
                     Debug.LogWarning(
-                        $"ReactiveUITK Fiber: Suspense task faulted: {suspenderTask.Exception}"
+                        $"Ruitk Fiber: Suspense task faulted: {suspenderTask.Exception}"
                     );
                 }
                 catch { }

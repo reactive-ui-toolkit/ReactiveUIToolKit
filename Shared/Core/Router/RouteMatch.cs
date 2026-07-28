@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ReactiveUITK.Router
+namespace Ruitk.Router
 {
     public sealed class RouteMatch
     {

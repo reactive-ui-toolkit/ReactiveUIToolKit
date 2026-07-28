@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Integration tests that run the full <see cref="UitkxGenerator"/> pipeline
@@ -257,7 +257,7 @@ public class EmitterTests
 
         // No asmdef/project-root in the test temp dir → both files fall back to the default
         // namespace; container = DeriveContainerClassName("Counter.hooks") = "CounterHooks".
-        const string expectedKey = "ReactiveUITK.FunctionStyle.CounterHooks::useCounter";
+        const string expectedKey = "Ruitk.FunctionStyle.CounterHooks::useCounter";
 
         var hookUnit = result.AllSources.Single(s => s.Text.Contains("RegisterHook("));
         Assert.Contains($"RegisterHook(\"{expectedKey}\"", hookUnit.Text);
@@ -279,7 +279,7 @@ public class EmitterTests
             + "hook useLocal() {\n  return 0;\n}";
         var result = GeneratorTestHelper.Run(src, fileName: "Panel.uitkx");
 
-        const string expectedKey = "ReactiveUITK.FunctionStyle.PanelHooks::useLocal";
+        const string expectedKey = "Ruitk.FunctionStyle.PanelHooks::useLocal";
         Assert.Contains(result.AllSources, s => s.Text.Contains($"RegisterHook(\"{expectedKey}\""));
         Assert.Contains(result.AllSources, s => s.Text.Contains("class Screen") && s.Text.Contains(expectedKey));
         Assert.Empty(result.SyntaxErrors());
@@ -326,7 +326,7 @@ public class EmitterTests
         var result = GeneratorTestHelper.Run(Wrap("<box/>"));
 
         Assert.True(
-            result.SourceContains("namespace ReactiveUITK.FunctionStyle"),
+            result.SourceContains("namespace Ruitk.FunctionStyle"),
             "Expected namespace declaration"
         );
     }
@@ -429,7 +429,7 @@ public class EmitterTests
         );
         // Inner per-iteration IIFE should NOT exist (OPT-10)
         Assert.False(
-            result.SourceContains("Func<global::ReactiveUITK.Core.VirtualNode>>)"),
+            result.SourceContains("Func<global::Ruitk.Core.VirtualNode>>)"),
             "Inner per-iteration IIFE should be eliminated (OPT-10).\nGenerated:\n"
                 + (result.GeneratedSource ?? "<null>")
         );
@@ -603,13 +603,13 @@ public class EmitterTests
         );
 
         // Must carry a concrete path to avoid Unity virtual generator hyperlinks
-        // like ReactiveUITK.SourceGenerator\...\Foo.uitkx(...).
+        // like Ruitk.SourceGenerator\...\Foo.uitkx(...).
         Assert.True(
             result.SourceContains("/TestComponent.uitkx\""),
             "Expected #line to include normalized source file path"
         );
         Assert.False(
-            result.SourceContains("ReactiveUITK.SourceGenerator\\"),
+            result.SourceContains("Ruitk.SourceGenerator\\"),
             "#line should not point to virtual generator paths"
         );
     }
@@ -619,7 +619,7 @@ public class EmitterTests
     [Fact]
     public void GeneratedClass_HasUitkxElementAttribute()
     {
-        // The emitter should emit [global::ReactiveUITK.UitkxElement("MyComp")]
+        // The emitter should emit [global::Ruitk.UitkxElement("MyComp")]
         // on the generated partial class so runtime tooling can discover it.
         var result = GeneratorTestHelper.Run(Wrap("<label/>"));
 
@@ -897,9 +897,9 @@ public class EmitterTests
         // qualified form must be used to avoid CS0246 at the call site.
         Assert.True(
             result.SourceContains(
-                "V.Func<global::ReactiveUITK.FunctionStyle.ChildComp.ChildCompProps>"
+                "V.Func<global::Ruitk.FunctionStyle.ChildComp.ChildCompProps>"
             ),
-            $"Expected typed V.Func<global::ReactiveUITK.FunctionStyle.ChildComp.ChildCompProps> call. Got:\n{result.GeneratedSource}"
+            $"Expected typed V.Func<global::Ruitk.FunctionStyle.ChildComp.ChildCompProps> call. Got:\n{result.GeneratedSource}"
         );
         // The 'active' attribute must be passed through as 'Active = flag'
         Assert.True(
@@ -916,7 +916,7 @@ public class EmitterTests
         // A C# static class that follows the legacy ValuesBarFunc pattern:
         // nested Props class rather than the {TypeName}Props sibling convention.
         const string extraCSharp = """
-            using ReactiveUITK.Core;
+            using Ruitk.Core;
             using System.Collections.Generic;
 
             namespace MyApp
@@ -1372,7 +1372,7 @@ public class EmitterTests
 
         Assert.True(result.SourceWasProduced, "No source produced");
         Assert.True(
-            result.SourceContains("using static ReactiveUITK.AssetHelpers;"),
+            result.SourceContains("using static Ruitk.AssetHelpers;"),
             "Expected auto-injected AssetHelpers using"
         );
     }
@@ -1392,7 +1392,7 @@ public class EmitterTests
 
         Assert.True(result.SourceWasProduced, "No source produced");
         Assert.True(
-            result.SourceContains("using static ReactiveUITK.Props.Typed.CssHelpers;"),
+            result.SourceContains("using static Ruitk.Props.Typed.CssHelpers;"),
             "Expected auto-injected CssHelpers using"
         );
     }
@@ -1515,10 +1515,10 @@ public class EmitterTests
     [Fact]
     public void FuncComponent_WithSiblingTopLevelPropsClass_EmitsTypedVFunc()
     {
-        // Mirrors the actual ReactiveUITK.Router.RouterFunc / RouterFuncProps
+        // Mirrors the actual Ruitk.Router.RouterFunc / RouterFuncProps
         // declaration shape: both classes at namespace scope, neither nested.
         const string extraCSharp = """
-            using ReactiveUITK.Core;
+            using Ruitk.Core;
             using System.Collections.Generic;
 
             namespace MyApp.Routing
@@ -1613,7 +1613,7 @@ public class EmitterTests
     [InlineData("return null ;", "continue;")]
     public void RewriteReturns_ReturnNull_BecomesContinue(string input, string expected)
     {
-        var result = ReactiveUITK.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
+        var result = Ruitk.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
             input,
             "__r"
         );
@@ -1623,7 +1623,7 @@ public class EmitterTests
     [Fact]
     public void RewriteReturns_ReturnExpr_BecomesAddContinue()
     {
-        var result = ReactiveUITK.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
+        var result = Ruitk.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
             "return V.Label();",
             "__r"
         );
@@ -1633,7 +1633,7 @@ public class EmitterTests
     [Fact]
     public void RewriteReturns_ReturnParenExpr_UnwrapsParens()
     {
-        var result = ReactiveUITK.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
+        var result = Ruitk.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
             "return (V.Label());",
             "__r"
         );
@@ -1644,7 +1644,7 @@ public class EmitterTests
     public void RewriteReturns_SetupCodeThenReturn_PreservesSetup()
     {
         var input = "var x = 1; return (V.Label());";
-        var result = ReactiveUITK.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
+        var result = Ruitk.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
             input,
             "__r"
         );
@@ -1655,7 +1655,7 @@ public class EmitterTests
     public void RewriteReturns_GuardReturnNull_ThenReturnExpr()
     {
         var input = "if (x) { return null; } return (V.Label());";
-        var result = ReactiveUITK.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
+        var result = Ruitk.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
             input,
             "__r"
         );
@@ -1666,7 +1666,7 @@ public class EmitterTests
     public void RewriteReturns_LambdaReturnNotRewritten()
     {
         var input = "Func<int> f = () => { return 42; }; return (V.Label());";
-        var result = ReactiveUITK.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
+        var result = Ruitk.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
             input,
             "__r"
         );
@@ -1678,7 +1678,7 @@ public class EmitterTests
     public void RewriteReturns_StringWithReturnNotRewritten()
     {
         var input = "var s = \"return null;\"; return (V.Label());";
-        var result = ReactiveUITK.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
+        var result = Ruitk.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
             input,
             "__r"
         );
@@ -1690,7 +1690,7 @@ public class EmitterTests
     public void RewriteReturns_BreakAndContinuePassThrough()
     {
         var input = "if (i < 3) { continue; } if (i > 6) { break; } return (V.Label());";
-        var result = ReactiveUITK.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
+        var result = Ruitk.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
             input,
             "__r"
         );
@@ -1702,7 +1702,7 @@ public class EmitterTests
     [Fact]
     public void RewriteReturns_CustomListVar()
     {
-        var result = ReactiveUITK.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
+        var result = Ruitk.SourceGenerator.Emitter.EmitContext.RewriteReturnsForInline(
             "return V.Box();",
             "__items"
         );
@@ -1734,7 +1734,7 @@ public class EmitterTests
         );
         Assert.True(
             result.SourceContains(
-                "[global::ReactiveUITK.UitkxHmrSwap] private static global::ReactiveUITK.Props.Typed.Style __sty_0"
+                "[global::Ruitk.UitkxHmrSwap] private static global::Ruitk.Props.Typed.Style __sty_0"
             ),
             $"Expected hoisted static field __sty_0 with [UitkxHmrSwap]. Got:\n{result.GeneratedSource}"
         );
@@ -1763,7 +1763,7 @@ public class EmitterTests
         Assert.True(result.SourceWasProduced);
         Assert.True(
             result.SourceContains(
-                "[global::ReactiveUITK.UitkxHmrSwap] private static global::ReactiveUITK.Props.Typed.Style __sty_0"
+                "[global::Ruitk.UitkxHmrSwap] private static global::Ruitk.Props.Typed.Style __sty_0"
             ),
             $"Expected hoisted static field with [UitkxHmrSwap]. Got:\n{result.GeneratedSource}"
         );
@@ -1812,7 +1812,7 @@ public class EmitterTests
         Assert.True(result.SourceWasProduced);
         Assert.True(
             result.SourceContains(
-                "[global::ReactiveUITK.UitkxHmrSwap] private static global::ReactiveUITK.Props.Typed.Style __sty_0"
+                "[global::Ruitk.UitkxHmrSwap] private static global::Ruitk.Props.Typed.Style __sty_0"
             ),
             $"new Color(literal-args) must be hoist-safe with [UitkxHmrSwap]. Got:\n{result.GeneratedSource}"
         );
@@ -2060,7 +2060,7 @@ public class EmitterTests
     // NOTE: Per-attribute pass-through coverage for the new Index/End/CaseSensitive
     // properties cannot be validated in this isolated test compilation because the
     // generator skips its strongly-typed props block when the *FuncProps type is
-    // not resolvable (no Unity reference to ReactiveUITK.Shared.dll here).  The
+    // not resolvable (no Unity reference to Ruitk.Shared.dll here).  The
     // Index/End/CaseSensitive attributes follow the exact same emission path as
     // the existing Router/Route/Link properties, which are exercised end-to-end
     // by the FormatterSnapshotTests against real .uitkx samples
@@ -2234,7 +2234,7 @@ public class EmitterTests
     /// second argument to `GetFamily(...)` for every child reference,
     /// unconditionally. Hand-written children that ship without an
     /// `[ModuleInitializer]` Register call (e.g. router types in the
-    /// ReactiveUITK package) rely on this fallback so that
+    /// Ruitk package) rely on this fallback so that
     /// `Family.Current` resolves to a real delegate at first render
     /// instead of the throwing placeholder. Optimising the SG to skip
     /// the fallback for any reason would silently re-introduce the
@@ -2244,7 +2244,7 @@ public class EmitterTests
     public void ChildFamily_GetFamilyCall_AlwaysIncludesFallbackFactory()
     {
         // <Router/> resolves via router-tag aliases to RouterFunc, which
-        // ships hand-written in ReactiveUITK.Router and has no companion
+        // ships hand-written in Ruitk.Router and has no companion
         // class -- the exact production scenario.
         var result = GeneratorTestHelper.Run(Wrap("<Router/>"));
         Assert.True(result.SourceWasProduced);
@@ -2263,7 +2263,7 @@ public class EmitterTests
             && result.SourceContains(".Render);"),
             "Expected GetFamily(\"RouterFunc\", () => global::...RouterFunc.Render) " +
             "fallback factory. The fallback factory is what lets non-SG children " +
-            "(e.g. ReactiveUITK.Router types) resolve at first render. " +
+            "(e.g. Ruitk.Router types) resolve at first render. " +
             $"Got:\n{result.GeneratedSource}"
         );
     }
@@ -2358,8 +2358,8 @@ public class EmitterTests
 
         Assert.True(result.SourceWasProduced, "No source produced");
         Assert.Contains("isOn) ?", result.GeneratedSource);
-        Assert.Contains(": (global::ReactiveUITK.Core.VirtualNode?)null)", result.GeneratedSource);
-        Assert.DoesNotContain("isOn && global::ReactiveUITK.Core.V.", result.GeneratedSource);
+        Assert.Contains(": (global::Ruitk.Core.VirtualNode?)null)", result.GeneratedSource);
+        Assert.DoesNotContain("isOn && global::Ruitk.Core.V.", result.GeneratedSource);
     }
 
     [Fact]
@@ -2378,7 +2378,7 @@ public class EmitterTests
         var result = GeneratorTestHelper.Run(src, "Assets/UI/Foo.uitkx");
 
         Assert.True(result.SourceWasProduced, "No source produced");
-        Assert.Contains(": (global::ReactiveUITK.Core.VirtualNode?)null)", result.GeneratedSource);
+        Assert.Contains(": (global::Ruitk.Core.VirtualNode?)null)", result.GeneratedSource);
     }
 
     // ── U-06/U-23: `=` must be an LHS boundary for the `&&` desugar walker ──────

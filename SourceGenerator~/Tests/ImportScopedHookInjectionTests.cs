@@ -1,9 +1,9 @@
 using System.Collections.Immutable;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.SourceGenerator;
+using Ruitk.Language.Parser;
+using Ruitk.SourceGenerator;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// The hook-container injection seam (plan §6.2, <see cref="UitkxPipeline.ResolveInjectedUsings"/>).
@@ -23,7 +23,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         private static DirectiveSet ScreenImportingCounter()
         {
             var ds = new DirectiveSet(
-                Namespace: "ReactiveUITK.FunctionStyle",
+                Namespace: "Ruitk.FunctionStyle",
                 ComponentName: "Screen",
                 PropsTypeName: null,
                 DefaultKey: null,
@@ -115,7 +115,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         public void FlagOn_NoImports_InjectsNothing()
         {
             var ds = new DirectiveSet(
-                Namespace: "ReactiveUITK.FunctionStyle",
+                Namespace: "Ruitk.FunctionStyle",
                 ComponentName: "Screen",
                 PropsTypeName: null,
                 DefaultKey: null,

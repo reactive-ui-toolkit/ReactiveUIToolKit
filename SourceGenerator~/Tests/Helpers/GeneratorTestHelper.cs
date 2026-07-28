@@ -7,7 +7,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
 
-namespace ReactiveUITK.SourceGenerator.Tests.Helpers;
+namespace Ruitk.SourceGenerator.Tests.Helpers;
 
 /// <summary>
 /// Creates a minimal Roslyn compilation, runs the <see cref="UitkxGenerator"/>
@@ -18,7 +18,7 @@ internal static class GeneratorTestHelper
 {
     // Both Guards in UitkxPipeline must pass:
     //
-    //  Guard 1: compilation must resolve ReactiveUITK.Core.VirtualNode
+    //  Guard 1: compilation must resolve Ruitk.Core.VirtualNode
     //  Guard 2: compilation.AssemblyName must match the nearest ancestor .asmdef
     //           "name" field, OR (when no .asmdef exists) must start with
     //           "Assembly-CSharp" (the Unity default assembly).
@@ -29,7 +29,7 @@ internal static class GeneratorTestHelper
     // that live in a temp directory with no ancestor .asmdef.
 
     private const string StubSource = """
-        namespace ReactiveUITK.Core
+        namespace Ruitk.Core
         {
             public abstract class VirtualNode { }
         }

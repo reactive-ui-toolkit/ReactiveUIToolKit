@@ -1,8 +1,8 @@
 using System.Linq;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Build-side value-import cycle (UITKX2306) edge-construction regressions

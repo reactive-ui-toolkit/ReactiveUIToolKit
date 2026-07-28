@@ -4,15 +4,15 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Fiber;
+using Ruitk.Core;
+using Ruitk.Core.Fiber;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.Build.Reporting;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     /// <summary>
     /// Orchestrates the HMR lifecycle: file watching, compilation, delegate
@@ -253,7 +253,7 @@ namespace ReactiveUITK.EditorSupport.HMR
             // here (instead of [InitializeOnLoadMethod]) keeps the editor
             // load path lazy — the provider is only set when HMR actually
             // starts.
-            global::ReactiveUITK.Refresh.RefreshRuntime.RegisterRootRendererProvider(
+            global::Ruitk.Refresh.RefreshRuntime.RegisterRootRendererProvider(
                 EnumerateRootFibers);
 
             // Rebuild BOTH reverse-dependency maps on EVERY Start (field find: the old
@@ -495,7 +495,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 if (vhr?.FiberRendererInternal?.Root?.Current != null)
                     yield return vhr.FiberRendererInternal.Root.Current;
             }
-            foreach (var uguiRenderer in ReactiveUITK.Ugui.UguiRootRenderer.AllInstances)
+            foreach (var uguiRenderer in Ruitk.Ugui.UguiRootRenderer.AllInstances)
             {
                 var root = uguiRenderer?.FiberRootInternal;
                 if (root?.Current != null)
@@ -788,7 +788,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 // picks up body-only edits; PerformRefresh is what enforces
                 // the state-reset for signature edits. Both run; the second
                 // call is cheap when nothing is dirty.
-                int refreshed = global::ReactiveUITK.Refresh.RefreshRuntime.PerformRefresh();
+                int refreshed = global::Ruitk.Refresh.RefreshRuntime.PerformRefresh();
                 if (refreshed > swapped)
                     swapped = refreshed;
 
@@ -827,7 +827,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 // Family was just updated, and resets state for fibers
                 // whose hook signature changed. Single tree walk -- not
                 // per-component-type.
-                swapped = global::ReactiveUITK.Refresh.RefreshRuntime.PerformRefresh();
+                swapped = global::Ruitk.Refresh.RefreshRuntime.PerformRefresh();
 
                 // A successful compile that refreshes NOTHING must explain itself — a silent
                 // no-op is undiagnosable. Name the exact leg that returned zero: the family key
@@ -836,8 +836,8 @@ namespace ReactiveUITK.EditorSupport.HMR
                 // didn't run / didn't Register), no live roots, or no mounted fiber of this family.
                 if (swapped == 0)
                 {
-                    var stats = global::ReactiveUITK.Refresh.RefreshRuntime.LastRefreshStats;
-                    global::ReactiveUITK.Refresh.RefreshRuntime.TryGetFamilyInfo(
+                    var stats = global::Ruitk.Refresh.RefreshRuntime.LastRefreshStats;
+                    global::Ruitk.Refresh.RefreshRuntime.TryGetFamilyInfo(
                         result.FamilyKey, out bool famExists, out bool famEverUpdated);
                     string cause;
                     if (!famExists)
@@ -1208,7 +1208,7 @@ namespace ReactiveUITK.EditorSupport.HMR
         // SourceGenerator's CSharpEmitter both resolve it uitkx-dir-relative). The
         // canonical rule now lives once in language-lib's AssetPathUtil; Editor/HMR
         // cannot reference that assembly directly (its asmdef only references
-        // ReactiveUITK.Shared/ReactiveUITK.Runtime — language-lib is consumed via
+        // Ruitk.Shared/Ruitk.Runtime — language-lib is consumed via
         // reflection against the committed analyzer DLL elsewhere in this feature).
         // HmrAssetPathUtil is a byte-for-byte mirror of AssetPathUtil's algorithm —
         // if you change one, change the other (see FINAL_AUDIT_UITKX_FINDINGS.md H-03).

@@ -1,6 +1,6 @@
 # UITKX IDE Extensions
 
-Language tooling for **`.uitkx`** — the ReactiveUIToolKit component template format.  
+Language tooling for **`.uitkx`** — the ReactiveUIToolkit component template format.  
 Three IDE wrappers share a single LSP server and a single TextMate grammar.
 
 💬 Join the community on Discord: https://discord.gg/Knedqu4Wyv
@@ -103,7 +103,7 @@ GitHub Actions publish workflows simultaneously:
 
 ## Updating the Schema
 
-If you add or change elements or props in ReactiveUIToolKit, regenerate
+If you add or change elements or props in ReactiveUIToolkit, regenerate
 `grammar/uitkx-schema.json` by re-running the PowerShell extraction script
 (if one is added) or by editing the JSON directly.
 

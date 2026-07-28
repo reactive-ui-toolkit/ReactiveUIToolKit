@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Shared;
-using ReactiveUITK.Samples.Shared.AnimationsDemoPage;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Shared;
+using Ruitk.Samples.Shared.AnimationsDemoPage;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxAnimationsDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Animations")]
+        [MenuItem("Reactive UI Toolkit/Demos/Animations")]
         public static void ShowWindow()
         {
             EditorUitkxAnimationsDemoWindow window = GetWindow<EditorUitkxAnimationsDemoWindow>(

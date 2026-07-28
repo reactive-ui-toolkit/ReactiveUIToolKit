@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public sealed class ElementRegistry
     {

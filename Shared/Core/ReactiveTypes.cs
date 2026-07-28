@@ -1,7 +1,7 @@
 // ReactiveTypes.cs
 // ─────────────────────────────────────────────────────────────────────────────
 // Single source-of-truth for all public delegate, event-data and utility types
-// in ReactiveUITK.Core.
+// in Ruitk.Core.
 //
 // Design rationale
 // ────────────────
@@ -59,7 +59,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     // =========================================================================
     // Ref<T>
@@ -90,7 +90,7 @@ namespace ReactiveUITK.Core
     // =========================================================================
 
     /// <summary>
-    /// Base class for all ReactiveUITK event data objects passed to event handlers.
+    /// Base class for all Ruitk event data objects passed to event handlers.
     /// Wraps the underlying <see cref="UnityEngine.UIElements.EventBase"/> with a
     /// predictable, UIToolkit-agnostic surface.
     /// Origin: <c>SyntheticEvent</c>.

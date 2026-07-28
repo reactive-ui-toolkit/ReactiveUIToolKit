@@ -53,7 +53,7 @@ default-marked symbol.
 
 ### 1.2 Four parity emit layers (must change in lockstep — G-12)
 1. **SG**: `SourceGenerator~/Emitter/CSharpEmitter.cs` (4024 ln), `HookEmitter.cs` (426), `ModuleEmitter.cs` (205), `PropsResolver.cs` (963), pipeline `SourceGenerator~/UitkxPipeline.cs` (1123).
-2. **HMR**: `Editor/HMR/HmrCSharpEmitter.cs` (3714), `HmrHookEmitter.cs` (480), `UitkxHmrCompiler.cs` (3613). All language-lib access is **reflection** into the committed `Analyzers/ReactiveUITK.Language.dll` (`HmrHookEmitter.cs:16-17`, `HmrCSharpEmitter.cs:13`, `UitkxHmrCompiler.cs:1556-1564`) — any renamed/re-signatured public language-lib member breaks HMR silently at runtime, not at compile time.
+2. **HMR**: `Editor/HMR/HmrCSharpEmitter.cs` (3714), `HmrHookEmitter.cs` (480), `UitkxHmrCompiler.cs` (3613). All language-lib access is **reflection** into the committed `Analyzers/Ruitk.Language.dll` (`HmrHookEmitter.cs:16-17`, `HmrCSharpEmitter.cs:13`, `UitkxHmrCompiler.cs:1556-1564`) — any renamed/re-signatured public language-lib member breaks HMR silently at runtime, not at compile time.
 3. **IDE virtual docs**: `ide-extensions~/language-lib/Roslyn/VirtualDocumentGenerator.cs` (3067).
 4. **Shared single-sources-of-truth**: `ide-extensions~/language-lib/{ImportScopeFacts.cs (140), EffectiveNamespace.cs (147), NamespaceDerivation.cs (136), ImportResolver.cs (123), StrictImportDetector.cs, UitkxImportGraph.cs}`.
 
@@ -78,7 +78,7 @@ Parity is pinned by `SourceGenerator~/Tests/{HmrEmitterParityContractTests (33 t
 
 ### 1.4 Parser anchors (language-lib)
 `ide-extensions~/language-lib/Parser/DirectiveParser.cs` (3207 ln):
-- `FunctionStyleDefaultNamespace = "ReactiveUITK.FunctionStyle"` `:32`; top-level keyword set `:34-47`.
+- `FunctionStyleDefaultNamespace = "Ruitk.FunctionStyle"` `:32`; top-level keyword set `:34-47`.
 - `Parse` `:55`; `TryParseFunctionStyle` `:138`; **preamble loop** `:164-212` (readers: `TryReadFunctionStyleUsing :1783`, `TryReadFunctionStyleUss :1848`, `TryReadFunctionStyleNamespaceDirective :1714`, `TryReadFunctionStyleNamespaceImport :941`, `TryReadFunctionStyleImport :851`); duplicate-import 2303 `ReportDuplicateImports :1001`.
 - Keyword dispatch (`export` peek + component/hook/module) `:218-249`; component parse `:251-518`; **mixed-decl continuation loop** `:520-620` (`ParseSingleComponent :636`); `TryParseHookModuleFile :1041`; `ParseSingleHook :1145`; `ParseSingleModule :1280`; `IsPascalCase :2361`.
 - Model: `ide-extensions~/language-lib/Parser/ParseResult.cs` — `HookDeclaration :32`, `ModuleDeclaration :66`, `ImportDeclaration :94-109` (fields `Names, Specifier, Line, Column, NameColumns, SpecifierColumn` — **no alias/star/default fields yet**), `UsingDirective :119`, `ComponentDeclaration :140`, `DirectiveSet :191`.
@@ -96,7 +96,7 @@ Parity is pinned by `SourceGenerator~/Tests/{HmrEmitterParityContractTests (33 t
 
 ### 1.6 Baseline (re-measured 2026-07-17 on this working tree — GREEN)
 ```
-dotnet test SourceGenerator~/Tests/ReactiveUITK.SourceGenerator.Tests.csproj -v q --nologo
+dotnet test SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj -v q --nologo
   → Passed: 1554/1554
 dotnet test ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj -v q --nologo
   → Passed: 123/123
@@ -353,7 +353,7 @@ See `Plans~/ES_MODULES_GENERAL_PLAN.md` §3. Key Unity spellings: `export Style 
 
 ### 4.2 Generated C# for that file (SG + HMR + VDG must agree on shape)
 ```csharp
-namespace ReactiveUITK.Samples.<Folders>.<FileStem>          // file-keyed (U-01)
+namespace Ruitk.Samples.<Folders>.<FileStem>          // file-keyed (U-01)
 {
     public static partial class __Exports                     // U-02
     {
@@ -385,22 +385,22 @@ ASK); no push.
 
 The canonical verify block (referenced below as **VERIFY-CORE**):
 ```bash
-cd c:/Yanivs/GameDev/UnityComponents/Assets/ReactiveUIToolKit
-dotnet test SourceGenerator~/Tests/ReactiveUITK.SourceGenerator.Tests.csproj -v q --nologo | tail -2
+cd c:/Yanivs/GameDev/UnityComponents/Assets/ReactiveUIToolkit
+dotnet test SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj -v q --nologo | tail -2
 dotnet test ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj -v q --nologo | tail -2
 node scripts/corpus-hash.mjs --check
 ```
 Unity compile gates (run from `c:/Yanivs/GameDev/UnityComponents`; these six names verified to
-exist on this machine — there is NO `ReactiveUITK.csproj`) — referenced as **VERIFY-UNITY**:
+exist on this machine — there is NO `Ruitk.csproj`) — referenced as **VERIFY-UNITY**:
 ```bash
-dotnet build ReactiveUITK.Shared.csproj -v q --nologo          # engine core (Shared/) — 0 errors
-dotnet build ReactiveUITK.Runtime.csproj -v q --nologo         # MonoBehaviour adapter — 0 errors
-dotnet build ReactiveUITK.Editor.csproj -v q --nologo          # Editor (incl. HMR) — 0 errors
-dotnet build ReactiveUITK.Examples.csproj -v q --nologo        # Samples asmdef 1 — 0 errors
-dotnet build ReactiveUITK.Samples.csproj -v q --nologo         # Samples asmdef 2 — 0 errors
-dotnet build ReactiveUITK.Diagnostics.csproj -v q --nologo     # 0 errors
+dotnet build Ruitk.Shared.csproj -v q --nologo          # engine core (Shared/) — 0 errors
+dotnet build Ruitk.Runtime.csproj -v q --nologo         # MonoBehaviour adapter — 0 errors
+dotnet build Ruitk.Editor.csproj -v q --nologo          # Editor (incl. HMR) — 0 errors
+dotnet build Ruitk.Examples.csproj -v q --nologo        # Samples asmdef 1 — 0 errors
+dotnet build Ruitk.Samples.csproj -v q --nologo         # Samples asmdef 2 — 0 errors
+dotnet build Ruitk.Diagnostics.csproj -v q --nologo     # 0 errors
 ```
-(BOTH `ReactiveUITK.Examples.csproj` and `ReactiveUITK.Samples.csproj` compile `Samples/` code —
+(BOTH `Ruitk.Examples.csproj` and `Ruitk.Samples.csproj` compile `Samples/` code —
 two asmdefs. If a csproj name differs on the machine, list
 `c:/Yanivs/GameDev/UnityComponents/*.csproj` and use the obvious match; if none matches, STOP AND ASK.)
 
@@ -608,7 +608,7 @@ git checkout -- "Samples/Components/UitkxTestFileDoNotTouch/"
    sample files become new-mode; `SamplesCorpusGateTests` (zero-error gate over the whole corpus)
    green; `FormatterSnapshotTests` idempotency over all files green.
 4. Update the ~50 C# consumer `using` lines: file-keyed namespaces move every sample namespace
-   again (`ReactiveUITK.Samples.<Folders>` → `ReactiveUITK.Samples.<Folders>.<FileStem>`). Use the
+   again (`Ruitk.Samples.<Folders>` → `Ruitk.Samples.<Folders>.<FileStem>`). Use the
    same technique as `Plans~/SAMPLES_NAMESPACE_MODERNIZATION_PLAN.md` Appendix B (that file lists
    every consumer; recompute the ADD lines by appending the declaring file's stem). Iterate on
    VERIFY-UNITY compile errors — CS0246 in a `.cs` = missed using.
@@ -698,7 +698,7 @@ deprecation timeline (0.9.0 warns via 2320/2107, removal in a later minor); esca
 
 | Artifact | When it changes | How to regenerate |
 |---|---|---|
-| `Analyzers/ReactiveUITK.SourceGenerator.dll` + `ReactiveUITK.Language.dll` | any SG/language-lib source change (M1-M7) | `scripts/build-generator.ps1` (Release) — commit both |
+| `Analyzers/Ruitk.SourceGenerator.dll` + `Ruitk.Language.dll` | any SG/language-lib source change (M1-M7) | `scripts/build-generator.ps1` (Release) — commit both |
 | `Plans~/family-corpus.hash` + `FrozenFamilyHash` constant (`ImportCorpusManifestTests.cs:23`) | corpus case changes (M0/M7) | `node scripts/corpus-hash.mjs --write` + edit constant — ALWAYS together, family-synced |
 | `ide-extensions~/lsp-server/test-fixtures/uitkx-scanner-cases.json` | family corpus adoption | byte-identical mirror from the family source |
 | `SourceGenerator~/Tests/Golden/HookRegistry/*.golden.*` | HookRegistry metadata changes | test-driven re-pin (HookRegistryTests) |
@@ -724,7 +724,7 @@ deprecation timeline (0.9.0 warns via 2320/2107, removal in a later minor); esca
 - [ ] `ide-extensions~/changelog.json` — new top entry `{date, versions:{vscode:"1.5.0",
       vs2022:"1.5.0", rider:"1.2.0"}, shared:[…]}`; then `node scripts/changelog.mjs extract --ide vscode --out ide-extensions~/vscode/CHANGELOG.md`,
       `extract` README regen + `extract-overview`, and `node scripts/changelog.mjs verify` → exit 0.
-- [ ] Docs site (`ReactiveUIToolKitDocs~/src/pages/`) — NOTE: the code samples live in sibling
+- [ ] Docs site (`ReactiveUIToolkitDocs~/src/pages/`) — NOTE: the code samples live in sibling
       `*.example.ts` files next to each `*Page.tsx`, and wrapper-keyword syntax appears in **24
       files** (verified by grep), not just the two primary pages. Rewrite
       `UITKX/Imports/UitkxImportsPage.*` + `UITKX/CompanionFiles/CompanionFilesPage.*` (primary);
@@ -733,8 +733,8 @@ deprecation timeline (0.9.0 warns via 2320/2107, removal in a later minor); esca
       divergence notes), Differences, Events, GettingStarted, Guides, Hooks,
       Introduction, Portal, Reference, Router, Signals, Styling, Suspense}` plus
       `Components/Audio`, `Components/Video`, `Tooling/HMR`. Re-run the sweep before closing:
-      `grep -rln "component [A-Z]\|hook use\|module [A-Z]\|export component\|export hook\|export module" ReactiveUIToolKitDocs~/src/pages/`
-      → only intentional "legacy syntax" callouts remain. `cd ReactiveUIToolKitDocs~ && npm run build` → 0 errors.
+      `grep -rln "component [A-Z]\|hook use\|module [A-Z]\|export component\|export hook\|export module" ReactiveUIToolkitDocs~/src/pages/`
+      → only intentional "legacy syntax" callouts remain. `cd ReactiveUIToolkitDocs~ && npm run build` → 0 errors.
 - [ ] `Plans~/MIGRATION_GUIDE.md` §7.2 section.
 - [ ] `.claude/skills/rebuild-ide-extensions/SKILL.md` — reflect grammar/build additions if any
       step changed; `.claude/skills/changelog/SKILL.md` untouched unless conventions moved.
@@ -820,7 +820,7 @@ deprecation timeline (0.9.0 warns via 2320/2107, removal in a later minor); esca
 - **R9 — 2311/2312 lifecycle**: they stay ALIVE this minor (legacy path). Retiring them now would
   break the deprecation window.
 - **R10 — Unity csproj names** for VERIFY-UNITY are machine-generated; the six names in §5 were
-  verified to exist on 2026-07-17 (`ReactiveUITK.{Shared,Runtime,Editor,Examples,Samples,Diagnostics}.csproj`);
+  verified to exist on 2026-07-17 (`Ruitk.{Shared,Runtime,Editor,Examples,Samples,Diagnostics}.csproj`);
   still re-verify with `ls *.csproj` before first use — Unity regenerates them.
 - **R11 — G-06 privacy is soft WITHIN one assembly.** U-02 emits non-exported members as
   `internal` on `__Exports`, and U-03's named-import payload is `using static {targetNs}.__Exports`

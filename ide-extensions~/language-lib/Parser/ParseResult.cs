@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-namespace ReactiveUITK.Language.Parser
+namespace Ruitk.Language.Parser
 {
     // ── Typed-props function parameter ───────────────────────────────────────
 
@@ -524,7 +524,7 @@ namespace ReactiveUITK.Language.Parser
     /// </summary>
     public sealed record ParseResult(
         DirectiveSet Directives,
-        ImmutableArray<ReactiveUITK.Language.Nodes.AstNode> RootNodes,
+        ImmutableArray<Ruitk.Language.Nodes.AstNode> RootNodes,
         ImmutableArray<ParseDiagnostic> Diagnostics
     );
 }

@@ -42,16 +42,25 @@ jobs:
       - name: Build source generator DLLs
         if: steps.check.outputs.skip == 'false'
         run: |
-          dotnet restore SourceGenerator~/ReactiveUITK.SourceGenerator.csproj
-          dotnet build SourceGenerator~/ReactiveUITK.SourceGenerator.csproj -c Release --no-restore
+          dotnet restore SourceGenerator~/Ruitk.SourceGenerator.csproj
+          dotnet build SourceGenerator~/Ruitk.SourceGenerator.csproj -c Release --no-restore
 
       - name: Read paths to omit from config.json
         if: steps.check.outputs.skip == 'false'
         run: |
+          # config.json describes pathsToOmitFromStore as "anything a paying customer's
+          # Assets folder must not contain" — that is just as true of the dist/UPM channel,
+          # which previously read only pathsToOmitFromDist and therefore published CLAUDE.md,
+          # AUTOMATION.md, RELEASE_OPS.md, VERSIONING.md, publisher-secrets.example.json,
+          # Plans~/, automation~/, ide-extensions~/ and the .code-workspace at the dist root.
+          # The store job already concatenates both lists; do the same here.
           node -e "
             const config = require('./config.json');
-            const paths = config.pathsToOmitFromDist || [];
-            console.log(JSON.stringify(paths));
+            const paths = [
+              ...(config.pathsToOmitFromDist || []),
+              ...(config.pathsToOmitFromStore || []),
+            ];
+            console.log(JSON.stringify([...new Set(paths)]));
           " > /tmp/omit_paths.json
 
       - name: Build dist
@@ -62,12 +71,25 @@ jobs:
 
           mkdir -p "$DIST_DIR"
 
+          # The "Build source generator DLLs" step above just created SourceGenerator~/bin
+          # and obj. They were not excluded here, and `cp -r dist_build/*` below does not
+          # match dotfiles, so .gitignore never reached the dist worktree and `git add -A`
+          # committed them: 23 tracked files on origin/dist including .pdb files and an
+          # obj/…nuget.dgspec.json embedding the CI runner's absolute paths. That also
+          # defeated the Analyzers/Ruitk.*.pdb omit entries — the pdbs were stripped from
+          # Analyzers/ and shipped anyway from SourceGenerator~/bin/Release/.
           rsync -a \
             --exclude='.git' \
             --exclude='.vs' \
             --exclude='.github' \
             --exclude='dist_build' \
             --exclude='dist~' \
+            --exclude='SourceGenerator~/bin' \
+            --exclude='SourceGenerator~/obj' \
+            --exclude='SourceGenerator~/Tests/bin' \
+            --exclude='SourceGenerator~/Tests/obj' \
+            --exclude='SourceGenerator~/Tools/*/bin' \
+            --exclude='SourceGenerator~/Tools/*/obj' \
             ./ "$DIST_DIR/"
 
           node -e "
@@ -124,6 +146,11 @@ jobs:
           }
 
           find _dist_worktree -mindepth 1 -not -path '*/.git/*' -not -name '.git' -delete
+          # DELIBERATE: the glob does not match dotfiles, so repo dotfiles (.gitignore,
+          # .claude/, .config/, .csharpierignore) are NOT published to dist. The corollary
+          # is that .gitignore never reaches this worktree, so `git add -A` below filters
+          # NOTHING — every exclusion must already have happened in the rsync/omit steps
+          # above. Do not add build output to dist_build expecting .gitignore to save you.
           cp -r dist_build/* _dist_worktree/
 
           cd _dist_worktree
@@ -162,11 +189,11 @@ jobs:
           node-version: "20"
 
       - name: Install dependencies
-        working-directory: ReactiveUIToolKitDocs~
+        working-directory: ReactiveUIToolkitDocs~
         run: npm ci
 
       - name: Build
-        working-directory: ReactiveUIToolKitDocs~
+        working-directory: ReactiveUIToolkitDocs~
         run: npm run build
 
       - name: Deploy to documentations branch
@@ -180,7 +207,7 @@ jobs:
           }
 
           find _docs_branch -mindepth 1 -not -path '*/.git/*' -not -name '.git' -delete
-          cp -r ReactiveUIToolKitDocs~/dist/* _docs_branch/
+          cp -r ReactiveUIToolkitDocs~/dist/* _docs_branch/
 
           cd _docs_branch
           git add -A
@@ -447,7 +474,7 @@ jobs:
   # Assembles the store-shaped content (dist omit-list applied, Samples kept visible)
   # into a shell Unity project, imports it with the FLOOR Unity version (the store
   # derives compatibility from the upload editor; reviewers test on the floor), exports
-  # ReactiveUIToolKit-<version>.unitypackage via CICD/Editor/AssetStoreExport.cs, and
+  # ReactiveUIToolkit-<version>.unitypackage via CICD/Editor/AssetStoreExport.cs, and
   # uploads it as a run artifact. The store upload itself stays manual — Unity ships no
   # publish API — so the last mile is: download artifact (or export locally), then
   # Tools -> Asset Store -> Uploader -> Export and Upload -> Submit for review.
@@ -489,7 +516,7 @@ jobs:
         if: steps.check.outputs.skip == 'false'
         run: |
           set -e
-          STORE_DIR="shell/Assets/ReactiveUIToolKit"
+          STORE_DIR="shell/Assets/ReactiveUIToolkit"
           mkdir -p "$STORE_DIR"
 
           rsync -a \
@@ -603,7 +630,7 @@ jobs:
         env:
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
           UNITY_PASSWORD: ${{ secrets.UNITY_PASSWORD }}
-          OUT_FILE: out/ReactiveUIToolKit-${{ steps.check.outputs.version }}.unitypackage
+          OUT_FILE: out/ReactiveUIToolkit-${{ steps.check.outputs.version }}.unitypackage
         run: |
           set -e
           mkdir -p out
@@ -621,7 +648,7 @@ jobs:
                 -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD" -logFile - || true
               unity-editor -batchmode -nographics -quit \
                 -projectPath /workspace/shell \
-                -executeMethod ReactiveUITK.CICD.AssetStoreExport.Run \
+                -executeMethod Ruitk.CICD.AssetStoreExport.Run \
                 -exportOut "/workspace/$OUT_FILE" \
                 -logFile -
             '
@@ -630,7 +657,7 @@ jobs:
         if: steps.check.outputs.skip == 'false'
         run: |
           set -e
-          PKG="out/ReactiveUIToolKit-${{ steps.check.outputs.version }}.unitypackage"
+          PKG="out/ReactiveUIToolkit-${{ steps.check.outputs.version }}.unitypackage"
           [ -f "$PKG" ] || { echo "::error::unitypackage missing"; exit 1; }
           SIZE=$(stat -c%s "$PKG")
           COUNT=$(tar -tzf "$PKG" | wc -l)
@@ -642,14 +669,24 @@ jobs:
         if: steps.check.outputs.skip == 'false'
         uses: actions/upload-artifact@v4
         with:
-          name: ReactiveUIToolKit-unitypackage-${{ steps.check.outputs.version }}
+          name: ReactiveUIToolkit-unitypackage-${{ steps.check.outputs.version }}
           path: out/*.unitypackage
 
       # Permanent public copy: run artifacts expire (default 90 days); a GitHub
-      # Release asset on the version tag does not. deploy-dist creates v<version>
-      # in the same run (or a prior one) and finishes minutes before this job's
-      # docker import, so the tag normally exists; the --target fallback covers
-      # the cold path where it does not yet. --clobber makes re-runs idempotent.
+      # Release asset on the version tag does not.
+      #
+      # ORDERING: none is enforced. This job declares no `needs:`, so it runs in
+      # PARALLEL with deploy-dist and either job may create the v<version> tag
+      # first — do not read the code below as relying on deploy-dist finishing
+      # first, because nothing makes that true. The race is benign: both jobs are
+      # triggered by the same push and resolve v<version> to the same GITHUB_SHA,
+      # so whichever loses simply pushes an identical tag (a no-op). If the tag
+      # ever needs to point somewhere other than GITHUB_SHA, add `needs: deploy-dist`
+      # here — the comment is not a substitute for the dependency.
+      #
+      # The branch below covers both orders: use the existing tag when it is
+      # already on the remote, else create the release with an explicit --target.
+      # --clobber makes re-runs idempotent.
       - name: Attach .unitypackage to GitHub Release
         if: steps.check.outputs.skip == 'false'
         env:
@@ -660,12 +697,12 @@ jobs:
           if ! gh release view "v$VERSION" >/dev/null 2>&1; then
             if git ls-remote --tags origin "refs/tags/v$VERSION" | grep -q .; then
               gh release create "v$VERSION" \
-                --title "ReactiveUIToolKit $VERSION" \
+                --title "ReactiveUIToolkit $VERSION" \
                 --notes "Unity Asset Store package export (built with floor Unity $UNITY_VERSION; compatible with that version and newer). See CHANGELOG.md for the full $VERSION entry."
             else
               gh release create "v$VERSION" \
                 --target "$GITHUB_SHA" \
-                --title "ReactiveUIToolKit $VERSION" \
+                --title "ReactiveUIToolkit $VERSION" \
                 --notes "Unity Asset Store package export (built with floor Unity $UNITY_VERSION; compatible with that version and newer). See CHANGELOG.md for the full $VERSION entry."
             fi
           fi

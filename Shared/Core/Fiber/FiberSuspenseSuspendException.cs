@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// Control-flow exception used by Fiber Suspense to signal that
@@ -13,7 +13,7 @@ namespace ReactiveUITK.Core.Fiber
         public Task SuspenderTask { get; }
 
         public FiberSuspenseSuspendException(Task suspenderTask)
-            : base("ReactiveUITK Fiber suspense control flow")
+            : base("Ruitk Fiber suspense control flow")
         {
             SuspenderTask = suspenderTask;
         }

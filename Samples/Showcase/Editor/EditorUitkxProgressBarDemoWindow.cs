@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.ProgressBarDemoFunc;
-using ReactiveUITK.Samples.Components.ProgressBarDemoFunc.ProgressBarDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.ProgressBarDemoFunc;
+using Ruitk.Samples.Components.ProgressBarDemoFunc.ProgressBarDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxProgressBarDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Progress Bar")]
+        [MenuItem("Reactive UI Toolkit/Demos/Progress Bar")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxProgressBarDemoWindow>("Progress Bar Demo");

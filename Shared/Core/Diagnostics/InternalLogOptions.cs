@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Core.Diagnostics
+namespace Ruitk.Core.Diagnostics
 {
     /// <summary>
     /// Central switch for optional development-time logging across the toolkit.

@@ -8,18 +8,18 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Editor
+namespace Ruitk.Editor
 {
     /// <summary>
     /// Editor window that runs the UITKX Source Generator unit tests
     /// (xUnit, <c>SourceGenerator~/Tests/</c>) via <c>dotnet test</c> and
     /// displays the output inline.
     ///
-    /// Menu path: ReactiveUITK / Diagnostics / Run Unit Tests
+    /// Menu path: Reactive UI Toolkit / Diagnostics / Run Unit Tests
     /// </summary>
     public sealed class UitkxTestRunnerWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Diagnostics/Run Unit Tests")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Run Unit Tests")]
         public static void Open()
         {
             var window = GetWindow<UitkxTestRunnerWindow>("UITKX Unit Tests");
@@ -284,8 +284,8 @@ namespace ReactiveUITK.Editor
         {
             // Application.dataPath = <project>/Assets
             string projectRoot = Path.GetDirectoryName(Application.dataPath);
-            // The package lives inside Assets/ReactiveUIToolKit
-            string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
+            // The package lives inside Assets/ReactiveUIToolkit
+            string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
             string testsDir = Path.Combine(packageRoot, "SourceGenerator~", "Tests");
             return Path.GetFullPath(testsDir);
         }

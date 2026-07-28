@@ -1,7 +1,7 @@
-using ReactiveUITK.Language.Formatter;
+using Ruitk.Language.Formatter;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 public class FormatterTests
 {

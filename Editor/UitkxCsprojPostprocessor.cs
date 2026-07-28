@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.Editor
+namespace Ruitk.Editor
 {
     /// <summary>
     /// Injects &lt;AdditionalFiles&gt; entries for every .uitkx file into each
@@ -89,7 +89,7 @@ namespace ReactiveUITK.Editor
             {
                 // Never crash Unity's project generation — log and return original.
                 Debug.LogError(
-                    $"[ReactiveUITK] UitkxCsprojPostprocessor failed to inject "
+                    $"[Ruitk] UitkxCsprojPostprocessor failed to inject "
                         + $"AdditionalFiles into '{path}': {ex.Message}"
                 );
                 return content;
@@ -110,7 +110,7 @@ namespace ReactiveUITK.Editor
             string[] all = Directory.GetFiles(assetsRoot, "*.uitkx", SearchOption.AllDirectories);
 
             // Filter out any paths whose directory segments contain a "~" suffix
-            // (e.g. SourceGenerator~, ReactiveUIToolKitDocs~).
+            // (e.g. SourceGenerator~, ReactiveUIToolkitDocs~).
             // Those are Unity-ignored tooling folders — their files must never
             // be passed to the compiler as AdditionalFiles.
             var result = new System.Collections.Generic.List<string>(all.Length);

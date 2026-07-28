@@ -5,7 +5,7 @@ description: Rebuild the VS Code and/or Visual Studio 2022 extensions locally fo
 
 # Rebuild IDE extensions for F5
 
-Repo root (Windows, PowerShell): `C:\Yanivs\GameDev\UnityComponents\Assets\ReactiveUIToolKit`
+Repo root (Windows, PowerShell): `C:\Yanivs\GameDev\UnityComponents\Assets\ReactiveUIToolkit`
 
 Use this skill when the user wants to test changes to the VS Code or
 VS 2022 extension by launching an Extension Development Host (F5) or the
@@ -64,14 +64,14 @@ cmd /c "cd /d ide-extensions~\vscode && npm run build"
 ```powershell
 Get-ChildItem ide-extensions~/vscode/out/extension.js,
               ide-extensions~/vscode/server/UitkxLanguageServer.dll,
-              ide-extensions~/vscode/server/ReactiveUITK.Language.dll |
+              ide-extensions~/vscode/server/Ruitk.Language.dll |
   Select-Object Name, @{n='KB';e={[int]($_.Length/1KB)}}, LastWriteTime
 ```
 
 Expected sizes (rough sanity check, drift-tolerant):
 - `extension.js` ~ 700-900 KB
 - `UitkxLanguageServer.dll` ~ 250-320 KB
-- `ReactiveUITK.Language.dll` ~ 200-320 KB
+- `Ruitk.Language.dll` ~ 200-320 KB
 
 If `out/extension.js` is < 50 KB the bundle is broken (esbuild silently
 emitted a stub) — check `npm run build` output. (The bundle path is
@@ -99,8 +99,8 @@ $dst = "ide-extensions~/visual-studio/UitkxVsix/server"
 foreach ($d in $dst, "$dst/win-x64") {
   Copy-Item "$src/UitkxLanguageServer.dll"  "$d/" -Force
   Copy-Item "$src/UitkxLanguageServer.pdb"  "$d/" -Force
-  Copy-Item "$src/ReactiveUITK.Language.dll" "$d/" -Force
-  Copy-Item "$src/ReactiveUITK.Language.pdb" "$d/" -Force
+  Copy-Item "$src/Ruitk.Language.dll" "$d/" -Force
+  Copy-Item "$src/Ruitk.Language.pdb" "$d/" -Force
 }
 
 # 3. Build the VSIX (uses the wrapper script)
@@ -119,7 +119,7 @@ Independent of either IDE. Outputs to `Analyzers/` so Unity picks it up
 on the next domain reload:
 
 ```powershell
-dotnet build SourceGenerator~/ReactiveUITK.SourceGenerator.csproj -c Release
+dotnet build SourceGenerator~/Ruitk.SourceGenerator.csproj -c Release
 ```
 
 If the user is testing both an SG change *and* an IDE change in the

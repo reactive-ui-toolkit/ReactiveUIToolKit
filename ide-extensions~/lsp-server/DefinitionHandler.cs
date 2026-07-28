@@ -5,14 +5,14 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using OmniSharp.Extensions.LanguageServer.Protocol;
 using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Document;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using ReactiveUITK.Language.IntelliSense;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.Language.Roslyn;
+using Ruitk.Language.IntelliSense;
+using Ruitk.Language.Parser;
+using Ruitk.Language.Roslyn;
 using UitkxLanguageServer.Roslyn;
 using LspRange = OmniSharp.Extensions.LanguageServer.Protocol.Models.Range;
 
@@ -86,7 +86,7 @@ public sealed class DefinitionHandler : IDefinitionHandler
         // Parse the document with the language-lib AST pipeline so go-to-definition
         // targets are derived from the real syntax tree instead of text scanning.
 
-        var parseDiags  = new List<ReactiveUITK.Language.ParseDiagnostic>();
+        var parseDiags  = new List<Ruitk.Language.ParseDiagnostic>();
         var directives  = DirectiveParser.Parse(text, localPath, parseDiags);
         var nodes       = UitkxParser.Parse(text, localPath, directives, parseDiags);
         var parseResult = new ParseResult(

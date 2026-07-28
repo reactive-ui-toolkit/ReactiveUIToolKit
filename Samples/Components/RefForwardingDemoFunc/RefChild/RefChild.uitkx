@@ -1,7 +1,7 @@
 import "@UnityEngine.UIElements"
 
 export VirtualNode RefChild(Ref<TextField>? inputRef = null, Ref<Label>? labelRef = null, Action? onSnapshot = null) {
-  var value = inputRef?.Current?.value ?? "Hello ReactiveUITK refs!";
+  var value = inputRef?.Current?.value ?? "Hello Ruitk refs!";
 
   return (
     <VisualElement

@@ -635,7 +635,7 @@ a structured diff of additions, removals, and changes.
 | 4 | `Shared/Props/Typed/StyleKeys.cs` | Constants (line ~5) | public const string |
 | 5 | `Shared/Props/Typed/CssHelpers.cs` | Shortcuts (line ~16) | Static methods/properties |
 | 6 | `ide-extensions~/grammar/uitkx-schema.json` | styleKeyValues (line ~1685) | Enum values array |
-| 7 | `ReactiveUIToolKitDocs~/src/versionManifest.ts` | STYLE_PROPERTY_VERSIONS | `{name}: { sinceUnity: '{VERSION}' }` |
+| 7 | `ReactiveUIToolkitDocs~/src/versionManifest.ts` | STYLE_PROPERTY_VERSIONS | `{name}: { sinceUnity: '{VERSION}' }` |
 
 ### 8.2 Per New Element — 11+ files to touch
 
@@ -650,19 +650,19 @@ a structured diff of additions, removals, and changes.
 | 7 | `ide-extensions~/grammar/uitkx-schema.json` | Element definition |
 | 8 | `Version Coverage Matrix` | Elements table row |
 | 9 | (optional) `Shared/Props/Typed/BaseProps.cs` | Only if new universal attributes |
-| 10 | `ReactiveUIToolKitDocs~/src/versionManifest.ts` | ELEMENT_VERSIONS entry |
-| 11 | `ReactiveUIToolKitDocs~/src/components/UnityDocsSection/unityDocLinks.ts` | New entry |
+| 10 | `ReactiveUIToolkitDocs~/src/versionManifest.ts` | ELEMENT_VERSIONS entry |
+| 11 | `ReactiveUIToolkitDocs~/src/components/UnityDocsSection/unityDocLinks.ts` | New entry |
 
 ### 8.3 Documentation Website — Version Manifest
 
-The docs site version system is driven by `ReactiveUIToolKitDocs~/src/versionManifest.ts`.
+The docs site version system is driven by `ReactiveUIToolkitDocs~/src/versionManifest.ts`.
 
 | # | File | What to update |
 |---|------|----------------|
-| 1 | `ReactiveUIToolKitDocs~/src/versionManifest.ts` | `SUPPORTED_VERSIONS`, `ELEMENT_VERSIONS`, `STYLE_PROPERTY_VERSIONS`, `CSS_HELPER_VERSIONS`, `PAGE_VERSIONS` |
-| 2 | `ReactiveUIToolKitDocs~/src/components/UnityDocsSection/unityDocLinks.ts` | New element entries |
-| 3 | `ReactiveUIToolKitDocs~/src/pages.tsx` | New component pages with `sinceUnity` |
-| 4 | `ReactiveUIToolKitDocs~/src/docs.tsx` | New section entries with `sinceUnity` (if needed) |
+| 1 | `ReactiveUIToolkitDocs~/src/versionManifest.ts` | `SUPPORTED_VERSIONS`, `ELEMENT_VERSIONS`, `STYLE_PROPERTY_VERSIONS`, `CSS_HELPER_VERSIONS`, `PAGE_VERSIONS` |
+| 2 | `ReactiveUIToolkitDocs~/src/components/UnityDocsSection/unityDocLinks.ts` | New element entries |
+| 3 | `ReactiveUIToolkitDocs~/src/pages.tsx` | New component pages with `sinceUnity` |
+| 4 | `ReactiveUIToolkitDocs~/src/docs.tsx` | New section entries with `sinceUnity` (if needed) |
 
 Pages/components with `sinceUnity` set are automatically filtered out when the user
 selects a Unity version older than the feature's requirement. Search is scoped to

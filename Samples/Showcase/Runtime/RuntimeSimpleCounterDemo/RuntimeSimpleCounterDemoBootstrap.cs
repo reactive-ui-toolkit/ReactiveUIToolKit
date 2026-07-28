@@ -1,10 +1,10 @@
-using ReactiveUITK.Core;
-using ReactiveUITK.Samples.Components.SimpleCounterFunc;
+using Ruitk.Core;
+using Ruitk.Samples.Components.SimpleCounterFunc;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Components.SimpleCounterFunc.SimpleCounterFunc;
+using Ruitk.Samples.Components.SimpleCounterFunc.SimpleCounterFunc;
 
-namespace ReactiveUITK.Samples.Showcase.Runtime
+namespace Ruitk.Samples.Showcase.Runtime
 {
     [RequireComponent(typeof(RootRenderer))]
     public class RuntimeSimpleCounterDemoBootstrap : MonoBehaviour

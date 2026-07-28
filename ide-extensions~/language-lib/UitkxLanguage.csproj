@@ -3,13 +3,13 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <Nullable>enable</Nullable>
     <LangVersion>latest</LangVersion>
-    <RootNamespace>ReactiveUITK.Language</RootNamespace>
-    <AssemblyName>ReactiveUITK.Language</AssemblyName>
+    <RootNamespace>Ruitk.Language</RootNamespace>
+    <AssemblyName>Ruitk.Language</AssemblyName>
     <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <!--
       Define UNITY_EDITOR so the linked HookRegistry.cs (wrapped in
       #if UNITY_EDITOR to be stripped from Unity player builds) compiles
-      into ReactiveUITK.Language.dll.  The language library only runs in
+      into Ruitk.Language.dll.  The language library only runs in
       editor / LSP contexts, so this constant is unconditionally true here.
     -->
     <DefineConstants>$(DefineConstants);UNITY_EDITOR</DefineConstants>
