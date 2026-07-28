@@ -11,7 +11,7 @@
     <Description xml:space="preserve">Syntax highlighting + language intelligence for .uitkx markup (ReactiveUIToolkit for Unity). Completions, hover, diagnostics and formatting from the bundled language server — fully offline, no running Unity editor required. Discord: https://discord.gg/Knedqu4Wyv</Description>
     <MoreInfo>https://github.com/reactive-ui-toolkit/ruitk-unity</MoreInfo>
     <License>LICENSE.txt</License>
-    <Tags>Unity;UI Toolkit;UITKX;ReactiveUI;language;lsp</Tags>
+    <Tags>Unity;UI Toolkit;UITKX;Reactive UI Toolkit;language;lsp</Tags>
   </Metadata>
   <Installation AllUsers="false" Scope="ProductExtension">
     <InstallationTarget Id="Microsoft.VisualStudio.Community" Version="[17.0,19.0)">
