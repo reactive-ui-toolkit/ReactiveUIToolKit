@@ -21,6 +21,8 @@ Syntax highlighting + language intelligence for `.uitkx` markup (ReactiveUIToolk
 ### [1.8.0] - 2026-07-28
 - Breaking: the Reactive UI Toolkit family rebrand (pairs with Unity package 0.12.0). The repository moved to https://github.com/reactive-ui-toolkit/ruitk-unity and the code identifier root renamed ReactiveUITK → Ruitk: embedded Roslyn analysis and IntelliSense virtual documents now mirror the Ruitk.* namespaces, generated code emits global::Ruitk.*, asmdef names are Ruitk.*, and diagnostic categories follow. The UITKX language, file format, and every extension marketplace identity and display name are unchanged — existing installs keep updating in place. Migrate your own code with the RuitkMigrateBrand codemod (see MIGRATION-0.12.md in the repo). The bundled LICENSE files now carry the Reactive UI Toolkit Community License 1.1 — renamed and version-bumped family-wide, terms otherwise unchanged; previously published extension versions keep the license they shipped with.
 
+SG suite 1754/1754, LSP suite 152/152.
+
 ### [1.7.0] - 2026-07-25
 - Feature: @backend ugui — the uGUI element vocabulary across the toolchain (pairs with Unity package 0.11.0). A .uitkx file that opts in with the @backend ugui preamble directive switches to the 18-tag uGUI vocabulary (Canvas, Panel, Image, RawImage, Text, Button, the three LayoutGroups, Toggle/ToggleGroup, Slider, Scrollbar, ScrollRect, Dropdown, InputField, Prefab, UitkHost) with backend-aware completions, hover, diagnostics, and virtual-document IntelliSense.
 
