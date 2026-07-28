@@ -1,4 +1,4 @@
-## [0.11.0] - Unreleased
+## [0.11.0] - 2026-07-25
 
 **uGUI support is here.** ReactiveUIToolKit now renders classic Unity UI (uGUI) with the same components, hooks, signals, router, and hot reload you use on UI Toolkit - and it speaks uGUI's native language. No CSS, no flexbox emulation: you position with RectTransform anchors/pivots (including an `anchors` preset prop that mirrors the Inspector widget), you style with sprites, colors, and materials, you stack with LayoutGroups. If you know uGUI, you already know this API.
 

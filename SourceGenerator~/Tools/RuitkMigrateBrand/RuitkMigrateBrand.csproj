@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    RuitkMigrateBrand — the 0.12.0 rebrand codemod (REBRAND_PLAN §7.G1).
+
+    Rewrites a USER project for the ReactiveUITK -> Ruitk identifier rename
+    (family umbrella "Reactive UI Toolkit", wave 0.12.0):
+      • C1 composites (enumerated table): ReactiveUITKConfig -> RuitkConfig, plus the
+        hidden media host/peer object names (__ReactiveUITK_* -> __Ruitk_*);
+      • C2 bare token: ReactiveUITK(?![A-Za-z_]) -> Ruitk (namespaces, usings,
+        global:: refs, asmdef names/references);
+      • the REACTIVEUITK_HAS_TEST_FRAMEWORK define -> RUITK_HAS_TEST_FRAMEWORK;
+      • Assets/ReactiveUIToolKit install-path strings -> Assets/ReactiveUIToolkit.
+
+    Idempotent + re-runnable (a second run reports 0). Prints per-file replacement
+    counts. NEVER edits inside the package folder itself (any path segment named
+    ReactiveUIToolKit / ReactiveUIToolkit is skipped, as are ~-suffixed tooling
+    folders and build/VCS folders).
+
+    Modeled 1:1 on Tools/UitkxMigrateImports. Not shipped to Unity (under a `~`
+    tools folder).
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>RuitkMigrateBrand</AssemblyName>
+    <RootNamespace>Ruitk.SourceGenerator.Tools</RootNamespace>
+  </PropertyGroup>
+
+</Project>

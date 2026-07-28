@@ -1,12 +1,49 @@
 ﻿# Changelog
 
-All notable changes to the ReactiveUIToolKit Unity package are documented here.
+All notable changes to the Reactive UI Toolkit — Unity package are documented here.
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 For IDE extension changelogs (VS Code, Visual Studio 2022), see
 `ide-extensions~/changelog.json` â€” the single source of truth for extension releases.
 
-## [0.11.0] - Unreleased
+## [0.12.0] - 2026-07-28
+
+### Changed — BREAKING: the "Reactive UI Toolkit" family rebrand
+
+The library is now **Reactive UI Toolkit — Unity**, in the `reactive-ui-toolkit`
+GitHub org as `ruitk-unity`. Nothing changed functionally — this release is the
+rename, nothing else. See `MIGRATION-0.12.md` for the two-step upgrade
+(delete-old-folder + codemod).
+
+- **Namespace/assembly root `ReactiveUITK` → `Ruitk`**: every `namespace`, `using`,
+  and `global::` reference; all 10 asmdefs `ReactiveUITK.*` → `Ruitk.*` (the
+  `ReactiveUITK.Examples.asmdef` file is now `Ruitk.Samples.asmdef`, matching the
+  assembly name it always declared); analyzers renamed to `Analyzers/Ruitk.Language.dll`
+  + `Analyzers/Ruitk.SourceGenerator.dll` with their GUIDs preserved (references
+  survive); generator emits `global::Ruitk.*`.
+- **`ReactiveUITKConfig` → `RuitkConfig`** (type + file); the hidden media-host
+  object names `__ReactiveUITK_*` → `__Ruitk_*`; editor-prefs key
+  `ReactiveUITK.UitkxNavVerbose` → `Ruitk.UitkxNavVerbose` (saved value resets once).
+- **Define `REACTIVEUITK_HAS_TEST_FRAMEWORK` → `RUITK_HAS_TEST_FRAMEWORK`.**
+- **Install folder `Assets/ReactiveUIToolKit` → `Assets/ReactiveUIToolkit`**
+  (lowercase k; Linux upgraders: delete the old capital-K folder — case-sensitive
+  filesystems keep both).
+- **Editor menu root `ReactiveUITK/…` → `Reactive UI Toolkit/…`** (53 items) and the
+  Bench window titles follow the display name.
+- **License: Reactive UI Toolkit Community License 1.1** — same terms, renamed and
+  version-bumped family-wide; the credit line is now "Made with Reactive UI Toolkit".
+  Licensees under 1.0 keep their 1.0 terms.
+- **New codemod `SourceGenerator~/Tools/RuitkMigrateBrand`** rewrites user projects
+  (usings/namespaces/global:: refs, asmdef references, the define, install-path
+  strings; idempotent, `--check` gate; never edits inside the package folder).
+- Unchanged on purpose: UPM package id `com.reactiveuitoolkit`, the `.uitkx` language
+  and `UITKX` tooling brand, extension marketplace identities, the docs domain, and
+  `RUITK`-prefixed titles/pref keys.
+- Housekeeping: the broken UPM `displayName` ("Reactive UIToolKit") is fixed; stale
+  tracked `Analyzers/ReactiveUITK.SourceGenerator.dll.old` removed; wrong-org and
+  placeholder repo URLs corrected everywhere.
+
+## [0.11.0] - 2026-07-25
 
 ### Added — uGUI render backend (`@backend ugui`)
 
