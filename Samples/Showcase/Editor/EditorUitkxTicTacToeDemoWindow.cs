@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.TicTacToe;
-using ReactiveUITK.Samples.Components.TicTacToe.TicTacToe;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.TicTacToe;
+using Ruitk.Samples.Components.TicTacToe.TicTacToe;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxTicTacToeDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tic Tac Toe")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tic Tac Toe")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxTicTacToeDemoWindow>("Tic Tac Toe Demo");

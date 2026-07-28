@@ -1,7 +1,7 @@
 using UnityEngine;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Samples.Components.GalagaGame {
+namespace Ruitk.Samples.Components.GalagaGame {
   public enum GalagaScreen { MainMenu, Game }
 
   public static class Styles {

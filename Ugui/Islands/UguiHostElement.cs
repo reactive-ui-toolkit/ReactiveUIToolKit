@@ -1,14 +1,14 @@
 using System;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Fiber;
-using ReactiveUITK.Elements;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Core.Fiber;
+using Ruitk.Elements;
+using Ruitk.Props.Typed;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Canvas = UnityEngine.Canvas;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Props for the &lt;UguiHost&gt; island — a UI Toolkit element hosting a

@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Parser;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Plan §5 — the parser populates the import/export model (DirectiveSet.Imports,
@@ -148,12 +148,12 @@ namespace ReactiveUITK.SourceGenerator.Tests
         [Fact]
         public void AtUsing_PopulatesPositionedUsingDirective()
         {
-            // @using ReactiveUITK.Router
+            // @using Ruitk.Router
             // @ col 0, `using` 1-5, space 6, payload `R` col 7
-            var (ds, _) = Parse("@using ReactiveUITK.Router\ncomponent Foo {\n  return ( <Spacer /> );\n}\n");
-            Assert.Contains("ReactiveUITK.Router", ds.Usings);          // back-compat string view intact
+            var (ds, _) = Parse("@using Ruitk.Router\ncomponent Foo {\n  return ( <Spacer /> );\n}\n");
+            Assert.Contains("Ruitk.Router", ds.Usings);          // back-compat string view intact
             var u = Assert.Single(ds.UsingDirectives);
-            Assert.Equal("ReactiveUITK.Router", u.Payload);
+            Assert.Equal("Ruitk.Router", u.Payload);
             Assert.False(u.FromImportSyntax);
             Assert.Equal(1, u.Line);
             Assert.Equal(0, u.Column);
@@ -197,11 +197,11 @@ namespace ReactiveUITK.SourceGenerator.Tests
         public void NamespaceImport_And_FileImport_And_AtUsing_Coexist()
         {
             var (ds, _) = Parse(
-                "import { Chip } from \"./Chip\"\nimport \"@ReactiveUITK.Router\"\n@using UnityEngine\n" +
+                "import { Chip } from \"./Chip\"\nimport \"@Ruitk.Router\"\n@using UnityEngine\n" +
                 "component Foo {\n  return ( <Spacer /> );\n}\n");
             Assert.Single(ds.Imports);                                  // file import
             Assert.Equal("./Chip", ds.Imports[0].Specifier);
-            Assert.Equal(new[] { "ReactiveUITK.Router", "UnityEngine" }, ds.Usings.ToArray());
+            Assert.Equal(new[] { "Ruitk.Router", "UnityEngine" }, ds.Usings.ToArray());
             Assert.Equal(2, ds.UsingDirectives.Length);
             Assert.True(ds.UsingDirectives[0].FromImportSyntax);        // the import "@..." one
             Assert.False(ds.UsingDirectives[1].FromImportSyntax);       // the @using one

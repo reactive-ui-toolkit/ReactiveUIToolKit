@@ -1,10 +1,10 @@
-using ReactiveUITK.Core;
-using ReactiveUITK.Samples.Components.HelloWorldFunc;
+using Ruitk.Core;
+using Ruitk.Samples.Components.HelloWorldFunc;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Components.HelloWorldFunc.HelloWorldFunc;
+using Ruitk.Samples.Components.HelloWorldFunc.HelloWorldFunc;
 
-namespace ReactiveUITK.Samples.Showcase.Runtime
+namespace Ruitk.Samples.Showcase.Runtime
 {
     [RequireComponent(typeof(RootRenderer))]
     public class RuntimeHelloWorldDemoBootstrap : MonoBehaviour

@@ -9,7 +9,7 @@
         private void useEffect(
             global::System.Func<global::System.Action> effectFactory,
             params object[] deps) { }
-        private global::ReactiveUITK.Core.Ref<T> useRef<T>(T initial = default) => new();
+        private global::Ruitk.Core.Ref<T> useRef<T>(T initial = default) => new();
         private global::UnityEngine.UIElements.VisualElement useRef() => null!;
         private global::System.Func<T> useCallback<T>(
             global::System.Func<T> callback, params object[] deps) => callback!;
@@ -31,9 +31,9 @@
         private global::System.Func<T> useStableFunc<T>(global::System.Func<T> function) => function;
         private global::System.Action<T> useStableAction<T>(global::System.Action<T> action) => action;
         private global::System.Action useStableCallback(global::System.Action callback) => callback;
-        private void useTweenFloat(float from, float to, float duration, global::ReactiveUITK.Core.Animation.Ease ease, float delay, global::System.Action<float> onUpdate, global::System.Action onComplete, params object[] deps) { }
-        private void useAnimate(global::System.Collections.Generic.IReadOnlyList<global::ReactiveUITK.Core.Animation.AnimateTrack> tracks, bool autoplay = true, params object[] deps) { }
-        private global::ReactiveUITK.Core.SafeAreaInsets useSafeArea(float tolerance = 0.5f) => default!;
+        private void useTweenFloat(float from, float to, float duration, global::Ruitk.Core.Animation.Ease ease, float delay, global::System.Action<float> onUpdate, global::System.Action onComplete, params object[] deps) { }
+        private void useAnimate(global::System.Collections.Generic.IReadOnlyList<global::Ruitk.Core.Animation.AnimateTrack> tracks, bool autoplay = true, params object[] deps) { }
+        private global::Ruitk.Core.SafeAreaInsets useSafeArea(float tolerance = 0.5f) => default!;
         private (bool isPending, global::System.Action<global::System.Action> startTransition) useTransition() => (false, _ => { });
         private T Asset<T>(string path) where T : global::UnityEngine.Object => default!;
         private T Ast<T>(string path) where T : global::UnityEngine.Object => default!;

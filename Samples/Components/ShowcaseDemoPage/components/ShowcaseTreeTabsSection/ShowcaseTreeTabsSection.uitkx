@@ -2,7 +2,7 @@ import { IntroCounterFunc } from "../../../../Shared/IntroCounterFunc"
 import { MultiColumnTreeViewStatefulDemoFunc } from "../../../../Shared/MultiColumnTreeViewStatefulDemoFunc"
 import { TreeViewStatefulDemoFunc } from "../../../../Shared/TreeViewStatefulDemoFunc"
 import "@UnityEngine.UIElements"
-import "@ReactiveUITK.Samples.UITKXShared"
+import "@Ruitk.Samples.UITKXShared"
 
 export VirtualNode ShowcaseTreeTabsSection(Action<int>? onTreeCountChanged = null, Action<int>? onMctvCountChanged = null, Action<int>? onTreeTabIndexChanged = null) {
   // â”€â”€ State â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€

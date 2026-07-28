@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core.Fiber;
-using ReactiveUITK.Props;
+using Ruitk.Core.Fiber;
+using Ruitk.Props;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     public interface IVNodeHostRenderer
     {
@@ -115,7 +115,7 @@ namespace ReactiveUITK.Core
             int count = children?.Count ?? 0;
             if (count == 0)
             {
-                return ReactiveUITK.V.Fragment(hostNode.Key);
+                return Ruitk.V.Fragment(hostNode.Key);
             }
 
             var buffer = new VirtualNode[count];
@@ -123,7 +123,7 @@ namespace ReactiveUITK.Core
             {
                 buffer[i] = children[i];
             }
-            return ReactiveUITK.V.Fragment(hostNode.Key, buffer);
+            return Ruitk.V.Fragment(hostNode.Key, buffer);
         }
     }
 }

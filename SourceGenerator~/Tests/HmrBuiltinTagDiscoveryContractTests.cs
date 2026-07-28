@@ -7,12 +7,12 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Contract tests for HMR's <c>HmrBuiltinTagDiscovery.BuildAutoDiscoveredTagMap</c>
 /// (defined in <c>Editor/HMR/HmrCSharpEmitter.cs</c>). The HMR emitter lives in
-/// <c>ReactiveUITK.Editor.asmdef</c> which depends on <c>UnityEditor</c> and
+/// <c>Ruitk.Editor.asmdef</c> which depends on <c>UnityEditor</c> and
 /// therefore cannot be loaded by this standalone .NET test runner — so the
 /// algorithm under test is mirrored verbatim below as
 /// <see cref="DiscoverMirror"/>.
@@ -30,7 +30,7 @@ public class HmrBuiltinTagDiscoveryContractTests
     // Keep this byte-for-byte semantically equivalent. Differences:
     //   - The classification keys use plain enum strings instead of TagKind
     //     (which is a private nested type in HmrCSharpEmitter, unreachable here).
-    //   - The V type is passed in (not hardcoded to typeof(global::ReactiveUITK.V))
+    //   - The V type is passed in (not hardcoded to typeof(global::Ruitk.V))
     //     so the test can scope the lookup to a freshly-emitted assembly.
     //   - The VirtualNode type comes from the test fixture's stub assembly.
 
@@ -133,15 +133,15 @@ public class HmrBuiltinTagDiscoveryContractTests
         using System.Collections.Generic;
         using System.Threading.Tasks;
 
-        namespace ReactiveUITK.Core
+        namespace Ruitk.Core
         {
             public abstract class VirtualNode { }
             public interface IProps { }
         }
 
-        namespace ReactiveUITK
+        namespace Ruitk
         {
-            using ReactiveUITK.Core;
+            using Ruitk.Core;
 
             // Fake props/peer types matching real shapes.
             public sealed class LabelProps { }
@@ -237,8 +237,8 @@ public class HmrBuiltinTagDiscoveryContractTests
         );
 
         var asm = Assembly.Load(ms.ToArray());
-        var vType = asm.GetType("ReactiveUITK.V")!;
-        var vNodeType = asm.GetType("ReactiveUITK.Core.VirtualNode")!;
+        var vType = asm.GetType("Ruitk.V")!;
+        var vNodeType = asm.GetType("Ruitk.Core.VirtualNode")!;
         return (vType, vNodeType);
     }
 

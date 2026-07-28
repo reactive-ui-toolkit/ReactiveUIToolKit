@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Video;
 
-namespace ReactiveUITK.Core.Media
+namespace Ruitk.Core.Media
 {
     /// <summary>
     /// Imperative handle exposed by the <c>&lt;Video&gt;</c> element via its

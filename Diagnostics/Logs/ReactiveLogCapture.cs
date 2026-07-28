@@ -4,7 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.EditorDiagnostics
+namespace Ruitk.EditorDiagnostics
 {
     [InitializeOnLoad]
     public static class ReactiveLogCapture
@@ -18,19 +18,19 @@ namespace ReactiveUITK.EditorDiagnostics
             EditorApplication.quitting += StopCapture;
         }
 
-        [MenuItem("ReactiveUITK/Diagnostics/Logs/Start Capture")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Logs/Start Capture")]
         public static void StartCaptureMenu()
         {
             StartCapture();
         }
 
-        [MenuItem("ReactiveUITK/Diagnostics/Logs/Stop Capture")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Logs/Stop Capture")]
         public static void StopCaptureMenu()
         {
             StopCapture();
         }
 
-        [MenuItem("ReactiveUITK/Diagnostics/Logs/Open Log Folder")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Logs/Open Log Folder")]
         public static void OpenLogFolder()
         {
             string folder = EnsureFolder();
@@ -47,7 +47,7 @@ namespace ReactiveUITK.EditorDiagnostics
             string folder = EnsureFolder();
             string ts = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             logFilePath = Path.Combine(folder, $"reactive_log_{ts}.txt");
-            TryAppend($"==== ReactiveUITK log started {DateTime.Now:O} ===={Environment.NewLine}");
+            TryAppend($"==== Ruitk log started {DateTime.Now:O} ===={Environment.NewLine}");
             Application.logMessageReceived += OnLog;
             Application.logMessageReceivedThreaded += OnLogThreaded;
             capturing = true;
@@ -63,7 +63,7 @@ namespace ReactiveUITK.EditorDiagnostics
             Application.logMessageReceived -= OnLog;
             Application.logMessageReceivedThreaded -= OnLogThreaded;
             capturing = false;
-            TryAppend($"==== ReactiveUITK log stopped {DateTime.Now:O} ===={Environment.NewLine}");
+            TryAppend($"==== Ruitk log stopped {DateTime.Now:O} ===={Environment.NewLine}");
             Debug.Log("ReactiveLogCapture: stopped → " + logFilePath);
         }
 
@@ -71,7 +71,7 @@ namespace ReactiveUITK.EditorDiagnostics
         {
             string folder = Path.Combine(
                 Application.dataPath,
-                "ReactiveUIToolKit",
+                "ReactiveUIToolkit",
                 "Diagnostics",
                 "Logs",
                 "Results"

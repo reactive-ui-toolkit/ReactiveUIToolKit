@@ -2,17 +2,17 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.MarioGame;
-using ReactiveUITK.Samples.Components.MarioGame.MarioGame;
-using ReactiveUITK.Samples.Components.MarioGame.components.Mario;
-using ReactiveUITK.Samples.Components.MarioGame.components.Mario.Mario;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.MarioGame;
+using Ruitk.Samples.Components.MarioGame.MarioGame;
+using Ruitk.Samples.Components.MarioGame.components.Mario;
+using Ruitk.Samples.Components.MarioGame.components.Mario.Mario;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxMarioGameDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Mario Game")]
+        [MenuItem("Reactive UI Toolkit/Demos/Mario Game")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxMarioGameDemoWindow>("Mario Game Demo");

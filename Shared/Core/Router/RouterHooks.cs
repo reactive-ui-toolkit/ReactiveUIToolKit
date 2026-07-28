@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 
-namespace ReactiveUITK.Router
+namespace Ruitk.Router
 {
     public static class RouterHooks
     {

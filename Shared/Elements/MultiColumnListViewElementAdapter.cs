@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Props;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public sealed class MultiColumnListViewElementAdapter
         : StatefulElementAdapter<MultiColumnListView, MultiColumnListViewElementAdapter.Cached>
@@ -1202,7 +1202,7 @@ namespace ReactiveUITK.Elements
                 return;
             }
             parts.DetachWired = true;
-            ReactiveUITK.Core.PanelDetachGuard.Wire(
+            Ruitk.Core.PanelDetachGuard.Wire(
                 view,
                 () =>
                 {

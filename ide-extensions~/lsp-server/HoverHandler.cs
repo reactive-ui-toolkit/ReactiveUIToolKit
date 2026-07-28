@@ -7,8 +7,8 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Document;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using ReactiveUITK.Language.IntelliSense;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.IntelliSense;
+using Ruitk.Language.Parser;
 using UitkxLanguageServer.Roslyn;
 
 namespace UitkxLanguageServer;
@@ -81,7 +81,7 @@ public sealed class HoverHandler : IHoverHandler
         // Parse the document with the language-lib AST pipeline so hover is
         // derived from the real syntax tree instead of text scanning.
 
-        var parseDiags = new List<ReactiveUITK.Language.ParseDiagnostic>();
+        var parseDiags = new List<Ruitk.Language.ParseDiagnostic>();
         var directives = DirectiveParser.Parse(text, localPath, parseDiags);
         var nodes = UitkxParser.Parse(text, localPath, directives, parseDiags);
         var parseResult = new ParseResult(
@@ -302,7 +302,7 @@ public sealed class HoverHandler : IHoverHandler
     private Hover? TryGetRoslynHover(
         string localPath,
         int uitkxOffset,
-        ReactiveUITK.Language.Roslyn.VirtualDocument vdoc,
+        Ruitk.Language.Roslyn.VirtualDocument vdoc,
         CancellationToken ct
     )
     {
@@ -552,14 +552,14 @@ public sealed class HoverHandler : IHoverHandler
 
     // ── Hook documentation ──────────────────────────────────────────────────
     //
-    // Sourced from ReactiveUITK.Core.HookRegistry (Shared/Core/HookRegistry.cs
-    // linked into ReactiveUITK.Language.dll) so the LSP hover docs stay in
+    // Sourced from Ruitk.Core.HookRegistry (Shared/Core/HookRegistry.cs
+    // linked into Ruitk.Language.dll) so the LSP hover docs stay in
     // lockstep with the diagnostics analyzer, the source generator, and the
     // VDG stubs.  The registry adds useLayoutEffect entries that were missing
     // from the original hand-maintained map — a pure coverage win.
 
     private static readonly IReadOnlyDictionary<string, string> s_hookDocs =
-        global::ReactiveUITK.Core.HookRegistry.GetDocMap();
+        global::Ruitk.Core.HookRegistry.GetDocMap();
 
     private static readonly Regex s_hookTupleRegex = new Regex(
         @"\bvar\s*\(\s*\w+\s*,\s*(?<setter>\w+)\s*\)\s*=\s*(?<hook>(?:Hooks\.)?[Uu]se[A-Za-z]+)\s*[<(]",

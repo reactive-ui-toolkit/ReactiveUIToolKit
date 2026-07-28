@@ -1,28 +1,28 @@
-using ReactiveUITK.Core.Config;
-using ReactiveUITK.Core.Diagnostics;
+using Ruitk.Core.Config;
+using Ruitk.Core.Diagnostics;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     public static class BuildDefinesConfig
     {
         public static string ResolveEnvironment()
         {
-            return ReactiveUITKConfig.Current.EnvironmentLabel ?? "production";
+            return RuitkConfig.Current.EnvironmentLabel ?? "production";
         }
 
         public static DiagnosticsConfig.TraceLevel ResolveTraceLevel()
         {
-            return ReactiveUITKConfig.Current.TraceLevel;
+            return RuitkConfig.Current.TraceLevel;
         }
 
         public static bool ResolveEnableDiffTracing()
         {
-            return ReactiveUITKConfig.Current.EnableDiffTracing;
+            return RuitkConfig.Current.EnableDiffTracing;
         }
 
         public static bool ResolveExceptionBoundaryFlow()
         {
-            return ReactiveUITKConfig.Current.UseExceptionBoundaryFlow;
+            return RuitkConfig.Current.UseExceptionBoundaryFlow;
         }
     }
 }

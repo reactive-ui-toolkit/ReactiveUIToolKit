@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Formatter;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.Language;
+using Ruitk.Language.Formatter;
+using Ruitk.Language.Parser;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Null-only components (React case 2): a component whose body has no

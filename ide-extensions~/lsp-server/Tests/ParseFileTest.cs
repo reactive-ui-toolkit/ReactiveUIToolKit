@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Lowering;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Lowering;
+using Ruitk.Language.Parser;
 using Xunit;
 using Xunit.Abstractions;
 

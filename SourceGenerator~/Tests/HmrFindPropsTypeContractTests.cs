@@ -6,12 +6,12 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Contract tests for the props-type lookup performed by HMR's
 /// <c>HmrCSharpEmitter.FindPropsType</c>. The HMR code lives in
-/// <c>ReactiveUITK.Editor.asmdef</c> which depends on <c>UnityEditor</c> and
+/// <c>Ruitk.Editor.asmdef</c> which depends on <c>UnityEditor</c> and
 /// therefore cannot be loaded by this standalone .NET test runner — so the
 /// algorithm under test is mirrored verbatim below as
 /// <see cref="FindPropsTypeMirror"/>.
@@ -50,7 +50,7 @@ public class HmrFindPropsTypeContractTests
                     : type.Namespace + "." + siblingName;
                 var sibling = asm.GetType(siblingFullName, throwOnError: false);
                 if (sibling != null
-                    && sibling.GetInterface("ReactiveUITK.Core.IProps") != null)
+                    && sibling.GetInterface("Ruitk.Core.IProps") != null)
                 {
                     return "global::" + siblingFullName;
                 }
@@ -58,7 +58,7 @@ public class HmrFindPropsTypeContractTests
                 // Step 2 — nested {typeName}.{typeName}Props
                 var nestedNamed = type.GetNestedType(siblingName);
                 if (nestedNamed != null
-                    && nestedNamed.GetInterface("ReactiveUITK.Core.IProps") != null)
+                    && nestedNamed.GetInterface("Ruitk.Core.IProps") != null)
                 {
                     return $"{typeName}.{siblingName}";
                 }
@@ -66,7 +66,7 @@ public class HmrFindPropsTypeContractTests
                 // Step 3 — any nested IProps (legacy fallback)
                 foreach (var nested in type.GetNestedTypes())
                 {
-                    if (nested.GetInterface("ReactiveUITK.Core.IProps") != null)
+                    if (nested.GetInterface("Ruitk.Core.IProps") != null)
                         return $"{typeName}.{nested.Name}";
                 }
             }
@@ -77,7 +77,7 @@ public class HmrFindPropsTypeContractTests
     // ── Test fixture: build tiny in-memory assemblies via Roslyn ────────────────
 
     private const string IPropsStub = """
-        namespace ReactiveUITK.Core
+        namespace Ruitk.Core
         {
             public interface IProps {}
         }
@@ -108,10 +108,10 @@ public class HmrFindPropsTypeContractTests
     [Fact]
     public void FindPropsType_SiblingTopLevel_ReturnsGloballyQualifiedName()
     {
-        // Mirrors ReactiveUITK.Router.{RouterFunc, RouterFuncProps} — both at
+        // Mirrors Ruitk.Router.{RouterFunc, RouterFuncProps} — both at
         // namespace scope, neither nested in the other.
         const string src = """
-            using ReactiveUITK.Core;
+            using Ruitk.Core;
             namespace MyApp.Routing
             {
                 public static class RouterFunc {}
@@ -132,7 +132,7 @@ public class HmrFindPropsTypeContractTests
     public void FindPropsType_NestedSameNameProps_ReturnsBareNestedName()
     {
         const string src = """
-            using ReactiveUITK.Core;
+            using Ruitk.Core;
             namespace MyApp
             {
                 public static class CompFunc
@@ -155,7 +155,7 @@ public class HmrFindPropsTypeContractTests
     public void FindPropsType_NestedDifferentlyNamedIProps_ReturnsNestedName()
     {
         const string src = """
-            using ReactiveUITK.Core;
+            using Ruitk.Core;
             namespace MyApp
             {
                 public static class ValuesBarFunc
@@ -178,7 +178,7 @@ public class HmrFindPropsTypeContractTests
     public void FindPropsType_SiblingPlusNestedLegacy_PrefersSiblingTopLevel()
     {
         const string src = """
-            using ReactiveUITK.Core;
+            using Ruitk.Core;
             namespace MyApp.Routing
             {
                 public static class RouterFunc

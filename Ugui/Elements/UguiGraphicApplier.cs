@@ -1,6 +1,6 @@
 using UnityEngine.UI;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>Shared Graphic prop application (color, material, raycast, mask).</summary>
     internal static class UguiGraphicApplier

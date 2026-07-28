@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Language.SemanticTokens
+namespace Ruitk.Language.SemanticTokens
 {
     /// <summary>
     /// Describes a single classification override for a token whose type should

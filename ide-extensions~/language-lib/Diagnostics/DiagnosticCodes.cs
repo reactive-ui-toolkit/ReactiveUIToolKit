@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Language.Diagnostics
+namespace Ruitk.Language.Diagnostics
 {
     /// <summary>
     /// Diagnostic code constants used by the UITKX language library.

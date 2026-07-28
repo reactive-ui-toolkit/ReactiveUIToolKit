@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Applies the shared RectTransform/GameObject prop block. Application
@@ -33,7 +33,7 @@ namespace ReactiveUITK.Ugui
             if (!s_drivenHintShown.Add(id))
                 return;
             Debug.LogWarning(
-                $"[ReactiveUITK.Ugui] '{rt.name}': rect props are driven by "
+                $"[Ruitk.Ugui] '{rt.name}': rect props are driven by "
                     + $"{rt.drivenByObject.GetType().Name} — the written values will be "
                     + "overridden on the next layout pass. Control this element through "
                     + "layoutElement (min/preferred/flexible) or the parent group's "

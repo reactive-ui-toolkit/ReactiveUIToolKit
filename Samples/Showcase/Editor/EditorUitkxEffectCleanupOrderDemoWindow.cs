@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.EffectCleanupOrderDemoFunc;
-using ReactiveUITK.Samples.Components.EffectCleanupOrderDemoFunc.EffectCleanupOrderDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.EffectCleanupOrderDemoFunc;
+using Ruitk.Samples.Components.EffectCleanupOrderDemoFunc.EffectCleanupOrderDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxEffectCleanupOrderDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(Core-Fixes)/Effect Cleanup Order")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(Core-Fixes)/Effect Cleanup Order")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxEffectCleanupOrderDemoWindow>("Effect Cleanup Order");

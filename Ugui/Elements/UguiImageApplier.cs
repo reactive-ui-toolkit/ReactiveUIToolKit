@@ -1,6 +1,6 @@
 using UnityEngine.UI;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Shared Image prop application — used by both the Image adapter and the

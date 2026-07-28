@@ -1,7 +1,7 @@
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Plan §4 — path-derived default namespace + segment sanitization. The algorithm is pinned
@@ -14,7 +14,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         {
             string ns = NamespaceDerivation.Derive(
                 "C:/proj/Assets/Samples/Board.uitkx", "C:/proj/Assets/Samples");
-            Assert.Equal("ReactiveUITK.Uitkx", ns);
+            Assert.Equal("Ruitk.Uitkx", ns);
         }
 
         [Fact]
@@ -24,7 +24,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             string ns = NamespaceDerivation.Derive(
                 "C:/proj/Assets/Samples/Components/Tic Tac-Toe/Board.uitkx",
                 "C:/proj/Assets/Samples");
-            Assert.Equal("ReactiveUITK.Uitkx.Components.Tic_Tac_Toe", ns);
+            Assert.Equal("Ruitk.Uitkx.Components.Tic_Tac_Toe", ns);
         }
 
         [Fact]
@@ -33,7 +33,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             string ns = NamespaceDerivation.Derive(
                 @"C:\proj\Assets\Samples\Components\Widget\Widget.uitkx",
                 @"C:\proj\Assets\Samples");
-            Assert.Equal("ReactiveUITK.Uitkx.Components.Widget", ns);
+            Assert.Equal("Ruitk.Uitkx.Components.Widget", ns);
         }
 
         [Fact]
@@ -48,7 +48,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         [Fact]
         public void Derive_NullPrefix_UsesDefaultRoot()
         {
-            Assert.Equal("ReactiveUITK.Uitkx.Widget",
+            Assert.Equal("Ruitk.Uitkx.Widget",
                 NamespaceDerivation.Derive("C:/p/Assets/S/Widget/W.uitkx", "C:/p/Assets/S"));
         }
 
@@ -80,7 +80,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         [Fact]
         public void DeriveFileModule_AppendsSanitizedFileStem()
         {
-            Assert.Equal("ReactiveUITK.Uitkx.Components.Widget.Board",
+            Assert.Equal("Ruitk.Uitkx.Components.Widget.Board",
                 NamespaceDerivation.DeriveFileModule(
                     "C:/proj/Assets/Samples/Components/Widget/Board.uitkx", "C:/proj/Assets/Samples"));
         }
@@ -88,7 +88,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         [Fact]
         public void DeriveFileModule_FileBesideAsmdef_RootPlusStem()
         {
-            Assert.Equal("ReactiveUITK.Uitkx.Board",
+            Assert.Equal("Ruitk.Uitkx.Board",
                 NamespaceDerivation.DeriveFileModule(
                     "C:/proj/Assets/Samples/Board.uitkx", "C:/proj/Assets/Samples"));
         }
@@ -98,7 +98,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         {
             // A companion-style filename: `AppRoot.style.uitkx` → stem `AppRoot.style` → the
             // interior dot is a literal char, sanitized to '_' (NOT a namespace separator).
-            Assert.Equal("ReactiveUITK.Uitkx.Widget.AppRoot_style",
+            Assert.Equal("Ruitk.Uitkx.Widget.AppRoot_style",
                 NamespaceDerivation.DeriveFileModule(
                     "C:/proj/Assets/S/Widget/AppRoot.style.uitkx", "C:/proj/Assets/S"));
         }
@@ -106,7 +106,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         [Fact]
         public void DeriveFileModule_DigitLeadingStem_UnderscorePrefixed()
         {
-            Assert.Equal("ReactiveUITK.Uitkx._3DViewer",
+            Assert.Equal("Ruitk.Uitkx._3DViewer",
                 NamespaceDerivation.DeriveFileModule(
                     "C:/proj/Assets/S/3DViewer.uitkx", "C:/proj/Assets/S"));
         }
@@ -114,7 +114,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         [Fact]
         public void DeriveFileModule_ReservedKeywordStem_UnderscorePrefixed()
         {
-            Assert.Equal("ReactiveUITK.Uitkx._int",
+            Assert.Equal("Ruitk.Uitkx._int",
                 NamespaceDerivation.DeriveFileModule(
                     "C:/proj/Assets/S/int.uitkx", "C:/proj/Assets/S"));
         }

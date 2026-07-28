@@ -14,8 +14,8 @@ using OmniSharp.Extensions.LanguageServer.Protocol.Document;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server;
 using OmniSharp.Extensions.LanguageServer.Protocol.Window;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.Language.Roslyn;
+using Ruitk.Language.Parser;
+using Ruitk.Language.Roslyn;
 using UitkxLanguageServer.Roslyn;
 using LspRange = OmniSharp.Extensions.LanguageServer.Protocol.Models.Range;
 
@@ -645,7 +645,7 @@ public sealed class RenameHandler : IRenameHandler, IPrepareRenameHandler
                 if (TryGetText(invokerUri, invokingFilePath, out var invokerText))
                 {
                     var invokerDirectives = DirectiveParser.Parse(
-                        invokerText, invokingFilePath, new List<ReactiveUITK.Language.ParseDiagnostic>());
+                        invokerText, invokingFilePath, new List<Ruitk.Language.ParseDiagnostic>());
                     origin = ClassifyImportRenameOrigin(invokerDirectives, oldName);
                 }
             }
@@ -678,7 +678,7 @@ public sealed class RenameHandler : IRenameHandler, IPrepareRenameHandler
                 if (!TryGetText(uri, path, out var fileText))
                     continue;
 
-                var diags = new List<ReactiveUITK.Language.ParseDiagnostic>();
+                var diags = new List<Ruitk.Language.ParseDiagnostic>();
                 var directives = DirectiveParser.Parse(fileText, path, diags);
                 if (directives.Imports.IsDefaultOrEmpty)
                     continue;

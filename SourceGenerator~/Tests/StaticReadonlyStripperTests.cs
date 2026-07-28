@@ -1,9 +1,9 @@
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using ReactiveUITK.SourceGenerator.Emitter;
+using Ruitk.SourceGenerator.Emitter;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 public class StaticReadonlyStripperTests
 {
@@ -56,7 +56,7 @@ public class StaticReadonlyStripperTests
         var result = StaticReadonlyStripper.Strip(field).ToFullString();
 
         Assert.DoesNotContain("readonly", result);
-        Assert.Contains("[global::ReactiveUITK.UitkxHmrSwap]", result);
+        Assert.Contains("[global::Ruitk.UitkxHmrSwap]", result);
         Assert.Contains("public static int X = 1", result);
     }
 
@@ -67,7 +67,7 @@ public class StaticReadonlyStripperTests
         var result = StaticReadonlyStripper.Strip(field).ToFullString();
 
         Assert.Contains("[System.Obsolete]", result);
-        Assert.Contains("[global::ReactiveUITK.UitkxHmrSwap]", result);
+        Assert.Contains("[global::Ruitk.UitkxHmrSwap]", result);
         Assert.DoesNotContain("readonly", result);
     }
 
@@ -78,7 +78,7 @@ public class StaticReadonlyStripperTests
         var result = StaticReadonlyStripper.Strip(field).ToFullString();
 
         Assert.DoesNotContain("readonly", result);
-        Assert.Contains("[global::ReactiveUITK.UitkxHmrSwap]", result);
+        Assert.Contains("[global::Ruitk.UitkxHmrSwap]", result);
         Assert.Contains("A = 1", result);
         Assert.Contains("B = 2", result);
     }
@@ -91,7 +91,7 @@ public class StaticReadonlyStripperTests
 
         Assert.DoesNotContain("readonly", result);
         Assert.Contains("Dictionary<string, int>", result);
-        Assert.Contains("[global::ReactiveUITK.UitkxHmrSwap]", result);
+        Assert.Contains("[global::Ruitk.UitkxHmrSwap]", result);
     }
 
     [Fact]
@@ -105,7 +105,7 @@ public class StaticReadonlyStripperTests
         var result = StaticReadonlyStripper.Strip(field).ToFullString();
 
         Assert.Contains("<summary>The thing.</summary>", result);
-        Assert.Contains("[global::ReactiveUITK.UitkxHmrSwap]", result);
+        Assert.Contains("[global::Ruitk.UitkxHmrSwap]", result);
         Assert.DoesNotContain("readonly", result);
     }
 }

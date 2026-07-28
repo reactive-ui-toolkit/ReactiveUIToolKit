@@ -1,7 +1,7 @@
-using ReactiveUITK.Elements;
+using Ruitk.Elements;
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Registers the cross-backend island elements: "UguiHost" into the

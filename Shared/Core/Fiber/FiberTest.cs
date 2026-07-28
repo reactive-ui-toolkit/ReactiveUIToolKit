@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Fiber;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Core.Fiber;
+using Ruitk.Props.Typed;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Tests
+namespace Ruitk.Tests
 {
     /// <summary>
     /// Tests to validate Fiber core functionality
@@ -123,7 +123,7 @@ namespace ReactiveUITK.Tests
         {
             Debug.Log("[FiberTest] Starting signal test...");
 
-            var signal = ReactiveUITK.Signals.SignalFactory.Get<int>("FiberTest.SignalCounter", 0);
+            var signal = Ruitk.Signals.SignalFactory.Get<int>("FiberTest.SignalCounter", 0);
 
             var signalComp = V.Func(
                 (IProps props, IReadOnlyList<VirtualNode> children) =>

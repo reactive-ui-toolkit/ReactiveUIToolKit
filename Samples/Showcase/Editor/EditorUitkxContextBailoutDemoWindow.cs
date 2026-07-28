@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.ContextBailoutDemoFunc;
-using ReactiveUITK.Samples.Components.ContextBailoutDemoFunc.ContextBailoutDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.ContextBailoutDemoFunc;
+using Ruitk.Samples.Components.ContextBailoutDemoFunc.ContextBailoutDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxContextBailoutDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(Core-Fixes)/Context Through Bailout")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(Core-Fixes)/Context Through Bailout")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxContextBailoutDemoWindow>("Context Through Bailout");

@@ -8,7 +8,7 @@ using UnityEditor.Callbacks;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace ReactiveUITK.Editor
+namespace Ruitk.Editor
 {
     /// <summary>
     /// Intercepts Unity's "open asset" event for <c>.uitkx</c> files so that
@@ -21,7 +21,7 @@ namespace ReactiveUITK.Editor
     /// </summary>
     public static class UitkxConsoleNavigation
     {
-        private static readonly bool s_verboseLogs = EditorPrefs.GetBool("ReactiveUITK.UitkxNavVerbose", false);
+        private static readonly bool s_verboseLogs = EditorPrefs.GetBool("Ruitk.UitkxNavVerbose", false);
         private static bool s_isProgrammaticOpenInProgress;
 
         [InitializeOnLoadMethod]
@@ -702,7 +702,7 @@ namespace ReactiveUITK.Editor
                 return true;
             }
 
-            // Fallback for generator virtual paths (e.g. ReactiveUITK.SourceGenerator\...\Foo.uitkx)
+            // Fallback for generator virtual paths (e.g. Ruitk.SourceGenerator\...\Foo.uitkx)
             string fileName = Path.GetFileName(normalizedHint);
             string hintNoExt = Path.GetFileNameWithoutExtension(normalizedHint);
             if (string.IsNullOrEmpty(fileName) || string.IsNullOrEmpty(hintNoExt))

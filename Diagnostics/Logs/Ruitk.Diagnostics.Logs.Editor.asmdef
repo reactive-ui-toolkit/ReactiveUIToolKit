@@ -1,0 +1,17 @@
+{
+  "name": "Ruitk.Diagnostics.Logs.Editor",
+  "references": [
+    "Ruitk.Editor",
+    "Ruitk.Shared"
+  ],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
+

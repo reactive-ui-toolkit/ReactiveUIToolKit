@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine;
 using UnityEngine.Profiling;
 
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
-    /// React Fiber-style reconciler for ReactiveUITK
+    /// React Fiber-style reconciler for Ruitk
     /// Handles the work loop, fiber tree building, and commit phase
     /// </summary>
     public class FiberReconciler
@@ -1600,7 +1600,7 @@ namespace ReactiveUITK.Core.Fiber
                     try
                     {
                         UnityEngine.Debug.LogError(
-                            $"ReactiveUITK Fiber: Error boundary handler threw: {handlerEx}"
+                            $"Ruitk Fiber: Error boundary handler threw: {handlerEx}"
                         );
                     }
                     catch { }
@@ -1621,7 +1621,7 @@ namespace ReactiveUITK.Core.Fiber
                 if (exception != null)
                 {
                     UnityEngine.Debug.LogError(
-                        $"ReactiveUITK Fiber: Error boundary captured exception: {exception}"
+                        $"Ruitk Fiber: Error boundary captured exception: {exception}"
                     );
                 }
             }

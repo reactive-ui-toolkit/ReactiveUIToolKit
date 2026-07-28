@@ -1,6 +1,6 @@
-# Reactive UI - Unity - VS Code (UITKX)
+# Reactive UI Toolkit - Unity - VS Code (UITKX)
 
-Syntax highlighting + language intelligence for `.uitkx` markup (ReactiveUIToolKit for Unity). Completions, hover, diagnostics and formatting from the bundled language server — fully offline, no running Unity editor required.
+Syntax highlighting + language intelligence for `.uitkx` markup (ReactiveUIToolkit for Unity). Completions, hover, diagnostics and formatting from the bundled language server — fully offline, no running Unity editor required.
 
 💬 Join the community on Discord: https://discord.gg/Knedqu4Wyv
 

@@ -1,16 +1,16 @@
 using System.Collections.Generic;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Formatter;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.Language;
+using Ruitk.Language.Formatter;
+using Ruitk.Language.Parser;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Pins for the @backend directive and the ugui element vocabulary: parsing,
 /// diagnostics, formatter round-trip, and SG emission through the U factory
-/// surface. The test compilation has no ReactiveUITK.Ugui assembly reference,
+/// surface. The test compilation has no Ruitk.Ugui assembly reference,
 /// so ugui tag resolution exercises the ugui FALLBACK map — the same table
 /// the first-load path uses in a real project.
 /// </summary>
@@ -95,7 +95,7 @@ public class UguiBackendTests
 
         Assert.True(result.SourceWasProduced);
         Assert.True(
-            result.SourceContains("global::ReactiveUITK.Ugui.U.Image("),
+            result.SourceContains("global::Ruitk.Ugui.U.Image("),
             "Expected a U.Image( call for the ugui vocabulary"
         );
     }
@@ -107,7 +107,7 @@ public class UguiBackendTests
 
         Assert.True(
             result.SourceContains(
-                "global::ReactiveUITK.Ugui.UguiBaseProps.__Rent<global::ReactiveUITK.Ugui.UguiImageProps>"
+                "global::Ruitk.Ugui.UguiBaseProps.__Rent<global::Ruitk.Ugui.UguiImageProps>"
             ),
             "Expected ugui family pool rent"
         );
@@ -121,11 +121,11 @@ public class UguiBackendTests
         );
 
         Assert.True(
-            result.SourceContains("global::ReactiveUITK.Ugui.U.VerticalLayoutGroup("),
+            result.SourceContains("global::Ruitk.Ugui.U.VerticalLayoutGroup("),
             "Expected U.VerticalLayoutGroup"
         );
         Assert.True(
-            result.SourceContains("global::ReactiveUITK.Ugui.U.Text("),
+            result.SourceContains("global::Ruitk.Ugui.U.Text("),
             "Expected typed U.Text for the <Text> tag"
         );
     }
@@ -138,7 +138,7 @@ public class UguiBackendTests
         );
 
         Assert.True(result.SourceContains("V.Label("), "UITK files must keep bare V.* emission");
-        Assert.False(result.SourceContains("ReactiveUITK.Ugui"), "No ugui leakage into UITK files");
+        Assert.False(result.SourceContains("Ruitk.Ugui"), "No ugui leakage into UITK files");
     }
 
     // ── Vocabulary contract: every ugui tag resolves to its U factory ────────
@@ -172,7 +172,7 @@ public class UguiBackendTests
         {
             var result = GeneratorTestHelper.Run(UguiFile($"<{tag}/>"));
             Assert.True(
-                result.SourceContains($"global::ReactiveUITK.Ugui.U.{method}("),
+                result.SourceContains($"global::Ruitk.Ugui.U.{method}("),
                 $"Tag <{tag}> did not emit U.{method}("
             );
         }

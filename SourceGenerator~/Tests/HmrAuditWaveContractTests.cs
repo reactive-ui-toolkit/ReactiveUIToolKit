@@ -4,7 +4,7 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// ES-modules audit wave (Plans~/ES_MODULES_AUDIT_FINDINGS.md, HMR cluster H1/H3/H4/M1/M2/L3):

@@ -1,7 +1,7 @@
-@namespace ReactiveUITK.Samples.UITKXComponents
-@using ReactiveUITK.Props.Typed
-@using static ReactiveUITK.Props.Typed.StyleKeys
-@using static ReactiveUITK.Props.Typed.CssHelpers
+@namespace Ruitk.Samples.UITKXComponents
+@using Ruitk.Props.Typed
+@using static Ruitk.Props.Typed.StyleKeys
+@using static Ruitk.Props.Typed.CssHelpers
 
 export module UitkxTestFileDoNotTouch {
   public static readonly Style ContainerStyle = new Style

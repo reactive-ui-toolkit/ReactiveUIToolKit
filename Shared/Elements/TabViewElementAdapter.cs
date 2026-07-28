@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-using ReactiveUITK.Core;
-using ReactiveUITK.Elements.Trackers;
-using ReactiveUITK.Props;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Elements.Trackers;
+using Ruitk.Props;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public sealed class TabViewElementAdapter
         : StatefulElementAdapter<TabView, TabViewElementAdapter.Cached>

@@ -5,7 +5,7 @@ using System.Threading;
 using Microsoft.CodeAnalysis;
 using OmniSharp.Extensions.LanguageServer.Protocol;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 using LspRange = OmniSharp.Extensions.LanguageServer.Protocol.Models.Range;
 
 namespace UitkxLanguageServer;
@@ -169,7 +169,7 @@ internal static class LspHelpers
 
     public static ParseResult ParseText(string text, string filePath)
     {
-        var parseDiags = new List<ReactiveUITK.Language.ParseDiagnostic>();
+        var parseDiags = new List<Ruitk.Language.ParseDiagnostic>();
         var directives = DirectiveParser.Parse(text, filePath, parseDiags);
         var nodes = UitkxParser.Parse(text, filePath, directives, parseDiags);
         return new ParseResult(directives, nodes, ImmutableArray.CreateRange(parseDiags));

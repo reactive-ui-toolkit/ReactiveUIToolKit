@@ -5,7 +5,7 @@ using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     /// <summary>
     /// Generates C# source for hook body methods from a parsed DirectiveSet.
@@ -14,20 +14,20 @@ namespace ReactiveUITK.EditorSupport.HMR
     /// <see cref="UitkxHmrDelegateSwapper.SwapHooks"/>.
     ///
     /// All DirectiveSet / HookDeclaration access is via reflection because
-    /// <c>ReactiveUITK.Language.dll</c> is loaded dynamically at runtime.
+    /// <c>Ruitk.Language.dll</c> is loaded dynamically at runtime.
     /// </summary>
     internal static class HmrHookEmitter
     {
         // ── Hook alias substitution (mirrors HmrCSharpEmitter) ───────────────
         //
-        // Sourced from ReactiveUITK.Core.HookRegistry — the single source of
+        // Sourced from Ruitk.Core.HookRegistry — the single source of
         // truth shared by SG, HMR, IDE diagnostics, hover docs, and VDG stubs.
 
         private static readonly (string From, string To)[] s_hookAliases =
-            global::ReactiveUITK.Core.HookRegistry.GetAliasTable();
+            global::Ruitk.Core.HookRegistry.GetAliasTable();
 
         private static readonly Regex s_genericHookAliasRe = new Regex(
-            global::ReactiveUITK.Core.HookRegistry.GetGenericHookPattern(),
+            global::Ruitk.Core.HookRegistry.GetGenericHookPattern(),
             RegexOptions.Compiled
         );
 
@@ -54,7 +54,7 @@ namespace ReactiveUITK.EditorSupport.HMR
             // Prefer the EFFECTIVE namespace (matches the source generator) both for the
             // emitted container `namespace` — so the HMR swapper finds the method under the
             // same FQN the project assembly used — and for the §7 qualified family key.
-            string ns = effectiveNs ?? (string)GetProp(directives, "Namespace") ?? "ReactiveUITK.Generated";
+            string ns = effectiveNs ?? (string)GetProp(directives, "Namespace") ?? "Ruitk.Generated";
             var hookDecls = GetProp(directives, "HookDeclarations");
 
             // ImmutableArray<HookDeclaration> — enumerate via IEnumerable
@@ -80,15 +80,15 @@ namespace ReactiveUITK.EditorSupport.HMR
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using System.Linq;");
-            sb.AppendLine("using ReactiveUITK;");
-            sb.AppendLine("using ReactiveUITK.Core;");
-            sb.AppendLine("using ReactiveUITK.Core.Animation;");
-            sb.AppendLine("using ReactiveUITK.Router;");
-            sb.AppendLine("using ReactiveUITK.Props.Typed;");
+            sb.AppendLine("using Ruitk;");
+            sb.AppendLine("using Ruitk.Core;");
+            sb.AppendLine("using Ruitk.Core.Animation;");
+            sb.AppendLine("using Ruitk.Router;");
+            sb.AppendLine("using Ruitk.Props.Typed;");
             sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.StyleKeys;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.CssHelpers;");
-            sb.AppendLine("using static ReactiveUITK.AssetHelpers;");
+            sb.AppendLine("using static Ruitk.Props.Typed.StyleKeys;");
+            sb.AppendLine("using static Ruitk.Props.Typed.CssHelpers;");
+            sb.AppendLine("using static Ruitk.AssetHelpers;");
             sb.AppendLine("using UColor = UnityEngine.Color;");
 
             // User usings
@@ -183,7 +183,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 string familyKey = ns + "." + containerClassName + "::" + hookName;
                 string keysLit = HmrCSharpEmitter.RenderCustomHookFamilyKeysLiteral(hookCustomKeys);
                 sb.AppendLine(
-                    $"            global::ReactiveUITK.Refresh.RefreshRuntime.RegisterHook(" +
+                    $"            global::Ruitk.Refresh.RefreshRuntime.RegisterHook(" +
                     $"\"{EscapeStringLiteral(familyKey)}\", " +
                     $"\"{EscapeStringLiteral(sig)}\", " +
                     $"{keysLit});");
@@ -210,7 +210,7 @@ namespace ReactiveUITK.EditorSupport.HMR
             // partial class in the same hot unit (bare style refs like `container` fail
             // CS0103), and (b) the module static swapper — which matches hot↔project types
             // by Type.FullName — finds no project type and silently swaps nothing.
-            string ns = effectiveNs ?? (string)GetProp(directives, "Namespace") ?? "ReactiveUITK.Generated";
+            string ns = effectiveNs ?? (string)GetProp(directives, "Namespace") ?? "Ruitk.Generated";
             var moduleDecls = GetProp(directives, "ModuleDeclarations");
 
             var moduleList = new List<object>();
@@ -234,15 +234,15 @@ namespace ReactiveUITK.EditorSupport.HMR
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using System.Linq;");
-            sb.AppendLine("using ReactiveUITK;");
-            sb.AppendLine("using ReactiveUITK.Core;");
-            sb.AppendLine("using ReactiveUITK.Core.Animation;");
-            sb.AppendLine("using ReactiveUITK.Router;");
-            sb.AppendLine("using ReactiveUITK.Props.Typed;");
+            sb.AppendLine("using Ruitk;");
+            sb.AppendLine("using Ruitk.Core;");
+            sb.AppendLine("using Ruitk.Core.Animation;");
+            sb.AppendLine("using Ruitk.Router;");
+            sb.AppendLine("using Ruitk.Props.Typed;");
             sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.StyleKeys;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.CssHelpers;");
-            sb.AppendLine("using static ReactiveUITK.AssetHelpers;");
+            sb.AppendLine("using static Ruitk.Props.Typed.StyleKeys;");
+            sb.AppendLine("using static Ruitk.Props.Typed.CssHelpers;");
+            sb.AppendLine("using static Ruitk.AssetHelpers;");
             sb.AppendLine("using UColor = UnityEngine.Color;");
 
             var usings = GetProp(directives, "Usings");
@@ -338,7 +338,7 @@ namespace ReactiveUITK.EditorSupport.HMR
             IReadOnlyDictionary<string, string> hookKeyMap = null,
             IReadOnlyList<string> bridgeLines = null)
         {
-            string ns = effectiveNs ?? (string)GetProp(directives, "Namespace") ?? "ReactiveUITK.Generated";
+            string ns = effectiveNs ?? (string)GetProp(directives, "Namespace") ?? "Ruitk.Generated";
             var memberDecls = GetProp(directives, "MemberDeclarations");
 
             var memberList = new List<object>();
@@ -361,15 +361,15 @@ namespace ReactiveUITK.EditorSupport.HMR
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using System.Linq;");
-            sb.AppendLine("using ReactiveUITK;");
-            sb.AppendLine("using ReactiveUITK.Core;");
-            sb.AppendLine("using ReactiveUITK.Core.Animation;");
-            sb.AppendLine("using ReactiveUITK.Router;");
-            sb.AppendLine("using ReactiveUITK.Props.Typed;");
+            sb.AppendLine("using Ruitk;");
+            sb.AppendLine("using Ruitk.Core;");
+            sb.AppendLine("using Ruitk.Core.Animation;");
+            sb.AppendLine("using Ruitk.Router;");
+            sb.AppendLine("using Ruitk.Props.Typed;");
             sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.StyleKeys;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.CssHelpers;");
-            sb.AppendLine("using static ReactiveUITK.AssetHelpers;");
+            sb.AppendLine("using static Ruitk.Props.Typed.StyleKeys;");
+            sb.AppendLine("using static Ruitk.Props.Typed.CssHelpers;");
+            sb.AppendLine("using static Ruitk.AssetHelpers;");
             sb.AppendLine("using UColor = UnityEngine.Color;");
 
             sb.AppendLine("using Color = UnityEngine.Color;");
@@ -424,7 +424,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 {
                     string type = returnType ?? ExtractNewInitializerTypeName(body) ?? "object";
                     sb.AppendLine();
-                    sb.AppendLine("        [global::ReactiveUITK.UitkxHmrSwap]");
+                    sb.AppendLine("        [global::Ruitk.UitkxHmrSwap]");
                     sb.AppendLine($"#line {bodyStartLine} \"{linePath}\"");
                     sb.AppendLine($"        public static {type} {name} = {body};");
                     sb.AppendLine("#line hidden");
@@ -504,7 +504,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                     string familyKey = ns + ".__Exports::" + hookName;
                     string keysLit = HmrCSharpEmitter.RenderCustomHookFamilyKeysLiteral(hookCustomKeys);
                     sb.AppendLine(
-                        $"            global::ReactiveUITK.Refresh.RefreshRuntime.RegisterHook(" +
+                        $"            global::Ruitk.Refresh.RefreshRuntime.RegisterHook(" +
                         $"\"{EscapeStringLiteral(familyKey)}\", " +
                         $"\"{EscapeStringLiteral(sig)}\", " +
                         $"{keysLit});");

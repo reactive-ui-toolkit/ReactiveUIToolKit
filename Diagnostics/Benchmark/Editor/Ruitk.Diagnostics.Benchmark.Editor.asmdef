@@ -1,0 +1,19 @@
+{
+  "name": "Ruitk.Diagnostics.Benchmark.Editor",
+  "references": [
+    "Ruitk.Editor",
+    "Ruitk.Shared",
+    "Ruitk.Runtime",
+    "Ruitk.Diagnostics"
+  ],
+  "includePlatforms": ["Editor"],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
+

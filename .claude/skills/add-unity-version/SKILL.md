@@ -1,11 +1,11 @@
 ---
 name: add-unity-version
-description: Add support for a new Unity version to ReactiveUIToolKit. Run when a new Unity release is available (user says "add Unity 6.5 support", "new Unity version came out", etc.). Discovers API changes via the automation~ diff scripts, classifies them, and implements support across all layers (PropsApplier/Style/StyleKeys/CssHelpers, schema, LSP, docs site) plus record-keeping.
+description: Add support for a new Unity version to ReactiveUIToolkit. Run when a new Unity release is available (user says "add Unity 6.5 support", "new Unity version came out", etc.). Discovers API changes via the automation~ diff scripts, classifies them, and implements support across all layers (PropsApplier/Style/StyleKeys/CssHelpers, schema, LSP, docs site) plus record-keeping.
 ---
 
 # Add Unity Version Support
 
-You are adding support for a new Unity version to the **ReactiveUIToolKit** package.
+You are adding support for a new Unity version to the **ReactiveUIToolkit** package.
 The user will tell you which version was released (e.g. "Unity 6.5 / 6000.5").
 
 Follow these phases **in order**. Do not skip steps. Mark each step done as you go.
@@ -176,7 +176,7 @@ Update the docs site so the website reflects the new version.
 
 ### Steps
 
-1. **versionManifest.ts** (`ReactiveUIToolKitDocs~/src/versionManifest.ts`)
+1. **versionManifest.ts** (`ReactiveUIToolkitDocs~/src/versionManifest.ts`)
    - Add entry to `SUPPORTED_VERSIONS`: `{ version: '{VERSION}', label: '{MAJOR}.{MINOR}' }`
    - Add entries to `STYLE_PROPERTY_VERSIONS` for each new IStyle property:
      `{camelName}: { sinceUnity: '{VERSION}' }`
@@ -186,7 +186,7 @@ Update the docs site so the website reflects the new version.
      `{ElementName}: { sinceUnity: '{VERSION}' }`
    - Add entries to `CSS_HELPER_VERSIONS` for each new CssHelper
 
-2. **stylePropertyCatalog.ts** (`ReactiveUIToolKitDocs~/src/pages/UITKX/Styling/stylePropertyCatalog.ts`)
+2. **stylePropertyCatalog.ts** (`ReactiveUIToolkitDocs~/src/pages/UITKX/Styling/stylePropertyCatalog.ts`)
    - This is the **data file** that drives the entire Styling reference page.
    - Add a `PropertyCard` entry for each new IStyle property:
      ```ts
@@ -210,7 +210,7 @@ Update the docs site so the website reflects the new version.
 
 4. **New element doc pages** (if elements were added)
    - For each new element:
-     - Create a **full component page** in `ReactiveUIToolKitDocs~/src/pages/Components/{Name}/`
+     - Create a **full component page** in `ReactiveUIToolkitDocs~/src/pages/Components/{Name}/`
        with usage examples, props table, event list, and code samples using `language="tsx"`
      - Add page entry in `pages.tsx` with `sinceUnity: '{VERSION}'`
      - Add `unityDocLinks.ts` entry: `{Name}: { unityElement: '{Name}' }`
@@ -218,7 +218,7 @@ Update the docs site so the website reflects the new version.
 
 5. **Verify docs build:**
    ```powershell
-   cd ReactiveUIToolKitDocs~; npm run build
+   cd ReactiveUIToolkitDocs~; npm run build
    ```
 
 ---

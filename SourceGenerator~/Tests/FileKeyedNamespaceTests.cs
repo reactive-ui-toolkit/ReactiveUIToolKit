@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.IO;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Parser;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// ES-modules campaign (Plans~/ES_MODULES_EXECUTION_PLAN.md M2, U-01): the mode-aware
@@ -58,8 +58,8 @@ namespace ReactiveUITK.SourceGenerator.Tests
 
             string? nsA = ResolveFor(a);
             string? nsB = ResolveFor(b);
-            Assert.Equal("ReactiveUITK.Uitkx.Widgets.Board", nsA);
-            Assert.Equal("ReactiveUITK.Uitkx.Widgets.Panel", nsB);
+            Assert.Equal("Ruitk.Uitkx.Widgets.Board", nsA);
+            Assert.Equal("Ruitk.Uitkx.Widgets.Panel", nsB);
             Assert.NotEqual(nsA, nsB);
         }
 
@@ -71,7 +71,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
 
             string? nsA = ResolveFor(a);
             string? nsB = ResolveFor(b);
-            Assert.Equal("ReactiveUITK.Uitkx.Widgets", nsA);
+            Assert.Equal("Ruitk.Uitkx.Widgets", nsA);
             Assert.Equal(nsA, nsB);
         }
 
@@ -93,7 +93,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             // silently change meaning.
             string a = File_("Widgets/Board.uitkx", "export VirtualNode Board() { return (<Box/>); }");
             var ds = Parse(a);
-            Assert.Equal("ReactiveUITK.Uitkx.Widgets",
+            Assert.Equal("Ruitk.Uitkx.Widgets",
                 EffectiveNamespace.Resolve(ds.HasExplicitNamespace, ds.Namespace, a));
         }
 
@@ -101,7 +101,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         public void CompanionStyleFilename_NewMode_GetsItsOwnSanitizedNamespace()
         {
             string style = File_("Widgets/Board.style.uitkx", "export Style bg = new Style { };");
-            Assert.Equal("ReactiveUITK.Uitkx.Widgets.Board_style", ResolveFor(style));
+            Assert.Equal("Ruitk.Uitkx.Widgets.Board_style", ResolveFor(style));
         }
     }
 }

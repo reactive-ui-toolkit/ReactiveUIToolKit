@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactiveUITK.Signals
+namespace Ruitk.Signals
 {
     public sealed class SignalRegistry
     {

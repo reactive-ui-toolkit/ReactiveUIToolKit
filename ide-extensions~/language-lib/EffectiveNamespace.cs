@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>
     /// Resolves a <c>.uitkx</c> file's EFFECTIVE namespace (import/export grammar, §4) — the single
@@ -55,7 +55,7 @@ namespace ReactiveUITK.Language
         /// The root prefix for a path-derived namespace (namespace-import unification plan),
         /// most-specific WINS: the nearest <c>uitkx.config.json</c> <c>"namespacePrefix"</c>, else the
         /// owning <c>.asmdef</c>'s <c>"rootNamespace"</c> (Unity's own convention), else the
-        /// <c>ReactiveUITK.Uitkx</c> default. The asmdef <c>"name"</c> is DELIBERATELY not used — it
+        /// <c>Ruitk.Uitkx</c> default. The asmdef <c>"name"</c> is DELIBERATELY not used — it
         /// would silently re-root every named-asmdef project. Every step is opt-in, so a project with
         /// neither config nor an asmdef rootNamespace keeps the exact legacy derivation.
         /// </summary>

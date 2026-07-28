@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Elements;
+using Ruitk.Elements;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     internal readonly struct ContextKey : IEquatable<ContextKey>
     {

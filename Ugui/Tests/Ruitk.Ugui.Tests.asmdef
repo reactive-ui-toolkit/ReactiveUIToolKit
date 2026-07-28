@@ -1,0 +1,34 @@
+{
+  "name": "Ruitk.Ugui.Tests",
+  "references": [
+    "UnityEngine.TestRunner",
+    "UnityEditor.TestRunner",
+    "Ruitk.Shared",
+    "Ruitk.Runtime",
+    "Ruitk.Ugui",
+    "UnityEngine.UI",
+    "Unity.TextMeshPro"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "nunit.framework.dll"
+  ],
+  "autoReferenced": false,
+  "defineConstraints": [
+    "UNITY_INCLUDE_TESTS",
+    "RUITK_HAS_TEST_FRAMEWORK"
+  ],
+  "versionDefines": [
+    {
+      "name": "com.unity.test-framework",
+      "expression": "1",
+      "define": "RUITK_HAS_TEST_FRAMEWORK"
+    }
+  ],
+  "noEngineReferences": false
+}

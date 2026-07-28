@@ -4,7 +4,7 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace ReactiveUITK.Language.Parser
+namespace Ruitk.Language.Parser
 {
     /// <summary>
     /// Parses the function-style component declaration from a .uitkx source file.
@@ -29,7 +29,7 @@ namespace ReactiveUITK.Language.Parser
         // (see UitkxPipeline.ResolveEffectiveNamespace); it survives only as the flag-off /
         // no-project-root fallback. The generator no longer reads a companion .cs to infer the
         // namespace — a target's identity must never flip on a .cs edit (plan §4).
-        private const string FunctionStyleDefaultNamespace = "ReactiveUITK.FunctionStyle";
+        private const string FunctionStyleDefaultNamespace = "Ruitk.FunctionStyle";
 
         private static readonly HashSet<string> s_topLevelKeywords = new HashSet<string>(
             StringComparer.Ordinal
@@ -1820,7 +1820,7 @@ namespace ReactiveUITK.Language.Parser
                 && char.IsUpper(name[3]);
 
         /// <summary>Strips <c>global::</c> and namespace qualifiers so a fully-qualified
-        /// <c>ReactiveUITK.Core.VirtualNode</c> return type still classifies as a component
+        /// <c>Ruitk.Core.VirtualNode</c> return type still classifies as a component
         /// (G-03: "normalized return-type token"). Not applied to tuple return types (they never
         /// equal <c>VirtualNode</c> textually, so passing one through here is harmless).</summary>
         private static string NormalizeReturnTypeForClassification(string? typeText)

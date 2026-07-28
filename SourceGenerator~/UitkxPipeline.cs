@@ -7,13 +7,13 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
 using Microsoft.CodeAnalysis;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Lowering;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.SourceGenerator.Emitter;
+using Ruitk.Language;
+using Ruitk.Language.Lowering;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
+using Ruitk.SourceGenerator.Emitter;
 
-namespace ReactiveUITK.SourceGenerator
+namespace Ruitk.SourceGenerator
 {
     /// <summary>
     /// Top-level orchestrator for the UITKX compilation pipeline.
@@ -121,7 +121,7 @@ namespace ReactiveUITK.SourceGenerator
                 && directives.ComponentDeclarations.IsDefaultOrEmpty
                 && !directives.MemberDeclarations.IsDefaultOrEmpty)
             {
-                if (compilation.GetTypeByMetadataName("ReactiveUITK.Core.VirtualNode") == null)
+                if (compilation.GetTypeByMetadataName("Ruitk.Core.VirtualNode") == null)
                     return new UitkxPipelineResult(hintName, null, ImmutableArray<Diagnostic>.Empty);
                 if (!IsOwnedByCompilation(filePath, compilation.AssemblyName))
                     return new UitkxPipelineResult(hintName, null, ImmutableArray<Diagnostic>.Empty);
@@ -170,8 +170,8 @@ namespace ReactiveUITK.SourceGenerator
                 && (!directives.HookDeclarations.IsDefaultOrEmpty
                     || !directives.ModuleDeclarations.IsDefaultOrEmpty))
             {
-                // Guard: only emit into compilations that reference ReactiveUITK.Shared.
-                if (compilation.GetTypeByMetadataName("ReactiveUITK.Core.VirtualNode") == null)
+                // Guard: only emit into compilations that reference Ruitk.Shared.
+                if (compilation.GetTypeByMetadataName("Ruitk.Core.VirtualNode") == null)
                     return new UitkxPipelineResult(hintName, null, ImmutableArray<Diagnostic>.Empty);
                 if (!IsOwnedByCompilation(filePath, compilation.AssemblyName))
                     return new UitkxPipelineResult(hintName, null, ImmutableArray<Diagnostic>.Empty);
@@ -282,10 +282,10 @@ namespace ReactiveUITK.SourceGenerator
 
             ct.ThrowIfCancellationRequested();
 
-            // Guard 1: only emit into compilations that reference ReactiveUITK.Shared.
+            // Guard 1: only emit into compilations that reference Ruitk.Shared.
             // The generator runs on every assembly in the project; assemblies that
-            // don't reference Shared would get CS0246 errors for `using ReactiveUITK;`.
-            if (compilation.GetTypeByMetadataName("ReactiveUITK.Core.VirtualNode") == null)
+            // don't reference Shared would get CS0246 errors for `using Ruitk;`.
+            if (compilation.GetTypeByMetadataName("Ruitk.Core.VirtualNode") == null)
             {
                 return new UitkxPipelineResult(
                     HintName: hintName,
@@ -295,8 +295,8 @@ namespace ReactiveUITK.SourceGenerator
             }
 
             // Guard 2: only emit into the compilation that *owns* this .uitkx file.
-            // Multiple assemblies may reference Shared (e.g. ReactiveUITK.Editor and
-            // ReactiveUITK.Samples both pass Guard 1). Emitting the same partial class
+            // Multiple assemblies may reference Shared (e.g. Ruitk.Editor and
+            // Ruitk.Samples both pass Guard 1). Emitting the same partial class
             // into both causes CS0101 / CS0436 duplicate-type errors.
             //
             // Ownership is determined by walking up the directory tree from the .uitkx
@@ -1133,7 +1133,7 @@ namespace ReactiveUITK.SourceGenerator
         // (UseState) and the camelCase alias (useState). CanonicalNames alone missed the
         // camelCase call sites every real file uses → UITKX2307 storm in real projects.
         private static readonly HashSet<string> s_builtinHooks =
-            new HashSet<string>(global::ReactiveUITK.Core.HookRegistry.AmbientHookNames, StringComparer.Ordinal);
+            new HashSet<string>(global::Ruitk.Core.HookRegistry.AmbientHookNames, StringComparer.Ordinal);
 
         /// <summary>
         /// Validates each <c>import</c> declaration (resolves the specifier + checks the imported
@@ -1447,7 +1447,7 @@ namespace ReactiveUITK.SourceGenerator
                 pd.Code,
                 title: "",
                 messageFormat: pd.Message,
-                category: "ReactiveUITK.Parser",
+                category: "Ruitk.Parser",
                 severity,
                 isEnabledByDefault: true
             );

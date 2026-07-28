@@ -1,9 +1,9 @@
 import { HUD } from "../HUD/HUD"
 import { useGalagaGame } from "./GameScreen.hooks"
 import "@UnityEngine.UIElements"
-import "@static ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes"
-import "@static ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes.C"
-import "@static ReactiveUITK.Samples.Components.GalagaGame.SpriteAtlas"
+import "@static Ruitk.Samples.Components.GalagaGame.GalagaTypes"
+import "@static Ruitk.Samples.Components.GalagaGame.GalagaTypes.C"
+import "@static Ruitk.Samples.Components.GalagaGame.SpriteAtlas"
 
 export VirtualNode GameScreen(int restartVersion = 0, Action? onQuit = null) {
   var boardRef = useRef<VisualElement?>(null);

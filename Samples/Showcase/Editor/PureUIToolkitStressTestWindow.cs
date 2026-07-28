@@ -5,11 +5,11 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Samples.PureUIToolkit.Editor
+namespace Ruitk.Samples.PureUIToolkit.Editor
 {
     public sealed class PureUIToolkitStressTestWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Stress Test (Pure UI Toolkit)")]
+        [MenuItem("Reactive UI Toolkit/Demos/Stress Test (Pure UI Toolkit)")]
         public static void ShowWindow()
         {
             var window = GetWindow<PureUIToolkitStressTestWindow>("Stress Test (Pure UI Toolkit)");

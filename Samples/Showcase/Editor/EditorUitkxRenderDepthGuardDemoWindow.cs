@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.RenderDepthGuardDemoFunc;
-using ReactiveUITK.Samples.Components.RenderDepthGuardDemoFunc.RenderDepthGuardDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.RenderDepthGuardDemoFunc;
+using Ruitk.Samples.Components.RenderDepthGuardDemoFunc.RenderDepthGuardDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxRenderDepthGuardDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(Core-Fixes)/Render Depth Guard")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(Core-Fixes)/Render Depth Guard")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxRenderDepthGuardDemoWindow>("Render Depth Guard");

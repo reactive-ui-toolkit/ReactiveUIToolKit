@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.SourceGenerator.Emitter
+namespace Ruitk.SourceGenerator.Emitter
 {
     /// <summary>
     /// Phase 4 - walks the AST produced by <see cref="UitkxParser"/> and emits a
@@ -141,7 +141,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         private const string I3 = "            "; // 12sp - method body level
         private const string I4 = "                "; // 16sp - inside __C args
 
-        private const string QVNode = "global::ReactiveUITK.Core.VirtualNode";
+        private const string QVNode = "global::Ruitk.Core.VirtualNode";
 
         private readonly IReadOnlyDictionary<string, string>? _hookKeyMap;
 
@@ -163,7 +163,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             _isUgui = directives.Backend == "ugui";
             // Fully qualified for the ugui vocabulary so emission never depends
             // on a using; "V" stays bare so UITK output is byte-identical.
-            _factory = _isUgui ? "global::ReactiveUITK.Ugui.U" : "V";
+            _factory = _isUgui ? "global::Ruitk.Ugui.U" : "V";
         }
 
         private readonly bool _isUgui;
@@ -201,15 +201,15 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             L("using System;");
             L("using System.Collections.Generic;");
             L("using System.Linq;");
-            L("using ReactiveUITK;");
-            L("using ReactiveUITK.Core;");
-            L("using ReactiveUITK.Core.Animation;");
-            L("using ReactiveUITK.Router;");
-            L("using ReactiveUITK.Props.Typed;");
+            L("using Ruitk;");
+            L("using Ruitk.Core;");
+            L("using Ruitk.Core.Animation;");
+            L("using Ruitk.Router;");
+            L("using Ruitk.Props.Typed;");
             L("using UnityEngine;");
-            L("using static ReactiveUITK.Props.Typed.StyleKeys;");
-            L("using static ReactiveUITK.Props.Typed.CssHelpers;");
-            L("using static ReactiveUITK.AssetHelpers;");
+            L("using static Ruitk.Props.Typed.StyleKeys;");
+            L("using static Ruitk.Props.Typed.CssHelpers;");
+            L("using static Ruitk.AssetHelpers;");
             L("using UColor = UnityEngine.Color;");
             // NEW-MODE files (ES-modules campaign, M7): user + injected usings are emitted
             // INSIDE the namespace block instead of here. File-keyed namespaces make every
@@ -260,11 +260,11 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             if (!_directives.UsesLegacySyntax && !_directives.Usings.IsDefaultOrEmpty)
             {
                 foreach (var u in _directives.Usings)
-                    L($"    using {ReactiveUITK.Language.ImportScopeFacts.GlobalizeUsingPayload(u)};");
+                    L($"    using {Ruitk.Language.ImportScopeFacts.GlobalizeUsingPayload(u)};");
                 L("");
             }
-            L($"    [global::ReactiveUITK.UitkxSource(@\"{_filePath.Replace("\"", "\"\"")}\")]");
-            L($"    [global::ReactiveUITK.UitkxElement(\"{_directives.ComponentName}\")]");
+            L($"    [global::Ruitk.UitkxSource(@\"{_filePath.Replace("\"", "\"\"")}\")]");
+            L($"    [global::Ruitk.UitkxElement(\"{_directives.ComponentName}\")]");
 
             // Emit hook signature for proactive HMR state-reset detection.
             // customHookKeys are PATH-QUALIFIED (§7) via _hookKeyMap so they match the
@@ -276,11 +276,11 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             {
                 if (customHookKeys.Length > 0)
                 {
-                    L($"    [global::ReactiveUITK.HookSignature(\"{hookSig}\", {RenderCustomHookFamilyKeysLiteral(customHookKeys)})]");
+                    L($"    [global::Ruitk.HookSignature(\"{hookSig}\", {RenderCustomHookFamilyKeysLiteral(customHookKeys)})]");
                 }
                 else
                 {
-                    L($"    [global::ReactiveUITK.HookSignature(\"{hookSig}\")]");
+                    L($"    [global::Ruitk.HookSignature(\"{hookSig}\")]");
                 }
             }
 
@@ -320,7 +320,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 string projectRoot = GetProjectRoot(_filePath);
 
                 _sb.Append(
-                    $"{I2}[global::ReactiveUITK.UitkxHmrSwap] internal static string[] __uitkx_ussKeys = new string[] {{ "
+                    $"{I2}[global::Ruitk.UitkxHmrSwap] internal static string[] __uitkx_ussKeys = new string[] {{ "
                 );
                 for (int idx = 0; idx < _directives.UssFiles.Length; idx++)
                 {
@@ -329,9 +329,9 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                     string rawPath = _directives.UssFiles[idx];
                     // H-03: same canonical rule as ResolveAssetPaths - bare paths resolve
                     // uitkx-dir-relative too, not just explicitly "./"/"../"-prefixed ones.
-                    string resolved = ReactiveUITK.Language.AssetPathUtil.ResolveAssetPath(
+                    string resolved = Ruitk.Language.AssetPathUtil.ResolveAssetPath(
                         GetUitkxAssetDir(_filePath), rawPath,
-                        ReactiveUITK.Language.UitkxConfig.LoadRoot(System.IO.Path.GetDirectoryName(_filePath)));
+                        Ruitk.Language.UitkxConfig.LoadRoot(System.IO.Path.GetDirectoryName(_filePath)));
                     _sb.Append($"\"{resolved}\"");
 
                     // Validate file existence at compile time (UITKX0022)
@@ -384,7 +384,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             // emission below), so HMR delegate identity flows through the
             // Family.Current cell rather than this method.
             L($"{I2}public static {QVNode} Render(");
-            L($"{I2}    global::ReactiveUITK.Core.IProps __rawProps,");
+            L($"{I2}    global::Ruitk.Core.IProps __rawProps,");
             L($"{I2}    IReadOnlyList<{QVNode}> __children)");
             L($"{I2}{{");
             L($"{I3}return __Render_body(__rawProps, __children);");
@@ -399,7 +399,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             // assembly, so `internal` suffices.
             L($"{I2}[global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]");
             L($"{I2}internal static {QVNode} __Render_body(");
-            L($"{I2}    global::ReactiveUITK.Core.IProps __rawProps,");
+            L($"{I2}    global::Ruitk.Core.IProps __rawProps,");
             L($"{I2}    IReadOnlyList<{QVNode}> __children)");
             L($"{I2}{{");
 
@@ -554,14 +554,14 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                     // Fallback factory: `() => Child.Render`. For SG-emitted
                     // children the companion's [ModuleInitializer] Register
                     // runs first and the fallback is ignored. For hand-written
-                    // children (e.g. router types in the ReactiveUITK
+                    // children (e.g. router types in the Ruitk
                     // package) the fallback is what Family.Current resolves
                     // to at first render. The `ldftn Child.Render`
                     // instruction inside the lambda does NOT trigger the
                     // child's .cctor (per ECMA-335 -I.8.9.5 ldftn does not
                     // require type init; Mono honors this for ldftn -- the
                     // beforefieldinit divergence is on `call`, not ldftn).
-                    L($"{I2}private static readonly global::ReactiveUITK.Refresh.Family {famField} = global::ReactiveUITK.Refresh.RefreshRuntime.GetFamily(\"{famKey}\", () => {childFqn}.Render);");
+                    L($"{I2}private static readonly global::Ruitk.Refresh.Family {famField} = global::Ruitk.Refresh.RefreshRuntime.GetFamily(\"{famKey}\", () => {childFqn}.Render);");
                 }
             }
             L($"#endif // UNITY_EDITOR");
@@ -586,7 +586,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             L($"        [global::System.Runtime.CompilerServices.ModuleInitializer]");
             L($"        internal static void __Register()");
             L($"        {{");
-            L($"            global::ReactiveUITK.Refresh.RefreshRuntime.Register(");
+            L($"            global::Ruitk.Refresh.RefreshRuntime.Register(");
             L($"                \"{SelfFamilyKey()}\",");
             L($"                () => {componentRef}.__Render_body,");
             L($"                \"{hookSig}\",");
@@ -603,7 +603,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         // -- Hook alias substitution -------------------------------------------
         //
         // The alias table and the generic-hook regex are sourced from
-        // ReactiveUITK.Core.HookRegistry (Shared/Core/HookRegistry.cs) so
+        // Ruitk.Core.HookRegistry (Shared/Core/HookRegistry.cs) so
         // CSharpEmitter, HmrCSharpEmitter, HmrHookEmitter, HooksValidator,
         // the IDE DiagnosticsAnalyzer, the LSP HoverHandler, and the virtual
         // document generator all stay in lockstep automatically.  Local
@@ -611,7 +611,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         // start performance is identical to the pre-0.5.23 hard-coded form.
 
         private static readonly (string From, string To)[] s_hookAliases =
-            global::ReactiveUITK.Core.HookRegistry.GetAliasTable();
+            global::Ruitk.Core.HookRegistry.GetAliasTable();
 
         // Matches generic hook calls including up to 3 levels of nested type args:
         //   useContext<Color>(                         -> level 1
@@ -620,7 +620,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         // The non-generic form is handled by s_hookAliases simple replacements above.
         private static readonly System.Text.RegularExpressions.Regex s_genericHookAliasRe =
             new System.Text.RegularExpressions.Regex(
-                global::ReactiveUITK.Core.HookRegistry.GetGenericHookPattern(),
+                global::Ruitk.Core.HookRegistry.GetGenericHookPattern(),
                 System.Text.RegularExpressions.RegexOptions.Compiled
             );
 
@@ -680,7 +680,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         /// </summary>
         private static readonly System.Text.RegularExpressions.Regex s_hookSignatureRe =
             new System.Text.RegularExpressions.Regex(
-                global::ReactiveUITK.Core.HookRegistry.GetSignatureRegexPattern(),
+                global::Ruitk.Core.HookRegistry.GetSignatureRegexPattern(),
                 System.Text.RegularExpressions.RegexOptions.Compiled
             );
 
@@ -1200,7 +1200,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             );
             // useRef (two overloads)
             L(
-                $"{I2}private static global::ReactiveUITK.Core.Ref<T> useRef<T>(T initial = default) => Hooks.UseRef(initial);"
+                $"{I2}private static global::Ruitk.Core.Ref<T> useRef<T>(T initial = default) => Hooks.UseRef(initial);"
             );
             L(
                 $"{I2}private static global::UnityEngine.UIElements.VisualElement useRef() => Hooks.UseRef();"
@@ -1222,7 +1222,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             );
             // useSignal (two overloads)
             L(
-                $"{I2}private static T useSignal<T>(global::ReactiveUITK.Signals.Signal<T> signal) => Hooks.UseSignal(signal);"
+                $"{I2}private static T useSignal<T>(global::Ruitk.Signals.Signal<T> signal) => Hooks.UseSignal(signal);"
             );
             L(
                 $"{I2}private static T useSignal<T>(string key, T initialValue = default) => Hooks.UseSignal(key, initialValue);"
@@ -1354,8 +1354,8 @@ namespace ReactiveUITK.SourceGenerator.Emitter
 
             // The auto-injected baseline (AutoInjectedUsings) is in scope in every generated file,
             // so the resolver MUST search it too or its view of scope drifts from the emitted C#.
-            // Regression: when ReactiveUITK.Router joined the baseline, files stopped writing
-            // `import "@ReactiveUITK.Router"` — the emitted C# still resolved <Route>/RouteFunc via
+            // Regression: when Ruitk.Router joined the baseline, files stopped writing
+            // `import "@Ruitk.Router"` — the emitted C# still resolved <Route>/RouteFunc via
             // the baseline `using`, but this list (then usings-only) no longer did → UITKX0008 on
             // <Routes>/<Route>/<Outlet> and false UITKX0109 on their attributes broke the floor-Unity
             // publish. User usings come first so a more-specific type still wins on name collision.
@@ -1453,8 +1453,8 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 string propsVar = $"__p_{pId}";
                 _rentBuffer.Append(
                     _isUgui
-                        ? $"var {propsVar} = global::ReactiveUITK.Ugui.UguiBaseProps.__Rent<global::ReactiveUITK.Ugui.{res.PropsTypeName}>(); "
-                        : $"var {propsVar} = global::ReactiveUITK.Props.Typed.BaseProps.__Rent<{res.PropsTypeName}>(); "
+                        ? $"var {propsVar} = global::Ruitk.Ugui.UguiBaseProps.__Rent<global::Ruitk.Ugui.{res.PropsTypeName}>(); "
+                        : $"var {propsVar} = global::Ruitk.Props.Typed.BaseProps.__Rent<{res.PropsTypeName}>(); "
                 );
 
                 // Check for style attribute - try to hoist (Phase A) or pool it.
@@ -1485,7 +1485,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                             int sId = _poolVarId++;
                             styleVarName = $"__s_{sId}";
                             _rentBuffer.Append(
-                                $"var {styleVarName} = global::ReactiveUITK.Props.Typed.Style.__Rent(); "
+                                $"var {styleVarName} = global::Ruitk.Props.Typed.Style.__Rent(); "
                             );
                             // Split initializers and emit assignments
                             var inits = SplitTopLevelCommas(body);
@@ -1833,7 +1833,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         ///
         /// Generated structure (inside the same namespace, after the partial class closing brace):
         /// <code>
-        ///   public sealed class FooProps : global::ReactiveUITK.Core.IProps
+        ///   public sealed class FooProps : global::Ruitk.Core.IProps
         ///   {
         ///       public int X { get; set; } = 0;
         ///       public string Label { get; set; } = "hi";
@@ -1852,7 +1852,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             L(
                 $"    /// <summary>Auto-generated typed props for <see cref=\"{_directives.ComponentName}\"/>.</summary>"
             );
-            L($"    public sealed class {className} : global::ReactiveUITK.Core.IProps");
+            L($"    public sealed class {className} : global::Ruitk.Core.IProps");
             L("    {");
 
             // Properties
@@ -2562,7 +2562,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             int absLine = sourceLine + (lineInRange - 1);
             emitJsxFragment(spliced, jsxText, absLine);
 
-            spliced.Append(" : (global::ReactiveUITK.Core.VirtualNode?)null)");
+            spliced.Append(" : (global::Ruitk.Core.VirtualNode?)null)");
             return true;
         }
 
@@ -3550,10 +3550,10 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             hoistName = $"__sty_{hid}";
             _hoistedStyleFields.Append(I2);
             _hoistedStyleFields.Append(
-                "[global::ReactiveUITK.UitkxHmrSwap] private static global::ReactiveUITK.Props.Typed.Style "
+                "[global::Ruitk.UitkxHmrSwap] private static global::Ruitk.Props.Typed.Style "
             );
             _hoistedStyleFields.Append(hoistName);
-            _hoistedStyleFields.Append(" = new global::ReactiveUITK.Props.Typed.Style { ");
+            _hoistedStyleFields.Append(" = new global::Ruitk.Props.Typed.Style { ");
             _hoistedStyleFields.Append(body);
             _hoistedStyleFields.AppendLine(" };");
             return true;
@@ -3930,7 +3930,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         /// Rewrites every <c>Asset&lt;T&gt;("./x")</c> / <c>Ast&lt;T&gt;("../x")</c> call
         /// in <paramref name="expression"/> so the path literal becomes the absolute
         /// Unity asset key (e.g. <c>Assets/UI/x.png</c>) that the runtime
-        /// <see cref="ReactiveUITK.Core.UitkxAssetRegistry"/> indexes by.
+        /// <see cref="Ruitk.Core.UitkxAssetRegistry"/> indexes by.
         ///
         /// <para>Reports <c>UITKX0120</c> when the resolved file does not exist on
         /// disk, and <c>UITKX0121</c> on extension/type mismatch. The diagnostic
@@ -3967,9 +3967,9 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                     string requestedType = match.Groups[1].Value;
                     string rawPath = match.Groups[2].Value;
                     string uitkxDir = GetUitkxAssetDir(filePath);
-                    string resolved = ReactiveUITK.Language.AssetPathUtil.ResolveAssetPath(
+                    string resolved = Ruitk.Language.AssetPathUtil.ResolveAssetPath(
                         uitkxDir, rawPath,
-                        ReactiveUITK.Language.UitkxConfig.LoadRoot(System.IO.Path.GetDirectoryName(filePath)));
+                        Ruitk.Language.UitkxConfig.LoadRoot(System.IO.Path.GetDirectoryName(filePath)));
 
                     // Validate file existence at compile time
                     string projectRoot = GetProjectRoot(filePath);
@@ -4026,7 +4026,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         /// </summary>
         private static string GetUitkxAssetDir(string filePath)
         {
-            string? assetDir = ReactiveUITK.Language.AssetPathUtil.GetAssetDir(filePath);
+            string? assetDir = Ruitk.Language.AssetPathUtil.GetAssetDir(filePath);
             if (assetDir != null)
                 return assetDir;
             // Fallback for non-Unity paths (test environments)

@@ -1,10 +1,10 @@
-using ReactiveUITK.Core;
-using ReactiveUITK.Samples.Components.SimpleTextFieldFunc;
+using Ruitk.Core;
+using Ruitk.Samples.Components.SimpleTextFieldFunc;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Components.SimpleTextFieldFunc.SimpleTextFieldFunc;
+using Ruitk.Samples.Components.SimpleTextFieldFunc.SimpleTextFieldFunc;
 
-namespace ReactiveUITK.Samples.Showcase.Runtime
+namespace Ruitk.Samples.Showcase.Runtime
 {
     [RequireComponent(typeof(RootRenderer))]
     public class RuntimeSimpleTextFieldDemoBootstrap : MonoBehaviour

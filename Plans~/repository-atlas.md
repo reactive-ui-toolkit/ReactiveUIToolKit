@@ -1,4 +1,4 @@
-# ReactiveUIToolKit Repository Atlas
+# ReactiveUIToolkit Repository Atlas
 
 This document is a persistent map of the authored repository surface.
 
@@ -49,7 +49,7 @@ Primary authored surface by top-level area:
 - `ide-extensions~`: `110` files
 - `Diagnostics`: `15` files
 - `Samples`: `178` files
-- `ReactiveUIToolKitDocs~`: `234` files
+- `ReactiveUIToolkitDocs~`: `234` files
 - `CICD`: `2` files
 - `scripts`: `3` files
 
@@ -385,13 +385,13 @@ The docs site is large but structurally repetitive.
 
 Shell:
 
-- `ReactiveUIToolKitDocs~/src/App.tsx`
-- `ReactiveUIToolKitDocs~/src/App.style.ts`
-- `ReactiveUIToolKitDocs~/src/main.tsx`
-- `ReactiveUIToolKitDocs~/src/pages.tsx`
-- `ReactiveUIToolKitDocs~/src/theme.ts`
-- `ReactiveUIToolKitDocs~/src/propsDocs.ts`
-- `ReactiveUIToolKitDocs~/src/version.ts`
+- `ReactiveUIToolkitDocs~/src/App.tsx`
+- `ReactiveUIToolkitDocs~/src/App.style.ts`
+- `ReactiveUIToolkitDocs~/src/main.tsx`
+- `ReactiveUIToolkitDocs~/src/pages.tsx`
+- `ReactiveUIToolkitDocs~/src/theme.ts`
+- `ReactiveUIToolkitDocs~/src/propsDocs.ts`
+- `ReactiveUIToolkitDocs~/src/version.ts`
 
 Shared UI:
 

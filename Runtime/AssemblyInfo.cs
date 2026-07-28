@@ -1,5 +1,5 @@
 #if UNITY_EDITOR
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("ReactiveUITK.Editor")]
+[assembly: InternalsVisibleTo("Ruitk.Editor")]
 #endif

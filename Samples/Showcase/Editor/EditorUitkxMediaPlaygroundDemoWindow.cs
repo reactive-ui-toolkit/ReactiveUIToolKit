@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Shared;
-using ReactiveUITK.Samples.Shared.MediaPlaygroundDemoPage;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Shared;
+using Ruitk.Samples.Shared.MediaPlaygroundDemoPage;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxMediaPlaygroundDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Media Playground")]
+        [MenuItem("Reactive UI Toolkit/Demos/Media Playground")]
         public static void ShowWindow()
         {
             EditorUitkxMediaPlaygroundDemoWindow window =

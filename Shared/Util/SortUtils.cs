@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Shared.Util
+namespace Ruitk.Shared.Util
 {
     public static class SortUtils
     {

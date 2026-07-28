@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Diagnostics;
+using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
 
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// Function component support for Fiber reconciler

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Contract a prefab root component can implement to receive declarative

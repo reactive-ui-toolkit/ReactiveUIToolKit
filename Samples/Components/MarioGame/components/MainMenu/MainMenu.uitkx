@@ -3,7 +3,7 @@ export VirtualNode MainMenu(Action onStartGame) {
     <VisualElement style={MainMenuStyles.Container}>
       <VisualElement style={MainMenuStyles.MenuBox}>
         <Label text="SUPER MARIO" style={MainMenuStyles.Title} />
-        <Label text="ReactiveUITK Edition" style={MainMenuStyles.Subtitle} />
+        <Label text="Ruitk Edition" style={MainMenuStyles.Subtitle} />
         <Button
           text="New Game"
           onClick={_ => onStartGame()}

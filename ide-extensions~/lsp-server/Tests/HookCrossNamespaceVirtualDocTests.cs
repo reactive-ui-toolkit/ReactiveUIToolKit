@@ -4,10 +4,10 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Threading;
 using System.Threading.Tasks;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Lowering;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Lowering;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 using UitkxLanguageServer.Roslyn;
 using Xunit;
 
@@ -82,7 +82,7 @@ public sealed class HookCrossNamespaceVirtualDocTests : IAsyncLifetime, IDisposa
         // Path-derived world (no @namespace stamps, uitkx.config.json namespacePrefix —
         // the bundled-samples shape since 0.8.2): the injected using-static must name the
         // hook container's EFFECTIVE namespace. The RAW parsed namespace is the parser
-        // default `ReactiveUITK.FunctionStyle`, where no real container ever exists — a
+        // default `Ruitk.FunctionStyle`, where no real container ever exists — a
         // second phantom container there made every companion-hook call CS0121-ambiguous
         // in the editor while the build was clean.
         // An .asmdef makes the temp dir a resolvable derivation anchor (without one —
@@ -113,7 +113,7 @@ public sealed class HookCrossNamespaceVirtualDocTests : IAsyncLifetime, IDisposa
         var vdoc = _host.GetVirtualDocument(consumerPath);
         Assert.NotNull(vdoc);
         Assert.Contains("using static TestApp.Derived.UseFlagHooks;", vdoc!.Text);
-        Assert.DoesNotContain("ReactiveUITK.FunctionStyle.UseFlagHooks", vdoc.Text);
+        Assert.DoesNotContain("Ruitk.FunctionStyle.UseFlagHooks", vdoc.Text);
     }
 
     [Fact]

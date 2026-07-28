@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Immutable;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.Language.IntelliSense
+namespace Ruitk.Language.IntelliSense
 {
     // ── CursorKind ────────────────────────────────────────────────────────────
 

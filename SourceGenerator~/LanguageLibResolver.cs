@@ -4,11 +4,11 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Threading;
 
-namespace ReactiveUITK.SourceGenerator
+namespace Ruitk.SourceGenerator
 {
     /// <summary>
     /// Registers an <see cref="AppDomain.AssemblyResolve"/> handler so that
-    /// ReactiveUITK.Language.dll — and any of its transitive dependencies
+    /// Ruitk.Language.dll — and any of its transitive dependencies
     /// (e.g. System.Collections.Immutable) — can be located when the source
     /// generator DLL is loaded in an isolated context (Roslyn's analyzer host
     /// or Unity's managed plugin loader).

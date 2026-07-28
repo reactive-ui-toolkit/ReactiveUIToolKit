@@ -5,10 +5,10 @@ using System.Linq;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.Language.Roslyn
+namespace Ruitk.Language.Roslyn
 {
     // -- Collected expression --------------------------------------------------
 
@@ -164,10 +164,10 @@ namespace ReactiveUITK.Language.Roslyn
             "System.Collections.Generic",
             "System.Linq",
             "UnityEngine",
-            "ReactiveUITK.Core",
-            "ReactiveUITK.Core.Animation",
-            "ReactiveUITK.Router",
-            "ReactiveUITK.Props.Typed",
+            "Ruitk.Core",
+            "Ruitk.Core.Animation",
+            "Ruitk.Router",
+            "Ruitk.Props.Typed",
         };
 
         /// <summary>
@@ -176,13 +176,13 @@ namespace ReactiveUITK.Language.Roslyn
         /// </summary>
         private static readonly string[] s_extraUsingLines =
         {
-            "using static ReactiveUITK.Props.Typed.StyleKeys;",
-            "using static ReactiveUITK.Props.Typed.CssHelpers;",
+            "using static Ruitk.Props.Typed.StyleKeys;",
+            "using static Ruitk.Props.Typed.CssHelpers;",
             // Brings Asset<T>(...) and Ast<T>(...) into scope for component
             // setup blocks, hook bodies, and module initializers - matches the
             // using-static injected by every runtime emitter (CSharpEmitter,
             // ModuleEmitter, HookEmitter, HmrCSharpEmitter, HmrHookEmitter).
-            "using static ReactiveUITK.AssetHelpers;",
+            "using static Ruitk.AssetHelpers;",
             "using UColor = UnityEngine.Color;",
             // `using static StyleKeys` imports string constants (e.g. FlexDirection = "flexDirection")
             // that collide with identically-named enums/structs from UnityEngine.UIElements.
@@ -244,7 +244,7 @@ namespace ReactiveUITK.Language.Roslyn
             // aliases with the target's EFFECTIVE (path-derived, config-aware) namespace — the raw
             // parsed namespace was wrong for every stamp-less file. Shared with the HMR compiler
             // (via reflection) so IntelliSense, hot reload, and the build agree.
-            foreach (string payload in ReactiveUITK.Language.ImportScopeFacts
+            foreach (string payload in Ruitk.Language.ImportScopeFacts
                          .ComputeInjectedUsingPayloads(d, uitkxFilePath))
             {
                 if (seen.Add(payload))
@@ -259,7 +259,7 @@ namespace ReactiveUITK.Language.Roslyn
         private static void AppendImportUsingsInsideNamespace(
             VirtualDocBuilder b, DirectiveSet d, string uitkxFilePath, HashSet<string> seen)
         {
-            foreach (string payload in ReactiveUITK.Language.ImportScopeFacts
+            foreach (string payload in Ruitk.Language.ImportScopeFacts
                          .ComputeInjectedUsingPayloads(d, uitkxFilePath))
             {
                 if (seen.Add(payload))
@@ -379,7 +379,7 @@ namespace ReactiveUITK.Language.Roslyn
             b.Scaffold("#line hidden\n");
 
             // Ref<T> resolves to the workspace-shared canonical type:
-            //   - real ReactiveUITK.Core.Ref<T> when the runtime DLL is loaded
+            //   - real Ruitk.Core.Ref<T> when the runtime DLL is loaded
             //   - the polyfill stub in __UitkxPolyfill__.g.cs otherwise
             // Both share the same fully-qualified name so cross-document calls
             // (e.g. component -> peer hook(Ref<T>)) bind to a single nominal type.
@@ -397,7 +397,7 @@ namespace ReactiveUITK.Language.Roslyn
         /// EFFECTIVE namespace (explicit <c>@namespace</c> wins, else path-derived + config
         /// prefix) — the same namespace the real build emits into — so the virtual-doc type
         /// SHADOWS the identical compiled-DLL symbol instead of coexisting with it. Emitting
-        /// under the RAW parsed namespace (the parser default <c>ReactiveUITK.FunctionStyle</c>
+        /// under the RAW parsed namespace (the parser default <c>Ruitk.FunctionStyle</c>
         /// for every stamp-less file) creates a SECOND container in a foreign namespace; with
         /// both pulled into scope (peer-enrich uses one, import payloads the other) every
         /// companion-hook call turns CS0121-ambiguous in the editor while the build is clean.
@@ -409,7 +409,7 @@ namespace ReactiveUITK.Language.Roslyn
                 fileKeyed: !d.UsesLegacySyntax);
             if (!string.IsNullOrEmpty(effective))
                 return effective!;
-            return !string.IsNullOrEmpty(d.Namespace) ? d.Namespace! : "ReactiveUITK.Generated";
+            return !string.IsNullOrEmpty(d.Namespace) ? d.Namespace! : "Ruitk.Generated";
         }
 
         /// <summary>
@@ -428,7 +428,7 @@ namespace ReactiveUITK.Language.Roslyn
         {
             b.Scaffold("    static partial class __Exports\n    {\n");
             b.Scaffold("#line hidden\n");
-            b.Scaffold(global::ReactiveUITK.Core.HookRegistry.GenerateVirtualDocStubs(staticForm: true));
+            b.Scaffold(global::Ruitk.Core.HookRegistry.GenerateVirtualDocStubs(staticForm: true));
 
             if (!d.MemberDeclarations.IsDefaultOrEmpty)
             {
@@ -525,10 +525,10 @@ namespace ReactiveUITK.Language.Roslyn
             // (see component-document scaffold for details).
 
             // -- Hook stubs (same as component stubs) --------------------------
-            // Sourced from ReactiveUITK.Core.HookRegistry so the IDE stubs
+            // Sourced from Ruitk.Core.HookRegistry so the IDE stubs
             // stay byte-identical with the (former) hand-maintained block here
             // and the matching instance-form block emitted below.
-            b.Scaffold(global::ReactiveUITK.Core.HookRegistry.GenerateVirtualDocStubs(staticForm: true));
+            b.Scaffold(global::Ruitk.Core.HookRegistry.GenerateVirtualDocStubs(staticForm: true));
 
             // -- Emit each hook as a method ------------------------------------
             foreach (var hook in d.HookDeclarations)
@@ -667,7 +667,7 @@ namespace ReactiveUITK.Language.Roslyn
             // rewritten before being fed to Roslyn, so we scaffold private methods
             // with the correct return types so Roslyn can type-check the setup code
             // without CS0103 / CS8130 / CS1026 errors.
-            // CS0246: hook stubs reference Unity/ReactiveUITK types that may not
+            // CS0246: hook stubs reference Unity/Ruitk types that may not
             // be resolvable before the first Unity compile (e.g. VisualElement).
             //
             // State setter delegate: void __StateSetter__<T>(Func<T,T> updater).
@@ -685,17 +685,17 @@ namespace ReactiveUITK.Language.Roslyn
             // int to Func<int,int>); this is suppressed in RoslynDiagnosticMapper
             // by checking for the state-setter pattern in the error message.
             //
-            // useRef<T>() returns the workspace-shared global::ReactiveUITK.Core.Ref<T>
+            // useRef<T>() returns the workspace-shared global::Ruitk.Core.Ref<T>
             //   (real DLL when loaded, polyfill stub otherwise) so cross-document
             //   calls bind to one nominal type and .Current completions work.
             //
-            // Stub block sourced from ReactiveUITK.Core.HookRegistry; see the
+            // Stub block sourced from Ruitk.Core.HookRegistry; see the
             // matching static-form emission in GenerateHookContainerDocument
             // for the design rationale (single source of truth across SG / HMR
             // / IDE / VDG).  The instance form differs only in the method
             // modifier (private vs private static) and the header-comment
             // box-drawing tail length - both encoded inside the registry.
-            b.Scaffold(global::ReactiveUITK.Core.HookRegistry.GenerateVirtualDocStubs(staticForm: false));
+            b.Scaffold(global::Ruitk.Core.HookRegistry.GenerateVirtualDocStubs(staticForm: false));
 
             // Collect markup nodes - skip non-rendering nodes.
             var markupOnlyNodes = ImmutableArray.CreateBuilder<AstNode>(
@@ -715,7 +715,7 @@ namespace ReactiveUITK.Language.Roslyn
             // (the SG emits it as a parameter: IReadOnlyList<VirtualNode> __children).
             // Declare it here so {__children} expressions don't produce CS0103.
             // Uses dynamic so member access (.Count etc.) compiles without the
-            // ReactiveUITK assembly and without false-positive CS1061.
+            // Ruitk assembly and without false-positive CS1061.
             b.Scaffold("            dynamic __children = null!;\n");
 
             // Setup code - emitted in segments so that JSX paren blocks
@@ -914,7 +914,7 @@ namespace ReactiveUITK.Language.Roslyn
                     // Same typed-null technique as the standard placeholder so
                     // both ternary branches return `VirtualNode` and the outer
                     // expression's type stays well-defined.
-                    b.Scaffold("? ((global::ReactiveUITK.Core.VirtualNode)null!) : null");
+                    b.Scaffold("? ((global::Ruitk.Core.VirtualNode)null!) : null");
                     // Also defer JSX subtree type-checking so diagnostics inside
                     // the `<Tag/>` body are not silently dropped.
                     deferredJsxRanges?.Add((uitkxOffset + s, uitkxOffset + e));
@@ -931,7 +931,7 @@ namespace ReactiveUITK.Language.Roslyn
                 // Stub: typed-null lets the surrounding expression compile
                 // and flow into both VirtualNode-typed and object-typed
                 // contexts. Same pattern as EmitDirectiveBodyCode line 1244.
-                b.Scaffold("((global::ReactiveUITK.Core.VirtualNode)null!)");
+                b.Scaffold("((global::Ruitk.Core.VirtualNode)null!)");
                 // Record source-space range so callers (when source/directives
                 // are available) can emit a deferred Pattern-B JSX-subtree
                 // type-check block - preserves squiggles inside the dropped
@@ -1731,7 +1731,7 @@ namespace ReactiveUITK.Language.Roslyn
 
                 // Replace JSX with a C# placeholder
                 b.Scaffold("#line hidden\n");
-                b.Scaffold($"{indent}(global::ReactiveUITK.Core.VirtualNode)null!\n");
+                b.Scaffold($"{indent}(global::Ruitk.Core.VirtualNode)null!\n");
 
                 // Defer expression checks - see comment on deferredChecks above.
                 deferredChecks.Add((absStart, absEnd));
@@ -2352,7 +2352,7 @@ namespace ReactiveUITK.Language.Roslyn
                             ref attrCtr
                         );
                         b.Scaffold($"#line {currentLine} \"{escapedPath}\"\n");
-                        b.Scaffold("return (global::ReactiveUITK.Core.VirtualNode)null!");
+                        b.Scaffold("return (global::Ruitk.Core.VirtualNode)null!");
                         if (hasSemicolon)
                             b.Scaffold(";");
                         b.Scaffold("\n");
@@ -2431,7 +2431,7 @@ namespace ReactiveUITK.Language.Roslyn
 
                             int jsxNewlines = CountNewlines(setupCode, jsxStart, jsxEnd);
                             b.Scaffold($"#line {currentLine} \"{escapedPath}\"\n");
-                            b.Scaffold(" (global::ReactiveUITK.Core.VirtualNode)null!\n");
+                            b.Scaffold(" (global::Ruitk.Core.VirtualNode)null!\n");
                             for (int k = 0; k < jsxNewlines; k++)
                                 b.Scaffold("\n");
                             pendingExprChecks.Add((jsxStart, jsxEnd));
@@ -2495,7 +2495,7 @@ namespace ReactiveUITK.Language.Roslyn
 
                         int jsxNewlines = CountNewlines(setupCode, jsxStart, jsxEnd);
                         b.Scaffold($"#line {currentLine} \"{escapedPath}\"\n");
-                        b.Scaffold("(global::ReactiveUITK.Core.VirtualNode)null!\n");
+                        b.Scaffold("(global::Ruitk.Core.VirtualNode)null!\n");
                         for (int k = 0; k < jsxNewlines; k++)
                             b.Scaffold("\n");
                         pendingExprChecks.Add((jsxStart, jsxEnd));
@@ -2572,7 +2572,7 @@ namespace ReactiveUITK.Language.Roslyn
 
                             int jsxNewlines = CountNewlines(setupCode, jsxStart, jsxEnd);
                             b.Scaffold($"#line {currentLine} \"{escapedPath}\"\n");
-                            b.Scaffold("(global::ReactiveUITK.Core.VirtualNode)null!\n");
+                            b.Scaffold("(global::Ruitk.Core.VirtualNode)null!\n");
                             for (int k = 0; k < jsxNewlines; k++)
                                 b.Scaffold("\n");
                             pendingExprChecks.Add((jsxStart, jsxEnd));
@@ -2686,7 +2686,7 @@ namespace ReactiveUITK.Language.Roslyn
                 int jsxNewlines2 = CountNewlines(setupCode, i, j);
                 int placeholderLine = currentLine;
                 b.Scaffold($"#line {placeholderLine} \"{escapedPath}\"\n");
-                b.Scaffold("(global::ReactiveUITK.Core.VirtualNode)null!\n");
+                b.Scaffold("(global::Ruitk.Core.VirtualNode)null!\n");
                 for (int k = 0; k < jsxNewlines2; k++)
                     b.Scaffold("\n");
                 pendingExprChecks.Add((i + 1, j - 1));

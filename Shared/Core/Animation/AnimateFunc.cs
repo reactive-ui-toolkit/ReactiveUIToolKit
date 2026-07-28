@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Animation;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Core.Animation;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Core.AnimationComponents
+namespace Ruitk.Core.AnimationComponents
 {
     public static class AnimateFunc
     {
@@ -34,7 +34,7 @@ namespace ReactiveUITK.Core.AnimationComponents
                         ? new List<VirtualNode>(children).ToArray()
                         : Array.Empty<VirtualNode>()
                 );
-            return ReactiveUITK.V.VisualElement(new VisualElementProps { Style = style }, null, arr);
+            return Ruitk.V.VisualElement(new VisualElementProps { Style = style }, null, arr);
         }
     }
 }

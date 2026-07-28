@@ -6,11 +6,11 @@ using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Formatter;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Formatter;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.SourceGenerator.Tools
+namespace Ruitk.SourceGenerator.Tools
 {
     /// <summary>
     /// The ES-modules migration pass (Plans~/ES_MODULES_EXECUTION_PLAN.md §7.1, U-09): rewrites

@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// Root of the fiber tree - matches React's FiberRoot

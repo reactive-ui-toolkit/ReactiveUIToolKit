@@ -2,12 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Props;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public sealed class MultiColumnTreeViewElementAdapter
         : StatefulElementAdapter<MultiColumnTreeView, MultiColumnTreeViewElementAdapter.Cached>
@@ -512,7 +512,7 @@ namespace ReactiveUITK.Elements
             {
                 try
                 {
-                    var ops = ReactiveUITK.Elements.MultiColumnTreeViewExpansionOps.Instance;
+                    var ops = Ruitk.Elements.MultiColumnTreeViewExpansionOps.Instance;
                     parts.ExpansionTracker.Attach(tv, parts, properties, ops);
                 }
                 catch { }
@@ -531,7 +531,7 @@ namespace ReactiveUITK.Elements
                         catch { }
                         try
                         {
-                            var ops = ReactiveUITK
+                            var ops = Ruitk
                                 .Elements
                                 .MultiColumnTreeViewExpansionOps
                                 .Instance;
@@ -641,7 +641,7 @@ namespace ReactiveUITK.Elements
 
             try
             {
-                var ops = ReactiveUITK.Elements.MultiColumnTreeViewExpansionOps.Instance;
+                var ops = Ruitk.Elements.MultiColumnTreeViewExpansionOps.Instance;
                 parts.ExpansionTracker.Attach(tv, parts, next, ops);
             }
             catch { }
@@ -659,7 +659,7 @@ namespace ReactiveUITK.Elements
                 catch { }
                 try
                 {
-                    var ops = ReactiveUITK.Elements.MultiColumnTreeViewExpansionOps.Instance;
+                    var ops = Ruitk.Elements.MultiColumnTreeViewExpansionOps.Instance;
                     parts.ExpansionTracker.Reapply(tv, parts, previous, next, ops);
                 }
                 catch { }
@@ -699,7 +699,7 @@ namespace ReactiveUITK.Elements
                 }
                 try
                 {
-                    var ops = ReactiveUITK.Elements.MultiColumnTreeViewExpansionOps.Instance;
+                    var ops = Ruitk.Elements.MultiColumnTreeViewExpansionOps.Instance;
                     parts.ExpansionTracker.Reapply(tv, parts, previous, next, ops);
                 }
                 catch { }
@@ -712,7 +712,7 @@ namespace ReactiveUITK.Elements
             PropsApplier.ApplyDiff(element, previous, next);
             try
             {
-                var ops = ReactiveUITK.Elements.MultiColumnTreeViewExpansionOps.Instance;
+                var ops = Ruitk.Elements.MultiColumnTreeViewExpansionOps.Instance;
                 parts.ExpansionTracker.Reapply(tv, parts, previous, next, ops);
             }
             catch { }
@@ -963,7 +963,7 @@ namespace ReactiveUITK.Elements
             catch { }
             try
             {
-                var ops = ReactiveUITK.Elements.MultiColumnTreeViewExpansionOps.Instance;
+                var ops = Ruitk.Elements.MultiColumnTreeViewExpansionOps.Instance;
                 parts.ExpansionTracker.Reapply(tv, parts, null, null, ops);
             }
             catch { }
@@ -1140,7 +1140,7 @@ namespace ReactiveUITK.Elements
 
                 try
                 {
-                    var ops = ReactiveUITK.Elements.MultiColumnTreeViewExpansionOps.Instance;
+                    var ops = Ruitk.Elements.MultiColumnTreeViewExpansionOps.Instance;
                     parts.ExpansionTracker.Reapply(tv, parts, null, n, ops);
                 }
                 catch { }
@@ -1211,7 +1211,7 @@ namespace ReactiveUITK.Elements
                 return;
             }
             parts.DetachWired = true;
-            ReactiveUITK.Core.PanelDetachGuard.Wire(
+            Ruitk.Core.PanelDetachGuard.Wire(
                 tv,
                 () =>
                 {

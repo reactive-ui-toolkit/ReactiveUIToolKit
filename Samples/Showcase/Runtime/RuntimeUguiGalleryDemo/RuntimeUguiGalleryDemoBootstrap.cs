@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using ReactiveUITK.Core;
-using ReactiveUITK.Ugui;
+using Ruitk.Core;
+using Ruitk.Ugui;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ReactiveUITK.Samples.Showcase.Runtime
+namespace Ruitk.Samples.Showcase.Runtime
 {
     /// <summary>
     /// uGUI interaction gallery: slider, mute toggle, dropdown, input field,

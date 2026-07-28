@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.AnimationComponents;
-using ReactiveUITK.Core.Util;
-using ReactiveUITK.Props.Typed;
-using ReactiveUITK.Router;
+using Ruitk.Core;
+using Ruitk.Core.AnimationComponents;
+using Ruitk.Core.Util;
+using Ruitk.Props.Typed;
+using Ruitk.Router;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK
+namespace Ruitk
 {
     public static class V
     {
@@ -852,7 +852,7 @@ namespace ReactiveUITK
         /// <summary>
         /// Hidden, side-effect-only Func-Component that rents a pooled
         /// <see cref="UnityEngine.AudioSource"/> from
-        /// <see cref="ReactiveUITK.Core.Media.MediaHost"/>, configures it
+        /// <see cref="Ruitk.Core.Media.MediaHost"/>, configures it
         /// from <see cref="AudioProps"/>, and returns it on unmount.
         /// Renders a <c>Fragment</c> (no visual output).
         /// </summary>
@@ -862,14 +862,14 @@ namespace ReactiveUITK
             params VirtualNode[] children
         )
         {
-            return Func<AudioProps>(ReactiveUITK.Core.Media.AudioFunc.Render, props, key, children);
+            return Func<AudioProps>(Ruitk.Core.Media.AudioFunc.Render, props, key, children);
         }
 
         /// <summary>
         /// Real positionable Func-Component that rents a pooled
         /// <see cref="UnityEngine.Video.VideoPlayer"/> and a pooled
         /// <see cref="UnityEngine.RenderTexture"/> from
-        /// <see cref="ReactiveUITK.Core.Media.MediaHost"/> and renders the
+        /// <see cref="Ruitk.Core.Media.MediaHost"/> and renders the
         /// video into a <c>VisualElement</c>'s <c>backgroundImage</c>.
         /// Accepts overlay children (e.g. play/pause buttons).
         /// </summary>

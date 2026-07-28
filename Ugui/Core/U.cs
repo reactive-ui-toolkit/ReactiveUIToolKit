@@ -1,7 +1,7 @@
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Element factories for the uGUI backend — the sibling of <c>V</c>.

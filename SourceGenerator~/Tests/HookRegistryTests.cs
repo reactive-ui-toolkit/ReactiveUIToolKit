@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: LicenseRef-ReactiveUI-Community-1.0
-// ReactiveUIToolKit — see THIRDPARTY.md
+// ReactiveUIToolkit — see THIRDPARTY.md
 //
 //  HookRegistryTests
 //
@@ -28,10 +28,10 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 public sealed class HookRegistryTests
 {
@@ -158,7 +158,7 @@ public sealed class HookRegistryTests
     [Fact]
     public void Registry_CanonicalNames_MatchHooksType()
     {
-        // Reflect over the public static methods of ReactiveUITK.Core.Hooks to
+        // Reflect over the public static methods of Ruitk.Core.Hooks to
         // confirm every hook in the registry corresponds to a real method, and
         // surface any new Hooks.cs additions that the registry hasn't picked up.
         //
@@ -166,7 +166,7 @@ public sealed class HookRegistryTests
         // (registry's home).  If Hooks.cs isn't compiled in the test context
         // we skip — the SG project doesn't link Hooks.cs directly, only
         // HookRegistry.cs.  In that case other tests still gate drift.
-        var hooksType = Type.GetType("ReactiveUITK.Core.Hooks, ReactiveUITK.Language", throwOnError: false);
+        var hooksType = Type.GetType("Ruitk.Core.Hooks, Ruitk.Language", throwOnError: false);
         if (hooksType is null)
             return; // Hooks.cs isn't linked into language-lib; skip silently.
 

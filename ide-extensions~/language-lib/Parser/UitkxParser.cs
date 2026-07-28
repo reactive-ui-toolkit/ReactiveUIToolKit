@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using ReactiveUITK.Language.Nodes;
+using Ruitk.Language.Nodes;
 
-namespace ReactiveUITK.Language.Parser
+namespace Ruitk.Language.Parser
 {
     /// <summary>
     /// Recursive descent parser for UITKX markup.

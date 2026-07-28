@@ -1,0 +1,96 @@
+using System;
+using System.IO;
+using Ruitk.Core.Diagnostics;
+using UnityEngine;
+
+namespace Ruitk.Core.Config
+{
+    public sealed class RuitkConfig
+    {
+        [Serializable]
+        private sealed class EnvVariables
+        {
+            public string env;
+            public string traceLevel;
+            public bool diffTracing;
+            public bool exceptionControlFlow;
+        }
+
+        [Serializable]
+        private sealed class Root
+        {
+            public EnvVariables envVariables;
+        }
+
+        public string EnvironmentLabel { get; private set; } = "production";
+        public DiagnosticsConfig.TraceLevel TraceLevel { get; private set; } =
+            DiagnosticsConfig.TraceLevel.None;
+        public bool EnableDiffTracing { get; private set; } = false;
+        public bool UseExceptionBoundaryFlow { get; private set; } = false;
+
+        private static RuitkConfig instance;
+        public static RuitkConfig Current
+        {
+            get
+            {
+                if (instance == null)
+                {
+                    instance = Load();
+                }
+                return instance;
+            }
+        }
+
+        private static RuitkConfig Load()
+        {
+            var cfg = new RuitkConfig();
+            try
+            {
+                string candidate = GetDefaultProjectConfigPath();
+                if (File.Exists(candidate))
+                {
+                    string json = File.ReadAllText(candidate);
+                    var parsed = JsonUtility.FromJson<Root>(json);
+                    if (parsed != null && parsed.envVariables != null)
+                    {
+                        if (!string.IsNullOrEmpty(parsed.envVariables.env))
+                        {
+                            cfg.EnvironmentLabel = parsed.envVariables.env;
+                        }
+                        if (!string.IsNullOrEmpty(parsed.envVariables.traceLevel))
+                        {
+                            cfg.TraceLevel = ParseTraceLevel(parsed.envVariables.traceLevel);
+                        }
+                        cfg.EnableDiffTracing = parsed.envVariables.diffTracing;
+                        cfg.UseExceptionBoundaryFlow = parsed.envVariables.exceptionControlFlow;
+                    }
+                }
+            }
+            catch { }
+            return cfg;
+        }
+
+        private static string GetDefaultProjectConfigPath()
+        {
+            string assets = Application.dataPath;
+            return Path.Combine(assets, "ReactiveUIToolkit", "config.json");
+        }
+
+        private static DiagnosticsConfig.TraceLevel ParseTraceLevel(string value)
+        {
+            switch (value)
+            {
+                case "Verbose":
+                case "verbose":
+                    return DiagnosticsConfig.TraceLevel.Verbose;
+                case "Basic":
+                case "basic":
+                    return DiagnosticsConfig.TraceLevel.Basic;
+                case "None":
+                case "none":
+                default:
+                    return DiagnosticsConfig.TraceLevel.None;
+            }
+        }
+    }
+}

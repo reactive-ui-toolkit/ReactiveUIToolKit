@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Core;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.ShowcaseDemoPage;
-using ReactiveUITK.Samples.Components.ShowcaseDemoPage.ShowcaseDemoPage;
-using ReactiveUITK.Props.Typed;
-using static ReactiveUITK.Props.Typed.StyleKeys;
+using Ruitk.Core;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.ShowcaseDemoPage;
+using Ruitk.Samples.Components.ShowcaseDemoPage.ShowcaseDemoPage;
+using Ruitk.Props.Typed;
+using static Ruitk.Props.Typed.StyleKeys;
 using UColor = UnityEngine.Color;
 
-namespace ReactiveUITK.Bench
+namespace Ruitk.Bench
 {
     public class BenchEditorHost : EditorWindow, IVNodeHostRenderer
     {
@@ -22,11 +22,11 @@ namespace ReactiveUITK.Bench
         private int _totalRuns = 1;
         private int _currentRun;
 
-        [MenuItem("ReactiveUITK/Diagnostics/Benchmark/Run Tests")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Benchmark/Run Tests")]
         public static void Open()
         {
             var w = GetWindow<BenchEditorHost>();
-            w.titleContent = new GUIContent("ReactiveUITK Bench");
+            w.titleContent = new GUIContent("Reactive UI Toolkit Bench");
             w.minSize = new Vector2(520, 360);
             w.Show();
         }
@@ -57,7 +57,7 @@ namespace ReactiveUITK.Bench
                 },
             };
 
-            var title = new Label("ReactiveUITK Benchmark")
+            var title = new Label("Reactive UI Toolkit Benchmark")
             {
                 style =
                 {
@@ -347,8 +347,8 @@ namespace ReactiveUITK.Bench
 
             var hintText = _totalRuns > 1
                 ? $"Results written to {_totalRuns} separate run folders.\n"
-                    + "Open  ReactiveUITK > Diagnostics > Benchmark > Results Viewer  to compare runs."
-                : "Open  ReactiveUITK > Diagnostics > Benchmark > Results Viewer  to compare runs.";
+                    + "Open  Reactive UI Toolkit > Diagnostics > Benchmark > Results Viewer  to compare runs."
+                : "Open  Reactive UI Toolkit > Diagnostics > Benchmark > Results Viewer  to compare runs.";
 
             children.Add(
                 V.Label(

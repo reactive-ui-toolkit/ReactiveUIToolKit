@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.SyntheticEventDemoFunc;
-using ReactiveUITK.Samples.Components.SyntheticEventDemoFunc.SyntheticEventDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.SyntheticEventDemoFunc;
+using Ruitk.Samples.Components.SyntheticEventDemoFunc.SyntheticEventDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxSyntheticEventDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(35-37-40)/Synthetic Events")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(35-37-40)/Synthetic Events")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxSyntheticEventDemoWindow>("Synthetic Event Demo");

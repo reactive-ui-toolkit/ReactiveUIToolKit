@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     /// <summary>
     /// Well-known <see cref="HostContext"/> environment keys for named portal target slots.

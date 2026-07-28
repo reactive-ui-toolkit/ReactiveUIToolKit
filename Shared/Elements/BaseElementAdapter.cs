@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Diagnostics;
-using ReactiveUITK.Props;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
+using Ruitk.Props;
+using Ruitk.Props.Typed;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public abstract class BaseElementAdapter : IElementAdapter, ITypedElementAdapter
     {
@@ -116,11 +116,11 @@ namespace ReactiveUITK.Elements
                     if (_rootWrapWarned.Add(tag))
                     {
                         Debug.LogWarning(
-                            $"[ReactiveUITK][{tag}] Root was not a 'VisualElement'. Wrapping automatically (further wraps suppressed)."
+                            $"[Ruitk][{tag}] Root was not a 'VisualElement'. Wrapping automatically (further wraps suppressed)."
                         );
                     }
                 }
-                return ReactiveUITK.V.VisualElement(null, null, vnode);
+                return Ruitk.V.VisualElement(null, null, vnode);
             }
             return vnode;
         }

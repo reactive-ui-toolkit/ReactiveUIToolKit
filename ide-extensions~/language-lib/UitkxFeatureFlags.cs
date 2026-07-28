@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>
     /// Build-time feature flags for the import/export grammar (leg 3, plan §12).

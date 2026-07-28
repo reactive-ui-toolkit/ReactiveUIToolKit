@@ -1,4 +1,4 @@
-@namespace ReactiveUITK.Samples.UITKXComponents
+@namespace Ruitk.Samples.UITKXComponents
 @using UnityEngine.UIElements
 
 export hook useTestCounter() -> (

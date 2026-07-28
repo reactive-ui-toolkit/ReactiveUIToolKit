@@ -1,9 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     internal static class ColumnSignatureUtil
     {

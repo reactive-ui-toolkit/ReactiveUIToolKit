@@ -1,12 +1,12 @@
 using System;
 using System.Reflection;
-using ReactiveUITK.Bench;
-using ReactiveUITK.Core;
-using ReactiveUITK.Samples.Components.ShowcaseDemoPage;
-using ReactiveUITK.Samples.Components.ShowcaseDemoPage.ShowcaseDemoPage;
+using Ruitk.Bench;
+using Ruitk.Core;
+using Ruitk.Samples.Components.ShowcaseDemoPage;
+using Ruitk.Samples.Components.ShowcaseDemoPage.ShowcaseDemoPage;
 using UnityEngine;
 
-namespace ReactiveUITK.Benchmark
+namespace Ruitk.Benchmark
 {
     [DefaultExecutionOrder(-1000)]
     public sealed class BenchmarkSetup : MonoBehaviour

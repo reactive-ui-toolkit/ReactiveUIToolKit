@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Props.Typed
+namespace Ruitk.Props.Typed
 {
     public static class StyleKeys
     {

@@ -5,9 +5,9 @@ dist~/*
 
 /.vscode/*
 
-ReactiveUIToolKitDocs~/**/*.meta
-ReactiveUIToolKitDocs~/dist/*
-ReactiveUIToolKitDocs~/node_modules/*
+ReactiveUIToolkitDocs~/**/*.meta
+ReactiveUIToolkitDocs~/dist/*
+ReactiveUIToolkitDocs~/node_modules/*
 
 # ── Source generator ────────────────────────────────────────────
 # The compiled DLL in Analyzers/ IS committed;
@@ -16,6 +16,11 @@ SourceGenerator~/obj/
 SourceGenerator~/bin/
 SourceGenerator~/Tests/obj/
 SourceGenerator~/Tests/bin/
+# Tools/ was not covered, so RuitkMigrateBrand's build output was committed and
+# published on the dist branch (artifacts embed the maintainer's absolute paths).
+# Each tool also carries its own .gitignore; this is the belt-and-braces catch-all.
+SourceGenerator~/Tools/*/obj/
+SourceGenerator~/Tools/*/bin/
 
 # ── Analyzers (distributed DLLs) ───────────────────────────────
 # PDBs, deps.json, and their Unity .meta companions are not needed

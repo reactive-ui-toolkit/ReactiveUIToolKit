@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Props
+namespace Ruitk.Props
 {
     public readonly struct StyleValue<T>
     {

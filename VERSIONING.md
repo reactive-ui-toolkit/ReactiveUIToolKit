@@ -1,6 +1,6 @@
 # Versioning & Deprecation Policy
 
-> Applies to ReactiveUIToolKit (Unity package), UITKX language, and IDE
+> Applies to ReactiveUIToolkit (Unity package), UITKX language, and IDE
 > extensions.
 
 ---
@@ -94,8 +94,8 @@ syntax is removed.
 
 | Channel | What | Pricing |
 |---------|------|---------|
-| Unity Asset Store | ReactiveUIToolKit Unity package | Paid |
-| Gumroad | ReactiveUIToolKit Unity package | Paid |
-| Itch.io | ReactiveUIToolKit Unity package | Paid |
+| Unity Asset Store | ReactiveUIToolkit Unity package | Paid |
+| Gumroad | ReactiveUIToolkit Unity package | Paid |
+| Itch.io | ReactiveUIToolkit Unity package | Paid |
 | VS Code Marketplace | UITKX VS Code extension | Free |
 | Visual Studio Marketplace | UITKX Visual Studio extension | Free |

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReactiveUITK.Samples.Components.DoomGame {
+namespace Ruitk.Samples.Components.DoomGame {
   public struct WallHit {
     public float Distance; // ray parameter t at hit
     public Vector2 Hit; // world-space (x,y)

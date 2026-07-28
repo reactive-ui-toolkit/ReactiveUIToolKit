@@ -1,10 +1,10 @@
 using System;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Media;
+using Ruitk.Core;
+using Ruitk.Core.Media;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace ReactiveUITK.Props.Typed
+namespace Ruitk.Props.Typed
 {
     /// <summary>
     /// Typed props for the <c>&lt;Audio&gt;</c> element. <c>&lt;Audio&gt;</c>

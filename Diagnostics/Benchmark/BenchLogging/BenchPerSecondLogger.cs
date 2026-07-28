@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace ReactiveUITK.Bench
+namespace Ruitk.Bench
 {
     [Serializable]
     public class BenchEnv
@@ -361,7 +361,7 @@ namespace ReactiveUITK.Bench
 
             string root = Path.Combine(
                 Application.dataPath,
-                "ReactiveUIToolKit",
+                "ReactiveUIToolkit",
                 "Diagnostics",
                 "Benchmark",
                 "Results",

@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Audio;
 
-namespace ReactiveUITK.Core.Media
+namespace Ruitk.Core.Media
 {
     /// <summary>
     /// Imperative handle exposed by the <c>&lt;Audio&gt;</c> element via its

@@ -28,7 +28,7 @@ class UitkxFileType private constructor() : LanguageFileType(UitkxLanguage) {
     }
 
     override fun getName()             = "UITKX"
-    override fun getDescription()      = "UITKX ReactiveUIToolKit template"
+    override fun getDescription()      = "UITKX ReactiveUIToolkit template"
     override fun getDefaultExtension() = "uitkx"
     override fun getIcon(): Icon?      = null   // TODO: supply icon from resources
 }

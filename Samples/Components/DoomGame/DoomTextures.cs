@@ -2,7 +2,7 @@
 using System;
 using UnityEngine;
 
-namespace ReactiveUITK.Samples.Components.DoomGame {
+namespace Ruitk.Samples.Components.DoomGame {
   public static class DoomTextures {
     // ───── Constants ─────
     public const int TEX_W = 64;

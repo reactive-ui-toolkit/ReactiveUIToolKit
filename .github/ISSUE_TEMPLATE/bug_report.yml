@@ -1,5 +1,5 @@
 name: Bug Report
-description: Report a bug in ReactiveUIToolKit or the UITKX language tooling
+description: Report a bug in Reactive UI Toolkit — Unity or the UITKX language tooling
 labels: ["bug"]
 body:
   - type: dropdown

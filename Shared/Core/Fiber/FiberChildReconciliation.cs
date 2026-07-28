@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
+using Ruitk;
+using Ruitk.Core;
 
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// Child reconciliation - the heart of the diffing algorithm

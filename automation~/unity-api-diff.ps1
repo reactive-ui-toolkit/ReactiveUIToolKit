@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     Loads UnityEngine.UIElementsModule.dll from two Unity installations and diffs
-    the public API surface relevant to ReactiveUIToolKit:
+    the public API surface relevant to ReactiveUIToolkit:
       - IStyle properties (name + type)
       - VisualElement subclasses
       - Enums in UnityEngine.UIElements namespace

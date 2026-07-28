@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Router
+namespace Ruitk.Router
 {
     public sealed class RouterLocation
     {

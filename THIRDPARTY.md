@@ -1,25 +1,25 @@
 # Third-Party Licenses
 
-This document lists all third-party dependencies used by ReactiveUIToolKit and
+This document lists all third-party dependencies used by Reactive UI Toolkit — Unity and
 its associated tooling.
 
 ---
 
 ## Runtime Dependencies
 
-### Unity Package (ReactiveUIToolKit)
+### Unity Package (Reactive UI Toolkit — Unity)
 
 No third-party runtime dependencies. The core framework relies only on Unity's
 built-in UI Toolkit APIs.
 
-### Source Generator (ReactiveUITK.SourceGenerator)
+### Source Generator (Ruitk.SourceGenerator)
 
 | Package | Version | License |
 |---------|---------|---------|
 | Microsoft.CodeAnalysis.CSharp | 4.3.1 | MIT |
 | System.Collections.Immutable | 6.0.0 | MIT |
 
-### Language Library (ReactiveUITK.Language)
+### Language Library (Ruitk.Language)
 
 | Package | Version | License |
 |---------|---------|---------|
@@ -61,7 +61,7 @@ built-in UI Toolkit APIs.
 
 ---
 
-## Documentation Site (ReactiveUIToolKitDocs)
+## Documentation Site (ReactiveUIToolkitDocs)
 
 | Package | Version | License |
 |---------|---------|---------|

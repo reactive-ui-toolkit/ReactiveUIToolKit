@@ -88,7 +88,7 @@ audit report) / **DUP** (same defect as another entry).
 | PC-10 | MINOR | Rename-handler test coverage gaps for alias forms. | FIXED (tests with B3) |
 | PC-11 | MINOR | `__Exports` emitted even when a file has no members (empty container). | RESEARCHED — the real defect is the inverse: `import * as X` of a COMPONENT-ONLY new-mode file emitted `X = ns.__Exports` against a container that is never emitted → file-breaking CS0246 in the importer. FIXED (both payload layers skip the alias when the target exports no members; dotted tags resolve via the tag maps regardless). |
 | PC-12 | MINOR | Codemod exports private members (a) + leaves dead namespace imports (b). | (a) DUP A4 FIXED; (b) RESEARCHED, intentionally not implemented — dead-ns detection is compile-dependent (ambient C# resolves through them); the editor's 2316/2317 Roslyn tier owns it. A syntactic delete would break builds. |
-| PC-13 | MINOR | `ReactiveUITK.Examples.csproj` skipped in VERIFY-UNITY (stale machine-generated artifact). | recorded (R10 note stands) |
+| PC-13 | MINOR | `Ruitk.Examples.csproj` skipped in VERIFY-UNITY (stale machine-generated artifact). | recorded (R10 note stands) |
 | PC-14 | MINOR | Docs diagnostics page lacks the §3.3 2322 family-divergence note. | FIXED |
 | PC-15 | MINOR | HMR companion gate exercised only indirectly by tests. | FIXED (`HmrAuditWaveContractTests`: parse-clean syntax gate over every Editor/HMR source + direct pins on the redirect regex, bridge flow, tag maps, and key-map alias gate) |
 | PC-16..19 | NOTE | Observations, no action required (recorded in the audit transcript). | no action |
@@ -111,7 +111,7 @@ owner decision or genuinely blocked on external state:
   Family grammar change (G-band) — Unity now gives a precise diagnostic; adding the feature
   needs family-level agreement, not a Unity-local patch.
 - **Family corpus re-pin** (G-13): waiting on the sibling legs, owner-coordinated.
-- **PC-13**: `ReactiveUITK.Examples.csproj` is a stale Unity-machine-generated artifact — only
+- **PC-13**: `Ruitk.Examples.csproj` is a stale Unity-machine-generated artifact — only
   Unity can regenerate it (R10 note stands).
 - **Pre-band message style**: 2300/2301/2304/2305/2307 keep their historical backtick quoting
   (they predate the §3.1 band freeze); the §3-frozen codes (2325/2326/2109/2110) are verbatim.

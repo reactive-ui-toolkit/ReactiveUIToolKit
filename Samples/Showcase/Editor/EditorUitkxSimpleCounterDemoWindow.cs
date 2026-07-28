@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.SimpleCounterFunc;
-using ReactiveUITK.Samples.Components.SimpleCounterFunc.SimpleCounterFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.SimpleCounterFunc;
+using Ruitk.Samples.Components.SimpleCounterFunc.SimpleCounterFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxSimpleCounterDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Simple Counter")]
+        [MenuItem("Reactive UI Toolkit/Demos/Simple Counter")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxSimpleCounterDemoWindow>("Simple Counter Demo");

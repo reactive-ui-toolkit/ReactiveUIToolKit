@@ -2,10 +2,10 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using ReactiveUITK.Language.Formatter;
+using Ruitk.Language.Formatter;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 // ════════════════════════════════════════════════════════════════════════════════
 //  FormatterSnapshotTests
@@ -52,7 +52,7 @@ public sealed class FormatterSnapshotTests
     /// in by the compiler) and runtime.
     /// Layout:  SourceGenerator~/Tests/FormatterSnapshotTests.cs
     ///          ↑ dir         ↑ dir
-    ///          SourceGenerator~/       ReactiveUIToolKit/  ← workspace root
+    ///          SourceGenerator~/       ReactiveUIToolkit/  ← workspace root
     /// </summary>
     private static string WorkspaceRoot([CallerFilePath] string thisFile = "")
     {
@@ -2204,7 +2204,7 @@ public sealed class FormatterSnapshotTests
             """
             @namespace NS
             @using System
-            @using static ReactiveUITK.Props.Typed.StyleKeys
+            @using static Ruitk.Props.Typed.StyleKeys
             component Foo { return (<Box />); }
             """
         );
@@ -2212,7 +2212,7 @@ public sealed class FormatterSnapshotTests
         var result = Format(source);
 
         Assert.Contains("@using System\n", result);
-        Assert.Contains("@using static ReactiveUITK.Props.Typed.StyleKeys\n", result);
+        Assert.Contains("@using static Ruitk.Props.Typed.StyleKeys\n", result);
         var idx1 = result.IndexOf("@using System");
         var idx2 = result.IndexOf("@using static");
         Assert.True(idx1 < idx2, "@using must precede @using static in output");
@@ -4049,7 +4049,7 @@ public sealed class FormatterSnapshotTests
             @using System
             @using System.Collections.Generic
             @using UnityEngine
-            @using static ReactiveUITK.Props.Typed.StyleKeys
+            @using static Ruitk.Props.Typed.StyleKeys
             component KSSSetup {
               var (count, setCount) = useState(0);
               var (mode, setMode) = useState("normal");
@@ -5135,14 +5135,14 @@ public sealed class FormatterSnapshotTests
         var source = N(
             """
             @namespace NS
-            @using   static   ReactiveUITK.Props.Typed.StyleKeys
+            @using   static   Ruitk.Props.Typed.StyleKeys
             component Foo { return (<Box />); }
             """
         );
         var result = Format(source);
         Assert.Contains("@using", result);
         Assert.Contains("static", result);
-        Assert.Contains("ReactiveUITK.Props.Typed.StyleKeys", result);
+        Assert.Contains("Ruitk.Props.Typed.StyleKeys", result);
         Assert.Equal(result, Format(result));
     }
 
@@ -9264,29 +9264,29 @@ public sealed class FormatterSnapshotTests
         }
     }
 
-    private static ReactiveUITK.Language.Roslyn.VirtualDocument GenerateVDoc(
+    private static Ruitk.Language.Roslyn.VirtualDocument GenerateVDoc(
         string source,
         string filePath
     )
     {
-        var diags = new System.Collections.Generic.List<ReactiveUITK.Language.ParseDiagnostic>();
-        var directives = ReactiveUITK.Language.Parser.DirectiveParser.Parse(
+        var diags = new System.Collections.Generic.List<Ruitk.Language.ParseDiagnostic>();
+        var directives = Ruitk.Language.Parser.DirectiveParser.Parse(
             source,
             filePath,
             diags
         );
-        var nodes = ReactiveUITK.Language.Parser.UitkxParser.Parse(
+        var nodes = Ruitk.Language.Parser.UitkxParser.Parse(
             source,
             filePath,
             directives,
             diags
         );
-        var parseResult = new ReactiveUITK.Language.Parser.ParseResult(
+        var parseResult = new Ruitk.Language.Parser.ParseResult(
             directives,
             nodes,
             System.Collections.Immutable.ImmutableArray.CreateRange(diags)
         );
-        var vdg = new ReactiveUITK.Language.Roslyn.VirtualDocumentGenerator();
+        var vdg = new Ruitk.Language.Roslyn.VirtualDocumentGenerator();
         return vdg.Generate(parseResult, source, filePath);
     }
 
@@ -9346,7 +9346,7 @@ component Comp {
 
         // {/* ... */} block should be preserved as-is (no VirtualNode replacement inside).
         Assert.DoesNotContain(
-            "(global::ReactiveUITK.Core.VirtualNode)null!",
+            "(global::Ruitk.Core.VirtualNode)null!",
             ExtractBetween(text, "{/*", "*/}")
         );
 
@@ -9412,7 +9412,7 @@ component Comp {
         // All FunctionSetup entries must have matching text
         foreach (var e in map.Entries)
         {
-            if (e.Kind != ReactiveUITK.Language.Roslyn.SourceRegionKind.FunctionSetup)
+            if (e.Kind != Ruitk.Language.Roslyn.SourceRegionKind.FunctionSetup)
                 continue;
             string vText = text.Substring(e.VirtualStart, e.VirtualEnd - e.VirtualStart);
             string sText = source.Substring(e.UitkxStart, e.UitkxEnd - e.UitkxStart);
@@ -9896,36 +9896,36 @@ component Comp {
     }
 
     private static void CollectTags(
-        System.Collections.Immutable.ImmutableArray<ReactiveUITK.Language.Nodes.AstNode> nodes,
+        System.Collections.Immutable.ImmutableArray<Ruitk.Language.Nodes.AstNode> nodes,
         System.Collections.Generic.List<string> tags
     )
     {
         foreach (var node in nodes)
         {
-            if (node is ReactiveUITK.Language.Nodes.ElementNode el)
+            if (node is Ruitk.Language.Nodes.ElementNode el)
             {
                 tags.Add(el.TagName);
                 CollectTags(el.Children, tags);
             }
-            else if (node is ReactiveUITK.Language.Nodes.IfNode ifn)
+            else if (node is Ruitk.Language.Nodes.IfNode ifn)
             {
                 foreach (var br in ifn.Branches)
                     CollectTags(br.Payload.Body, tags);
             }
-            else if (node is ReactiveUITK.Language.Nodes.ForeachNode fe)
+            else if (node is Ruitk.Language.Nodes.ForeachNode fe)
             {
                 CollectTags(fe.Payload.Body, tags);
             }
-            else if (node is ReactiveUITK.Language.Nodes.SwitchNode sw)
+            else if (node is Ruitk.Language.Nodes.SwitchNode sw)
             {
                 foreach (var c in sw.Cases)
                     CollectTags(c.Payload.Body, tags);
             }
-            else if (node is ReactiveUITK.Language.Nodes.ForNode fn)
+            else if (node is Ruitk.Language.Nodes.ForNode fn)
             {
                 CollectTags(fn.Payload.Body, tags);
             }
-            else if (node is ReactiveUITK.Language.Nodes.WhileNode wh)
+            else if (node is Ruitk.Language.Nodes.WhileNode wh)
             {
                 CollectTags(wh.Payload.Body, tags);
             }
@@ -10006,11 +10006,11 @@ component Comp {
             return;
         // Read the raw file (CRLF on Windows)
         var source = File.ReadAllText(file);
-        var diags = new System.Collections.Generic.List<ReactiveUITK.Language.ParseDiagnostic>();
-        var directives = ReactiveUITK.Language.Parser.DirectiveParser.Parse(source, file, diags);
-        var nodes = ReactiveUITK.Language.Parser.UitkxParser.Parse(source, file, directives, diags);
+        var diags = new System.Collections.Generic.List<Ruitk.Language.ParseDiagnostic>();
+        var directives = Ruitk.Language.Parser.DirectiveParser.Parse(source, file, diags);
+        var nodes = Ruitk.Language.Parser.UitkxParser.Parse(source, file, directives, diags);
         var errors = diags
-            .Where(d => d.Severity == ReactiveUITK.Language.ParseSeverity.Error)
+            .Where(d => d.Severity == Ruitk.Language.ParseSeverity.Error)
             .ToList();
         Assert.True(
             errors.Count == 0,
@@ -10112,29 +10112,29 @@ component Comp {
         Assert.DoesNotContain("<Router path=\"/jsxDemo\"", round2);
     }
 
-    private static System.Collections.Generic.List<ReactiveUITK.Language.ParseDiagnostic> RunAnalyzer(
+    private static System.Collections.Generic.List<Ruitk.Language.ParseDiagnostic> RunAnalyzer(
         string source,
         string filePath
     )
     {
-        var diags = new System.Collections.Generic.List<ReactiveUITK.Language.ParseDiagnostic>();
-        var directives = ReactiveUITK.Language.Parser.DirectiveParser.Parse(
+        var diags = new System.Collections.Generic.List<Ruitk.Language.ParseDiagnostic>();
+        var directives = Ruitk.Language.Parser.DirectiveParser.Parse(
             source,
             filePath,
             diags
         );
-        var nodes = ReactiveUITK.Language.Parser.UitkxParser.Parse(
+        var nodes = Ruitk.Language.Parser.UitkxParser.Parse(
             source,
             filePath,
             directives,
             diags
         );
-        var parseResult = new ReactiveUITK.Language.Parser.ParseResult(
+        var parseResult = new Ruitk.Language.Parser.ParseResult(
             directives,
             nodes,
             System.Collections.Immutable.ImmutableArray.CreateRange(diags)
         );
-        var analyzer = new ReactiveUITK.Language.Diagnostics.DiagnosticsAnalyzer();
+        var analyzer = new Ruitk.Language.Diagnostics.DiagnosticsAnalyzer();
         var t2 = analyzer.Analyze(parseResult, filePath);
         return t2.ToList();
     }
@@ -10699,7 +10699,7 @@ component Comp {
         var source = N(
             """
             @namespace MyApp
-            @using ReactiveUITK.Props.Typed
+            @using Ruitk.Props.Typed
 
             module Counter {
               public static readonly Style containerStyle = new Style
@@ -10743,7 +10743,7 @@ component Comp {
         var source = N(
             """
             @namespace MyApp
-            @using ReactiveUITK.Props.Typed
+            @using Ruitk.Props.Typed
 
             module Counter {
               public static readonly Style containerStyle = new Style

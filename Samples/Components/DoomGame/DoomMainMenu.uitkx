@@ -1,5 +1,5 @@
 import "@UnityEngine.UIElements"
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTypes"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTypes"
 
 export VirtualNode DoomMainMenu(int level, Difficulty difficulty, Action<int> onLevelChange, Action<Difficulty> onDifficultyChange, Action onStart) {
   var bg = new Color(0.06f, 0.05f, 0.05f, 1f);

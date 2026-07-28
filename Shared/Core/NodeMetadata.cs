@@ -1,10 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ReactiveUITK.Core.Fiber;
+using Ruitk.Core.Fiber;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     internal sealed class NodeMetadata
     {

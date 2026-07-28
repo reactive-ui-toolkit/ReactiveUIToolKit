@@ -1,10 +1,10 @@
 <idea-plugin>
   <id>com.reactiveuitk.uitkx</id>
   <name>UITKX</name>
-  <vendor url="https://github.com/your-org/ReactiveUIToolKit">ReactiveUITK</vendor>
+  <vendor url="https://github.com/reactive-ui-toolkit/ruitk-unity">ReactiveUITK</vendor>
   <description>
     <![CDATA[
-    <p>Language support for <b>.uitkx</b> ReactiveUIToolKit component templates.</p>
+    <p>Language support for <b>.uitkx</b> ReactiveUIToolkit component templates.</p>
     <ul>
       <li>Syntax highlighting (TextMate grammar)</li>
       <li>Completions for element tags, attributes, and directives</li>

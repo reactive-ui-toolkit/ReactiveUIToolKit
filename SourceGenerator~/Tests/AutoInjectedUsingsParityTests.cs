@@ -2,10 +2,10 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Guards the single-source-of-truth <see cref="AutoInjectedUsings.Namespaces"/> against the
@@ -45,9 +45,9 @@ namespace ReactiveUITK.SourceGenerator.Tests
             Assert.True(AutoInjectedUsings.IsRedundant("UnityEngine"));
             Assert.True(AutoInjectedUsings.IsRedundant("System"));
             Assert.True(AutoInjectedUsings.IsRedundant("  System.Linq  ")); // trimmed
-            Assert.True(AutoInjectedUsings.IsRedundant("ReactiveUITK.Router")); // now auto-injected (feature 2)
+            Assert.True(AutoInjectedUsings.IsRedundant("Ruitk.Router")); // now auto-injected (feature 2)
             Assert.False(AutoInjectedUsings.IsRedundant("UnityEngine.UIElements")); // NOT auto-injected
-            Assert.False(AutoInjectedUsings.IsRedundant("ReactiveUITK.Router.Extras")); // sub-namespace is not
+            Assert.False(AutoInjectedUsings.IsRedundant("Ruitk.Router.Extras")); // sub-namespace is not
             Assert.False(AutoInjectedUsings.IsRedundant("static System.Math"));
         }
 

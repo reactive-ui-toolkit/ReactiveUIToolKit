@@ -1,12 +1,12 @@
 using System;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Fiber;
-using ReactiveUITK.Elements;
+using Ruitk.Core;
+using Ruitk.Core.Fiber;
+using Ruitk.Elements;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Props for the &lt;UitkHost&gt; island — a uGUI element hosting a

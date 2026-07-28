@@ -1,4 +1,4 @@
-import "@ReactiveUITK.Signals"
+import "@Ruitk.Signals"
 
 export VirtualNode SignalCounterDemoFunc() {
   var counterSignal = useMemo(() => SignalFactory.Get<int>("demo.counter", 0), Array.Empty<object>());

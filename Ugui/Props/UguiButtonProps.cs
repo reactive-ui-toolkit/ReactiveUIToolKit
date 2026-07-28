@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Props for the Button element — a Selectable Button whose background is
