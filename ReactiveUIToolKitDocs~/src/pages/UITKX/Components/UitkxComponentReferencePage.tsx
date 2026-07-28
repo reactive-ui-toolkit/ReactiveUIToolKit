@@ -86,7 +86,7 @@ const getIntro = (title: string) => {
     case 'ErrorBoundary':
     case 'IMGUIContainer':
     case 'PropertyInspector':
-      return `Use <${title}> in UITKX when you need this higher-level ReactiveUITK runtime feature directly in markup.`
+      return `Use <${title}> in UITKX when you need this higher-level Ruitk runtime feature directly in markup.`
     default:
       return `Use <${title}> directly in UITKX markup. The runtime still exposes the underlying props type, but the normal authoring surface is the tag itself.`
   }

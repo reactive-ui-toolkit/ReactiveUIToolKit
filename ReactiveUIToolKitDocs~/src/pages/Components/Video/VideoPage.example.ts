@@ -1,5 +1,5 @@
 export const VIDEO_BASIC = `import "@UnityEngine.Video"
-import "@ReactiveUITK.Core.Media"
+import "@Ruitk.Core.Media"
 
 export VirtualNode VideoDemo() {
   var clip = Asset<VideoClip>("Assets/Resources/intro.mp4");

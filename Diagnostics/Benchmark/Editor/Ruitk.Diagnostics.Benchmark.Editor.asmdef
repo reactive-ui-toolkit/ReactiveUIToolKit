@@ -1,12 +1,12 @@
 {
-  "name": "ReactiveUITK.Ugui",
+  "name": "Ruitk.Diagnostics.Benchmark.Editor",
   "references": [
-    "ReactiveUITK.Shared",
-    "ReactiveUITK.Runtime",
-    "UnityEngine.UI",
-    "Unity.TextMeshPro"
+    "Ruitk.Editor",
+    "Ruitk.Shared",
+    "Ruitk.Runtime",
+    "Ruitk.Diagnostics"
   ],
-  "includePlatforms": [],
+  "includePlatforms": ["Editor"],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": false,
@@ -16,3 +16,4 @@
   "versionDefines": [],
   "noEngineReferences": false
 }
+

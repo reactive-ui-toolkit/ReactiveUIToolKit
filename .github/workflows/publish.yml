@@ -42,8 +42,8 @@ jobs:
       - name: Build source generator DLLs
         if: steps.check.outputs.skip == 'false'
         run: |
-          dotnet restore SourceGenerator~/ReactiveUITK.SourceGenerator.csproj
-          dotnet build SourceGenerator~/ReactiveUITK.SourceGenerator.csproj -c Release --no-restore
+          dotnet restore SourceGenerator~/Ruitk.SourceGenerator.csproj
+          dotnet build SourceGenerator~/Ruitk.SourceGenerator.csproj -c Release --no-restore
 
       - name: Read paths to omit from config.json
         if: steps.check.outputs.skip == 'false'
@@ -621,7 +621,7 @@ jobs:
                 -username "$UNITY_EMAIL" -password "$UNITY_PASSWORD" -logFile - || true
               unity-editor -batchmode -nographics -quit \
                 -projectPath /workspace/shell \
-                -executeMethod ReactiveUITK.CICD.AssetStoreExport.Run \
+                -executeMethod Ruitk.CICD.AssetStoreExport.Run \
                 -exportOut "/workspace/$OUT_FILE" \
                 -logFile -
             '

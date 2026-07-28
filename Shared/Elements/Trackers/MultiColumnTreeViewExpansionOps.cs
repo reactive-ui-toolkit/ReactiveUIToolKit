@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     internal sealed class MultiColumnTreeViewExpansionOps : IExpansionViewOps<MultiColumnTreeView>
     {

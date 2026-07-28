@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.GalagaGame;
-using ReactiveUITK.Samples.Components.GalagaGame.GalagaGame;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.GalagaGame;
+using Ruitk.Samples.Components.GalagaGame.GalagaGame;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxGalagaGameDemoWindow : EditorWindow
     {

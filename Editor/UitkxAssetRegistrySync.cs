@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.Editor
+namespace Ruitk.Editor
 {
     /// <summary>
     /// Populates the <see cref="UitkxAssetRegistry"/> ScriptableObject by scanning
@@ -23,7 +23,7 @@ namespace ReactiveUITK.Editor
     [InitializeOnLoad]
     internal static class UitkxAssetRegistrySync
     {
-        private const string RegistryFolder = "Assets/ReactiveUITK/Resources";
+        private const string RegistryFolder = "Assets/Ruitk/Resources";
         private const string RegistryAssetPath = RegistryFolder + "/__uitkx_registry.asset";
 
         private static readonly Regex s_assetCallRe = new(

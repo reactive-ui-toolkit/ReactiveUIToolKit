@@ -1,13 +1,13 @@
 using System.IO;
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// EffectiveNamespace.ResolveNamespacePrefix precedence (namespace-import unification plan,
     /// feature 3), most-specific WINS: uitkx.config.json "namespacePrefix" → owning .asmdef
-    /// "rootNamespace" → ReactiveUITK.Uitkx default. The asmdef "name" is deliberately NOT used.
+    /// "rootNamespace" → Ruitk.Uitkx default. The asmdef "name" is deliberately NOT used.
     /// Exercised over real temp files since the resolver walks the filesystem.
     /// </summary>
     public sealed class NamespacePrefixResolutionTests : System.IDisposable

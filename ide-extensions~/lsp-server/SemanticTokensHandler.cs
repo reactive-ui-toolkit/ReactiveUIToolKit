@@ -7,10 +7,10 @@ using OmniSharp.Extensions.LanguageServer.Protocol;
 using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Document;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Lowering;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.Language.SemanticTokens;
+using Ruitk.Language;
+using Ruitk.Language.Lowering;
+using Ruitk.Language.Parser;
+using Ruitk.Language.SemanticTokens;
 using UitkxLanguageServer.Roslyn;
 
 namespace UitkxLanguageServer;

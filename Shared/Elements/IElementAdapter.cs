@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public interface IElementAdapter
     {

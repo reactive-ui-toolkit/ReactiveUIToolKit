@@ -32,8 +32,8 @@ export const EXAMPLE_IMPORT = `// .uitkx — nothing to import: Style, StyleKeys
 // are all in scope automatically.
 
 // .cs — add:
-using ReactiveUITK.Props.Typed;                    // Style
-using static ReactiveUITK.Props.Typed.CssHelpers;  // Pct(), Px(), FlexRow, ...`
+using Ruitk.Props.Typed;                    // Style
+using static Ruitk.Props.Typed.CssHelpers;  // Pct(), Px(), FlexRow, ...`
 
 export const EXAMPLE_LAYOUT = `var cardStyle = new Style {
     Width = Pct(100),

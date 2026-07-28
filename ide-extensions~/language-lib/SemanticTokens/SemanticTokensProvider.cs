@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.Language.SemanticTokens
+namespace Ruitk.Language.SemanticTokens
 {
     /// <summary>
     /// Walks a <see cref="ParseResult"/> and the matching source text to produce

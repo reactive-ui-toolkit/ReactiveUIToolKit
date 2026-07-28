@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Props
+namespace Ruitk.Props
 {
     /// <summary>
     /// Applies typed <see cref="BaseProps"/> directly to a <see cref="VisualElement"/>

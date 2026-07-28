@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Language.Formatter
+namespace Ruitk.Language.Formatter
 {
     /// <summary>
     /// Pluggable delegate that formats a raw C# code string.

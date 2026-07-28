@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Linq;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Parser;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// ES-modules campaign (Plans~/ES_MODULES_EXECUTION_PLAN.md M1, U-04): plain
@@ -269,7 +269,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             var (ds, diags) = Parse("");
             Assert.Contains(diags, d => d.Code == "UITKX2105");
             Assert.Empty(ds.MemberDeclarations.IsDefault
-                ? System.Collections.Immutable.ImmutableArray<ReactiveUITK.Language.Parser.MemberDeclaration>.Empty
+                ? System.Collections.Immutable.ImmutableArray<Ruitk.Language.Parser.MemberDeclaration>.Empty
                 : ds.MemberDeclarations);
         }
 

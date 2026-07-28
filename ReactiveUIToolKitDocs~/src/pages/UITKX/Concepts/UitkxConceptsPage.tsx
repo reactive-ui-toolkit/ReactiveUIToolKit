@@ -97,7 +97,7 @@ export const UitkxConceptsPage: FC = () => (
         Environment labels and diagnostics are configured in{' '}
         <code>Assets/ReactiveUIToolKit/config.json</code> under the{' '}
         <code>envVariables</code> object (read once at startup via{' '}
-        <code>ReactiveUITKConfig.Current</code>) — no scripting define symbols are involved:
+        <code>RuitkConfig.Current</code>) — no scripting define symbols are involved:
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>

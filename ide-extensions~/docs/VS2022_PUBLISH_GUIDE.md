@@ -32,7 +32,7 @@ The LSP server is published into each extension's `server/` directory.
 | **Version file** | `ide-extensions~/vscode/package.json` | `source.extension.vsixmanifest` |
 | **Changelog file** | `ide-extensions~/vscode/CHANGELOG.md` | `ide-extensions~/visual-studio/UitkxVsix/overview.md` |
 | **PAT source** | `publisher-secrets.json → vscePatToken` | Same PAT, same file |
-| **Marketplace ID** | `ReactiveUITK.uitkx` | `ReactiveUITK.uitkx-visualstudio` |
+| **Marketplace ID** | `Ruitk.uitkx` | `Ruitk.uitkx-visualstudio` |
 | **Build tool** | `npm run build` + `vsce package` | MSBuild (VS2022) + CreateVsixContainer |
 | **Publish tool** | `vsce publish --pat` | `VsixPublisher.exe publish` |
 | **Local install** | `code --install-extension` | `VSIXInstaller.exe /quiet` |
@@ -111,7 +111,7 @@ The VS2022 publish is more involved than VS Code. Here's exactly what `publish-v
 
 Edits `source.extension.vsixmanifest`:
 ```xml
-<Identity Id="UitkxVsix.ReactiveUITK" Version="1.0.53" ... />
+<Identity Id="UitkxVsix.Ruitk" Version="1.0.53" ... />
 ```
 
 ### Step 2: Update Changelog
@@ -231,9 +231,9 @@ After upload, the marketplace may take a few minutes to validate and show the ne
 
 ## Marketplace Links
 
-- **VS Code**: https://marketplace.visualstudio.com/items?itemName=ReactiveUITK.uitkx
-- **VS2022**: https://marketplace.visualstudio.com/items?itemName=ReactiveUITK.uitkx-visualstudio
-- **Publisher Portal**: https://marketplace.visualstudio.com/manage/publishers/ReactiveUITK
+- **VS Code**: https://marketplace.visualstudio.com/items?itemName=Ruitk.uitkx
+- **VS2022**: https://marketplace.visualstudio.com/items?itemName=Ruitk.uitkx-visualstudio
+- **Publisher Portal**: https://marketplace.visualstudio.com/manage/publishers/Ruitk
 
 ---
 
@@ -242,7 +242,7 @@ After upload, the marketplace may take a few minutes to validate and show the ne
 ```powershell
 # Query marketplace API for current version
 $headers = @{ "Accept" = "application/json; api-version=6.1-preview.1" }
-$body = '{"filters":[{"criteria":[{"filterType":7,"value":"ReactiveUITK.uitkx-visualstudio"}]}],"flags":55}'
+$body = '{"filters":[{"criteria":[{"filterType":7,"value":"Ruitk.uitkx-visualstudio"}]}],"flags":55}'
 $r = Invoke-RestMethod -Uri "https://marketplace.visualstudio.com/_apis/public/gallery/extensionquery" -Method Post -ContentType "application/json" -Headers $headers -Body $body
 $r.results[0].extensions[0].versions | ForEach-Object { "v$($_.version) $($_.flags)" }
 ```

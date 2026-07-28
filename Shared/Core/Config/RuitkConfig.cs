@@ -1,11 +1,11 @@
 using System;
 using System.IO;
-using ReactiveUITK.Core.Diagnostics;
+using Ruitk.Core.Diagnostics;
 using UnityEngine;
 
-namespace ReactiveUITK.Core.Config
+namespace Ruitk.Core.Config
 {
-    public sealed class ReactiveUITKConfig
+    public sealed class RuitkConfig
     {
         [Serializable]
         private sealed class EnvVariables
@@ -28,8 +28,8 @@ namespace ReactiveUITK.Core.Config
         public bool EnableDiffTracing { get; private set; } = false;
         public bool UseExceptionBoundaryFlow { get; private set; } = false;
 
-        private static ReactiveUITKConfig instance;
-        public static ReactiveUITKConfig Current
+        private static RuitkConfig instance;
+        public static RuitkConfig Current
         {
             get
             {
@@ -41,9 +41,9 @@ namespace ReactiveUITK.Core.Config
             }
         }
 
-        private static ReactiveUITKConfig Load()
+        private static RuitkConfig Load()
         {
-            var cfg = new ReactiveUITKConfig();
+            var cfg = new RuitkConfig();
             try
             {
                 string candidate = GetDefaultProjectConfigPath();

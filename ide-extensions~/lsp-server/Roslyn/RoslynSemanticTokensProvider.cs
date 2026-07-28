@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Classification;
 using Microsoft.CodeAnalysis.Text;
-using ReactiveUITK.Language.Roslyn;
-using ReactiveUITK.Language.SemanticTokens;
+using Ruitk.Language.Roslyn;
+using Ruitk.Language.SemanticTokens;
 
 namespace UitkxLanguageServer.Roslyn
 {

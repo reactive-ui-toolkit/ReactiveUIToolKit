@@ -2,7 +2,7 @@ using System.IO;
 using System.Runtime.CompilerServices;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Source-text contract pins for HMR's effective-namespace threading

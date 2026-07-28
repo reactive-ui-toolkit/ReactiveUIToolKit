@@ -1,12 +1,9 @@
 {
-  "name": "ReactiveUITK.Diagnostics.Benchmark.Editor",
+  "name": "Ruitk.Runtime",
   "references": [
-    "ReactiveUITK.Editor",
-    "ReactiveUITK.Shared",
-    "ReactiveUITK.Runtime",
-    "ReactiveUITK.Diagnostics"
+    "Ruitk.Shared"
   ],
-  "includePlatforms": ["Editor"],
+  "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": false,
@@ -16,4 +13,3 @@
   "versionDefines": [],
   "noEngineReferences": false
 }
-

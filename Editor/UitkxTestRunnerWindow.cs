@@ -8,14 +8,14 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Editor
+namespace Ruitk.Editor
 {
     /// <summary>
     /// Editor window that runs the UITKX Source Generator unit tests
     /// (xUnit, <c>SourceGenerator~/Tests/</c>) via <c>dotnet test</c> and
     /// displays the output inline.
     ///
-    /// Menu path: ReactiveUITK / Diagnostics / Run Unit Tests
+    /// Menu path: Ruitk / Diagnostics / Run Unit Tests
     /// </summary>
     public sealed class UitkxTestRunnerWindow : EditorWindow
     {

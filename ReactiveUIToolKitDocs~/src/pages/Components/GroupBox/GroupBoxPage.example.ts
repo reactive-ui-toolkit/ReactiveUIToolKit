@@ -1,9 +1,9 @@
-export const GROUP_BOX_BASIC = `// Example namespace: ReactiveUITK.Samples.Components
+export const GROUP_BOX_BASIC = `// Example namespace: Ruitk.Samples.Components
 
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 using UnityEngine;
 
 public static class GroupBoxExamples

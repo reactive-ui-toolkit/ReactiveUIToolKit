@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.LatestFeaturesDemoFunc;
-using ReactiveUITK.Samples.Components.LatestFeaturesDemoFunc.LatestFeaturesDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.LatestFeaturesDemoFunc;
+using Ruitk.Samples.Components.LatestFeaturesDemoFunc.LatestFeaturesDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxLatestFeaturesDemoWindow : EditorWindow
     {

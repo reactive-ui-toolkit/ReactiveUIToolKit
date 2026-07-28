@@ -118,7 +118,7 @@ export const StylingPage: FC = () => {
 
     <Alert severity="info" sx={{ mb: 3 }}>
       Both <code>Style</code> and <code>CssHelpers</code> live in the{' '}
-      <code>ReactiveUITK.Props.Typed</code> namespace.
+      <code>Ruitk.Props.Typed</code> namespace.
     </Alert>
 
     {/* ── Setup ─────────────────────────────────────────────── */}

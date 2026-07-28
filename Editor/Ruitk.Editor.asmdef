@@ -1,7 +1,11 @@
 {
-  "name": "ReactiveUITK.Shared",
-  "references": [],
-  "includePlatforms": [],
+  "name": "Ruitk.Editor",
+  "references": [
+    "Ruitk.Shared",
+    "Ruitk.Runtime",
+    "Ruitk.Ugui"
+  ],
+  "includePlatforms": ["Editor"],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": false,

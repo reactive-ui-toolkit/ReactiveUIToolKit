@@ -1,4 +1,4 @@
-using ReactiveUITK.Language.Formatter;
+using Ruitk.Language.Formatter;
 var source = System.IO.File.ReadAllText(@"c:\Yanivs\GameDev\UnityComponents\Assets\ReactiveUIToolKit\Samples\Components\UitkxCounterFunc\UitkxCounterFunc.uitkx");
 try {
     var f = new AstFormatter(FormatterOptions.Default);

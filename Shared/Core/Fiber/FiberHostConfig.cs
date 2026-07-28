@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// Host configuration — the backend seam between the fiber reconciler and a

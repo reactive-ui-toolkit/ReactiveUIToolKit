@@ -1,7 +1,7 @@
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// ES-modules campaign (Plans~/ES_MODULES_EXECUTION_PLAN.md M1, U-05):

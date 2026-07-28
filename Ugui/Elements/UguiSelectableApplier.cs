@@ -1,8 +1,8 @@
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     internal static class UguiSelectableApplier
     {

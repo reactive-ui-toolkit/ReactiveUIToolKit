@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactiveUITK.Samples.Components.DoomGame {
+namespace Ruitk.Samples.Components.DoomGame {
   public static class DoomTypes {
     public enum GameScreen { MainMenu, Game }
     public enum Difficulty { Easy = 0, Normal = 1, Hard = 2 }

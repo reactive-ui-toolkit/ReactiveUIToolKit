@@ -3,8 +3,8 @@ import { DoomHUD } from "./DoomHUD"
 import { DoomMinimap } from "./DoomMinimap"
 import * as DoomGameScreenLogic from "./DoomGameScreenLogic"
 import "@UnityEngine.UIElements"
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTypes"
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTextures"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTypes"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTextures"
 
 export VirtualNode DoomGameScreen(int restartVersion, int level, Difficulty difficulty, Action onExit, Action onNextLevel) {
   var viewRef = useRef<VisualElement?>(null);
@@ -197,7 +197,7 @@ export VirtualNode DoomGameScreen(int restartVersion, int level, Difficulty diff
                 BackgroundSize = new BackgroundSize(new Length(ebgWidth, LengthUnit.Pixel), new Length(etexPx, LengthUnit.Pixel)),
                 BackgroundPositionX = new BackgroundPosition(BackgroundPositionKeyword.Left, new Length(ebgOffsetX, LengthUnit.Pixel)),
                 BackgroundPositionY = new BackgroundPosition(BackgroundPositionKeyword.Top, new Length(ecol.TexOffsetPx, LengthUnit.Pixel)),
-                BackgroundRepeat = ReactiveUITK.Props.Typed.CssHelpers.BgRepeatY,
+                BackgroundRepeat = Ruitk.Props.Typed.CssHelpers.BgRepeatY,
                 BackgroundImageTint = new Color(elightF, elightF, elightF, 1f),
               }}
             />
@@ -259,7 +259,7 @@ export VirtualNode DoomGameScreen(int restartVersion, int level, Difficulty diff
                 BackgroundSize = new BackgroundSize(new Length(bgWidth, LengthUnit.Pixel), new Length(texPx, LengthUnit.Pixel)),
                 BackgroundPositionX = new BackgroundPosition(BackgroundPositionKeyword.Left, new Length(bgOffsetX, LengthUnit.Pixel)),
                 BackgroundPositionY = new BackgroundPosition(BackgroundPositionKeyword.Top, new Length(col.TexOffsetPx, LengthUnit.Pixel)),
-                BackgroundRepeat = ReactiveUITK.Props.Typed.CssHelpers.BgRepeatY,
+                BackgroundRepeat = Ruitk.Props.Typed.CssHelpers.BgRepeatY,
                 BackgroundImageTint = new Color(lightF * vertDim, lightF * vertDim, lightF * vertDim, 1f),
               }}
             />

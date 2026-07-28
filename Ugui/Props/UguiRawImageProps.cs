@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     public sealed class UguiRawImageProps : UguiGraphicProps
     {

@@ -53,7 +53,7 @@ export const UitkxGettingStartedPage: FC = () => (
       complete C# class (<code>HelloWorld.uitkx.g.cs</code>) with <code>namespace</code>, a{' '}
       <code>partial class</code>, and a full <code>Render()</code> method. The namespace is{' '}
       <strong>file-keyed</strong> — derived from the file&rsquo;s folders plus its file stem
-      (here <code>ReactiveUITK.Uitkx.UI.HelloWorld</code>) — so no <code>@namespace</code>{' '}
+      (here <code>Ruitk.Uitkx.UI.HelloWorld</code>) — so no <code>@namespace</code>{' '}
       directive is needed. <code>export</code> makes the class <code>public</code> and importable
       from other files; without it the declaration is <code>internal</code> and file-private. You
       don&rsquo;t need to create any companion file for this to work.

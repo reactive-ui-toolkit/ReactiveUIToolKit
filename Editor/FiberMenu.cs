@@ -1,7 +1,7 @@
-namespace ReactiveUITK.EditorSupport
+namespace Ruitk.EditorSupport
 {
     /// <summary>
-    /// Top-level ReactiveUITK editor menu items.
+    /// Top-level Ruitk editor menu items.
     /// </summary>
     public static class FiberMenu
     {

@@ -1,4 +1,4 @@
-export const AUDIO_BASIC = `import "@ReactiveUITK.Core.Media"
+export const AUDIO_BASIC = `import "@Ruitk.Core.Media"
 
 export VirtualNode MusicDemo() {
   var music = Asset<AudioClip>("Assets/Resources/theme.mp3");

@@ -31,7 +31,7 @@ const UITKX_CONFIG_JSON = `// uitkx.config.json — place it at your UI source r
 
   // The root of every path-derived namespace (files with no @namespace).
   // Lets a whole project carry its own namespace root — no per-file @namespace.
-  // Default: falls back to the owning .asmdef's rootNamespace, else "ReactiveUITK.Uitkx".
+  // Default: falls back to the owning .asmdef's rootNamespace, else "Ruitk.Uitkx".
   "namespacePrefix": "MyGame.UI"
 }`
 
@@ -99,9 +99,9 @@ export const UitkxConfigPage: FC = () => (
       <strong>Namespace-prefix precedence</strong> (most-specific wins): a per-file{' '}
       <code>@namespace</code> &rarr; the config <code>"namespacePrefix"</code> &rarr; the owning{' '}
       <code>.asmdef</code>&rsquo;s <code>rootNamespace</code> (Unity&rsquo;s own field) &rarr; the
-      built-in <code>ReactiveUITK.Uitkx</code> default. Every step is opt-in, so a project that sets
+      built-in <code>Ruitk.Uitkx</code> default. Every step is opt-in, so a project that sets
       neither a prefix nor an asmdef <code>rootNamespace</code> keeps deriving under{' '}
-      <code>ReactiveUITK.Uitkx</code>. The asmdef <em>name</em> is deliberately not used — it would
+      <code>Ruitk.Uitkx</code>. The asmdef <em>name</em> is deliberately not used — it would
       silently re-root every project the moment it named an assembly.
     </Typography>
     <Typography variant="body2" paragraph>
@@ -180,7 +180,7 @@ export const UitkxConfigPage: FC = () => (
         <TableBody>
           <TableRow>
             <TableCell><code>editor.defaultFormatter</code></TableCell>
-            <TableCell><code>ReactiveUITK.uitkx</code></TableCell>
+            <TableCell><code>Ruitk.uitkx</code></TableCell>
             <TableCell>Uses the UITKX formatter for <code>.uitkx</code> files</TableCell>
           </TableRow>
           <TableRow>

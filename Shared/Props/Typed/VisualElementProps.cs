@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Props.Typed
+namespace Ruitk.Props.Typed
 {
     /// <summary>
     /// Props for a plain VisualElement. All shared element properties are inherited from BaseProps.

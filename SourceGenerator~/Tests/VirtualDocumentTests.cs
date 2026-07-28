@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Lowering;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.Language.Roslyn;
+using Ruitk.Language;
+using Ruitk.Language.Lowering;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
+using Ruitk.Language.Roslyn;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Tests for <see cref="VirtualDocumentGenerator"/> — verifies that the generated
@@ -42,7 +42,7 @@ public sealed class VirtualDocumentTests
     {
         var source = "component Foo {\n  return (\n    <Label text=\"hi\"/>\n  );\n}";
         var doc = Generate(source);
-        Assert.Contains("namespace ReactiveUITK.FunctionStyle", doc.Text);
+        Assert.Contains("namespace Ruitk.FunctionStyle", doc.Text);
     }
 
     [Fact]
@@ -267,7 +267,7 @@ public sealed class VirtualDocumentTests
         // Raw JSX must not leak — Roslyn would reject it.
         Assert.DoesNotContain("<Label/>", doc.Text);
         // Stub must appear so Roslyn parses cleanly.
-        Assert.Contains("(global::ReactiveUITK.Core.VirtualNode)null!", doc.Text);
+        Assert.Contains("(global::Ruitk.Core.VirtualNode)null!", doc.Text);
     }
 
     [Fact]
@@ -304,6 +304,6 @@ public sealed class VirtualDocumentTests
 
         Assert.Contains("n.ToString()", doc.Text);
         // The stub must NOT appear when there's no JSX.
-        Assert.DoesNotContain("(global::ReactiveUITK.Core.VirtualNode)null!", doc.Text);
+        Assert.DoesNotContain("(global::Ruitk.Core.VirtualNode)null!", doc.Text);
     }
 }

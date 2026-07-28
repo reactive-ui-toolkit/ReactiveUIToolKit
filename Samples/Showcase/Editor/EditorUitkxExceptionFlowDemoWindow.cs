@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.ExceptionFlowDemoFunc;
-using ReactiveUITK.Samples.Components.ExceptionFlowDemoFunc.ExceptionFlowDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.ExceptionFlowDemoFunc;
+using Ruitk.Samples.Components.ExceptionFlowDemoFunc.ExceptionFlowDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxExceptionFlowDemoWindow : EditorWindow
     {

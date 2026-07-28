@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.CustomDrawDemoFunc;
-using ReactiveUITK.Samples.Components.CustomDrawDemoFunc.CustomDrawDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.CustomDrawDemoFunc;
+using Ruitk.Samples.Components.CustomDrawDemoFunc.CustomDrawDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     /// <summary>
     /// Editor demo for custom rendering via the <c>onGenerateVisualContent</c>
@@ -15,7 +15,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
     /// <c>MeshGenerationContext.Allocate</c>, and the <c>redrawKey</c> repaint
     /// trigger paired with a stable callback.
     ///
-    /// Launch from the menu: <b>ReactiveUITK / Demos / Custom Drawing</b>.
+    /// Launch from the menu: <b>Ruitk / Demos / Custom Drawing</b>.
     /// </summary>
     public sealed class EditorUitkxCustomDrawDemoWindow : EditorWindow
     {

@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Diagnostics;
-using ReactiveUITK.Elements;
-using ReactiveUITK.Signals;
+using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
+using Ruitk.Elements;
+using Ruitk.Signals;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     public sealed class RootRenderer : MonoBehaviour
     {
@@ -160,7 +160,7 @@ namespace ReactiveUITK.Core
             {
                 return;
             }
-            hostDocumentTickUnsubscribe = ReactiveUITK.Core.Animation.AnimationTicker.Subscribe(
+            hostDocumentTickUnsubscribe = Ruitk.Core.Animation.AnimationTicker.Subscribe(
                 PollHostDocument
             );
         }

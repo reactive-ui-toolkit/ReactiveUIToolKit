@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     /// <summary>Use <see cref="ReactiveEvent"/> instead.</summary>
     [Obsolete(

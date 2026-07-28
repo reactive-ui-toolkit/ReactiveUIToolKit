@@ -124,7 +124,7 @@ export const UitkxReferencePage: FC = () => (
           <TableRow>
             <TableCell><code>@using</code></TableCell>
             <TableCell><code>@using System.Collections.Generic</code></TableCell>
-            <TableCell>Adds a using directive to the generated file. <code>import "@Ns"</code> is the equivalent, recommended spelling. Note: <code>StyleKeys</code>, <code>CssHelpers</code>, <code>System</code>, <code>UnityEngine</code>, and the ReactiveUITK namespaces are auto-imported.</TableCell>
+            <TableCell>Adds a using directive to the generated file. <code>import "@Ns"</code> is the equivalent, recommended spelling. Note: <code>StyleKeys</code>, <code>CssHelpers</code>, <code>System</code>, <code>UnityEngine</code>, and the Ruitk namespaces are auto-imported.</TableCell>
           </TableRow>
           <TableRow>
             <TableCell><code>@uss</code></TableCell>

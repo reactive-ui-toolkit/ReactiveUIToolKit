@@ -7,7 +7,7 @@ Editor — without domain reload, without losing component state.
 
 ## Quick Start
 
-1. Open **ReactiveUITK → HMR Mode** from the Unity menu bar
+1. Open **Ruitk → HMR Mode** from the Unity menu bar
 2. Click **Start HMR**
 3. Edit and save any `.uitkx` file
 4. The component updates in-place — hook state (counters, refs, effects) is preserved
@@ -18,7 +18,7 @@ When HMR is active:
 
 - **Assembly reloads are locked** — no domain reload occurs on file saves
 - A `FileSystemWatcher` detects `.uitkx` changes under `Assets/`
-- The file is parsed and emitted to C# using `ReactiveUITK.Language.dll`
+- The file is parsed and emitted to C# using `Ruitk.Language.dll`
 - C# is compiled in-process via Roslyn (`Microsoft.CodeAnalysis.CSharp` 4.3.1), with
   automatic fallback to external `csc.dll` if Roslyn DLLs aren't available
 - The compiled assembly is loaded via `Assembly.Load(byte[])`
@@ -55,7 +55,7 @@ Available actions:
 
 To set a shortcut:
 
-1. Open the HMR window (**ReactiveUITK → HMR Mode**)
+1. Open the HMR window (**Ruitk → HMR Mode**)
 2. Expand **Keyboard Shortcuts**
 3. Click the button next to an action (shows "Not set" by default)
 4. Press your desired key combination (e.g. `Ctrl + Alt + H`)
@@ -97,7 +97,7 @@ in-place (or triggers domain reload for modules).
 components by the family key `{EffectiveNamespace}.{Container}::{hookName}` (e.g.
 `MyGame.UI.CounterHooks::useCounter`), not by the bare hook name — so two identically-named
 hooks in different files never cross-swap. Both the source generator and the HMR emitters
-derive the key from the SAME shared functions (`ReactiveUITK.Language.EffectiveNamespace` +
+derive the key from the SAME shared functions (`Ruitk.Language.EffectiveNamespace` +
 the container-name algorithm + `ImportResolver` for imported hooks); if you change the key
 format on one side, the other must change in lockstep or hot-swap silently stops matching
 (see `HmrEmitterParityContractTests.Sg_HookRegistration_UsesPathQualifiedFamilyKey_HmrMustMirror`).
@@ -165,7 +165,7 @@ resets state for that component, and logs a warning:
 
 **HMR doesn't start**
 - Check the Console for initialization errors
-- Ensure `ReactiveUITK.Language.dll` exists in the `Analyzers/` folder
+- Ensure `Ruitk.Language.dll` exists in the `Analyzers/` folder
 - Verify Unity's Roslyn compiler is present at `{EditorPath}/Data/DotNetSdkRoslyn/csc.dll`
 - Check for `[HMR] In-process Roslyn compiler loaded successfully` in Console
 - If Roslyn fails to load, check that `~/.nuget/packages/microsoft.codeanalysis.csharp/4.3.1/` exists

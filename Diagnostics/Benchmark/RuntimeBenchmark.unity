@@ -517,7 +517,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6d89152fd1d89274a93425047621ad6e, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ReactiveUITK.Core.RootRenderer
+  m_EditorClassIdentifier: Assembly-CSharp::Ruitk.Core.RootRenderer
 --- !u!4 &1445575337
 Transform:
   m_ObjectHideFlags: 0
@@ -544,7 +544,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2d3d957aa822cdc4191be6494facf3eb, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: ReactiveUITK.Samples::ReactiveUITK.Bench.BenchRuntimeHost
+  m_EditorClassIdentifier: Ruitk.Samples::Ruitk.Bench.BenchRuntimeHost
   uiDocument: {fileID: 715795523}
 --- !u!114 &1445575339
 MonoBehaviour:
@@ -557,7 +557,7 @@ MonoBehaviour:
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ab7519db9f8704f42bffb1543ba4bd89, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: ReactiveUITK.Samples::ReactiveUITK.Benchmark.BenchmarkSetup
+  m_EditorClassIdentifier: Ruitk.Samples::Ruitk.Benchmark.BenchmarkSetup
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

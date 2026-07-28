@@ -1,9 +1,9 @@
 using System;
 using System.Reflection;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Assigns ref targets for uGUI hosts. Supported shapes:

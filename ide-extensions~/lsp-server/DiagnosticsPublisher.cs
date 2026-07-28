@@ -11,12 +11,12 @@ using OmniSharp.Extensions.LanguageServer.Protocol;
 using OmniSharp.Extensions.LanguageServer.Protocol.Document;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Diagnostics;
-using ReactiveUITK.Language.Lowering;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.Language.Roslyn;
+using Ruitk.Language;
+using Ruitk.Language.Diagnostics;
+using Ruitk.Language.Lowering;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
+using Ruitk.Language.Roslyn;
 using UitkxLanguageServer.Roslyn;
 using LspDiagnosticSeverity = OmniSharp.Extensions.LanguageServer.Protocol.Models.DiagnosticSeverity;
 using LspRange = OmniSharp.Extensions.LanguageServer.Protocol.Models.Range;
@@ -191,7 +191,7 @@ public sealed class DiagnosticsPublisher
     // AmbientHookNames = canonical PascalCase + camelCase alias forms (see HookRegistry) —
     // CanonicalNames alone missed camelCase call sites → false UITKX2307 in the editor.
     private static readonly HashSet<string> s_builtinHooks =
-        new HashSet<string>(global::ReactiveUITK.Core.HookRegistry.AmbientHookNames, StringComparer.Ordinal);
+        new HashSet<string>(global::Ruitk.Core.HookRegistry.AmbientHookNames, StringComparer.Ordinal);
 
     private static readonly Regex s_asmdefNameRe =
         new(@"""name""\s*:\s*""([^""]+)""", RegexOptions.CultureInvariant);
@@ -959,7 +959,7 @@ public sealed class DiagnosticsPublisher
         string? resolvedNs = EffectiveNamespace.Resolve(
             directives.HasExplicitNamespace, directives.Namespace, localPath,
             fileKeyed: !directives.UsesLegacySyntax);
-        string ns = string.IsNullOrEmpty(resolvedNs) ? "ReactiveUITK.Generated" : resolvedNs!;
+        string ns = string.IsNullOrEmpty(resolvedNs) ? "Ruitk.Generated" : resolvedNs!;
 
         foreach (var module in directives.ModuleDeclarations)
         {

@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.PropTypesDemoFunc;
-using ReactiveUITK.Samples.Components.PropTypesDemoFunc.PropTypesDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.PropTypesDemoFunc;
+using Ruitk.Samples.Components.PropTypesDemoFunc.PropTypesDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxPropTypesDemoWindow : EditorWindow
     {

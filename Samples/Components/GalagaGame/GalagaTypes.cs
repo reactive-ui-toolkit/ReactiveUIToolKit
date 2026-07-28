@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactiveUITK.Samples.Components.GalagaGame {
+namespace Ruitk.Samples.Components.GalagaGame {
   public static class GalagaTypes {
     // ───── Enums ─────
 

@@ -48,7 +48,7 @@ export const EXAMPLE_NAMESPACE_IMPORT = `// Two shapes, two jobs — both live i
 
 import { Card } from "./Card"          // FILE import  — braces + 'from "./path"'
                                        //   pulls in a peer .uitkx export (name-checked)
-import "@ReactiveUITK.Router"          // NAMESPACE import — quoted "@Namespace"
+import "@Ruitk.Router"          // NAMESPACE import — quoted "@Namespace"
                                        //   brings a C# namespace into scope
 
 // import "@Ns" is exactly equivalent to @using Ns — the same generated 'using'.
@@ -56,7 +56,7 @@ import "@ReactiveUITK.Router"          // NAMESPACE import — quoted "@Namespac
 import "@static UnityEngine.Mathf"     // = using static UnityEngine.Mathf;
 import "@V = UnityEngine.Vector2"      // = using V = UnityEngine.Vector2;
 
-// You rarely need either: System, System.Linq, UnityEngine, ReactiveUITK[.Core],
+// You rarely need either: System, System.Linq, UnityEngine, Ruitk[.Core],
 // and the typed-style helpers are already in scope. Write a namespace import only
 // when the editor red-squiggles a C# name that isn't from another .uitkx file.`
 
@@ -87,7 +87,7 @@ dotnet run --project SourceGenerator~/Tools/UitkxMigrateImports -- Assets --es-m
 
 export const EXAMPLE_NAMESPACE = `// No @namespace? The default derives from the file's path INCLUDING its stem
 // (a file IS a module):  Samples/Components/Board/Board.uitkx  (asmdef at Samples/)
-//   → namespace ReactiveUITK.Uitkx.Components.Board.Board
+//   → namespace Ruitk.Uitkx.Components.Board.Board
 //
 // @namespace is an OPTIONAL interop override (for hand-written C# that
 // references the generated type by a fixed namespace):

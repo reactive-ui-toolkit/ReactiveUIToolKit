@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.Bench.EditorTools
+namespace Ruitk.Bench.EditorTools
 {
     public class BenchResultsViewer : EditorWindow
     {

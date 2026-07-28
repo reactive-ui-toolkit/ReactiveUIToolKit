@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>
     /// Roslyn-free classifier for a <c>@using</c> / <c>import "@Ns"</c> payload (namespace-import

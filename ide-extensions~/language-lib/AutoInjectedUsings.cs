@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>
     /// The namespaces every generated .uitkx C# file receives unconditionally from the runtime
@@ -22,11 +22,11 @@ namespace ReactiveUITK.Language
             "System",
             "System.Collections.Generic",
             "System.Linq",
-            "ReactiveUITK",
-            "ReactiveUITK.Core",
-            "ReactiveUITK.Core.Animation",
-            "ReactiveUITK.Router",
-            "ReactiveUITK.Props.Typed",
+            "Ruitk",
+            "Ruitk.Core",
+            "Ruitk.Core.Animation",
+            "Ruitk.Router",
+            "Ruitk.Props.Typed",
             "UnityEngine",
         };
 

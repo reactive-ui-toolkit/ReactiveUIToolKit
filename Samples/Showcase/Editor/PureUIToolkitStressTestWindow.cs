@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Samples.PureUIToolkit.Editor
+namespace Ruitk.Samples.PureUIToolkit.Editor
 {
     public sealed class PureUIToolkitStressTestWindow : EditorWindow
     {

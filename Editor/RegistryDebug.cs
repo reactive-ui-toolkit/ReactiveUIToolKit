@@ -1,8 +1,8 @@
 #if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-using ReactiveUITK.Elements;
-using ReactiveUITK.Core;
+using Ruitk.Elements;
+using Ruitk.Core;
 
 public static class RegistryDebug
 {

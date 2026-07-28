@@ -1,10 +1,7 @@
 {
-  "name": "ReactiveUITK.Diagnostics.Logs.Editor",
-  "references": [
-    "ReactiveUITK.Editor",
-    "ReactiveUITK.Shared"
-  ],
-  "includePlatforms": ["Editor"],
+  "name": "Ruitk.Shared",
+  "references": [],
+  "includePlatforms": [],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": false,
@@ -14,4 +11,3 @@
   "versionDefines": [],
   "noEngineReferences": false
 }
-

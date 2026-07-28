@@ -5,7 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace ReactiveUITK.CICD
+namespace Ruitk.CICD
 {
     /// <summary>
     /// Headless Asset Store package export (Tier A of Plans~/ASSET_STORE_PUBLISHING_PLAN.md).
@@ -15,7 +15,7 @@ namespace ReactiveUITK.CICD
     /// exists to be called):
     ///
     ///   Unity -batchmode -nographics -quit -projectPath &lt;shell&gt;
-    ///         -executeMethod ReactiveUITK.CICD.AssetStoreExport.Run
+    ///         -executeMethod Ruitk.CICD.AssetStoreExport.Run
     ///         [-exportOut &lt;absolute .unitypackage path&gt;]
     ///
     /// CICD/ itself never ships: it is excluded from the collected asset list, and the

@@ -1,13 +1,13 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Diagnostics;
-using ReactiveUITK.Elements;
-using ReactiveUITK.Signals;
+using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
+using Ruitk.Elements;
+using Ruitk.Signals;
 using UnityEditor;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.EditorSupport
+namespace Ruitk.EditorSupport
 {
     public static class EditorRootRendererUtility
     {

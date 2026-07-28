@@ -1,13 +1,10 @@
 {
-  "name": "ReactiveUITK.Samples",
+  "name": "Ruitk.Ugui",
   "references": [
-    "ReactiveUITK.Editor",
-    "ReactiveUITK.Shared",
-    "ReactiveUITK.Runtime",
-    "ReactiveUITK.Ugui",
+    "Ruitk.Shared",
+    "Ruitk.Runtime",
     "UnityEngine.UI",
-    "Unity.TextMeshPro",
-    "Unity.InputSystem"
+    "Unity.TextMeshPro"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],

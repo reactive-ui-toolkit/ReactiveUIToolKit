@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Coverage parity tests that lock down the wiring between
@@ -14,11 +14,11 @@ namespace ReactiveUITK.SourceGenerator.Tests;
 /// <para>
 /// These tests parse the source files directly (no Unity runtime needed) and
 /// assert that every <c>IStyle</c> property is wired into:
-///   • <see cref="ReactiveUITK.Props.PropsApplier"/> <c>styleSetters</c>,
-///   • <see cref="ReactiveUITK.Props.PropsApplier"/> <c>styleResetters</c>,
-///   • <see cref="ReactiveUITK.Props.Typed.StyleKeys"/> string constants,
-///   • <see cref="ReactiveUITK.Props.Typed.Style"/> <c>SetByKey</c>,
-///   • <see cref="ReactiveUITK.Props.Typed.Style"/> <c>BIT_*</c> constants
+///   • <see cref="Ruitk.Props.PropsApplier"/> <c>styleSetters</c>,
+///   • <see cref="Ruitk.Props.PropsApplier"/> <c>styleResetters</c>,
+///   • <see cref="Ruitk.Props.Typed.StyleKeys"/> string constants,
+///   • <see cref="Ruitk.Props.Typed.Style"/> <c>SetByKey</c>,
+///   • <see cref="Ruitk.Props.Typed.Style"/> <c>BIT_*</c> constants
 ///     (via <c>KeyToBit</c> mapping).
 /// </para>
 ///

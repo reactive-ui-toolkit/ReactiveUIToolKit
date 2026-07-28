@@ -85,7 +85,7 @@ export const sections: DocSection[] = [
         title: 'Install & Setup',
         path: '/getting-started',
         keywords: ['install', 'setup', 'component', 'partial'],
-        searchContent: 'getting started reactiveuitoolkit function-style .uitkx components source generator produces complete class no boilerplate install via unity package manager open package manager add package from git url create a uitkx component setup code returned markup generator emits render mount rootrenderer V.Func EditorRootRendererUtility.Mount editor window one component per file recommended convention migrate codemod UitkxMigrateImports --es-modules auto-discovers assets directory file is a module file-keyed namespace folders file stem export VirtualNode HelloWorld var count setCount useState return VisualElement Text Hello ReactiveUITK Button Increment onClick setCount count + 1 companion files optional modules import styles values utils',
+        searchContent: 'getting started reactiveuitoolkit function-style .uitkx components source generator produces complete class no boilerplate install via unity package manager open package manager add package from git url create a uitkx component setup code returned markup generator emits render mount rootrenderer V.Func EditorRootRendererUtility.Mount editor window one component per file recommended convention migrate codemod UitkxMigrateImports --es-modules auto-discovers assets directory file is a module file-keyed namespace folders file stem export VirtualNode HelloWorld var count setCount useState return VisualElement Text Hello Ruitk Button Increment onClick setCount count + 1 companion files optional modules import styles values utils',
         element: () => <UitkxGettingStartedPage />,
       },
     ],

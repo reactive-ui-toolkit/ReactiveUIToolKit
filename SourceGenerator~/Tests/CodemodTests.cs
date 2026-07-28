@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using ReactiveUITK.SourceGenerator.Tools;
+using Ruitk.SourceGenerator.Tools;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Fixture tests for the leg-3 migration codemod (<see cref="UitkxMigrator"/>, plan §11 / §15).
@@ -39,7 +39,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             string outText = changed[screen.AbsPath];
             Assert.Contains("import { StatusChip } from \"./StatusChip\"", outText);
             Assert.Contains("export component Screen", outText);
-            Assert.Contains("@namespace ReactiveUITK.FunctionStyle", outText);
+            Assert.Contains("@namespace Ruitk.FunctionStyle", outText);
             // The peer that is only referenced (not referencing) still gets exported.
             Assert.Contains("export component StatusChip", changed[chip.AbsPath]);
         }
@@ -201,7 +201,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         [Fact]
         public void Tidy_IsIdempotent()
         {
-            string src = "@using ReactiveUITK.Router\n@using UnityEngine\ncomponent Foo {\n  return ( <Box /> );\n}\n";
+            string src = "@using Ruitk.Router\n@using UnityEngine\ncomponent Foo {\n  return ( <Box /> );\n}\n";
             string once = UitkxMigrator.TidyUsings(src);
             string twice = UitkxMigrator.TidyUsings(once);
             Assert.Equal(once, twice);

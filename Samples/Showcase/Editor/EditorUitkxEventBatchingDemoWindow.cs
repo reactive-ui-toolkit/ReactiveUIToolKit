@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.EventBatchingDemoFunc;
-using ReactiveUITK.Samples.Components.EventBatchingDemoFunc.EventBatchingDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.EventBatchingDemoFunc;
+using Ruitk.Samples.Components.EventBatchingDemoFunc.EventBatchingDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxEventBatchingDemoWindow : EditorWindow
     {

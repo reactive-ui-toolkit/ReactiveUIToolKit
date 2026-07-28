@@ -1,7 +1,7 @@
 using System;
 using System.Text.RegularExpressions;
 
-namespace ReactiveUITK.Language.Formatter
+namespace Ruitk.Language.Formatter
 {
     /// <summary>
     /// All formatting options understood by <see cref="AstFormatter"/>.

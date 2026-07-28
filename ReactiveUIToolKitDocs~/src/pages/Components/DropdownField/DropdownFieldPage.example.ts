@@ -1,10 +1,10 @@
-export const DROPDOWN_FIELD_BASIC = `// Example namespace: ReactiveUITK.Samples.Components
+export const DROPDOWN_FIELD_BASIC = `// Example namespace: Ruitk.Samples.Components
 
 using System.Collections;
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 
 public static class DropdownFieldExamples

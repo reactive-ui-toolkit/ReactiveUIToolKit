@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 using System.Linq;
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using UitkxLanguageServer;
 using Xunit;
 
@@ -66,8 +66,8 @@ namespace UitkxLanguageServer.Tests
             idx.Refresh(screen);
 
             var peers = idx.GetPeerExports(screen, null);
-            var diags = new System.Collections.Generic.List<ReactiveUITK.Language.ParseDiagnostic>();
-            var directives = ReactiveUITK.Language.Parser.DirectiveParser.Parse(File.ReadAllText(screen), screen, diags);
+            var diags = new System.Collections.Generic.List<Ruitk.Language.ParseDiagnostic>();
+            var directives = Ruitk.Language.Parser.DirectiveParser.Parse(File.ReadAllText(screen), screen, diags);
 
             var findings = StrictImportDetector.Detect(
                 directives, screen, StrictImportDetector.ScrubNonCode(File.ReadAllText(screen)),
@@ -89,8 +89,8 @@ namespace UitkxLanguageServer.Tests
             idx.Refresh(screen);
 
             var peers = idx.GetPeerExports(screen, null);
-            var diags = new System.Collections.Generic.List<ReactiveUITK.Language.ParseDiagnostic>();
-            var directives = ReactiveUITK.Language.Parser.DirectiveParser.Parse(File.ReadAllText(screen), screen, diags);
+            var diags = new System.Collections.Generic.List<Ruitk.Language.ParseDiagnostic>();
+            var directives = Ruitk.Language.Parser.DirectiveParser.Parse(File.ReadAllText(screen), screen, diags);
 
             var findings = StrictImportDetector.Detect(
                 directives, screen, StrictImportDetector.ScrubNonCode(File.ReadAllText(screen)),

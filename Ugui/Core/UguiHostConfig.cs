@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using ReactiveUITK.Core.Fiber;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core.Fiber;
+using Ruitk.Props.Typed;
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// uGUI host backend. Host handles are <see cref="GameObject"/>s under a
@@ -38,7 +38,7 @@ namespace ReactiveUITK.Ugui
             {
                 if (_stagingRoot == null)
                 {
-                    var go = new GameObject("ReactiveUITK.Ugui.Staging");
+                    var go = new GameObject("Ruitk.Ugui.Staging");
                     go.hideFlags = HideFlags.HideAndDontSave;
                     go.SetActive(false);
                     _stagingRoot = go.transform;

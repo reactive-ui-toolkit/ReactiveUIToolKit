@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     internal struct ColumnSignature
     {

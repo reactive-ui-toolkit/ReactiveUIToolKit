@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEditor;
 #endif
 
-namespace ReactiveUITK.Bench
+namespace Ruitk.Bench
 {
     [Serializable]
     public class BenchEnv

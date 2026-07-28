@@ -5,9 +5,9 @@ using System.IO;
 using UnityEditor;
 using UnityEditor.Compilation;
 using UnityEngine;
-using ReactiveUITK.EditorSupport.HMR;
+using Ruitk.EditorSupport.HMR;
 
-namespace ReactiveUITK.Editor
+namespace Ruitk.Editor
 {
     /// <summary>
     /// Forces Unity to recompile the assembly that OWNS a changed .uitkx file, so
@@ -22,7 +22,7 @@ namespace ReactiveUITK.Editor
     /// HOW IT WORKS (fast, incremental — no CleanBuildCache stall)
     /// ──────────────────────────────────────────────────────────
     /// A .uitkx file is an AdditionalFile of whatever assembly its folder's .asmdef
-    /// defines (e.g. Samples/*.uitkx → ReactiveUITK.Examples; .uitkx with no ancestor
+    /// defines (e.g. Samples/*.uitkx → Ruitk.Examples; .uitkx with no ancestor
     /// .asmdef → the default Assembly-CSharp). To make THAT assembly recompile we
     /// write a tiny trigger .cs into its own folder and bump a value inside it. A real
     /// script change is exactly what a manual .cs edit does: Unity recompiles just that
@@ -59,7 +59,7 @@ namespace ReactiveUITK.Editor
         // (no ancestor .asmdef → Assembly-CSharp). Created on demand. Chosen inside
         // the consuming project's Assets/ so it works whether the package lives under
         // Assets/ (dev) or is UPM-installed under Packages/ (read-only).
-        private const string DefaultAssemblyFolderAsset = "Assets/ReactiveUITK";
+        private const string DefaultAssemblyFolderAsset = "Assets/Ruitk";
 
         private static void OnPostprocessAllAssets(
             string[] importedAssets,
@@ -146,7 +146,7 @@ namespace ReactiveUITK.Editor
                     + "// Rewritten by UitkxChangeWatcher on each .uitkx save to force Unity to\n"
                     + "// recompile THIS assembly so the source generator re-reads its .uitkx files.\n"
                     + "// Safe to delete; gitignored by default. Do not reference this type.\n"
-                    + "namespace ReactiveUITK.Generated\n"
+                    + "namespace Ruitk.Generated\n"
                     + "{\n"
                     + "    internal static class UitkxRecompileTrigger\n"
                     + "    {\n"

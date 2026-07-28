@@ -6,7 +6,7 @@ export VirtualNode HelloWorld() {
 
   return (
     <VisualElement>
-      <Text text="Hello ReactiveUITK" />
+      <Text text="Hello Ruitk" />
       <Text text={$"Count: {count}"} />
       <Button text="Increment" onClick={_ => setCount(count + 1)} />
     </VisualElement>
@@ -15,10 +15,10 @@ export VirtualNode HelloWorld() {
 
 export const UITKX_HELLO_WORLD_BOOTSTRAP = `using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK;
-using ReactiveUITK.Core;
+using Ruitk;
+using Ruitk.Core;
 // File-keyed namespace: <prefix>.<folders>.<file stem> for Assets/UI/HelloWorld.uitkx
-using ReactiveUITK.Uitkx.UI.HelloWorld;
+using Ruitk.Uitkx.UI.HelloWorld;
 
 public sealed class HelloRuntime : MonoBehaviour
 {
@@ -48,10 +48,10 @@ public sealed class HelloRuntime : MonoBehaviour
 
 export const UITKX_EDITOR_BOOTSTRAP = `using UnityEditor;
 using UnityEngine.UIElements;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Uitkx.UI.HelloWorld;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.EditorSupport;
+using Ruitk.Uitkx.UI.HelloWorld;
 
 public sealed class HelloEditorWindow : EditorWindow
 {

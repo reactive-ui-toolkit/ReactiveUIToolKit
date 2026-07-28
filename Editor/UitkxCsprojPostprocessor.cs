@@ -6,7 +6,7 @@ using System.Xml.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.Editor
+namespace Ruitk.Editor
 {
     /// <summary>
     /// Injects &lt;AdditionalFiles&gt; entries for every .uitkx file into each
@@ -89,7 +89,7 @@ namespace ReactiveUITK.Editor
             {
                 // Never crash Unity's project generation — log and return original.
                 Debug.LogError(
-                    $"[ReactiveUITK] UitkxCsprojPostprocessor failed to inject "
+                    $"[Ruitk] UitkxCsprojPostprocessor failed to inject "
                         + $"AdditionalFiles into '{path}': {ex.Message}"
                 );
                 return content;

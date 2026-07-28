@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Parser;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// ImportScopeFacts — the single source of truth for "what using lines a file's imports imply",
@@ -49,14 +49,14 @@ namespace ReactiveUITK.SourceGenerator.Tests
         public void CrossFolderModuleImport_AliasUsesDerivedEffectiveNamespace()
         {
             // NO @namespace anywhere — the alias must use the PATH-DERIVED namespace
-            // (ReactiveUITK.Uitkx.shared), not the raw parsed default.
+            // (Ruitk.Uitkx.shared), not the raw parsed default.
             F("shared/Tokens.types.uitkx", "export module Tokens {\n  public const int Gap = 8;\n}\n");
             string screen = F("screens/Home.uitkx",
                 "import { Tokens } from \"../shared/Tokens.types\"\ncomponent Home {\n  return (<Box />);\n}\n");
 
             var payloads = Payloads(screen);
 
-            Assert.Contains("Tokens = ReactiveUITK.Uitkx.shared.Tokens", payloads);
+            Assert.Contains("Tokens = Ruitk.Uitkx.shared.Tokens", payloads);
         }
 
         [Fact]
@@ -68,7 +68,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
 
             var payloads = Payloads(screen);
 
-            Assert.Contains("Card = ReactiveUITK.Uitkx.widgets.Card", payloads);
+            Assert.Contains("Card = Ruitk.Uitkx.widgets.Card", payloads);
         }
 
         [Fact]
@@ -91,7 +91,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
 
             var payloads = Payloads(screen);
 
-            Assert.Contains("static ReactiveUITK.Uitkx.shared.CounterHooks", payloads);
+            Assert.Contains("static Ruitk.Uitkx.shared.CounterHooks", payloads);
         }
 
         [Fact]
@@ -132,7 +132,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             string screen = F("screens/Home.uitkx",
                 "import { FormatScore } from \"../shared/Scoring\"\ncomponent Home {\n  return (<Box />);\n}\n");
 
-            Assert.Contains("static ReactiveUITK.Uitkx.shared.Scoring.__Exports", Payloads(screen));
+            Assert.Contains("static Ruitk.Uitkx.shared.Scoring.__Exports", Payloads(screen));
         }
 
         [Fact]
@@ -144,7 +144,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
                 "import { useCountdown } from \"../shared/Countdown\"\ncomponent Home {\n  return (<Box />);\n}\n");
 
             var payloads = Payloads(screen);
-            Assert.Contains("static ReactiveUITK.Uitkx.shared.Countdown.__Exports", payloads);
+            Assert.Contains("static Ruitk.Uitkx.shared.Countdown.__Exports", payloads);
             Assert.DoesNotContain(payloads, p => p.Contains("CountdownHooks"));
         }
 
@@ -155,7 +155,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             string screen = F("screens/Home.uitkx",
                 "import { Card } from \"../widgets/Card\"\ncomponent Home {\n  return (<Card title=\"x\" />);\n}\n");
 
-            Assert.Contains("Card = ReactiveUITK.Uitkx.widgets.Card.Card", Payloads(screen));
+            Assert.Contains("Card = Ruitk.Uitkx.widgets.Card.Card", Payloads(screen));
         }
 
         [Fact]
@@ -166,8 +166,8 @@ namespace ReactiveUITK.SourceGenerator.Tests
                 "import { Card as Tile } from \"../widgets/Card\"\ncomponent Home {\n  return (<Tile title=\"x\" />);\n}\n");
 
             var payloads = Payloads(screen);
-            Assert.Contains("Tile = ReactiveUITK.Uitkx.widgets.Card.Card", payloads);
-            Assert.DoesNotContain("Card = ReactiveUITK.Uitkx.widgets.Card.Card", payloads);
+            Assert.Contains("Tile = Ruitk.Uitkx.widgets.Card.Card", payloads);
+            Assert.DoesNotContain("Card = Ruitk.Uitkx.widgets.Card.Card", payloads);
         }
 
         [Fact]
@@ -177,7 +177,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             string screen = F("screens/Home.uitkx",
                 "import * as Tokens from \"../shared/Tokens\"\ncomponent Home {\n  return (<Box />);\n}\n");
 
-            Assert.Contains("Tokens = ReactiveUITK.Uitkx.shared.Tokens.__Exports", Payloads(screen));
+            Assert.Contains("Tokens = Ruitk.Uitkx.shared.Tokens.__Exports", Payloads(screen));
         }
 
         [Fact]
@@ -188,7 +188,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             string screen = F("screens/Home.uitkx",
                 "import Panel from \"../widgets/Panel\"\ncomponent Home {\n  return (<Panel t=\"x\" />);\n}\n");
 
-            Assert.Contains("Panel = ReactiveUITK.Uitkx.widgets.Panel.ScorePanel", Payloads(screen));
+            Assert.Contains("Panel = Ruitk.Uitkx.widgets.Panel.ScorePanel", Payloads(screen));
         }
 
         [Fact]
@@ -212,7 +212,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             string screen = F("screens/Home.uitkx",
                 "import { bg } from \"./Home.style\"\ncomponent Home {\n  return (<Box />);\n}\n");
 
-            Assert.Contains("static ReactiveUITK.Uitkx.screens.Home_style.__Exports", Payloads(screen));
+            Assert.Contains("static Ruitk.Uitkx.screens.Home_style.__Exports", Payloads(screen));
         }
     }
 
@@ -227,7 +227,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         public void HmrCompiler_WiresImportScopeFacts_ByExactNames()
         {
             string hmr = File.ReadAllText(HmrCompilerPath());
-            Assert.Contains("ReactiveUITK.Language.ImportScopeFacts", hmr);
+            Assert.Contains("Ruitk.Language.ImportScopeFacts", hmr);
             Assert.Contains("ComputeInjectedUsingPayloads", hmr);
         }
 
@@ -250,7 +250,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
             Assert.NotNull(mi);
             var ps = mi!.GetParameters();
             Assert.Equal(2, ps.Length);
-            Assert.Equal(typeof(ReactiveUITK.Language.Parser.DirectiveSet), ps[0].ParameterType);
+            Assert.Equal(typeof(Ruitk.Language.Parser.DirectiveSet), ps[0].ParameterType);
             Assert.Equal(typeof(string), ps[1].ParameterType);
         }
 

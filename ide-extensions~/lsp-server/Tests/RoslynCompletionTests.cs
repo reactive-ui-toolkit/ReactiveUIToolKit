@@ -4,10 +4,10 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Lowering;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Lowering;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 using UitkxLanguageServer;
 using UitkxLanguageServer.Roslyn;
 using Xunit;
@@ -163,7 +163,7 @@ public sealed class RoslynCompletionTests : IAsyncLifetime
     [Fact]
     public async Task FunctionStyle_UseRef_ReturnTypeIsCanonicalRefT()
     {
-        // TD-S1 regression: useRef<T>() must return global::ReactiveUITK.Core.Ref<T>
+        // TD-S1 regression: useRef<T>() must return global::Ruitk.Core.Ref<T>
         // (the workspace-shared canonical type), not a per-document nested stub.
         // This guarantees that values flow without CS1503 to peer hooks
         // declaring `Ref<T>` parameters.
@@ -175,7 +175,7 @@ public sealed class RoslynCompletionTests : IAsyncLifetime
         var doc = _host.GetRoslynDocument("c:/test/Test.uitkx");
         Assert.NotNull(doc);
         var text = (await doc!.GetTextAsync()).ToString();
-        Assert.Contains("global::ReactiveUITK.Core.Ref<T> useRef<T>", text);
+        Assert.Contains("global::Ruitk.Core.Ref<T> useRef<T>", text);
         Assert.DoesNotContain("__UitkxRef__", text);
     }
 }

@@ -1,7 +1,7 @@
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Parity CONTRACT for <c>~/</c> (root-alias) asset-path resolution (import/export grammar §9).

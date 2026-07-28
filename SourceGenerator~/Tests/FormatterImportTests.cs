@@ -1,7 +1,7 @@
-using ReactiveUITK.Language.Formatter;
+using Ruitk.Language.Formatter;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Plan §10 / A7f — the formatter re-prints the preamble from the model and DROPS unmodeled
@@ -81,17 +81,17 @@ namespace ReactiveUITK.SourceGenerator.Tests
             // The formatter must preserve the authored spelling — NOT silently rewrite
             // import "@X" back to @using X (that would be a data-losing round-trip).
             string outp = Fmt(
-                "import \"@ReactiveUITK.Router\"\n\ncomponent Foo {\n  return ( <Spacer /> );\n}\n");
-            Assert.Contains("import \"@ReactiveUITK.Router\"", outp);
-            Assert.DoesNotContain("@using ReactiveUITK.Router", outp);
+                "import \"@Ruitk.Router\"\n\ncomponent Foo {\n  return ( <Spacer /> );\n}\n");
+            Assert.Contains("import \"@Ruitk.Router\"", outp);
+            Assert.DoesNotContain("@using Ruitk.Router", outp);
         }
 
         [Fact]
         public void AtUsing_RoundTrips_NotConvertedToImport()
         {
             string outp = Fmt(
-                "@using ReactiveUITK.Router\n\ncomponent Foo {\n  return ( <Spacer /> );\n}\n");
-            Assert.Contains("@using ReactiveUITK.Router", outp);
+                "@using Ruitk.Router\n\ncomponent Foo {\n  return ( <Spacer /> );\n}\n");
+            Assert.Contains("@using Ruitk.Router", outp);
             Assert.DoesNotContain("import \"@", outp);
         }
 
@@ -99,9 +99,9 @@ namespace ReactiveUITK.SourceGenerator.Tests
         public void MixedUsingForms_BothSurvive_InOrder()
         {
             string outp = Fmt(
-                "import \"@ReactiveUITK.Router\"\n@using UnityEngine\n\n" +
+                "import \"@Ruitk.Router\"\n@using UnityEngine\n\n" +
                 "component Foo {\n  return ( <Spacer /> );\n}\n");
-            int imp = outp.IndexOf("import \"@ReactiveUITK.Router\"", System.StringComparison.Ordinal);
+            int imp = outp.IndexOf("import \"@Ruitk.Router\"", System.StringComparison.Ordinal);
             int use = outp.IndexOf("@using UnityEngine", System.StringComparison.Ordinal);
             Assert.True(imp >= 0 && use > imp, "both using forms survive, in source order");
         }
@@ -109,7 +109,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         [Fact]
         public void FormatIsIdempotent_WithNamespaceImports()
         {
-            string src = "import \"@ReactiveUITK.Router\"\n@using UnityEngine\n\ncomponent Foo {\n  return ( <Spacer /> );\n}\n";
+            string src = "import \"@Ruitk.Router\"\n@using UnityEngine\n\ncomponent Foo {\n  return ( <Spacer /> );\n}\n";
             string once = Fmt(src);
             Assert.Equal(once, Fmt(once));
         }
@@ -121,12 +121,12 @@ namespace ReactiveUITK.SourceGenerator.Tests
         {
             // Author order is deliberately jumbled: file import, @namespace, namespace import.
             string outp = Fmt(
-                "import { Chip } from \"./Chip\"\n@namespace My.Ns\nimport \"@ReactiveUITK.Router\"\n\n" +
+                "import { Chip } from \"./Chip\"\n@namespace My.Ns\nimport \"@Ruitk.Router\"\n\n" +
                 "component Foo {\n  return ( <Spacer /> );\n}\n");
 
             int ns   = outp.IndexOf("@namespace My.Ns", System.StringComparison.Ordinal);
             int file = outp.IndexOf("import { Chip } from \"./Chip\"", System.StringComparison.Ordinal);
-            int nsi  = outp.IndexOf("import \"@ReactiveUITK.Router\"", System.StringComparison.Ordinal);
+            int nsi  = outp.IndexOf("import \"@Ruitk.Router\"", System.StringComparison.Ordinal);
 
             Assert.True(ns >= 0 && file >= 0 && nsi >= 0);
             Assert.True(ns < file, "@namespace must come before the imports");
@@ -137,7 +137,7 @@ namespace ReactiveUITK.SourceGenerator.Tests
         public void Format_NamespaceBeforeImports_IsIdempotent()
         {
             string src =
-                "import { Chip } from \"./Chip\"\n@namespace My.Ns\nimport \"@ReactiveUITK.Router\"\n\n" +
+                "import { Chip } from \"./Chip\"\n@namespace My.Ns\nimport \"@Ruitk.Router\"\n\n" +
                 "component Foo {\n  return ( <Spacer /> );\n}\n";
             string once = Fmt(src);
             Assert.Equal(once, Fmt(once));

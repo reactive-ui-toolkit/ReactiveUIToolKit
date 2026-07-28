@@ -1,10 +1,10 @@
 using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Pins down the Unity 6.3+ targeted aliases that every emitter must include

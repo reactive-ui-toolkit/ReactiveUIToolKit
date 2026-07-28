@@ -5,8 +5,8 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Parser;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server;
 
 namespace UitkxLanguageServer;

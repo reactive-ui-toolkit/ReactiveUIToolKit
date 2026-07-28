@@ -57,7 +57,7 @@
       "root": "CICD",
       "ext": ".cs",
       "lines": 1358,
-      "namespace": "ReactiveUITK.CICD",
+      "namespace": "Ruitk.CICD",
       "types": [
         "PublishUtility",
         "EnvVars",
@@ -92,7 +92,7 @@
       ]
     },
     {
-      "path": "CICD/Editor/ReactiveUITK.CICD.Editor.asmdef",
+      "path": "CICD/Editor/Ruitk.CICD.Editor.asmdef",
       "root": "CICD",
       "ext": ".asmdef",
       "lines": 19,
@@ -106,7 +106,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 27,
-      "namespace": "ReactiveUITK.Bench",
+      "namespace": "Ruitk.Bench",
       "types": [
         "ScenarioDef",
         "BenchConfig"
@@ -119,7 +119,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 130,
-      "namespace": "ReactiveUITK.Bench",
+      "namespace": "Ruitk.Bench",
       "types": [
         "BenchEditorHost"
       ],
@@ -145,7 +145,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 27,
-      "namespace": "ReactiveUITK.Bench",
+      "namespace": "Ruitk.Bench",
       "types": [
         "BenchOutputTarget",
         "BenchEnvOverrides"
@@ -158,7 +158,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 427,
-      "namespace": "ReactiveUITK.Bench",
+      "namespace": "Ruitk.Bench",
       "types": [
         "BenchEnv",
         "BenchScenarioHeader",
@@ -187,7 +187,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 124,
-      "namespace": "ReactiveUITK.Bench",
+      "namespace": "Ruitk.Bench",
       "types": [
         "BenchMetrics"
       ],
@@ -207,7 +207,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 210,
-      "namespace": "ReactiveUITK.Bench",
+      "namespace": "Ruitk.Bench",
       "types": [
         "BenchRuntimeHost"
       ],
@@ -231,7 +231,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 359,
-      "namespace": "ReactiveUITK.Bench",
+      "namespace": "Ruitk.Bench",
       "types": [
         "BenchScenarios"
       ],
@@ -258,7 +258,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 147,
-      "namespace": "ReactiveUITK.Bench",
+      "namespace": "Ruitk.Bench",
       "types": [
         "BenchSharedHost"
       ],
@@ -279,7 +279,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 27,
-      "namespace": "ReactiveUITK.Benchmark",
+      "namespace": "Ruitk.Benchmark",
       "types": [
         "BenchmarkSetup"
       ],
@@ -295,7 +295,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 552,
-      "namespace": "ReactiveUITK.Bench.EditorTools",
+      "namespace": "Ruitk.Bench.EditorTools",
       "types": [
         "BenchResultsViewer",
         "RunEntry",
@@ -325,7 +325,7 @@
       ]
     },
     {
-      "path": "Diagnostics/Benchmark/Editor/ReactiveUITK.Diagnostics.Benchmark.Editor.asmdef",
+      "path": "Diagnostics/Benchmark/Editor/Ruitk.Diagnostics.Benchmark.Editor.asmdef",
       "root": "Diagnostics",
       "ext": ".asmdef",
       "lines": 20,
@@ -341,7 +341,7 @@
       "root": "Diagnostics",
       "ext": ".cs",
       "lines": 121,
-      "namespace": "ReactiveUITK.EditorDiagnostics",
+      "namespace": "Ruitk.EditorDiagnostics",
       "types": [
         "ReactiveLogCapture"
       ],
@@ -361,7 +361,7 @@
       ]
     },
     {
-      "path": "Diagnostics/Logs/ReactiveUITK.Diagnostics.Logs.Editor.asmdef",
+      "path": "Diagnostics/Logs/Ruitk.Diagnostics.Logs.Editor.asmdef",
       "root": "Diagnostics",
       "ext": ".asmdef",
       "lines": 18,
@@ -373,7 +373,7 @@
       ]
     },
     {
-      "path": "Diagnostics/ReactiveUITK.Diagnostics.asmdef",
+      "path": "Diagnostics/Ruitk.Diagnostics.asmdef",
       "root": "Diagnostics",
       "ext": ".asmdef",
       "lines": 19,
@@ -389,7 +389,7 @@
       "root": "Editor",
       "ext": ".cs",
       "lines": 176,
-      "namespace": "ReactiveUITK.EditorSupport",
+      "namespace": "Ruitk.EditorSupport",
       "types": [
         "EditorRenderScheduler"
       ],
@@ -411,7 +411,7 @@
       "root": "Editor",
       "ext": ".cs",
       "lines": 93,
-      "namespace": "ReactiveUITK.EditorSupport",
+      "namespace": "Ruitk.EditorSupport",
       "types": [
         "EditorRootRendererUtility"
       ],
@@ -431,7 +431,7 @@
       "root": "Editor",
       "ext": ".cs",
       "lines": 15,
-      "namespace": "ReactiveUITK.EditorSupport",
+      "namespace": "Ruitk.EditorSupport",
       "types": [
         "remains",
         "FiberMenu"
@@ -440,7 +440,7 @@
       "tags": []
     },
     {
-      "path": "Editor/ReactiveUITK.Editor.asmdef",
+      "path": "Editor/Ruitk.Editor.asmdef",
       "root": "Editor",
       "ext": ".asmdef",
       "lines": 16,
@@ -454,7 +454,7 @@
       "root": "Editor",
       "ext": ".cs",
       "lines": 7,
-      "namespace": "ReactiveUITK.Editor.Generated",
+      "namespace": "Ruitk.Editor.Generated",
       "types": [],
       "methods": [],
       "tags": [
@@ -466,7 +466,7 @@
       "root": "Editor",
       "ext": ".cs",
       "lines": 102,
-      "namespace": "ReactiveUITK.Editor",
+      "namespace": "Ruitk.Editor",
       "types": [
         "UitkxChangeWatcher"
       ],
@@ -485,7 +485,7 @@
       "root": "Editor",
       "ext": ".cs",
       "lines": 769,
-      "namespace": "ReactiveUITK.Editor",
+      "namespace": "Ruitk.Editor",
       "types": [
         "UitkxConsoleNavigation",
         "implementations"
@@ -524,7 +524,7 @@
       "root": "Editor",
       "ext": ".cs",
       "lines": 144,
-      "namespace": "ReactiveUITK.Editor",
+      "namespace": "Ruitk.Editor",
       "types": [
         "UitkxCsprojPostprocessor"
       ],
@@ -544,7 +544,7 @@
       "root": "Editor",
       "ext": ".cs",
       "lines": 322,
-      "namespace": "ReactiveUITK.Editor",
+      "namespace": "Ruitk.Editor",
       "types": [
         "UitkxTestRunnerWindow",
         "StatusKind"
@@ -3297,7 +3297,7 @@
       "root": "Runtime",
       "ext": ".cs",
       "lines": 261,
-      "namespace": "ReactiveUITK",
+      "namespace": "Ruitk",
       "types": [
         "RenderScheduler"
       ],
@@ -3321,7 +3321,7 @@
       "root": "Runtime",
       "ext": ".cs",
       "lines": 118,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "RootRenderer"
       ],
@@ -3343,7 +3343,7 @@
       "root": "Runtime",
       "ext": ".cs",
       "lines": 41,
-      "namespace": "ReactiveUITK",
+      "namespace": "Ruitk",
       "types": [
         "as",
         "so",
@@ -3356,7 +3356,7 @@
       ]
     },
     {
-      "path": "Runtime/ReactiveUITK.Runtime.asmdef",
+      "path": "Runtime/Ruitk.Runtime.asmdef",
       "root": "Runtime",
       "ext": ".asmdef",
       "lines": 16,
@@ -3370,7 +3370,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 212,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "ContextBailoutDemoFunc"
       ],
@@ -3390,7 +3390,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 90,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "ContextDemoFunc",
         "ContextConsumer",
@@ -3410,7 +3410,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 179,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "DeferredEffectDemoFunc"
       ],
@@ -3428,7 +3428,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 216,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "EffectCleanupOrderDemoFunc",
         "LogRef",
@@ -3450,7 +3450,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 135,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "EventBatchingDemoFunc"
       ],
@@ -3468,7 +3468,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 195,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "ExceptionFlowDemoFunc",
         "UnstableChildProps"
@@ -3490,7 +3490,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 51,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "FlushSyncDemoFunc"
       ],
@@ -3507,7 +3507,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 17,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "HelloWorldFunc"
       ],
@@ -3521,7 +3521,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 204,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "HookStateQueueDemoFunc"
       ],
@@ -3540,7 +3540,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 219,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "KeyedDiffLisDemoFunc"
       ],
@@ -3558,7 +3558,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 307,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "LatestFeaturesDemoFunc",
         "MetricsSnapshot"
@@ -3580,7 +3580,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 194,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "MainMenuRouterDemoFunc"
       ],
@@ -3600,7 +3600,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 95,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "PortalEventScopeDemoFunc",
         "Props"
@@ -3618,7 +3618,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 127,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "ProgressBarDemoFunc"
       ],
@@ -3636,7 +3636,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 120,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "PropTypesDemoFunc",
         "StatusBadgeFunc",
@@ -3655,7 +3655,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 217,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "RefForwardingDemoFunc",
         "RefChild",
@@ -3677,7 +3677,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 175,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "RenderDepthGuardDemoFunc",
         "DeepNodeFunc",
@@ -3697,7 +3697,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 722,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "RouterDemoFunc",
         "QuickAccessPanel",
@@ -3731,7 +3731,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 54,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "SignalCounterDemoFunc"
       ],
@@ -3748,7 +3748,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 24,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "SimpleCounterFunc"
       ],
@@ -3765,7 +3765,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 31,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "SimpleTextFieldFunc"
       ],
@@ -3782,7 +3782,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 28,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "SimpleUseEffectFunc"
       ],
@@ -3800,7 +3800,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 111,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "SyntheticEventDemoFunc"
       ],
@@ -3817,7 +3817,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 53,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "ToggleButtonGroupDemoFunc"
       ],
@@ -3842,7 +3842,7 @@
       ]
     },
     {
-      "path": "Samples/ReactiveUITK.Examples.asmdef",
+      "path": "Samples/Ruitk.Examples.asmdef",
       "root": "Samples",
       "ext": ".asmdef",
       "lines": 18,
@@ -3856,7 +3856,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 205,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "AnimationsDemoPage"
       ],
@@ -3873,7 +3873,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 106,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "BottomBarFunc",
         "Props"
@@ -3891,7 +3891,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 182,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "EditorControlsDemoPage",
         "Props"
@@ -3908,7 +3908,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 32,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "IntroCounterFunc"
       ],
@@ -3925,7 +3925,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 252,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "MultiColumnTreeViewStatefulDemoFunc",
         "Props"
@@ -3944,7 +3944,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 11,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "MultiColumnTreeViewRowState"
       ],
@@ -3956,7 +3956,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 173,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "SharedDemoPage"
       ],
@@ -3974,7 +3974,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 138,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "SharedDemoPageStyles"
       ],
@@ -3986,7 +3986,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 103,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "SharedDemoPageUtils"
       ],
@@ -4003,7 +4003,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 107,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "ListViewStatefulDemoFunc",
         "Props"
@@ -4021,7 +4021,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 10,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "ListViewRowState"
       ],
@@ -4033,7 +4033,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 59,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "SharedListViewRow",
         "Props"
@@ -4051,7 +4051,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 196,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "MultiColumnListViewStatefulDemoFunc",
         "Props"
@@ -4069,7 +4069,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 10,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "MultiColumnListViewRowState"
       ],
@@ -4081,7 +4081,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 90,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "ShowcaseExtrasPanel",
         "Props"
@@ -4099,7 +4099,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 180,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "ShowcaseFieldsPanel"
       ],
@@ -4119,7 +4119,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 257,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "ShowcaseListTabsSection",
         "Props"
@@ -4139,7 +4139,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 106,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "ShowcaseNewComponentsPanel",
         "Props"
@@ -4157,7 +4157,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 63,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "ShowcaseTopBar",
         "Props"
@@ -4175,7 +4175,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 475,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "ShowcaseTreeTabsSection",
         "Props"
@@ -4195,7 +4195,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 77,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "ValuesBarFunc",
         "Props"
@@ -4212,7 +4212,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 72,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "ValueItemFunc",
         "Props"
@@ -4229,7 +4229,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 22,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "SharedRowItem",
         "SharedTreeRowItem"
@@ -4244,7 +4244,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 418,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "TabTreeDemoFunc"
       ],
@@ -4261,7 +4261,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 178,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "TreeViewStatefulDemoFunc",
         "Props"
@@ -4279,7 +4279,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 11,
-      "namespace": "ReactiveUITK.Samples.Shared",
+      "namespace": "Ruitk.Samples.Shared",
       "types": [
         "TreeViewRowState"
       ],
@@ -4291,7 +4291,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 39,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorAppExampleWindow"
       ],
@@ -4310,7 +4310,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 39,
-      "namespace": "ReactiveUITK.Samples.FunctionalComponents",
+      "namespace": "Ruitk.Samples.FunctionalComponents",
       "types": [
         "RuntimeAppExampleUIBootstrap"
       ],
@@ -4329,7 +4329,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 37,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorAnimationsDemoWindow"
       ],
@@ -4348,7 +4348,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorContextBailoutDemoWindow"
       ],
@@ -4367,7 +4367,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorContextDemoWindow"
       ],
@@ -4386,7 +4386,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorDeferredEffectDemoWindow"
       ],
@@ -4406,7 +4406,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 37,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorEditorControlsDemoWindow"
       ],
@@ -4425,7 +4425,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorEffectCleanupOrderDemoWindow"
       ],
@@ -4444,7 +4444,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorEventBatchingDemoWindow"
       ],
@@ -4463,7 +4463,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorExceptionFlowDemoWindow"
       ],
@@ -4482,7 +4482,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorFlushSyncDemoWindow"
       ],
@@ -4501,7 +4501,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorHelloWorldDemoWindow"
       ],
@@ -4520,7 +4520,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 40,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorHookQueueDemoWindow"
       ],
@@ -4541,7 +4541,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorKeyedDiffLisDemoWindow"
       ],
@@ -4560,7 +4560,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 39,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorLatestFeaturesDemoWindow"
       ],
@@ -4579,7 +4579,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorMainMenuRouterDemoWindow"
       ],
@@ -4599,7 +4599,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 81,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorPortalDemoWindow"
       ],
@@ -4618,7 +4618,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorProgressBarDemoWindow"
       ],
@@ -4637,7 +4637,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorPropTypesDemoWindow"
       ],
@@ -4656,7 +4656,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorRefForwardingDemoWindow"
       ],
@@ -4675,7 +4675,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorRenderDepthGuardDemoWindow"
       ],
@@ -4694,7 +4694,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorRouterDemoWindow"
       ],
@@ -4714,7 +4714,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorSignalCounterDemoWindow"
       ],
@@ -4733,7 +4733,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorSimpleCounterDemoWindow"
       ],
@@ -4752,7 +4752,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorSimpleTextFieldDemoWindow"
       ],
@@ -4771,7 +4771,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorSimpleUseEffectDemoWindow"
       ],
@@ -4791,7 +4791,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorSyntheticEventDemoWindow"
       ],
@@ -4810,7 +4810,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorTabTreeDemoWindow"
       ],
@@ -4829,7 +4829,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 37,
-      "namespace": "ReactiveUITK.Samples.Editor",
+      "namespace": "Ruitk.Samples.Editor",
       "types": [
         "EditorToggleButtonGroupDemoWindow"
       ],
@@ -4848,7 +4848,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Samples.Showcase.Runtime",
+      "namespace": "Ruitk.Samples.Showcase.Runtime",
       "types": [
         "RuntimeHelloWorldDemoBootstrap"
       ],
@@ -4866,7 +4866,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 32,
-      "namespace": "ReactiveUITK.Samples.Showcase.Runtime",
+      "namespace": "Ruitk.Samples.Showcase.Runtime",
       "types": [
         "RuntimeLatestFeaturesDemoBootstrap"
       ],
@@ -4884,7 +4884,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Samples.Showcase.Runtime",
+      "namespace": "Ruitk.Samples.Showcase.Runtime",
       "types": [
         "RuntimeSimpleCounterDemoBootstrap"
       ],
@@ -4902,7 +4902,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Samples.Showcase.Runtime",
+      "namespace": "Ruitk.Samples.Showcase.Runtime",
       "types": [
         "RuntimeSimpleTextFieldDemoBootstrap"
       ],
@@ -4920,7 +4920,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Samples.Showcase.Runtime",
+      "namespace": "Ruitk.Samples.Showcase.Runtime",
       "types": [
         "RuntimeSimpleUseEffectDemoBootstrap"
       ],
@@ -4955,7 +4955,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 35,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -4969,7 +4969,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 26,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -4982,7 +4982,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 45,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -4996,7 +4996,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 26,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5009,7 +5009,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 33,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5023,7 +5023,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 90,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5038,7 +5038,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 53,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5051,7 +5051,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 80,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5065,7 +5065,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 27,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5079,7 +5079,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 87,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5093,7 +5093,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 99,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5110,7 +5110,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 12,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5122,7 +5122,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 30,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5136,7 +5136,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 8,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5148,7 +5148,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 122,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5162,7 +5162,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 142,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5176,7 +5176,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 216,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5192,7 +5192,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 50,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5206,7 +5206,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 30,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5220,7 +5220,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 32,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5234,7 +5234,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 43,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5248,7 +5248,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 58,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5262,7 +5262,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 81,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5276,7 +5276,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 36,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5290,7 +5290,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 24,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5303,7 +5303,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 32,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5316,7 +5316,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 63,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5330,7 +5330,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 30,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5343,7 +5343,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 69,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5357,7 +5357,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 85,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5371,7 +5371,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 32,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5385,7 +5385,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 45,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5399,7 +5399,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 32,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5412,7 +5412,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 60,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5426,7 +5426,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 97,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5441,7 +5441,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 35,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5455,7 +5455,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 31,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5469,7 +5469,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 39,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5482,7 +5482,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 152,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5498,7 +5498,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 55,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5512,7 +5512,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 104,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5526,7 +5526,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 218,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5542,7 +5542,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 62,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5556,7 +5556,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 73,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5570,7 +5570,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 379,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5586,7 +5586,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 39,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5600,7 +5600,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 13,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5614,7 +5614,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 17,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5628,7 +5628,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 18,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5643,7 +5643,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 64,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5657,7 +5657,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 340,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5671,7 +5671,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 35,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5685,7 +5685,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 19,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5698,7 +5698,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 544,
-      "namespace": "ReactiveUITK.Samples.UITKXComponents",
+      "namespace": "Ruitk.Samples.UITKXComponents",
       "types": [],
       "methods": [],
       "tags": [
@@ -5715,7 +5715,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 9,
-      "namespace": "ReactiveUITK.Samples.UITKXShared",
+      "namespace": "Ruitk.Samples.UITKXShared",
       "types": [
         "for",
         "AnimationsDemoPage"
@@ -5730,7 +5730,7 @@
       "root": "Samples",
       "ext": ".uitkx",
       "lines": 70,
-      "namespace": "ReactiveUITK.Samples.UITKXShared",
+      "namespace": "Ruitk.Samples.UITKXShared",
       "types": [],
       "methods": [],
       "tags": [
@@ -5743,7 +5743,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 39,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxShowcaseAllDemoWindow"
       ],
@@ -5763,7 +5763,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 39,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxAnimationsDemoWindow"
       ],
@@ -5783,7 +5783,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxContextBailoutDemoWindow"
       ],
@@ -5803,7 +5803,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxContextDemoWindow"
       ],
@@ -5823,7 +5823,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxCounterDemoWindow"
       ],
@@ -5843,7 +5843,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxDeferredEffectDemoWindow"
       ],
@@ -5864,7 +5864,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxEditorControlsDemoWindow"
       ],
@@ -5884,7 +5884,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxEffectCleanupOrderDemoWindow"
       ],
@@ -5904,7 +5904,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxEventBatchingDemoWindow"
       ],
@@ -5924,7 +5924,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxExceptionFlowDemoWindow"
       ],
@@ -5944,7 +5944,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxFlushSyncDemoWindow"
       ],
@@ -5964,7 +5964,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxHelloWorldDemoWindow"
       ],
@@ -5984,7 +5984,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxHookQueueDemoWindow"
       ],
@@ -6004,7 +6004,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxKeyedDiffLisDemoWindow"
       ],
@@ -6024,7 +6024,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxLatestFeaturesDemoWindow"
       ],
@@ -6044,7 +6044,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxMainMenuRouterDemoWindow"
       ],
@@ -6065,7 +6065,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 88,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxPortalDemoWindow"
       ],
@@ -6085,7 +6085,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxProgressBarDemoWindow"
       ],
@@ -6105,7 +6105,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxPropTypesDemoWindow"
       ],
@@ -6125,7 +6125,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxRefForwardingDemoWindow"
       ],
@@ -6145,7 +6145,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxRenderDepthGuardDemoWindow"
       ],
@@ -6165,7 +6165,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxRouterDemoWindow"
       ],
@@ -6186,7 +6186,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxSignalCounterDemoWindow"
       ],
@@ -6206,7 +6206,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxSimpleCounterDemoWindow"
       ],
@@ -6226,7 +6226,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxSimpleTextFieldDemoWindow"
       ],
@@ -6246,7 +6246,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxSimpleUseEffectDemoWindow"
       ],
@@ -6267,7 +6267,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxSyntheticEventDemoWindow"
       ],
@@ -6287,7 +6287,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxTabTreeDemoWindow"
       ],
@@ -6307,7 +6307,7 @@
       "root": "Samples",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Samples.UITKX.Editor",
+      "namespace": "Ruitk.Samples.UITKX.Editor",
       "types": [
         "EditorUitkxToggleButtonGroupDemoWindow"
       ],
@@ -6337,7 +6337,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 41,
-      "namespace": "ReactiveUITK.Core.AnimationComponents",
+      "namespace": "Ruitk.Core.AnimationComponents",
       "types": [
         "AnimateFunc"
       ],
@@ -6353,7 +6353,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 502,
-      "namespace": "ReactiveUITK.Core.Animation",
+      "namespace": "Ruitk.Core.Animation",
       "types": [
         "AnimationHandle",
         "AnimateTrack",
@@ -6378,7 +6378,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 115,
-      "namespace": "ReactiveUITK.Core.Animation",
+      "namespace": "Ruitk.Core.Animation",
       "types": [
         "Ease",
         "Easing"
@@ -6393,7 +6393,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 29,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "BuildDefinesConfig"
       ],
@@ -6412,7 +6412,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 61,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "SortedColumnDef",
         "ColumnLayoutState"
@@ -6425,13 +6425,13 @@
       ]
     },
     {
-      "path": "Shared/Core/Config/ReactiveUITKConfig.cs",
+      "path": "Shared/Core/Config/RuitkConfig.cs",
       "root": "Shared",
       "ext": ".cs",
       "lines": 97,
-      "namespace": "ReactiveUITK.Core.Config",
+      "namespace": "Ruitk.Core.Config",
       "types": [
-        "ReactiveUITKConfig",
+        "RuitkConfig",
         "EnvVariables",
         "Root"
       ],
@@ -6449,7 +6449,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Core.Diagnostics",
+      "namespace": "Ruitk.Core.Diagnostics",
       "types": [
         "DiagnosticsConfig",
         "TraceLevel"
@@ -6464,7 +6464,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 15,
-      "namespace": "ReactiveUITK.Core.Diagnostics",
+      "namespace": "Ruitk.Core.Diagnostics",
       "types": [
         "InternalLogOptions"
       ],
@@ -6478,7 +6478,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 534,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberChildReconciliation"
       ],
@@ -6508,7 +6508,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 19,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberConfig"
       ],
@@ -6520,7 +6520,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 229,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberFactory"
       ],
@@ -6543,7 +6543,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 40,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberFragment"
       ],
@@ -6560,7 +6560,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 553,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberFunctionComponent"
       ],
@@ -6590,7 +6590,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 126,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberHostConfig"
       ],
@@ -6612,7 +6612,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 297,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "SuspenseProps",
         "FiberIntrinsicComponents"
@@ -6636,7 +6636,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 180,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberNode",
         "FiberTag",
@@ -6653,7 +6653,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 1405,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberReconciler",
         "FiberReconcilerMetrics",
@@ -6699,7 +6699,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 59,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberRenderer"
       ],
@@ -6717,7 +6717,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 38,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberRoot"
       ],
@@ -6731,7 +6731,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 22,
-      "namespace": "ReactiveUITK.Core.Fiber",
+      "namespace": "Ruitk.Core.Fiber",
       "types": [
         "FiberSuspenseSuspendException"
       ],
@@ -6743,7 +6743,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 150,
-      "namespace": "ReactiveUITK.Tests",
+      "namespace": "Ruitk.Tests",
       "types": [
         "FiberTest"
       ],
@@ -6766,7 +6766,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 1922,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "HookContext",
         "Hooks",
@@ -6821,7 +6821,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 153,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "ContextKey",
         "HostContext",
@@ -6848,7 +6848,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 29,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "implemented",
         "that",
@@ -6868,7 +6868,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 29,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "IScheduler",
         "Priority"
@@ -6881,7 +6881,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 147,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "NodeMetadata",
         "HookStateUpdateQueue",
@@ -6906,7 +6906,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 50,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "PortalContextKeys"
       ],
@@ -6922,7 +6922,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 197,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "PropTypeDefinition",
         "SimplePropTypeDefinition",
@@ -6949,7 +6949,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 596,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "Ref",
         "for",
@@ -6997,7 +6997,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 219,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "RefUtility"
       ],
@@ -7016,7 +7016,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 26,
-      "namespace": "ReactiveUITK.Router",
+      "namespace": "Ruitk.Router",
       "types": [
         "IRouterHistory"
       ],
@@ -7030,7 +7030,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 206,
-      "namespace": "ReactiveUITK.Router",
+      "namespace": "Ruitk.Router",
       "types": [
         "MemoryHistory",
         "Subscription",
@@ -7057,7 +7057,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Router",
+      "namespace": "Ruitk.Router",
       "types": [
         "RouteMatch"
       ],
@@ -7073,7 +7073,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 119,
-      "namespace": "ReactiveUITK.Router",
+      "namespace": "Ruitk.Router",
       "types": [
         "RouteMatcher"
       ],
@@ -7090,7 +7090,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 316,
-      "namespace": "ReactiveUITK.Router",
+      "namespace": "Ruitk.Router",
       "types": [
         "RouterFunc",
         "RouteFunc",
@@ -7122,7 +7122,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 17,
-      "namespace": "ReactiveUITK.Router",
+      "namespace": "Ruitk.Router",
       "types": [
         "RouterContextKeys"
       ],
@@ -7136,7 +7136,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 125,
-      "namespace": "ReactiveUITK.Router",
+      "namespace": "Ruitk.Router",
       "types": [
         "RouterHooks"
       ],
@@ -7165,7 +7165,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 26,
-      "namespace": "ReactiveUITK.Router",
+      "namespace": "Ruitk.Router",
       "types": [
         "RouterLocation"
       ],
@@ -7181,7 +7181,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 155,
-      "namespace": "ReactiveUITK.Router",
+      "namespace": "Ruitk.Router",
       "types": [
         "RouterPath"
       ],
@@ -7203,7 +7203,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 46,
-      "namespace": "ReactiveUITK.Router",
+      "namespace": "Ruitk.Router",
       "types": [
         "RouterState"
       ],
@@ -7221,7 +7221,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 182,
-      "namespace": "ReactiveUITK.Signals",
+      "namespace": "Ruitk.Signals",
       "types": [
         "SignalBase",
         "Signal",
@@ -7246,7 +7246,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 116,
-      "namespace": "ReactiveUITK.Signals",
+      "namespace": "Ruitk.Signals",
       "types": [
         "SignalRegistry",
         "SignalFactory",
@@ -7268,7 +7268,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 29,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "StateSetterExtensions"
       ],
@@ -7280,7 +7280,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 211,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "SyntheticEvent",
         "SyntheticPointerEvent",
@@ -7302,7 +7302,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 42,
-      "namespace": "ReactiveUITK.Core.Util",
+      "namespace": "Ruitk.Core.Util",
       "types": [
         "SafeAreaInsets",
         "SafeAreaUtility"
@@ -7319,7 +7319,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 63,
-      "namespace": "ReactiveUITK.Core.Util",
+      "namespace": "Ruitk.Core.Util",
       "types": [
         "ShallowCompare"
       ],
@@ -7333,7 +7333,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 63,
-      "namespace": "ReactiveUITK.Core.Util",
+      "namespace": "Ruitk.Core.Util",
       "types": [
         "SnapshotAssert",
         "Result"
@@ -7351,7 +7351,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 136,
-      "namespace": "ReactiveUITK.Core.Util",
+      "namespace": "Ruitk.Core.Util",
       "types": [
         "VNodeSnapshot"
       ],
@@ -7369,7 +7369,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 1354,
-      "namespace": "ReactiveUITK",
+      "namespace": "Ruitk",
       "types": [
         "V",
         "is"
@@ -7412,7 +7412,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 193,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "VirtualNodeType",
         "VirtualNode"
@@ -7432,7 +7432,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Core",
+      "namespace": "Ruitk.Core",
       "types": [
         "IVNodeHostRenderer",
         "VNodeHostRenderer"
@@ -7454,7 +7454,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 57,
-      "namespace": "ReactiveUITK.Diagnostics",
+      "namespace": "Ruitk.Diagnostics",
       "types": [
         "WhyDidYouRender"
       ],
@@ -7470,7 +7470,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 158,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "BaseElementAdapter"
       ],
@@ -7493,7 +7493,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "BoundsFieldElementAdapter"
       ],
@@ -7513,7 +7513,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "BoundsIntFieldElementAdapter"
       ],
@@ -7533,7 +7533,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 72,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "BoxElementAdapter"
       ],
@@ -7553,7 +7553,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 94,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ButtonElementAdapter"
       ],
@@ -7573,7 +7573,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 103,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ColorFieldElementAdapter"
       ],
@@ -7593,7 +7593,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 9,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ColumnSignature"
       ],
@@ -7605,7 +7605,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 66,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ColumnSignatureUtil"
       ],
@@ -7619,7 +7619,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 99,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "DoubleFieldElementAdapter"
       ],
@@ -7639,7 +7639,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 165,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "DropdownFieldElementAdapter"
       ],
@@ -7659,7 +7659,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 129,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "PropertyFieldElementAdapter",
         "InspectorElementAdapter"
@@ -7678,7 +7678,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 394,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ToolbarElementAdapter",
         "ToolbarButtonElementAdapter",
@@ -7704,7 +7704,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 76,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "TwoPaneSplitViewElementAdapter"
       ],
@@ -7723,7 +7723,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 43,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ElementRegistry"
       ],
@@ -7738,7 +7738,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 409,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ElementRegistryProvider"
       ],
@@ -7756,7 +7756,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 119,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "EnumFieldElementAdapter"
       ],
@@ -7776,7 +7776,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 104,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "EnumFlagsFieldElementAdapter"
       ],
@@ -7796,7 +7796,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 116,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "FloatFieldElementAdapter"
       ],
@@ -7816,7 +7816,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 111,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "FoldoutElementAdapter"
       ],
@@ -7837,7 +7837,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 178,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "GroupBoxElementAdapter",
         "CachedParts"
@@ -7861,7 +7861,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "Hash128FieldElementAdapter"
       ],
@@ -7881,7 +7881,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 80,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "HelpBoxElementAdapter"
       ],
@@ -7899,7 +7899,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 18,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "IElementAdapter"
       ],
@@ -7913,7 +7913,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 48,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "IMGUIContainerElementAdapter"
       ],
@@ -7931,7 +7931,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 127,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ImageElementAdapter"
       ],
@@ -7949,7 +7949,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 109,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "IntegerFieldElementAdapter"
       ],
@@ -7969,7 +7969,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 56,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "LabelElementAdapter"
       ],
@@ -7987,7 +7987,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 507,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ListViewElementAdapter",
         "CachedParts"
@@ -8012,7 +8012,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 109,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "LongFieldElementAdapter"
       ],
@@ -8032,7 +8032,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 50,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "MinMaxSliderElementAdapter"
       ],
@@ -8050,7 +8050,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 1263,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "MultiColumnListViewElementAdapter",
         "Cached",
@@ -8089,7 +8089,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 1218,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "MultiColumnTreeViewElementAdapter",
         "Cached",
@@ -8126,7 +8126,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 129,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ObjectFieldElementAdapter"
       ],
@@ -8156,7 +8156,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 210,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ProgressBarElementAdapter",
         "CachedParts"
@@ -8179,7 +8179,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 190,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "RadioButtonElementAdapter",
         "CachedParts"
@@ -8203,7 +8203,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 289,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "RadioButtonGroupElementAdapter",
         "CachedParts"
@@ -8229,7 +8229,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "RectFieldElementAdapter"
       ],
@@ -8249,7 +8249,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "RectIntFieldElementAdapter"
       ],
@@ -8269,7 +8269,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 55,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "RepeatButtonElementAdapter"
       ],
@@ -8287,7 +8287,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 178,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ScrollViewElementAdapter"
       ],
@@ -8308,7 +8308,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 47,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ScrollerElementAdapter"
       ],
@@ -8326,7 +8326,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 230,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "SliderElementAdapter",
         "CachedParts"
@@ -8349,7 +8349,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 83,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "SliderIntElementAdapter"
       ],
@@ -8367,7 +8367,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 19,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "StatefulElementAdapter"
       ],
@@ -8384,7 +8384,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 120,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "TabElementAdapter"
       ],
@@ -8403,7 +8403,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 271,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "TabViewElementAdapter",
         "Cached"
@@ -8426,7 +8426,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 59,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "TemplateContainerElementAdapter"
       ],
@@ -8445,7 +8445,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 43,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "TextElementAdapter"
       ],
@@ -8463,7 +8463,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 497,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "TextFieldElementAdapter",
         "CachedParts"
@@ -8493,7 +8493,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 118,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ToggleButtonGroupElementAdapter"
       ],
@@ -8514,7 +8514,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 213,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ToggleElementAdapter",
         "CachedParts"
@@ -8538,7 +8538,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 84,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "IElementStateTracker",
         "ISortState",
@@ -8560,7 +8560,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 133,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "MultiColumnAdjustmentTracker"
       ],
@@ -8578,7 +8578,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 29,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "MultiColumnHeaderOps"
       ],
@@ -8594,7 +8594,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 373,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "MultiColumnLayoutTracker"
       ],
@@ -8618,7 +8618,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 23,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "MultiColumnScrollOps"
       ],
@@ -8634,7 +8634,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 199,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "MultiColumnScrollTracker"
       ],
@@ -8652,7 +8652,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 370,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "MultiColumnSortTracker"
       ],
@@ -8673,7 +8673,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 69,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "MultiColumnTreeViewExpansionOps"
       ],
@@ -8692,7 +8692,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 24,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ScrollTracker"
       ],
@@ -8710,7 +8710,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 24,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "SelectionTracker"
       ],
@@ -8728,7 +8728,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 785,
-      "namespace": "ReactiveUITK.Elements.Trackers",
+      "namespace": "Ruitk.Elements.Trackers",
       "types": [
         "TabViewSelectionState",
         "TabViewSelectionTracker"
@@ -8769,7 +8769,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 147,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "ExpansionStateTracker"
       ],
@@ -8786,7 +8786,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 63,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "TreeViewExpansionOps"
       ],
@@ -8805,7 +8805,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 587,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "TreeViewElementAdapter",
         "Cached",
@@ -8836,7 +8836,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 99,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "UnsignedIntegerFieldElementAdapter"
       ],
@@ -8856,7 +8856,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 99,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "UnsignedLongFieldElementAdapter"
       ],
@@ -8876,7 +8876,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "Vector2FieldElementAdapter"
       ],
@@ -8896,7 +8896,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "Vector2IntFieldElementAdapter"
       ],
@@ -8916,7 +8916,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "Vector3FieldElementAdapter"
       ],
@@ -8936,7 +8936,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "Vector3IntFieldElementAdapter"
       ],
@@ -8956,7 +8956,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 100,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "Vector4FieldElementAdapter"
       ],
@@ -8976,7 +8976,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Elements",
+      "namespace": "Ruitk.Elements",
       "types": [
         "VisualElementAdapter"
       ],
@@ -8994,7 +8994,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 2708,
-      "namespace": "ReactiveUITK.Props",
+      "namespace": "Ruitk.Props",
       "types": [
         "PropsApplier"
       ],
@@ -9035,7 +9035,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 224,
-      "namespace": "ReactiveUITK.Props",
+      "namespace": "Ruitk.Props",
       "types": [
         "PropsHelper",
         "where",
@@ -9055,7 +9055,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 13,
-      "namespace": "ReactiveUITK.Props",
+      "namespace": "Ruitk.Props",
       "types": [
         "StyleValue"
       ],
@@ -9067,7 +9067,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 12,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "AnimateProps"
       ],
@@ -9079,7 +9079,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 171,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "for",
         "BaseProps"
@@ -9096,7 +9096,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 26,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "BoundsFieldProps"
       ],
@@ -9112,7 +9112,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 26,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "BoundsIntFieldProps"
       ],
@@ -9128,7 +9128,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 11,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "BoxProps"
       ],
@@ -9144,7 +9144,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 20,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ButtonProps"
       ],
@@ -9158,7 +9158,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 31,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ColorFieldProps"
       ],
@@ -9174,7 +9174,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "DoubleFieldProps"
       ],
@@ -9190,7 +9190,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 49,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "DropdownFieldProps"
       ],
@@ -9204,7 +9204,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 29,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "EnumFieldProps"
       ],
@@ -9220,7 +9220,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 26,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "EnumFlagsFieldProps"
       ],
@@ -9236,7 +9236,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 13,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ErrorBoundaryProps"
       ],
@@ -9248,7 +9248,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "FloatFieldProps"
       ],
@@ -9264,7 +9264,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 37,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "FoldoutProps"
       ],
@@ -9278,7 +9278,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 25,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "GroupBoxProps"
       ],
@@ -9292,7 +9292,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 26,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "Hash128FieldProps"
       ],
@@ -9308,7 +9308,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 25,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "HelpBoxProps"
       ],
@@ -9322,7 +9322,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 20,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "IMGUIContainerProps"
       ],
@@ -9338,7 +9338,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 31,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ImageProps"
       ],
@@ -9352,7 +9352,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "IntegerFieldProps"
       ],
@@ -9368,7 +9368,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 20,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "LabelProps"
       ],
@@ -9382,7 +9382,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 66,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ListViewProps"
       ],
@@ -9398,7 +9398,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "LongFieldProps"
       ],
@@ -9414,7 +9414,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 28,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "MinMaxSliderProps"
       ],
@@ -9430,7 +9430,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 146,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "MultiColumnListViewProps",
         "ColumnDef"
@@ -9447,7 +9447,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 154,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "MultiColumnTreeViewProps",
         "ColumnDef"
@@ -9464,7 +9464,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 32,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ObjectFieldProps"
       ],
@@ -9480,7 +9480,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 35,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ProgressBarProps"
       ],
@@ -9494,7 +9494,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 39,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "PropertyFieldProps",
         "InspectorElementProps"
@@ -9511,7 +9511,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 36,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "RadioButtonGroupProps"
       ],
@@ -9525,7 +9525,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 37,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "RadioButtonProps"
       ],
@@ -9541,7 +9541,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 26,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "RectFieldProps"
       ],
@@ -9557,7 +9557,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 26,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "RectIntFieldProps"
       ],
@@ -9573,7 +9573,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 20,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "RepeatButtonProps"
       ],
@@ -9587,7 +9587,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 37,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ScrollViewProps"
       ],
@@ -9603,7 +9603,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 25,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ScrollerProps"
       ],
@@ -9619,7 +9619,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 44,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "SliderIntProps"
       ],
@@ -9635,7 +9635,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 73,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "SliderProps"
       ],
@@ -9651,7 +9651,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "Style"
       ],
@@ -9666,7 +9666,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 79,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "StyleKeys"
       ],
@@ -9678,7 +9678,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 20,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "TabProps"
       ],
@@ -9692,7 +9692,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 70,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "TabViewProps",
         "TabDef"
@@ -9709,7 +9709,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 11,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "TemplateContainerProps"
       ],
@@ -9725,7 +9725,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 19,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "TextElementProps"
       ],
@@ -9741,7 +9741,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 80,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "TextFieldProps"
       ],
@@ -9757,7 +9757,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 19,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ToggleButtonGroupProps"
       ],
@@ -9773,7 +9773,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 47,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ToggleProps"
       ],
@@ -9789,7 +9789,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 114,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "ToolbarProps",
         "ToolbarButtonProps",
@@ -9812,7 +9812,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 59,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "TreeViewProps"
       ],
@@ -9828,7 +9828,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 27,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "TwoPaneSplitViewProps"
       ],
@@ -9844,7 +9844,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "UnsignedIntegerFieldProps"
       ],
@@ -9860,7 +9860,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "UnsignedLongFieldProps"
       ],
@@ -9876,7 +9876,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 31,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "Vector2FieldProps"
       ],
@@ -9892,7 +9892,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 27,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "Vector2IntFieldProps"
       ],
@@ -9908,7 +9908,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 31,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "Vector3FieldProps"
       ],
@@ -9924,7 +9924,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 27,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "Vector3IntFieldProps"
       ],
@@ -9940,7 +9940,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 31,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "Vector4FieldProps"
       ],
@@ -9956,7 +9956,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 16,
-      "namespace": "ReactiveUITK.Props.Typed",
+      "namespace": "Ruitk.Props.Typed",
       "types": [
         "VisualElementProps"
       ],
@@ -9968,7 +9968,7 @@
       ]
     },
     {
-      "path": "Shared/ReactiveUITK.Shared.asmdef",
+      "path": "Shared/Ruitk.Shared.asmdef",
       "root": "Shared",
       "ext": ".asmdef",
       "lines": 14,
@@ -9982,7 +9982,7 @@
       "root": "Shared",
       "ext": ".cs",
       "lines": 51,
-      "namespace": "ReactiveUITK.Shared.Util",
+      "namespace": "Ruitk.Shared.Util",
       "types": [
         "SortUtils"
       ],
@@ -10006,7 +10006,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 322,
-      "namespace": "ReactiveUITK.SourceGenerator",
+      "namespace": "Ruitk.SourceGenerator",
       "types": [
         "UitkxDiagnostics",
         "when",
@@ -10025,7 +10025,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 1401,
-      "namespace": "ReactiveUITK.SourceGenerator.Emitter",
+      "namespace": "Ruitk.SourceGenerator.Emitter",
       "types": [
         "source",
         "CSharpEmitter",
@@ -10081,7 +10081,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 225,
-      "namespace": "ReactiveUITK.SourceGenerator.Emitter",
+      "namespace": "Ruitk.SourceGenerator.Emitter",
       "types": [
         "HooksValidator",
         "HookContext"
@@ -10108,7 +10108,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 750,
-      "namespace": "ReactiveUITK.SourceGenerator.Emitter",
+      "namespace": "Ruitk.SourceGenerator.Emitter",
       "types": [
         "at",
         "cannot",
@@ -10154,7 +10154,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 261,
-      "namespace": "ReactiveUITK.SourceGenerator.Emitter",
+      "namespace": "Ruitk.SourceGenerator.Emitter",
       "types": [
         "StructureValidator"
       ],
@@ -10182,7 +10182,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 86,
-      "namespace": "ReactiveUITK.SourceGenerator.Emitter",
+      "namespace": "Ruitk.SourceGenerator.Emitter",
       "types": [
         "TagResolutionKind",
         "produced",
@@ -10219,7 +10219,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 65,
-      "namespace": "ReactiveUITK.SourceGenerator",
+      "namespace": "Ruitk.SourceGenerator",
       "types": [
         "LanguageLibResolver"
       ],
@@ -10235,7 +10235,7 @@
       ]
     },
     {
-      "path": "SourceGenerator~/ReactiveUITK.SourceGenerator.csproj",
+      "path": "SourceGenerator~/Ruitk.SourceGenerator.csproj",
       "root": "SourceGenerator~",
       "ext": ".csproj",
       "lines": 94,
@@ -10254,7 +10254,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 62,
-      "namespace": "ReactiveUITK.SourceGenerator.Tests",
+      "namespace": "Ruitk.SourceGenerator.Tests",
       "types": [
         "DebugDumpTest",
         "GameOverPage",
@@ -10277,7 +10277,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 299,
-      "namespace": "ReactiveUITK.SourceGenerator.Tests",
+      "namespace": "Ruitk.SourceGenerator.Tests",
       "types": [
         "DiagnosticTests"
       ],
@@ -10311,7 +10311,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 825,
-      "namespace": "ReactiveUITK.SourceGenerator.Tests",
+      "namespace": "Ruitk.SourceGenerator.Tests",
       "types": [
         "EmitterTests",
         "structure",
@@ -10366,7 +10366,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 8097,
-      "namespace": "ReactiveUITK.SourceGenerator.Tests",
+      "namespace": "Ruitk.SourceGenerator.Tests",
       "types": [
         "FormatterSnapshotTests",
         "TestRoslynFormatter",
@@ -10418,7 +10418,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 73,
-      "namespace": "ReactiveUITK.SourceGenerator.Tests",
+      "namespace": "Ruitk.SourceGenerator.Tests",
       "types": [
         "FormatterTests"
       ],
@@ -10438,7 +10438,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 284,
-      "namespace": "ReactiveUITK.SourceGenerator.Tests.Helpers",
+      "namespace": "Ruitk.SourceGenerator.Tests.Helpers",
       "types": [
         "GeneratorTestHelper",
         "VirtualNode",
@@ -10467,7 +10467,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 249,
-      "namespace": "ReactiveUITK.SourceGenerator.Tests",
+      "namespace": "Ruitk.SourceGenerator.Tests",
       "types": [
         "LoweringTests"
       ],
@@ -10494,7 +10494,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 701,
-      "namespace": "ReactiveUITK.SourceGenerator.Tests",
+      "namespace": "Ruitk.SourceGenerator.Tests",
       "types": [
         "ParserTests",
         "CounterPanel",
@@ -10536,7 +10536,7 @@
       ]
     },
     {
-      "path": "SourceGenerator~/Tests/ReactiveUITK.SourceGenerator.Tests.csproj",
+      "path": "SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj",
       "root": "SourceGenerator~",
       "ext": ".csproj",
       "lines": 37,
@@ -10553,7 +10553,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 309,
-      "namespace": "ReactiveUITK.SourceGenerator",
+      "namespace": "Ruitk.SourceGenerator",
       "types": [
         "UitkxGenerator",
         "will"
@@ -10575,7 +10575,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 322,
-      "namespace": "ReactiveUITK.SourceGenerator",
+      "namespace": "Ruitk.SourceGenerator",
       "types": [
         "UitkxPipeline"
       ],
@@ -10597,7 +10597,7 @@
       "root": "SourceGenerator~",
       "ext": ".cs",
       "lines": 34,
-      "namespace": "ReactiveUITK.SourceGenerator",
+      "namespace": "Ruitk.SourceGenerator",
       "types": [
         "UitkxPipelineResult"
       ],
@@ -10743,7 +10743,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 90,
-      "namespace": "ReactiveUITK.Language.Diagnostics",
+      "namespace": "Ruitk.Language.Diagnostics",
       "types": [
         "DiagnosticCodes"
       ],
@@ -10758,7 +10758,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 780,
-      "namespace": "ReactiveUITK.Language.Diagnostics",
+      "namespace": "Ruitk.Language.Diagnostics",
       "types": [
         "never",
         "DiagnosticsAnalyzer",
@@ -10790,7 +10790,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 1988,
-      "namespace": "ReactiveUITK.Language.Formatter",
+      "namespace": "Ruitk.Language.Formatter",
       "types": [
         "AstFormatter",
         "the"
@@ -10834,7 +10834,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 67,
-      "namespace": "ReactiveUITK.Language.Formatter",
+      "namespace": "Ruitk.Language.Formatter",
       "types": [
         "ConfigLoader"
       ],
@@ -10851,7 +10851,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 165,
-      "namespace": "ReactiveUITK.Language.Formatter",
+      "namespace": "Ruitk.Language.Formatter",
       "types": [
         "FormatterOptions"
       ],
@@ -10871,7 +10871,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 49,
-      "namespace": "ReactiveUITK.Language.Formatter",
+      "namespace": "Ruitk.Language.Formatter",
       "types": [
         "lives",
         "ICSharpFormatterDelegate"
@@ -10887,7 +10887,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 618,
-      "namespace": "ReactiveUITK.Language.IntelliSense",
+      "namespace": "Ruitk.Language.IntelliSense",
       "types": [
         "CursorKind",
         "CursorContext",
@@ -10930,7 +10930,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 66,
-      "namespace": "ReactiveUITK.Language.Lowering",
+      "namespace": "Ruitk.Language.Lowering",
       "types": [
         "CanonicalLowering"
       ],
@@ -10948,7 +10948,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 291,
-      "namespace": "ReactiveUITK.Language.Nodes",
+      "namespace": "Ruitk.Language.Nodes",
       "types": [
         "for",
         "AstNode",
@@ -11006,7 +11006,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 46,
-      "namespace": "ReactiveUITK.Language",
+      "namespace": "Ruitk.Language",
       "types": [
         "ParseSeverity",
         "ParseDiagnostic"
@@ -11022,7 +11022,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 2002,
-      "namespace": "ReactiveUITK.Language.Parser",
+      "namespace": "Ruitk.Language.Parser",
       "types": [
         "DirectiveParser",
         "will"
@@ -11064,7 +11064,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 340,
-      "namespace": "ReactiveUITK.Language.Parser",
+      "namespace": "Ruitk.Language.Parser",
       "types": [
         "ExpressionExtractor"
       ],
@@ -11084,7 +11084,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 362,
-      "namespace": "ReactiveUITK.Language.Parser",
+      "namespace": "Ruitk.Language.Parser",
       "types": [
         "MarkupTokenizer"
       ],
@@ -11117,7 +11117,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 162,
-      "namespace": "ReactiveUITK.Language.Parser",
+      "namespace": "Ruitk.Language.Parser",
       "types": [
         "FunctionParam",
         "DirectiveSet",
@@ -11140,7 +11140,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 1672,
-      "namespace": "ReactiveUITK.Language.Parser",
+      "namespace": "Ruitk.Language.Parser",
       "types": [
         "UitkxParser"
       ],
@@ -11181,7 +11181,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 139,
-      "namespace": "ReactiveUITK.Language.Roslyn",
+      "namespace": "Ruitk.Language.Roslyn",
       "types": [
         "SourceRegionKind",
         "SourceMapEntry",
@@ -11202,7 +11202,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 1599,
-      "namespace": "ReactiveUITK.Language.Roslyn",
+      "namespace": "Ruitk.Language.Roslyn",
       "types": [
         "CollectedExpression",
         "VirtualDocument",
@@ -11254,7 +11254,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 30,
-      "namespace": "ReactiveUITK.Language.SemanticTokens",
+      "namespace": "Ruitk.Language.SemanticTokens",
       "types": [
         "SemanticTokenData"
       ],
@@ -11266,7 +11266,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 95,
-      "namespace": "ReactiveUITK.Language.SemanticTokens",
+      "namespace": "Ruitk.Language.SemanticTokens",
       "types": [
         "SemanticTokenTypes",
         "SemanticTokenModifiers",
@@ -11282,7 +11282,7 @@
       "root": "ide-extensions~",
       "ext": ".cs",
       "lines": 1223,
-      "namespace": "ReactiveUITK.Language.SemanticTokens",
+      "namespace": "Ruitk.Language.SemanticTokens",
       "types": [
         "SemanticTokensProvider"
       ],

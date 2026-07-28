@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.SimpleUseEffectFunc;
-using ReactiveUITK.Samples.Components.SimpleUseEffectFunc.SimpleUseEffectFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.SimpleUseEffectFunc;
+using Ruitk.Samples.Components.SimpleUseEffectFunc.SimpleUseEffectFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxSimpleUseEffectDemoWindow : EditorWindow
     {

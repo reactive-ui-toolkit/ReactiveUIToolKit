@@ -1,6 +1,6 @@
 import * as GameLogic from "./GameLogic"
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTypes"
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTextures"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTypes"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTextures"
 
 export List<SpriteEntry> BuildSpriteList(GameState state) {
   var list = new List<SpriteEntry>(64);

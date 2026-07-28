@@ -37,7 +37,7 @@ export const HmrPage: FC = () => (
     <Section title="Quick Start">
       <List sx={Styles.list}>
         <ListItem disablePadding>
-          <ListItemText primary={<>Open <strong>ReactiveUITK → HMR Mode</strong> from the Unity menu bar.</>} />
+          <ListItemText primary={<>Open <strong>Ruitk → HMR Mode</strong> from the Unity menu bar.</>} />
         </ListItem>
         <ListItem disablePadding>
           <ListItemText primary={<>Click <strong>Start HMR</strong>.</>} />
@@ -63,7 +63,7 @@ export const HmrPage: FC = () => (
           <ListItemText primary={<>A <code>FileSystemWatcher</code> detects <code>.uitkx</code> changes under <code>Assets/</code>.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<>The file is parsed and emitted to C# using <code>ReactiveUITK.Language.dll</code>.</>} />
+          <ListItemText primary={<>The file is parsed and emitted to C# using <code>Ruitk.Language.dll</code>.</>} />
         </ListItem>
         <ListItem disablePadding>
           <ListItemText primary={<>C# is compiled in-process via Roslyn (<code>Microsoft.CodeAnalysis.CSharp</code> 4.3.1), with automatic fallback to external <code>csc.dll</code> if Roslyn DLLs aren't available.</>} />
@@ -242,7 +242,7 @@ export const HmrPage: FC = () => (
 
     <Section title="HMR Window">
       <Typography variant="body1" paragraph>
-        The HMR window (<strong>ReactiveUITK → HMR Mode</strong>) shows:
+        The HMR window (<strong>Ruitk → HMR Mode</strong>) shows:
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>
@@ -397,7 +397,7 @@ export const HmrPage: FC = () => (
           <ListItemText primary="Check the Console for initialization errors." />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<>Ensure <code>ReactiveUITK.Language.dll</code> exists in the <code>Analyzers/</code> folder.</>} />
+          <ListItemText primary={<>Ensure <code>Ruitk.Language.dll</code> exists in the <code>Analyzers/</code> folder.</>} />
         </ListItem>
         <ListItem disablePadding>
           <ListItemText primary={<>Verify Unity's Roslyn compiler is present at <code>{'${EditorPath}'}/Data/DotNetSdkRoslyn/csc.dll</code>.</>} />

@@ -1,9 +1,9 @@
-export const TWO_PANE_SPLIT_VIEW_BASIC = `// Example namespace: ReactiveUITK.Samples.Components
+export const TWO_PANE_SPLIT_VIEW_BASIC = `// Example namespace: Ruitk.Samples.Components
 
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 
 // Editor-only usage

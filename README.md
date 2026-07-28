@@ -145,7 +145,7 @@ where a `Color` is expected is a build error.
 
 ```csharp
 // In .uitkx files, CssHelpers is auto-imported — no using needed.
-// In .cs files, add: using static ReactiveUITK.Props.Typed.CssHelpers;
+// In .cs files, add: using static Ruitk.Props.Typed.CssHelpers;
 
 var cardStyle = new Style {
     Width = Pct(100),
@@ -238,7 +238,7 @@ in a UI Toolkit tree, `U.UitkHost` embeds a UI Toolkit panel in a uGUI tree.
 
 **Source Generator**
 ```
-dotnet build SourceGenerator~/ReactiveUITK.SourceGenerator.csproj
+dotnet build SourceGenerator~/Ruitk.SourceGenerator.csproj
 scripts/build-generator.ps1   # builds + copies DLL to Analyzers/
 ```
 

@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     public static class StateSetterExtensions
     {

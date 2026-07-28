@@ -68,7 +68,7 @@ using System.Collections;
 using System.Reflection;
 using UnityEngine;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     /// <summary>
     /// Re-binds the <c>__hmr_*</c> delegate / MethodInfo fields on

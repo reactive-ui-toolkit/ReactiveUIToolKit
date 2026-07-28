@@ -40,7 +40,7 @@ export const UNITY_DOC_LINKS: Record<string, UnityDocLinkInfo> = {
   PropertyInspector: {
     unityElement: 'InspectorElement',
     label: 'InspectorElement entry',
-    note: 'ReactiveUITK.PropertyInspector wraps Unity\u2019s InspectorElement to embed serialized-object inspectors.',
+    note: 'Ruitk.PropertyInspector wraps Unity\u2019s InspectorElement to embed serialized-object inspectors.',
   },
   RadioButton: { unityElement: 'RadioButton' },
   RadioButtonGroup: { unityElement: 'RadioButtonGroup' },

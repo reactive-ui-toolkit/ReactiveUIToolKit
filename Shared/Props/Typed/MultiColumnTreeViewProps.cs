@@ -1,10 +1,10 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Props.Typed
+namespace Ruitk.Props.Typed
 {
     public sealed class MultiColumnTreeViewProps : BaseProps
     {
@@ -60,7 +60,7 @@ namespace ReactiveUITK.Props.Typed
             return true;
         }
 
-        public sealed class ColumnDef : global::ReactiveUITK.Core.IProps
+        public sealed class ColumnDef : global::Ruitk.Core.IProps
         {
             public string Name { get; set; }
             public string Title { get; set; }

@@ -12,14 +12,14 @@ its associated tooling.
 No third-party runtime dependencies. The core framework relies only on Unity's
 built-in UI Toolkit APIs.
 
-### Source Generator (ReactiveUITK.SourceGenerator)
+### Source Generator (Ruitk.SourceGenerator)
 
 | Package | Version | License |
 |---------|---------|---------|
 | Microsoft.CodeAnalysis.CSharp | 4.3.1 | MIT |
 | System.Collections.Immutable | 6.0.0 | MIT |
 
-### Language Library (ReactiveUITK.Language)
+### Language Library (Ruitk.Language)
 
 | Package | Version | License |
 |---------|---------|---------|

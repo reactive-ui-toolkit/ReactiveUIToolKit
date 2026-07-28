@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>
     /// Severity levels for a <see cref="ParseDiagnostic"/>.

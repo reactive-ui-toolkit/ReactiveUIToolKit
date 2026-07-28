@@ -372,7 +372,7 @@ export const CssHelpersReferencePage: FC = () => (
       <code>CssHelpers</code> provides <strong>{totalCount}</strong> static
       shortcuts for Unity UI Toolkit style values. Import them with:
     </Typography>
-    <CodeBlock language="jsx" code={`using static ReactiveUITK.Props.Typed.CssHelpers;
+    <CodeBlock language="jsx" code={`using static Ruitk.Props.Typed.CssHelpers;
 
 // Then use directly in styles:
 new Style { Width = Pct(50), FlexDirection = FlexRow, BackgroundColor = Hex("#1e1e1e") }`} />

@@ -2,7 +2,7 @@ using System;
 using System.Runtime.CompilerServices;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public abstract class StatefulElementAdapter<TElement, TState> : BaseElementAdapter
         where TElement : VisualElement

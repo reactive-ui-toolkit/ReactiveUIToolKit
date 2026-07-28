@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
-namespace ReactiveUITK.CICD
+namespace Ruitk.CICD
 {
     internal static class PublishUtility
     {

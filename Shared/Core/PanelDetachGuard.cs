@@ -1,7 +1,7 @@
 using System;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     /// <summary>
     /// Wires reusable Attach/Detach callbacks on a VisualElement so that

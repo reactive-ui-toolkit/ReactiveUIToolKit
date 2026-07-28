@@ -1,9 +1,9 @@
-export const TOOLBAR_BASIC = `// Example namespace: ReactiveUITK.Samples.Editor
+export const TOOLBAR_BASIC = `// Example namespace: Ruitk.Samples.Editor
 
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 
 public static class ToolbarExamples
 {

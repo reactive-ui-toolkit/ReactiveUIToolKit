@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>
     /// The <c>.uitkx</c> import graph (import/export grammar, leg 3, plan §6/§8). Pure and

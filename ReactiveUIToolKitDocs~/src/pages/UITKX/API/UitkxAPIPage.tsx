@@ -18,19 +18,19 @@ export const UitkxAPIPage: FC = () => (
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Core.V</code> — static factory for building <code>VirtualNode</code> trees (<code>V.VisualElement</code>, <code>V.Button</code>, <code>V.Label</code>, <code>V.Router</code>, etc.).</>} />
+          <ListItemText primary={<><code>Ruitk.Core.V</code> — static factory for building <code>VirtualNode</code> trees (<code>V.VisualElement</code>, <code>V.Button</code>, <code>V.Label</code>, <code>V.Router</code>, etc.).</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Core.Hooks</code> — hook functions: <code>UseState</code>, <code>UseReducer</code>, <code>UseEffect</code>, <code>UseLayoutEffect</code>, <code>UseMemo</code>, <code>UseCallback</code>, <code>UseRef</code>, <code>UseContext</code>, <code>ProvideContext</code>, <code>UseDeferredValue</code>, <code>UseImperativeHandle</code>, <code>UseStableFunc</code>, <code>UseStableAction</code>, <code>UseStableCallback</code>, <code>UseSignal</code>, <code>UseAnimate</code>, <code>UseTweenFloat</code>, <code>UseSafeArea</code>, <code>UseUiDocumentRoot</code>, <code>UseTransition</code>, <code>UseSfx</code>. Static configuration: <code>Hooks.EnableHookValidation</code>, <code>Hooks.EnableStrictDiagnostics</code>, <code>Hooks.EnableHookAutoRealign</code>.</>} />
+          <ListItemText primary={<><code>Ruitk.Core.Hooks</code> — hook functions: <code>UseState</code>, <code>UseReducer</code>, <code>UseEffect</code>, <code>UseLayoutEffect</code>, <code>UseMemo</code>, <code>UseCallback</code>, <code>UseRef</code>, <code>UseContext</code>, <code>ProvideContext</code>, <code>UseDeferredValue</code>, <code>UseImperativeHandle</code>, <code>UseStableFunc</code>, <code>UseStableAction</code>, <code>UseStableCallback</code>, <code>UseSignal</code>, <code>UseAnimate</code>, <code>UseTweenFloat</code>, <code>UseSafeArea</code>, <code>UseUiDocumentRoot</code>, <code>UseTransition</code>, <code>UseSfx</code>. Static configuration: <code>Hooks.EnableHookValidation</code>, <code>Hooks.EnableStrictDiagnostics</code>, <code>Hooks.EnableHookAutoRealign</code>.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Core.StateSetterExtensions</code> — fluent helpers for state setters (<code>set.Set(value)</code> / <code>{'set.Set(prev => next)'}</code>).</>} />
+          <ListItemText primary={<><code>Ruitk.Core.StateSetterExtensions</code> — fluent helpers for state setters (<code>set.Set(value)</code> / <code>{'set.Set(prev => next)'}</code>).</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Core.RootRenderer</code> — runtime component that mounts a <code>VirtualNode</code> tree into a <code>UIDocument</code> root.</>} />
+          <ListItemText primary={<><code>Ruitk.Core.RootRenderer</code> — runtime component that mounts a <code>VirtualNode</code> tree into a <code>UIDocument</code> root.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Core.RenderScheduler</code> — runtime scheduler used by the reconciler to batch updates per frame.</>} />
+          <ListItemText primary={<><code>Ruitk.Core.RenderScheduler</code> — runtime scheduler used by the reconciler to batch updates per frame.</>} />
         </ListItem>
       </List>
     </Box>
@@ -41,16 +41,16 @@ export const UitkxAPIPage: FC = () => (
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Props.Typed</code> — typed props for UI Toolkit controls. Each control has a <code>*Props</code> class (<code>ButtonProps</code>, <code>LabelProps</code>, <code>ListViewProps</code>, <code>ScrollViewProps</code>, etc.).</>} />
+          <ListItemText primary={<><code>Ruitk.Props.Typed</code> — typed props for UI Toolkit controls. Each control has a <code>*Props</code> class (<code>ButtonProps</code>, <code>LabelProps</code>, <code>ListViewProps</code>, <code>ScrollViewProps</code>, etc.).</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Props.Typed.Style</code> — strongly typed wrapper around a style dictionary used by many props.</>} />
+          <ListItemText primary={<><code>Ruitk.Props.Typed.Style</code> — strongly typed wrapper around a style dictionary used by many props.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Props.Typed.StyleKeys</code> — constants used as keys inside <code>Style</code> (<code>StyleKeys.MarginTop</code>, <code>StyleKeys.FlexDirection</code>, etc.). Auto-imported in <code>.uitkx</code> files.</>} />
+          <ListItemText primary={<><code>Ruitk.Props.Typed.StyleKeys</code> — constants used as keys inside <code>Style</code> (<code>StyleKeys.MarginTop</code>, <code>StyleKeys.FlexDirection</code>, etc.). Auto-imported in <code>.uitkx</code> files.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Props.Typed.CssHelpers</code> — shortcut values for enum props and style values: <code>FlexRow</code>, <code>FlexColumn</code>, <code>Pct()</code>, <code>Px()</code>, <code>SelectNone</code>, <code>SortCustom</code>, etc. Auto-imported in <code>.uitkx</code> files.</>} />
+          <ListItemText primary={<><code>Ruitk.Props.Typed.CssHelpers</code> — shortcut values for enum props and style values: <code>FlexRow</code>, <code>FlexColumn</code>, <code>Pct()</code>, <code>Px()</code>, <code>SelectNone</code>, <code>SortCustom</code>, etc. Auto-imported in <code>.uitkx</code> files.</>} />
         </ListItem>
       </List>
     </Box>
@@ -61,19 +61,19 @@ export const UitkxAPIPage: FC = () => (
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Router.RouterHooks</code> — hook helpers: <code>UseRouter()</code>, <code>UseLocation()</code>, <code>UseLocationInfo()</code>, <code>UseParams()</code>, <code>UseQuery()</code>, <code>UseSearchParams()</code>, <code>UseNavigationState()</code>, <code>UseNavigate()</code>, <code>UseNavigate(NavigateOptions)</code>, <code>UseGo()</code>, <code>UseCanGo()</code>, <code>UseBlocker()</code>, <code>UsePrompt()</code>, <code>UseRouteMatch()</code>, <code>UseMatches()</code>, <code>UseNavigationBase()</code>, <code>UseResolvedPath()</code>, <code>{'UseOutletContext<T>()'}</code>.</>} />
+          <ListItemText primary={<><code>Ruitk.Router.RouterHooks</code> — hook helpers: <code>UseRouter()</code>, <code>UseLocation()</code>, <code>UseLocationInfo()</code>, <code>UseParams()</code>, <code>UseQuery()</code>, <code>UseSearchParams()</code>, <code>UseNavigationState()</code>, <code>UseNavigate()</code>, <code>UseNavigate(NavigateOptions)</code>, <code>UseGo()</code>, <code>UseCanGo()</code>, <code>UseBlocker()</code>, <code>UsePrompt()</code>, <code>UseRouteMatch()</code>, <code>UseMatches()</code>, <code>UseNavigationBase()</code>, <code>UseResolvedPath()</code>, <code>{'UseOutletContext<T>()'}</code>.</>} />
         </ListItem>
         <ListItem disablePadding>
           <ListItemText primary={<>Router primitives (factories on <code>V</code> and intrinsic tags in <code>.uitkx</code>): <code>Router</code>, <code>Route</code>, <code>Routes</code>, <code>Outlet</code>, <code>NavLink</code>, <code>Navigate</code>, <code>Link</code>.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Router.IRouterHistory</code>, <code>MemoryHistory</code> — the history abstraction. Supply a custom <code>IRouterHistory</code> to control how locations are stored.</>} />
+          <ListItemText primary={<><code>Ruitk.Router.IRouterHistory</code>, <code>MemoryHistory</code> — the history abstraction. Supply a custom <code>IRouterHistory</code> to control how locations are stored.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Router.RouterLocation</code>, <code>RouterPath</code>, <code>RouteMatch</code>, <code>NavigateOptions</code> — types describing the current location, parsed path, route matching result, and navigation options.</>} />
+          <ListItemText primary={<><code>Ruitk.Router.RouterLocation</code>, <code>RouterPath</code>, <code>RouteMatch</code>, <code>NavigateOptions</code> — types describing the current location, parsed path, route matching result, and navigation options.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Router.RouteRanker</code> — internal port of RR's <code>flattenRoutes</code> + <code>rankRouteBranches</code> + <code>computeScore</code>, shared by <code>{'<Routes>'}</code> and the layout-route flow on <code>{'<Route>'}</code>.</>} />
+          <ListItemText primary={<><code>Ruitk.Router.RouteRanker</code> — internal port of RR's <code>flattenRoutes</code> + <code>rankRouteBranches</code> + <code>computeScore</code>, shared by <code>{'<Routes>'}</code> and the layout-route flow on <code>{'<Route>'}</code>.</>} />
         </ListItem>
       </List>
     </Box>
@@ -84,13 +84,13 @@ export const UitkxAPIPage: FC = () => (
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Signals.SignalFactory</code> — entry point: <code>{'SignalFactory.Get<T>(key, initialValue)'}</code> and <code>{'SignalFactory.TryGet<T>(key, out signal)'}</code>.</>} />
+          <ListItemText primary={<><code>Ruitk.Signals.SignalFactory</code> — entry point: <code>{'SignalFactory.Get<T>(key, initialValue)'}</code> and <code>{'SignalFactory.TryGet<T>(key, out signal)'}</code>.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>{'ReactiveUITK.Signals.Signal<T>'}</code> — concrete signal type with <code>Value</code>, <code>Subscribe(...)</code>, <code>Set(value)</code>, and <code>Dispatch(update)</code>.</>} />
+          <ListItemText primary={<><code>{'Ruitk.Signals.Signal<T>'}</code> — concrete signal type with <code>Value</code>, <code>Subscribe(...)</code>, <code>Set(value)</code>, and <code>Dispatch(update)</code>.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Signals.SignalsRuntime</code> — bootstraps the runtime registry. Call <code>SignalsRuntime.EnsureInitialized()</code> at startup if using signals outside components.</>} />
+          <ListItemText primary={<><code>Ruitk.Signals.SignalsRuntime</code> — bootstraps the runtime registry. Call <code>SignalsRuntime.EnsureInitialized()</code> at startup if using signals outside components.</>} />
         </ListItem>
       </List>
     </Box>
@@ -107,7 +107,7 @@ export const UitkxAPIPage: FC = () => (
           <ListItemText primary={<><code>Hooks.UseTweenFloat(from, to, duration, ease, delay, onUpdate, onComplete)</code> — tweens a float value with easing. Integrates with component lifecycle and cancels on unmount.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Core.Animation.AnimateTrack</code> — helpers for creating animation tracks (property, size, color, etc.).</>} />
+          <ListItemText primary={<><code>Ruitk.Core.Animation.AnimateTrack</code> — helpers for creating animation tracks (property, size, color, etc.).</>} />
         </ListItem>
       </List>
     </Box>
@@ -138,7 +138,7 @@ export const UitkxAPIPage: FC = () => (
           <ListItemText primary={<><code>Hooks.UseUiDocumentRoot(UIDocument)</code> — returns a stable <code>VisualElement</code> reference that always tracks the document's current <code>rootVisualElement</code>. Polls via <code>AnimationTicker</code>, short-circuits with <code>ReferenceEquals</code>. Convenience overload <code>UseUiDocumentRoot(string contextKey)</code> resolves the document from <code>HostContext.Environment</code> by key. Pair with a non-null guard at the call site (<code>{'target != null ? <Portal target={target}>…</Portal> : null'}</code>) for components portaling into a UIDocument that may not have built its panel yet.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Core.Animation.AnimationTicker</code> (internal) — panel-independent shared ticker. Editor uses <code>EditorApplication.update</code>; Player uses <code>MediaHost.SubscribeTick</code>. Backs the rebuild poll, animation hooks, and reparent-resilient adapters.</>} />
+          <ListItemText primary={<><code>Ruitk.Core.Animation.AnimationTicker</code> (internal) — panel-independent shared ticker. Editor uses <code>EditorApplication.update</code>; Player uses <code>MediaHost.SubscribeTick</code>. Backs the rebuild poll, animation hooks, and reparent-resilient adapters.</>} />
         </ListItem>
         <ListItem disablePadding>
           <ListItemText primary={<><code>{'<Portal>'}</code> retarget on rebuild (v0.5.7) — the Fiber commit phase detects when a <code>{'<Portal target={x}>'}</code>'s target VisualElement reference changes between renders and physically reparents the portal's stable host descendants from the old target to the new one. Pair with <code>UseUiDocumentRoot</code> on a world-space document and the portal contents survive Unity 6.3's panel rebuild storm.</>} />
@@ -155,10 +155,10 @@ export const UitkxAPIPage: FC = () => (
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.EditorSupport.EditorRootRendererUtility</code> — mounts a VirtualNode tree into an EditorWindow VisualElement.</>} />
+          <ListItemText primary={<><code>Ruitk.EditorSupport.EditorRootRendererUtility</code> — mounts a VirtualNode tree into an EditorWindow VisualElement.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.EditorSupport.EditorRenderScheduler</code> — scheduler for batched updates in the editor.</>} />
+          <ListItemText primary={<><code>Ruitk.EditorSupport.EditorRenderScheduler</code> — scheduler for batched updates in the editor.</>} />
         </ListItem>
       </List>
     </Box>
@@ -169,10 +169,10 @@ export const UitkxAPIPage: FC = () => (
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Elements.ElementRegistry</code> — maps element names ("Button", "ListView") to concrete adapters used by the reconciler.</>} />
+          <ListItemText primary={<><code>Ruitk.Elements.ElementRegistry</code> — maps element names ("Button", "ListView") to concrete adapters used by the reconciler.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>ReactiveUITK.Elements.ElementRegistryProvider</code> — static helpers for obtaining the default registry.</>} />
+          <ListItemText primary={<><code>Ruitk.Elements.ElementRegistryProvider</code> — static helpers for obtaining the default registry.</>} />
         </ListItem>
       </List>
     </Box>

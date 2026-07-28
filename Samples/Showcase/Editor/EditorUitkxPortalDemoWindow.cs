@@ -1,13 +1,13 @@
 #if UNITY_EDITOR
-using ReactiveUITK.Core;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.PortalEventScopeDemoFunc;
+using Ruitk.Core;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.PortalEventScopeDemoFunc;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Components.PortalEventScopeDemoFunc.PortalEventScopeDemoFunc;
+using Ruitk.Samples.Components.PortalEventScopeDemoFunc.PortalEventScopeDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxPortalDemoWindow : EditorWindow
     {

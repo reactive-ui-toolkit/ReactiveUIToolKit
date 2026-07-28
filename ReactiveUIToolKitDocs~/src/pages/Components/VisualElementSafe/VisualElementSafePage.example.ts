@@ -4,12 +4,12 @@ export const VISUAL_ELEMENT_SAFE_SIGNATURE = `public static VirtualNode VisualEl
   params VirtualNode[] children
 );`
 
-export const VISUAL_ELEMENT_SAFE = `// Example namespace: ReactiveUITK.Samples.Components
+export const VISUAL_ELEMENT_SAFE = `// Example namespace: Ruitk.Samples.Components
 
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 using UnityEngine;
 

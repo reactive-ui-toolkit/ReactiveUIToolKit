@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.StressTest;
-using ReactiveUITK.Samples.Components.StressTest.StressTest;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.StressTest;
+using Ruitk.Samples.Components.StressTest.StressTest;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxStressTestDemoWindow : EditorWindow
     {

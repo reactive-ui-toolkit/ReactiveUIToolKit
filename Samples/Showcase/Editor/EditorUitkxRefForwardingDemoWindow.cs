@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.RefForwardingDemoFunc;
-using ReactiveUITK.Samples.Components.RefForwardingDemoFunc.RefForwardingDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.RefForwardingDemoFunc;
+using Ruitk.Samples.Components.RefForwardingDemoFunc.RefForwardingDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxRefForwardingDemoWindow : EditorWindow
     {

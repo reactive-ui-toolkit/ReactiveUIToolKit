@@ -226,7 +226,7 @@ export const HooksAPIPage: FC = () => (
     </Typography>
     <Typography variant="body1" paragraph>
       Complete reference of every hook exposed by{' '}
-      <code>ReactiveUITK.Hooks</code>. All hooks are called as lowercase
+      <code>Ruitk.Hooks</code>. All hooks are called as lowercase
       functions in <code>.uitkx</code> markup (e.g.,{' '}
       <code>{'useState<int>(0)'}</code>). In the C# runtime API they are
       static methods on the <code>Hooks</code> class.

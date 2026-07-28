@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ReactiveUITK.Core.Animation
+namespace Ruitk.Core.Animation
 {
     /// <summary>
     /// Panel-independent per-frame ticker for animations and tweens.
@@ -60,7 +60,7 @@ namespace ReactiveUITK.Core.Animation
 #if UNITY_EDITOR
             UnityEditor.EditorApplication.update += Pump;
 #else
-            s_runtimeUnsubscribe = ReactiveUITK.Core.Media.MediaHost.Instance.SubscribeTick(Pump);
+            s_runtimeUnsubscribe = Ruitk.Core.Media.MediaHost.Instance.SubscribeTick(Pump);
 #endif
         }
 

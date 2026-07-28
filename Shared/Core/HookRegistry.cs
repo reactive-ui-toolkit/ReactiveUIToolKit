@@ -5,7 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     /// <summary>
     /// Single source of truth for hook metadata across every tooling layer in
@@ -22,14 +22,14 @@ namespace ReactiveUITK.Core
     ///
     /// <list type="bullet">
     ///   <item>
-    ///     <b>Unity runtime</b> — compiled into <c>ReactiveUITK.Shared.dll</c>.
+    ///     <b>Unity runtime</b> — compiled into <c>Ruitk.Shared.dll</c>.
     ///     Wrapped in <c>#if UNITY_EDITOR</c> so the registry is stripped from
     ///     player builds (the Shared asmdef has no <c>defineConstraints</c> and
     ///     ships every <c>Shared/Core/</c> file into all players by default).
     ///   </item>
     ///   <item>
     ///     <b>Source generator</b> — linked into
-    ///     <c>ReactiveUITK.SourceGenerator.csproj</c> via <c>&lt;Compile Include
+    ///     <c>Ruitk.SourceGenerator.csproj</c> via <c>&lt;Compile Include
     ///     Link&gt;</c>.  That csproj defines <c>UNITY_EDITOR</c> at build time
     ///     so the registry compiles into the analyzer DLL.
     ///   </item>
@@ -37,7 +37,7 @@ namespace ReactiveUITK.Core
     ///     <b>IDE language library</b> — linked into
     ///     <c>ide-extensions~/language-lib/UitkxLanguage.csproj</c> the same
     ///     way; that csproj also defines <c>UNITY_EDITOR</c>.  The LSP server
-    ///     (<c>ReactiveUITK.LanguageServer</c>) consumes the registry via the
+    ///     (<c>Ruitk.LanguageServer</c>) consumes the registry via the
     ///     language-lib DLL reference, which is why the type is
     ///     <see langword="public"/> rather than <see langword="internal"/>.
     ///   </item>
@@ -434,7 +434,7 @@ namespace ReactiveUITK.Core
             "        private static void useEffect(\n" +
             "            global::System.Func<global::System.Action> effectFactory,\n" +
             "            params object[] deps) { }\n" +
-            "        private static global::ReactiveUITK.Core.Ref<T> useRef<T>(T initial = default) => new();\n" +
+            "        private static global::Ruitk.Core.Ref<T> useRef<T>(T initial = default) => new();\n" +
             "        private static global::UnityEngine.UIElements.VisualElement useRef() => null!;\n" +
             "        private static global::System.Func<T> useCallback<T>(\n" +
             "            global::System.Func<T> callback, params object[] deps) => callback!;\n" +
@@ -456,9 +456,9 @@ namespace ReactiveUITK.Core
             "        private static global::System.Func<T> useStableFunc<T>(global::System.Func<T> function) => function;\n" +
             "        private static global::System.Action<T> useStableAction<T>(global::System.Action<T> action) => action;\n" +
             "        private static global::System.Action useStableCallback(global::System.Action callback) => callback;\n" +
-            "        private static void useTweenFloat(float from, float to, float duration, global::ReactiveUITK.Core.Animation.Ease ease, float delay, global::System.Action<float> onUpdate, global::System.Action onComplete, params object[] deps) { }\n" +
-            "        private static void useAnimate(global::System.Collections.Generic.IReadOnlyList<global::ReactiveUITK.Core.Animation.AnimateTrack> tracks, bool autoplay = true, params object[] deps) { }\n" +
-            "        private static global::ReactiveUITK.Core.SafeAreaInsets useSafeArea(float tolerance = 0.5f) => default!;\n" +
+            "        private static void useTweenFloat(float from, float to, float duration, global::Ruitk.Core.Animation.Ease ease, float delay, global::System.Action<float> onUpdate, global::System.Action onComplete, params object[] deps) { }\n" +
+            "        private static void useAnimate(global::System.Collections.Generic.IReadOnlyList<global::Ruitk.Core.Animation.AnimateTrack> tracks, bool autoplay = true, params object[] deps) { }\n" +
+            "        private static global::Ruitk.Core.SafeAreaInsets useSafeArea(float tolerance = 0.5f) => default!;\n" +
             "        private static (bool isPending, global::System.Action<global::System.Action> startTransition) useTransition() => (false, _ => { });\n" +
             "        private static T Asset<T>(string path) where T : global::UnityEngine.Object => default!;\n" +
             "        private static T Ast<T>(string path) where T : global::UnityEngine.Object => default!;\n" +
@@ -477,7 +477,7 @@ namespace ReactiveUITK.Core
             "        private void useEffect(\n" +
             "            global::System.Func<global::System.Action> effectFactory,\n" +
             "            params object[] deps) { }\n" +
-            "        private global::ReactiveUITK.Core.Ref<T> useRef<T>(T initial = default) => new();\n" +
+            "        private global::Ruitk.Core.Ref<T> useRef<T>(T initial = default) => new();\n" +
             "        private global::UnityEngine.UIElements.VisualElement useRef() => null!;\n" +
             "        private global::System.Func<T> useCallback<T>(\n" +
             "            global::System.Func<T> callback, params object[] deps) => callback!;\n" +
@@ -499,9 +499,9 @@ namespace ReactiveUITK.Core
             "        private global::System.Func<T> useStableFunc<T>(global::System.Func<T> function) => function;\n" +
             "        private global::System.Action<T> useStableAction<T>(global::System.Action<T> action) => action;\n" +
             "        private global::System.Action useStableCallback(global::System.Action callback) => callback;\n" +
-            "        private void useTweenFloat(float from, float to, float duration, global::ReactiveUITK.Core.Animation.Ease ease, float delay, global::System.Action<float> onUpdate, global::System.Action onComplete, params object[] deps) { }\n" +
-            "        private void useAnimate(global::System.Collections.Generic.IReadOnlyList<global::ReactiveUITK.Core.Animation.AnimateTrack> tracks, bool autoplay = true, params object[] deps) { }\n" +
-            "        private global::ReactiveUITK.Core.SafeAreaInsets useSafeArea(float tolerance = 0.5f) => default!;\n" +
+            "        private void useTweenFloat(float from, float to, float duration, global::Ruitk.Core.Animation.Ease ease, float delay, global::System.Action<float> onUpdate, global::System.Action onComplete, params object[] deps) { }\n" +
+            "        private void useAnimate(global::System.Collections.Generic.IReadOnlyList<global::Ruitk.Core.Animation.AnimateTrack> tracks, bool autoplay = true, params object[] deps) { }\n" +
+            "        private global::Ruitk.Core.SafeAreaInsets useSafeArea(float tolerance = 0.5f) => default!;\n" +
             "        private (bool isPending, global::System.Action<global::System.Action> startTransition) useTransition() => (false, _ => { });\n" +
             "        private T Asset<T>(string path) where T : global::UnityEngine.Object => default!;\n" +
             "        private T Ast<T>(string path) where T : global::UnityEngine.Object => default!;\n" +

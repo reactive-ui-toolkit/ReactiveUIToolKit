@@ -1,12 +1,12 @@
 <#
-Build script for ReactiveUITK.SourceGenerator
+Build script for Ruitk.SourceGenerator
 
 Usage:
   .\scripts\build-generator.ps1           # Release build (default)
   .\scripts\build-generator.ps1 -Debug    # Debug build
 
 What this does:
-  1) Builds SourceGenerator~/ReactiveUITK.SourceGenerator.csproj.
+  1) Builds SourceGenerator~/Ruitk.SourceGenerator.csproj.
   2) The csproj builds to bin/; its PublishGeneratorToAnalyzers post-build target copies the DLLs into Assets/ReactiveUIToolKit/Analyzers/.
   3) Unity picks up the updated analyzer on refresh/recompile.
 #>
@@ -21,7 +21,7 @@ $scriptDir    = Split-Path -Parent $MyInvocation.MyCommand.Path
 $repoRoot     = Split-Path -Parent $scriptDir
 $generatorDir = Join-Path $repoRoot "SourceGenerator~"
 $analyzersDir = Join-Path $repoRoot "Analyzers"
-$csproj       = Join-Path $generatorDir "ReactiveUITK.SourceGenerator.csproj"
+$csproj       = Join-Path $generatorDir "Ruitk.SourceGenerator.csproj"
 
 if (-not (Test-Path $csproj)) {
     throw "Cannot find $csproj"
@@ -31,7 +31,7 @@ $configuration = if ($Debug) { "Debug" } else { "Release" }
 
 Write-Host ""
 Write-Host "===============================================================" -ForegroundColor Cyan
-Write-Host "  ReactiveUITK.SourceGenerator - building ($configuration)" -ForegroundColor Cyan
+Write-Host "  Ruitk.SourceGenerator - building ($configuration)" -ForegroundColor Cyan
 Write-Host "===============================================================" -ForegroundColor Cyan
 Write-Host "  Project  : $csproj"
 Write-Host "  Output   : $analyzersDir"
@@ -51,7 +51,7 @@ finally {
     Pop-Location
 }
 
-$dll = Join-Path $analyzersDir "ReactiveUITK.SourceGenerator.dll"
+$dll = Join-Path $analyzersDir "Ruitk.SourceGenerator.dll"
 if (Test-Path $dll) {
     $size = (Get-Item $dll).Length
     Write-Host ""

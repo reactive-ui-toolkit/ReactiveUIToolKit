@@ -1,9 +1,9 @@
 {
-  "name": "ReactiveUITK.Editor",
+  "name": "Ruitk.CICD.Editor",
   "references": [
-    "ReactiveUITK.Shared",
-    "ReactiveUITK.Runtime",
-    "ReactiveUITK.Ugui"
+    "Ruitk.Editor",
+    "Ruitk.Shared",
+    "Ruitk.Runtime"
   ],
   "includePlatforms": ["Editor"],
   "excludePlatforms": [],
@@ -15,3 +15,4 @@
   "versionDefines": [],
   "noEngineReferences": false
 }
+

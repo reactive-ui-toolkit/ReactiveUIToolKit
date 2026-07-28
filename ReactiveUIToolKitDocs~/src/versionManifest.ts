@@ -148,7 +148,7 @@ export const STYLE_PROPERTY_DETAILS: Record<string, StylePropertyDetail> = {
       'Sets the preferred aspect ratio (width\u00A0/\u00A0height) for the element. ' +
       'The layout engine uses this when one dimension is auto.',
     example: [
-      'using static ReactiveUITK.Props.Typed.CssHelpers;',
+      'using static Ruitk.Props.Typed.CssHelpers;',
       '',
       'new Style {',
       '    AspectRatio = Ratio(16f / 9f),',
@@ -163,7 +163,7 @@ export const STYLE_PROPERTY_DETAILS: Record<string, StylePropertyDetail> = {
       'Applies one or more graphical filter effects to the element\u2019s rendering. ' +
       'Multiple filters can be chained in a single list.',
     example: [
-      'using static ReactiveUITK.Props.Typed.CssHelpers;',
+      'using static Ruitk.Props.Typed.CssHelpers;',
       '',
       'new Style {',
       '    Filter = new StyleList<FilterFunction>(',
@@ -183,7 +183,7 @@ export const STYLE_PROPERTY_DETAILS: Record<string, StylePropertyDetail> = {
       'Assigns a Unity Material (Shader Graph or built-in) for custom rendering of the element. ' +
       'Useful for shader-driven UI effects.',
     example: [
-      'using static ReactiveUITK.Props.Typed.CssHelpers;',
+      'using static Ruitk.Props.Typed.CssHelpers;',
       '',
       'new Style {',
       '    UnityMaterial = MaterialDef(myMaterial),',

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>
     /// Canonical Unity asset-path resolution rule, shared by every consumer that turns a
@@ -20,7 +20,7 @@ namespace ReactiveUITK.Language
     /// could miss a file entirely (see FINAL_AUDIT_UITKX_FINDINGS.md, finding H-03).
     ///
     /// <c>Editor/HMR</c> cannot reference this type directly (its asmdef only references
-    /// <c>ReactiveUITK.Shared</c>/<c>ReactiveUITK.Runtime</c> — the language-lib is consumed via
+    /// <c>Ruitk.Shared</c>/<c>Ruitk.Runtime</c> — the language-lib is consumed via
     /// reflection against the committed analyzer DLL, never a normal assembly reference). Its
     /// HMR-side mirror must be kept byte-for-byte identical to this algorithm; see
     /// <c>UitkxHmrController.HmrAssetPathUtil</c>.

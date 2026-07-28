@@ -6,10 +6,10 @@ using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Document;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
 using OmniSharp.Extensions.LanguageServer.Protocol.Server;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.IntelliSense;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.IntelliSense;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 using System.Text.RegularExpressions;
 using UitkxLanguageServer.Roslyn;
 
@@ -92,7 +92,7 @@ public sealed class CompletionHandler : ICompletionHandler
         // Parse the document with the language-lib AST pipeline so completions
         // are derived from the real syntax tree instead of text scanning.
 
-        var parseDiags = new List<ReactiveUITK.Language.ParseDiagnostic>();
+        var parseDiags = new List<Ruitk.Language.ParseDiagnostic>();
         var directives = DirectiveParser.Parse(text, localPath, parseDiags);
         var nodes = UitkxParser.Parse(text, localPath, directives, parseDiags);
         var parseResult = new ParseResult(
@@ -333,7 +333,7 @@ public sealed class CompletionHandler : ICompletionHandler
                 label: "import \"@\"",
                 insert: "import \"@${1:Some.Namespace}\"",
                 detail: "Namespace import — the unified spelling of @using.",
-                doc: "Imports a C# namespace using the unified import syntax, e.g. `import \"@ReactiveUITK.Router\"`.\n\nEquivalent to `@using ReactiveUITK.Router`. Braces + `from` (`import { X } from \"./file\"`) import a peer `.uitkx` file; a quoted `\"@Namespace\"` imports a C# namespace."
+                doc: "Imports a C# namespace using the unified import syntax, e.g. `import \"@Ruitk.Router\"`.\n\nEquivalent to `@using Ruitk.Router`. Braces + `from` (`import { X } from \"./file\"`) import a peer `.uitkx` file; a quoted `\"@Namespace\"` imports a C# namespace."
             ),
             (
                 label: "@uss",
@@ -1636,7 +1636,7 @@ public sealed class CompletionHandler : ICompletionHandler
         string? target = ImportResolver.MapSpecifierToPath(importerDir, spec.Groups[1].Value, rootDir, out _);
         if (target is null || !File.Exists(target)) return empty;
 
-        var diags = new List<ReactiveUITK.Language.ParseDiagnostic>();
+        var diags = new List<Ruitk.Language.ParseDiagnostic>();
         var ds = DirectiveParser.Parse(File.ReadAllText(target), target, diags);
 
         // Each listed entry may be aliased (`a as b`): the imported NAME is what must not be

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     public enum VirtualNodeType
     {

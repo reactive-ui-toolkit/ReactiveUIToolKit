@@ -8,7 +8,7 @@
 
 ```powershell
 cd "ide-extensions~\vscode"
-node_modules\.bin\vsce login ReactiveUITK
+node_modules\.bin\vsce login Ruitk
 # paste PAT when prompted
 ```
 
@@ -63,7 +63,7 @@ re-uploading the same version number. Then run the full rebuild + publish steps 
 
 ## Publisher details
 
-- **Publisher ID:** `ReactiveUITK`
-- **Extension ID:** `ReactiveUITK.uitkx`
-- **Marketplace URL:** https://marketplace.visualstudio.com/items?itemName=ReactiveUITK.uitkx
-- **Manage URL:** https://marketplace.visualstudio.com/manage/publishers/ReactiveUITK
+- **Publisher ID:** `Ruitk`
+- **Extension ID:** `Ruitk.uitkx`
+- **Marketplace URL:** https://marketplace.visualstudio.com/items?itemName=Ruitk.uitkx
+- **Manage URL:** https://marketplace.visualstudio.com/manage/publishers/Ruitk

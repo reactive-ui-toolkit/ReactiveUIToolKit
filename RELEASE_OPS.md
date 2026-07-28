@@ -165,7 +165,7 @@ Before publishing:
 After publishing:
 
 - [ ] VS Code Marketplace listing shows new version
-- [ ] `ext install ReactiveUITK.uitkx` installs successfully
+- [ ] `ext install Ruitk.uitkx` installs successfully
 - [ ] Open VSX listing shows new version (if published)
 - [ ] Visual Studio Marketplace listing shows new version (check manually)
 - [ ] Unity Asset Store package is submitted (review pending)

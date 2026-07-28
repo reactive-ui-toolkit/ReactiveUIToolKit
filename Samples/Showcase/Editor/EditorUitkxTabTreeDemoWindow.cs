@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.TabTreeDemoFunc;
-using ReactiveUITK.Samples.Components.TabTreeDemoFunc.TabTreeDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.TabTreeDemoFunc;
+using Ruitk.Samples.Components.TabTreeDemoFunc.TabTreeDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxTabTreeDemoWindow : EditorWindow
     {

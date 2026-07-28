@@ -1,13 +1,13 @@
-@namespace ReactiveUITK.Samples.UITKXComponents
+@namespace Ruitk.Samples.UITKXComponents
 import { IntroCounterFunc } from "../../Shared/IntroCounterFunc"
 import { UitkxTestSubFileDoNotTouch } from "./UitkxTestSubFileDoNotTouch"
 @using System
 @using System.Collections.Generic
 @using UnityEngine
 @using UnityEngine.UIElements
-@using ReactiveUITK.Signals
-@using ReactiveUITK.Router
-@using ReactiveUITK.Samples.UITKXShared
+@using Ruitk.Signals
+@using Ruitk.Router
+@using Ruitk.Samples.UITKXShared
 
 export component UitkxTestFileDoNotTouch(
   IReadOnlyList<ListViewRowState>? items = null,

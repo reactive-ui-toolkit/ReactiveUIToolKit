@@ -5,9 +5,9 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.SourceGenerator.Emitter
+namespace Ruitk.SourceGenerator.Emitter
 {
     /// <summary>
     /// Emits C# source for <c>hook</c> declarations parsed from .uitkx files.
@@ -47,15 +47,15 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using System.Collections.Concurrent;");
             sb.AppendLine("using System.Linq;");
-            sb.AppendLine("using ReactiveUITK;");
-            sb.AppendLine("using ReactiveUITK.Core;");
-            sb.AppendLine("using ReactiveUITK.Core.Animation;");
-            sb.AppendLine("using ReactiveUITK.Router;");
-            sb.AppendLine("using ReactiveUITK.Props.Typed;");
+            sb.AppendLine("using Ruitk;");
+            sb.AppendLine("using Ruitk.Core;");
+            sb.AppendLine("using Ruitk.Core.Animation;");
+            sb.AppendLine("using Ruitk.Router;");
+            sb.AppendLine("using Ruitk.Props.Typed;");
             sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.StyleKeys;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.CssHelpers;");
-            sb.AppendLine("using static ReactiveUITK.AssetHelpers;");
+            sb.AppendLine("using static Ruitk.Props.Typed.StyleKeys;");
+            sb.AppendLine("using static Ruitk.Props.Typed.CssHelpers;");
+            sb.AppendLine("using static Ruitk.AssetHelpers;");
             sb.AppendLine("using UColor = UnityEngine.Color;");
             foreach (var u in directives.Usings)
                 sb.AppendLine($"using {u};");
@@ -85,14 +85,14 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             // ── Namespace ────────────────────────────────────────────────────
             string ns = !string.IsNullOrEmpty(directives.Namespace)
                 ? directives.Namespace!
-                : "ReactiveUITK.Generated";
+                : "Ruitk.Generated";
 
             sb.AppendLine($"namespace {ns}");
             sb.AppendLine("{");
 
             // Derive container class name from filename
             string containerClass = DeriveContainerClassName(filePath);
-            sb.AppendLine($"    [global::ReactiveUITK.UitkxSource(@\"{filePath.Replace("\"", "\"\"")}\")]");
+            sb.AppendLine($"    [global::Ruitk.UitkxSource(@\"{filePath.Replace("\"", "\"\"")}\")]");
             sb.AppendLine($"    public static partial class {containerClass}");
             sb.AppendLine("    {");
 
@@ -173,7 +173,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 string keysLit = EmitContext.RenderCustomHookFamilyKeysLiteral(
                     QualifyKeys(hookCustomKeys, hookKeyMap));
                 sb.AppendLine(
-                    $"            global::ReactiveUITK.Refresh.RefreshRuntime.RegisterHook(" +
+                    $"            global::Ruitk.Refresh.RefreshRuntime.RegisterHook(" +
                     $"\"{EscapeStringLiteral(familyKey)}\", " +
                     $"\"{EscapeStringLiteral(sig)}\", " +
                     $"{keysLit});");
@@ -229,11 +229,11 @@ namespace ReactiveUITK.SourceGenerator.Emitter
 
                 // Trampoline
                 if (!string.IsNullOrEmpty(hookSig))
-                    sb.AppendLine($"        [global::ReactiveUITK.HookSignature(\"{hookSig}\")]");
+                    sb.AppendLine($"        [global::Ruitk.HookSignature(\"{hookSig}\")]");
                 sb.AppendLine($"        {access} static {returnType} {hook.Name}{genericSuffix}({paramList})");
                 sb.AppendLine("        {");
                 sb.AppendLine("#if UNITY_EDITOR");
-                sb.AppendLine($"            if (global::ReactiveUITK.Core.HmrState.IsActive && {hmrFieldName} != null)");
+                sb.AppendLine($"            if (global::Ruitk.Core.HmrState.IsActive && {hmrFieldName} != null)");
                 sb.AppendLine("            {");
 
                 // Build Func/Action type for the delegate
@@ -269,11 +269,11 @@ namespace ReactiveUITK.SourceGenerator.Emitter
 
                 // Trampoline
                 if (!string.IsNullOrEmpty(hookSig))
-                    sb.AppendLine($"        [global::ReactiveUITK.HookSignature(\"{hookSig}\")]");
+                    sb.AppendLine($"        [global::Ruitk.HookSignature(\"{hookSig}\")]");
                 sb.AppendLine($"        {access} static {returnType} {hook.Name}({paramList})");
                 sb.AppendLine("        {");
                 sb.AppendLine("#if UNITY_EDITOR");
-                sb.AppendLine($"            if (global::ReactiveUITK.Core.HmrState.IsActive)");
+                sb.AppendLine($"            if (global::Ruitk.Core.HmrState.IsActive)");
                 if (isVoid)
                 {
                     sb.AppendLine($"            {{ {hmrFieldName}({paramNames}); return; }}");

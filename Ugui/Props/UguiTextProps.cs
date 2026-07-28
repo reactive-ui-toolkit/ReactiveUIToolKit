@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     public sealed class UguiTextProps : UguiGraphicProps
     {

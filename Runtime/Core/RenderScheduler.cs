@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine;
 
-namespace ReactiveUITK
+namespace Ruitk
 {
     public sealed class RenderScheduler : MonoBehaviour, IScheduler
     {

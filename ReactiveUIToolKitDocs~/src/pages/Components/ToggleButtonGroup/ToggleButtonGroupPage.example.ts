@@ -1,11 +1,11 @@
-export const TOGGLE_BUTTON_GROUP_BASIC = `// Example namespace: ReactiveUITK.Samples.Components
+export const TOGGLE_BUTTON_GROUP_BASIC = `// Example namespace: Ruitk.Samples.Components
 
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 using UnityEngine;
-using static ReactiveUITK.Props.Typed.StyleKeys;
+using static Ruitk.Props.Typed.StyleKeys;
 
 public static class ToggleButtonGroupExamples
 {

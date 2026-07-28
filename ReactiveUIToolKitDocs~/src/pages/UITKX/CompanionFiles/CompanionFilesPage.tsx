@@ -80,7 +80,7 @@ export const CompanionFilesPage: FC = () => (
             <>
               <strong>Namespace</strong> — <strong>file-keyed</strong> by default: derived from
               the file&rsquo;s folders relative to its owning <code>.asmdef</code> <em>plus its
-              file stem</em> (e.g. <code>ReactiveUITK.Uitkx.UI.PlayerCard.PlayerCard</code>), so
+              file stem</em> (e.g. <code>Ruitk.Uitkx.UI.PlayerCard.PlayerCard</code>), so
               every file gets its own namespace. The optional <code>@namespace</code> directive
               overrides it — useful interop escape hatch when a hand-written partial{' '}
               <code>.cs</code> must share the generated class&rsquo;s namespace. See{' '}

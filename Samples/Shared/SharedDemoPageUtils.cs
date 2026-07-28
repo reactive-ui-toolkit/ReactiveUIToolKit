@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 
-namespace ReactiveUITK.Samples.UITKXShared
+namespace Ruitk.Samples.UITKXShared
 {
     public static class SharedDemoPageUtils
     {

@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.HookStateQueueDemoFunc;
-using ReactiveUITK.Samples.Components.HookStateQueueDemoFunc.HookStateQueueDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.HookStateQueueDemoFunc;
+using Ruitk.Samples.Components.HookStateQueueDemoFunc.HookStateQueueDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxHookQueueDemoWindow : EditorWindow
     {

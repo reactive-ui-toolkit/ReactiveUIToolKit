@@ -4,7 +4,7 @@ using System.IO;
 using System.Text.Json;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// TD-009 family-corpus drift gate (leg 3). The scanner corpus

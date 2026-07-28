@@ -2,11 +2,11 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.ShowcaseDemoPage;
-using ReactiveUITK.Samples.Components.ShowcaseDemoPage.ShowcaseDemoPage;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.ShowcaseDemoPage;
+using Ruitk.Samples.Components.ShowcaseDemoPage.ShowcaseDemoPage;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxShowcaseAllDemoWindow : EditorWindow
     {
@@ -14,7 +14,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
         public static void ShowWindow()
         {
             EditorUitkxShowcaseAllDemoWindow window = GetWindow<EditorUitkxShowcaseAllDemoWindow>(
-                "ReactiveUITK UITKX Showcase Demo"
+                "Ruitk UITKX Showcase Demo"
             );
             window.minSize = new Vector2(420, 320);
             window.Show();

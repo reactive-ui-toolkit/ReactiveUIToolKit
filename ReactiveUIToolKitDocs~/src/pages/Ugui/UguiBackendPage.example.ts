@@ -1,6 +1,6 @@
-export const UGUI_CSHARP_COUNTER = `using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Ugui;
+export const UGUI_CSHARP_COUNTER = `using Ruitk;
+using Ruitk.Core;
+using Ruitk.Ugui;
 using UnityEngine;
 
 // Attach to a GameObject with a UguiRootRenderer, under a Canvas.
@@ -78,7 +78,7 @@ export VirtualNode Hud(GameObject healthBarPrefab, float health) {
   );
 }`
 
-export const UGUI_PREFAB_BINDING = `using ReactiveUITK.Ugui;
+export const UGUI_PREFAB_BINDING = `using Ruitk.Ugui;
 using UnityEngine;
 
 // Lives on the prefab root. Receives the bind={...} value on mount and

@@ -1,10 +1,10 @@
-export const ANIMATE_BASIC = `// Example namespace: ReactiveUITK.Samples.Components
+export const ANIMATE_BASIC = `// Example namespace: Ruitk.Samples.Components
 
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Animation;
-using ReactiveUITK.Props.Typed;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Core.Animation;
+using Ruitk.Props.Typed;
 using UnityEngine;
 using UnityEngine.UIElements;
 

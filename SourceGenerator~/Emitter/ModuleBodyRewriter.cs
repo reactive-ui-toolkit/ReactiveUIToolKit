@@ -56,7 +56,7 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 #nullable disable
 
-namespace ReactiveUITK.SourceGenerator.Emitter
+namespace Ruitk.SourceGenerator.Emitter
 {
     internal readonly struct RewriteResult
     {
@@ -448,7 +448,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             sb.AppendLine("#if UNITY_EDITOR");
             if (isGeneric)
             {
-                sb.Append("            if (global::ReactiveUITK.Core.HmrState.IsActive && ")
+                sb.Append("            if (global::Ruitk.Core.HmrState.IsActive && ")
                     .Append(hmrFieldName)
                     .AppendLine(" != null)");
                 sb.AppendLine("            {");
@@ -490,7 +490,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             }
             else
             {
-                sb.AppendLine("            if (global::ReactiveUITK.Core.HmrState.IsActive)");
+                sb.AppendLine("            if (global::Ruitk.Core.HmrState.IsActive)");
                 if (isVoid)
                 {
                     sb.Append("            { ")

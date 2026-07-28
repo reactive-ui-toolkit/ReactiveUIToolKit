@@ -206,7 +206,7 @@ export const CustomRenderingPage: FC = () => (
       <Alert severity="info" sx={{ mb: 2 }}>
         The shipped sample <code>CustomDrawDemoFunc</code> demonstrates all three
         techniques. Open it from the Unity menu under{' '}
-        <strong>ReactiveUITK &rarr; Demos &rarr; Custom Drawing</strong>.
+        <strong>Ruitk &rarr; Demos &rarr; Custom Drawing</strong>.
       </Alert>
     </Box>
   </Box>

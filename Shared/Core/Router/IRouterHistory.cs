@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK.Router
+namespace Ruitk.Router
 {
     public interface IRouterHistory
     {

@@ -1,5 +1,5 @@
 import { IntroCounterFunc } from "./IntroCounterFunc"
-import "@ReactiveUITK.Samples.UITKXShared"
+import "@Ruitk.Samples.UITKXShared"
 
 export VirtualNode MultiColumnListViewStatefulDemoFunc(IReadOnlyList<MultiColumnListViewRowState>? items = null, List<SortedColumnDef>? sortDefs = null, Dictionary<string, float>? columnWidths = null, Dictionary<string, bool>? columnVisibility = null, Dictionary<string, int>? columnDisplayIndex = null, Action? addItem = null, Action? setTopItem = null, Action? deleteLast = null, ColumnSortEventHandler? onSortChanged = null, ColumnLayoutEventHandler? onLayoutChanged = null, Action<int>? onCountChanged = null) {
   var safeItems = items ?? Array.Empty<MultiColumnListViewRowState>();
@@ -74,7 +74,7 @@ export VirtualNode MultiColumnListViewStatefulDemoFunc(IReadOnlyList<MultiColumn
       }
     }
 
-    return ReactiveUITK.Shared.Util.SortUtils.MultiSort(
+    return Ruitk.Shared.Util.SortUtils.MultiSort(
     defsTree,
     safeItems,
     (row, col) =>

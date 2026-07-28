@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Router
+namespace Ruitk.Router
 {
     /// <summary>
     /// Canonical map of short markup tag names to their implementing C# class

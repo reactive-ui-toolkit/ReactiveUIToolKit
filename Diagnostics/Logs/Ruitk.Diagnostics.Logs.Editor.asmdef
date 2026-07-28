@@ -1,9 +1,10 @@
 {
-  "name": "ReactiveUITK.Runtime",
+  "name": "Ruitk.Diagnostics.Logs.Editor",
   "references": [
-    "ReactiveUITK.Shared"
+    "Ruitk.Editor",
+    "Ruitk.Shared"
   ],
-  "includePlatforms": [],
+  "includePlatforms": ["Editor"],
   "excludePlatforms": [],
   "allowUnsafeCode": false,
   "overrideReferences": false,
@@ -13,3 +14,4 @@
   "versionDefines": [],
   "noEngineReferences": false
 }
+

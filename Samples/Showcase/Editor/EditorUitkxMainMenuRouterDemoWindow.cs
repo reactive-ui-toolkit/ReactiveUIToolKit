@@ -2,12 +2,12 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.MainMenuRouterDemoFunc;
-using ReactiveUITK.Samples.Components.SnakeGame.components.Menu;
-using ReactiveUITK.Samples.Components.MainMenuRouterDemoFunc.MainMenuRouterDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.MainMenuRouterDemoFunc;
+using Ruitk.Samples.Components.SnakeGame.components.Menu;
+using Ruitk.Samples.Components.MainMenuRouterDemoFunc.MainMenuRouterDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxMainMenuRouterDemoWindow : EditorWindow
     {

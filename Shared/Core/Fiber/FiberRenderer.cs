@@ -1,9 +1,9 @@
-using ReactiveUITK.Core;
-using ReactiveUITK.Elements;
+using Ruitk.Core;
+using Ruitk.Elements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// Simple renderer using Fiber reconciler

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Video;
 
-namespace ReactiveUITK.Core.Media
+namespace Ruitk.Core.Media
 {
     /// <summary>
     /// Hidden, lazy, <c>DontDestroyOnLoad</c> <see cref="GameObject"/> that owns
@@ -65,7 +65,7 @@ namespace ReactiveUITK.Core.Media
             {
                 if (_hostGo == null)
                 {
-                    _hostGo = new GameObject("__ReactiveUITK_MediaHost")
+                    _hostGo = new GameObject("__Ruitk_MediaHost")
                     {
                         hideFlags = HideFlags.HideAndDontSave,
                     };
@@ -98,7 +98,7 @@ namespace ReactiveUITK.Core.Media
             }
             else
             {
-                var go = new GameObject("__ReactiveUITK_VideoPeer")
+                var go = new GameObject("__Ruitk_VideoPeer")
                 {
                     hideFlags = HideFlags.HideAndDontSave,
                 };
@@ -176,7 +176,7 @@ namespace ReactiveUITK.Core.Media
             }
             else
             {
-                var go = new GameObject("__ReactiveUITK_AudioPeer")
+                var go = new GameObject("__Ruitk_AudioPeer")
                 {
                     hideFlags = HideFlags.HideAndDontSave,
                 };
@@ -237,7 +237,7 @@ namespace ReactiveUITK.Core.Media
             {
                 if (_sfxSource == null)
                 {
-                    var go = new GameObject("__ReactiveUITK_Sfx")
+                    var go = new GameObject("__Ruitk_Sfx")
                     {
                         hideFlags = HideFlags.HideAndDontSave,
                     };
@@ -320,7 +320,7 @@ namespace ReactiveUITK.Core.Media
 
             var fresh = new RenderTexture(w, h, depth, format)
             {
-                name = $"__ReactiveUITK_RT_{w}x{h}",
+                name = $"__Ruitk_RT_{w}x{h}",
                 hideFlags = HideFlags.HideAndDontSave,
                 filterMode = FilterMode.Bilinear,
                 wrapMode = TextureWrapMode.Clamp,

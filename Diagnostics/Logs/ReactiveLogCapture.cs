@@ -4,7 +4,7 @@ using System.IO;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.EditorDiagnostics
+namespace Ruitk.EditorDiagnostics
 {
     [InitializeOnLoad]
     public static class ReactiveLogCapture
@@ -47,7 +47,7 @@ namespace ReactiveUITK.EditorDiagnostics
             string folder = EnsureFolder();
             string ts = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             logFilePath = Path.Combine(folder, $"reactive_log_{ts}.txt");
-            TryAppend($"==== ReactiveUITK log started {DateTime.Now:O} ===={Environment.NewLine}");
+            TryAppend($"==== Ruitk log started {DateTime.Now:O} ===={Environment.NewLine}");
             Application.logMessageReceived += OnLog;
             Application.logMessageReceivedThreaded += OnLogThreaded;
             capturing = true;
@@ -63,7 +63,7 @@ namespace ReactiveUITK.EditorDiagnostics
             Application.logMessageReceived -= OnLog;
             Application.logMessageReceivedThreaded -= OnLogThreaded;
             capturing = false;
-            TryAppend($"==== ReactiveUITK log stopped {DateTime.Now:O} ===={Environment.NewLine}");
+            TryAppend($"==== Ruitk log stopped {DateTime.Now:O} ===={Environment.NewLine}");
             Debug.Log("ReactiveLogCapture: stopped → " + logFilePath);
         }
 

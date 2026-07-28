@@ -120,7 +120,7 @@ export const UitkxDebuggingPage: FC = () => (
       <li>
         <strong>Ensure format-on-save is using the UITKX formatter</strong> —
         check that <code>editor.defaultFormatter</code> is set to{' '}
-        <code>"ReactiveUITK.uitkx"</code> for <code>[uitkx]</code> files.
+        <code>"Ruitk.uitkx"</code> for <code>[uitkx]</code> files.
       </li>
       <li>
         <strong>Try formatting manually</strong> — press Shift+Alt+F to rule out

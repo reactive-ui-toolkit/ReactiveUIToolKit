@@ -8,7 +8,7 @@ using System.Reflection;
 using System.Text.RegularExpressions;
 using UnityEngine;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     // ─────────────────────────────────────────────────────────────────────────
     //  NewCsFileDiscovery — Rank 2 of the TECH_DEBT_20_21_22 plan

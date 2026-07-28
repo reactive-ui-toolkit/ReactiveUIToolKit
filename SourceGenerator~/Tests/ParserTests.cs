@@ -2,12 +2,12 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Direct unit tests for <see cref="DirectiveParser"/> and <see cref="UitkxParser"/>.
@@ -62,7 +62,7 @@ public class ParserTests
         Assert.DoesNotContain(diags, d => d.Severity == ParseSeverity.Error);
         Assert.True(set.IsFunctionStyle);
         Assert.Equal("CounterPanel", set.ComponentName);
-        Assert.Equal("ReactiveUITK.FunctionStyle", set.Namespace);
+        Assert.Equal("Ruitk.FunctionStyle", set.Namespace);
         Assert.True(set.MarkupStartIndex > 0);
         Assert.True(set.MarkupEndIndex > set.MarkupStartIndex);
         Assert.Contains("useState", set.FunctionSetupCode ?? string.Empty);
@@ -433,7 +433,7 @@ public class ParserTests
             Assert.True(set.IsFunctionStyle);
             Assert.Equal("CounterPanel", set.ComponentName);
             // The companion's MyGame.Sample.UI is IGNORED — default, not .cs-derived.
-            Assert.Equal("ReactiveUITK.FunctionStyle", set.Namespace);
+            Assert.Equal("Ruitk.FunctionStyle", set.Namespace);
         }
         finally
         {
@@ -459,7 +459,7 @@ public class ParserTests
 
         Assert.True(set.IsFunctionStyle);
         Assert.Equal("CounterPanel", set.ComponentName);
-        Assert.Equal("ReactiveUITK.FunctionStyle", set.Namespace);
+        Assert.Equal("Ruitk.FunctionStyle", set.Namespace);
         Assert.DoesNotContain(diags, d => d.Code == "UITKX0005");
     }
 

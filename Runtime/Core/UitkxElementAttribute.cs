@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK
+namespace Ruitk
 {
     /// <summary>
     /// Marks a partial class as a UITKX-managed component whose <c>Render()</c>
@@ -8,7 +8,7 @@ namespace ReactiveUITK
     ///
     /// The source generator emits this attribute automatically on every generated
     /// partial class so that runtime tooling and reflection-based helpers
-    /// (e.g. <see cref="ReactiveUITK.Props.PropsHelper"/>) can discover UITKX
+    /// (e.g. <see cref="Ruitk.Props.PropsHelper"/>) can discover UITKX
     /// components without scanning assembly names.
     /// </summary>
     /// <example>

@@ -4,7 +4,7 @@
 // Returns true if the ray (origin, dir, |dir|=1) intersects segment (a,b).
 // Out: t (ray distance, ≥ 0), u (along segment 0..1), backside (true if ray
 // hits the segment from the right of V1→V2 direction).
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTypes"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTypes"
 
 export bool RaySegment(Vector2 origin, Vector2 dir, Vector2 a, Vector2 b,
 out float t, out float u, out bool backside) {

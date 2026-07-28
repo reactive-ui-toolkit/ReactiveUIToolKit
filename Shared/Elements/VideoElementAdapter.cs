@@ -1,12 +1,12 @@
 using System;
-using ReactiveUITK.Core.Media;
-using ReactiveUITK.Props;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core.Media;
+using Ruitk.Props;
+using Ruitk.Props.Typed;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEngine.Video;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     /// <summary>
     /// Custom <see cref="VisualElement"/> subclass that hosts the
@@ -170,7 +170,7 @@ namespace ReactiveUITK.Elements
         private void OnDetach(DetachFromPanelEvent _)
         {
             _cancelPendingTeardown?.Invoke();
-            _cancelPendingTeardown = ReactiveUITK.Core.MainThreadTimer.OneFrameLater(() =>
+            _cancelPendingTeardown = Ruitk.Core.MainThreadTimer.OneFrameLater(() =>
             {
                 _cancelPendingTeardown = null;
                 if (panel != null)

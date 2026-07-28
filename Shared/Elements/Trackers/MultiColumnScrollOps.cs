@@ -1,6 +1,6 @@
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     internal sealed class MultiColumnScrollOps<TView> : IScrollOps<TView>
         where TView : VisualElement

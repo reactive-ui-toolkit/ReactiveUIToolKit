@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Every element registered in <c>ElementRegistryProvider</c> must have an entry in

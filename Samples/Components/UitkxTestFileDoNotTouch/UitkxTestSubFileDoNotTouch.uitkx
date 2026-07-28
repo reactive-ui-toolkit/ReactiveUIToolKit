@@ -1,4 +1,4 @@
-@namespace ReactiveUITK.Samples.UITKXComponents
+@namespace Ruitk.Samples.UITKXComponents
 @using UnityEngine
 
 export component UitkxTestSubFileDoNotTouch(string message = "Footer") {

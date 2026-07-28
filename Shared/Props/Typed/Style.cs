@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Numerics;
 using UnityEngine;
 using UnityEngine.UIElements;
-using SStack = System.Collections.Generic.Stack<ReactiveUITK.Props.Typed.Style>;
+using SStack = System.Collections.Generic.Stack<Ruitk.Props.Typed.Style>;
 
-namespace ReactiveUITK.Props.Typed
+namespace Ruitk.Props.Typed
 {
     /// <summary>
     /// Typed style container with bitmask tracking. No dictionary, no boxing.

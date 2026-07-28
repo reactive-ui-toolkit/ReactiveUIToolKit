@@ -1,10 +1,10 @@
-export const BUTTON_BASIC = `// Example namespace: ReactiveUITK.Samples.Components
+export const BUTTON_BASIC = `// Example namespace: Ruitk.Samples.Components
 
 using System;
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 using UnityEngine;
 
 public static class ButtonExamples

@@ -1,7 +1,7 @@
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Plan §9 — <c>~/</c> (root alias) in asset references resolves against the UI source root

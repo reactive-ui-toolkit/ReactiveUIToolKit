@@ -28,9 +28,9 @@
     "ReactiveUIToolKitDocs~/**",
     "Analyzers/publish",
     "_docs_branch",
-    "Analyzers/ReactiveUITK.Language.pdb",
-    "Analyzers/ReactiveUITK.SourceGenerator.pdb",
-    "Analyzers/ReactiveUITK.SourceGenerator.deps.json",
+    "Analyzers/Ruitk.Language.pdb",
+    "Analyzers/Ruitk.SourceGenerator.pdb",
+    "Analyzers/Ruitk.SourceGenerator.deps.json",
     "publisher-secrets.json",
     "publisher-secrets.json.meta"
   ],

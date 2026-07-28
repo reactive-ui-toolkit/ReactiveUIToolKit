@@ -1,7 +1,7 @@
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Torture tests for the canonical lexer facts (<see cref="CSharpLexFacts"/>) that replaced

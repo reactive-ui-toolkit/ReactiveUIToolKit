@@ -2,10 +2,10 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.SnakeGame.components.Menu;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.SnakeGame.components.Menu;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxDiabloMenuDemoWindow : EditorWindow
     {

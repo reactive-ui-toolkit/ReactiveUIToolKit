@@ -52,7 +52,7 @@ export const UitkxImportsPage: FC = () => (
     <Typography variant="body1" paragraph>
       Cross-file references in <code>.uitkx</code> are <strong>explicit</strong>. A file
       declares what it exposes with <code>export</code> and pulls in what it needs with{' '}
-      <code>import</code> — ESM-style, the same grammar shared across the ReactiveUI family
+      <code>import</code> — ESM-style, the same grammar shared across the Reactive UI Toolkit family
       (Unity <code>.uitkx</code>, Unreal <code>.uetkx</code>, Godot <code>.guitkx</code>).
     </Typography>
 

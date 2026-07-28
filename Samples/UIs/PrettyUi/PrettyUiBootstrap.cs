@@ -1,11 +1,11 @@
-using ReactiveUITK.Samples.UIs.PrettyUi.UI;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Samples.UIs.PrettyUi.UI;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.UIs.PrettyUi.UI.AppRoot;
+using Ruitk.Samples.UIs.PrettyUi.UI.AppRoot;
 
-namespace ReactiveUITK.Samples.UIs.PrettyUi
+namespace Ruitk.Samples.UIs.PrettyUi
 {
     /// <summary>
     /// Mounts the <see cref="AppRoot"/> tree from <c>Samples/UIs/PrettyUi/UI</c>.

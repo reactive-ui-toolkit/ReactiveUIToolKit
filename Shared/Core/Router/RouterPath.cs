@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ReactiveUITK.Router
+namespace Ruitk.Router
 {
     public static class RouterPath
     {

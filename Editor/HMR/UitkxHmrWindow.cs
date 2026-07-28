@@ -1,7 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     /// <summary>
     /// Editor window for UITKX Hot Module Replacement.
