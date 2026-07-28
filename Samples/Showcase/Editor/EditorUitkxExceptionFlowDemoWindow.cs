@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxExceptionFlowDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Exception Flow")]
+        [MenuItem("Reactive UI Toolkit/Demos/Exception Flow")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxExceptionFlowDemoWindow>("Exception Flow Demo");

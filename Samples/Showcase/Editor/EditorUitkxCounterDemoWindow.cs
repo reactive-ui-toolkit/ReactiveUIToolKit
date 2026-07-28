@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxCounterDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Counter")]
+        [MenuItem("Reactive UI Toolkit/Demos/Counter")]
         public static void ShowWindow()
         {
             EditorUitkxCounterDemoWindow window = GetWindow<EditorUitkxCounterDemoWindow>(

@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxHelloWorldDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Hello World")]
+        [MenuItem("Reactive UI Toolkit/Demos/Hello World")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxHelloWorldDemoWindow>("Hello World Demo");

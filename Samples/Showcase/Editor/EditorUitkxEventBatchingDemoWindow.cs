@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxEventBatchingDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(13-17-18-26)/Event Batching")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(13-17-18-26)/Event Batching")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxEventBatchingDemoWindow>("Event Batching Demo");

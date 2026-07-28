@@ -10,7 +10,7 @@ namespace ReactiveUITK.Bench.EditorTools
 {
     public class BenchResultsViewer : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Diagnostics/Benchmark/Results Viewer")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Benchmark/Results Viewer")]
         public static void Open()
         {
             var w = GetWindow<BenchResultsViewer>();

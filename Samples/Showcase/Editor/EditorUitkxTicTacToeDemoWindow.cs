@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxTicTacToeDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tic Tac Toe")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tic Tac Toe")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxTicTacToeDemoWindow>("Tic Tac Toe Demo");

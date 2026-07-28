@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxHookQueueDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(13-17-18-26)/Hook Queue Merge")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(13-17-18-26)/Hook Queue Merge")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxHookQueueDemoWindow>("Hook Queue Merge Demo");

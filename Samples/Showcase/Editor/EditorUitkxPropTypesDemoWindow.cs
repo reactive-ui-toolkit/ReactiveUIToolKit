@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxPropTypesDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(35-37-40)/PropTypes Validation")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(35-37-40)/PropTypes Validation")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxPropTypesDemoWindow>("PropTypes Demo");

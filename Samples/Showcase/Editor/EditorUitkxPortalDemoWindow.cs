@@ -11,7 +11,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxPortalDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(35-37-40)/Portal Event Scope")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(35-37-40)/Portal Event Scope")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxPortalDemoWindow>("Portal Event Scope");

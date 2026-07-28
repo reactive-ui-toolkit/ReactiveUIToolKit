@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxContextDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Context Demo")]
+        [MenuItem("Reactive UI Toolkit/Demos/Context Demo")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxContextDemoWindow>("Context Demo");

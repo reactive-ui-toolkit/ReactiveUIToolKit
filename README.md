@@ -1,6 +1,6 @@
-# ReactiveUIToolKit
+# Reactive UI Toolkit — Unity
 
-ReactiveUIToolKit brings a React-like component model to Unity UI Toolkit, with function components, hooks, a virtual node tree, and a typed props model that all run entirely in C# on top of UI Toolkit.
+Reactive UI Toolkit — Unity brings a React-like component model to Unity UI Toolkit, with function components, hooks, a virtual node tree, and a typed props model that all run entirely in C# on top of UI Toolkit.
 
 The same components also render to classic **Unity UI (uGUI)**: one fiber reconciler, two render backends. A `.uitkx` file opts in with the `@backend ugui` directive and mounts under any Canvas `RectTransform` — see [uGUI Backend](#ugui-backend) below.
 
@@ -39,7 +39,7 @@ The same components also render to classic **Unity UI (uGUI)**: one fiber reconc
 
 ---
 
-## UITKX — JSX-style markup for ReactiveUIToolKit
+## UITKX — JSX-style markup for the toolkit
 
 UITKX lets you write components as `.uitkx` files with XML-like markup instead
 of nested `V.Box(...)` C# calls. A Roslyn source generator compiles each
@@ -267,8 +267,8 @@ dotnet test SourceGenerator~/Tests
 
 ## License
 
-**Free for almost everyone.** ReactiveUIToolKit ships under the
-[ReactiveUI Community License 1.0](LICENSE.md): use it, modify it, and ship commercial
+**Free for almost everyone.** The toolkit ships under the
+[Reactive UI Toolkit Community License 1.1](LICENSE.md): use it, modify it, and ship commercial
 games with it at no cost if your company (plus parents/subsidiaries) earned under
 **US $250,000** in the last 12 months. Development, evaluation, and education are free
 at any company size — the threshold only applies when you *ship*.
@@ -276,12 +276,12 @@ at any company size — the threshold only applies when you *ship*.
 Above the threshold, shipping a product takes a commercial license — **$2,000 per
 title** (one-time, perpetual) or **$2,500 per studio per year**, your pick; see
 [LICENSE-COMMERCIAL.md](LICENSE-COMMERCIAL.md). The same terms and prices exist for
-each library in the ReactiveUI family (Godot, Unity, Unreal).
+each library in the Reactive UI Toolkit family (Godot, Unity, Unreal).
 
-Two asks of everyone: put **"Made with ReactiveUI"** in your credits alongside your
+Two asks of everyone: put **"Made with Reactive UI Toolkit"** in your credits alongside your
 other middleware, and don't resell the library itself as a competing product (your
 game is never a competing product). Every previously released version keeps the
 license it shipped with. Contributions require the one-time [CLA](CLA.md).
 Weird case (nonprofit, just-over-the-line, contractor)? Email
-<yanivkalfa@gmail.com> — we'd rather you ship with ReactiveUI than not.
+<yanivkalfa@gmail.com> — we'd rather you ship with the toolkit than not.
 

@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxDoomGameDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Doom Game")]
+        [MenuItem("Reactive UI Toolkit/Demos/Doom Game")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxDoomGameDemoWindow>("Doom Game Demo");

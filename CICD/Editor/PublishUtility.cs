@@ -39,7 +39,7 @@ namespace ReactiveUITK.CICD
             public string vscePatToken;
         }
 
-        [MenuItem("ReactiveUITK/Publish/Build Dist", priority = 1000)]
+        [MenuItem("Reactive UI Toolkit/Publish/Build Dist", priority = 1000)]
         public static void BuildDist()
         {
             try
@@ -160,7 +160,7 @@ namespace ReactiveUITK.CICD
             }
         }
 
-        [MenuItem("ReactiveUITK/Publish/Build Dist and Push", priority = 1001)]
+        [MenuItem("Reactive UI Toolkit/Publish/Build Dist and Push", priority = 1001)]
         public static void BuildDistAndPush()
         {
             try
@@ -330,7 +330,7 @@ namespace ReactiveUITK.CICD
         /// If neither is present the user is asked for a changelog entry and
         /// whether to proceed without marketplace upload.
         /// </summary>
-        [MenuItem("ReactiveUITK/Publish/Build VS Extension and Publish", priority = 1002)]
+        [MenuItem("Reactive UI Toolkit/Publish/Build VS Extension and Publish", priority = 1002)]
         public static void BuildExtensionAndPublish()
         {
             try
@@ -496,7 +496,7 @@ namespace ReactiveUITK.CICD
             }
         }
 
-        [MenuItem("ReactiveUITK/Publish/Build Docs and Push", priority = 1100)]
+        [MenuItem("Reactive UI Toolkit/Publish/Build Docs and Push", priority = 1100)]
         public static void BuildDocsAndPush()
         {
             try

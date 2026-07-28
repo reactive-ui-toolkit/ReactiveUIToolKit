@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxSimpleTextFieldDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Simple TextField")]
+        [MenuItem("Reactive UI Toolkit/Demos/Simple TextField")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxSimpleTextFieldDemoWindow>("Simple TextField Demo");

@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxMediaPlaygroundDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Media Playground")]
+        [MenuItem("Reactive UI Toolkit/Demos/Media Playground")]
         public static void ShowWindow()
         {
             EditorUitkxMediaPlaygroundDemoWindow window =

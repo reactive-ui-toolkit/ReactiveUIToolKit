@@ -6,7 +6,7 @@ using ReactiveUITK.Core;
 
 public static class RegistryDebug
 {
-    [MenuItem("ReactiveUITK/Debug/Check Registry")]
+    [MenuItem("Reactive UI Toolkit/Debug/Check Registry")]
     public static void CheckRegistry()
     {
         var registry = ElementRegistryProvider.GetDefaultRegistry();

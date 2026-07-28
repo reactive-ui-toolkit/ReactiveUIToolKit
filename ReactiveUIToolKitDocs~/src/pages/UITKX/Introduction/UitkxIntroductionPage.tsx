@@ -17,7 +17,7 @@ const QUICK_SAMPLE = `export VirtualNode CounterCard() {
 export const UitkxIntroductionPage: FC = () => (
   <Box sx={Styles.root}>
     <Typography variant="h4" component="h1" gutterBottom>
-      ReactiveUIToolKit
+      Reactive UI Toolkit — Unity
     </Typography>
     <Typography variant="body1" paragraph>
       ReactiveUIToolKit is a React-like UI framework for Unity, and UITKX is its authoring language.

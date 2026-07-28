@@ -72,7 +72,7 @@ cd ReactiveUIToolKitDocs~ && npm run dev                  # or: npm run build
 
 ## Conventions
 
-- **Versioning is SemVer, patch by default.** Bump only the last digit unless a change is genuinely additive (minor) or breaking (major); see `VERSIONING.md`. IDE extensions version independently from the Unity package (`package.json`, currently `0.6.x`). Deprecate for one minor with `[Obsolete(...)]` before removing. `CHANGELOG.md` is the source of truth for every version and is generated/assisted by `scripts/changelog.mjs`.
+- **Versioning is SemVer, patch by default.** Bump only the last digit unless a change is genuinely additive (minor) or breaking (major); see `VERSIONING.md`. IDE extensions version independently from the Unity package (`package.json`, currently `0.12.x`). Deprecate for one minor with `[Obsolete(...)]` before removing. `CHANGELOG.md` is the source of truth for every version and is generated/assisted by `scripts/changelog.mjs`.
 - **Typed styles:** `Style` is a set-only typed dictionary mapping every UI Toolkit inline style; values are compile-time checked. `CssHelpers` (`Pct()`, `Px()`, `FlexRow`, `Rgba()`, `Hex()`, …) is auto-imported in `.uitkx` files; in `.cs` add `using static ReactiveUITK.Props.Typed.CssHelpers;`. The old `(StyleKeys.Key, value)` tuple form is a still-supported escape hatch.
 - `VirtualNode` is pooled (`__Rent`); don't hold references across renders.
 - Git author is the user's alone — do not add a `Co-Authored-By` trailer, and don't stage/commit/push unless explicitly asked.

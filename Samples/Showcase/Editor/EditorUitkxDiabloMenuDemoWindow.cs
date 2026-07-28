@@ -9,7 +9,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxDiabloMenuDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Diablo Menu")]
+        [MenuItem("Reactive UI Toolkit/Demos/Diablo Menu")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxDiabloMenuDemoWindow>("Diablo Menu Demo");

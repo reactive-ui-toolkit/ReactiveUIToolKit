@@ -6,7 +6,7 @@ namespace ReactiveUITK.EditorSupport
     public static class FiberMenu
     {
 #if UNITY_EDITOR
-        [UnityEditor.MenuItem("ReactiveUITK/UI Toolkit Debugger", priority = 9000)]
+        [UnityEditor.MenuItem("Reactive UI Toolkit/UI Toolkit Debugger", priority = 9000)]
         private static void OpenUIToolkitDebugger()
         {
             UnityEditor.EditorApplication.ExecuteMenuItem("Window/UI Toolkit/Debugger");

@@ -19,7 +19,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
     /// </summary>
     public sealed class EditorUitkxCustomDrawDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Custom Drawing")]
+        [MenuItem("Reactive UI Toolkit/Demos/Custom Drawing")]
         public static void ShowWindow()
         {
             EditorUitkxCustomDrawDemoWindow window =

@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxSyntheticEventDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(35-37-40)/Synthetic Events")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(35-37-40)/Synthetic Events")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxSyntheticEventDemoWindow>("Synthetic Event Demo");

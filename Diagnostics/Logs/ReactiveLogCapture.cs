@@ -18,19 +18,19 @@ namespace ReactiveUITK.EditorDiagnostics
             EditorApplication.quitting += StopCapture;
         }
 
-        [MenuItem("ReactiveUITK/Diagnostics/Logs/Start Capture")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Logs/Start Capture")]
         public static void StartCaptureMenu()
         {
             StartCapture();
         }
 
-        [MenuItem("ReactiveUITK/Diagnostics/Logs/Stop Capture")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Logs/Stop Capture")]
         public static void StopCaptureMenu()
         {
             StopCapture();
         }
 
-        [MenuItem("ReactiveUITK/Diagnostics/Logs/Open Log Folder")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Logs/Open Log Folder")]
         public static void OpenLogFolder()
         {
             string folder = EnsureFolder();

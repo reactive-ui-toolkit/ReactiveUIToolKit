@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxRefForwardingDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Ref Forwarding + useRef")]
+        [MenuItem("Reactive UI Toolkit/Demos/Ref Forwarding + useRef")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxRefForwardingDemoWindow>("Ref Forwarding Demo");

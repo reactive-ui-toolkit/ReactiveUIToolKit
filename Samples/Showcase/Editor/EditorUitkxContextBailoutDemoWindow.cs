@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxContextBailoutDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(Core-Fixes)/Context Through Bailout")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(Core-Fixes)/Context Through Bailout")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxContextBailoutDemoWindow>("Context Through Bailout");

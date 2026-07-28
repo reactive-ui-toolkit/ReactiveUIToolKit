@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxRouterDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Router")]
+        [MenuItem("Reactive UI Toolkit/Demos/Router")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxRouterDemoWindow>("Router Demo");

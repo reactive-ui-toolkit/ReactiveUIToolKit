@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxSnakeGameDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Snake Game")]
+        [MenuItem("Reactive UI Toolkit/Demos/Snake Game")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxSnakeGameDemoWindow>("Snake Game Demo");

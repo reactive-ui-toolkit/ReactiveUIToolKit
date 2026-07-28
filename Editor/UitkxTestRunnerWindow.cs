@@ -19,7 +19,7 @@ namespace ReactiveUITK.Editor
     /// </summary>
     public sealed class UitkxTestRunnerWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Diagnostics/Run Unit Tests")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Run Unit Tests")]
         public static void Open()
         {
             var window = GetWindow<UitkxTestRunnerWindow>("UITKX Unit Tests");

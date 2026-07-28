@@ -21,11 +21,11 @@ export const TopBar: FC<TopBarProps> = ({ onOpenSearch }) => {
             <Box
               component="img"
               src="/logo.png"
-              alt="ReactiveUIToolKit logo"
+              alt="Reactive UI Toolkit — Unity logo"
               sx={Styles.logo}
             />
             <Typography variant="h6" sx={Styles.title}>
-              ReactiveUIToolKit
+              Reactive UI Toolkit — Unity
             </Typography>
           </Link>
           <Chip label={`v${PACKAGE_VERSION}`} size="small" />

@@ -23,7 +23,7 @@ namespace ReactiveUITK.EditorSupport.HMR
         private double _nextMemoryRefreshTime;
         private const double MemoryRefreshInterval = 2.0; // seconds
 
-        [MenuItem("ReactiveUITK/HMR Mode", priority = 200)]
+        [MenuItem("Reactive UI Toolkit/HMR Mode", priority = 200)]
         public static void ShowWindow()
         {
             var wnd = GetWindow<UitkxHmrWindow>("UITKX Hot Reload");

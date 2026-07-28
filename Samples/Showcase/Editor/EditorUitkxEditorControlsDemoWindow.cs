@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxEditorControlsDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Editor Controls")]
+        [MenuItem("Reactive UI Toolkit/Demos/Editor Controls")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxEditorControlsDemoWindow>("RUITK Editor Controls");

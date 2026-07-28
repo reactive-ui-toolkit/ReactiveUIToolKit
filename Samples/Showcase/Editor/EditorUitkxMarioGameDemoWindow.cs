@@ -12,7 +12,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxMarioGameDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Mario Game")]
+        [MenuItem("Reactive UI Toolkit/Demos/Mario Game")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxMarioGameDemoWindow>("Mario Game Demo");

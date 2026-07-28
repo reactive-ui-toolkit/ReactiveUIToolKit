@@ -22,11 +22,11 @@ namespace ReactiveUITK.Bench
         private int _totalRuns = 1;
         private int _currentRun;
 
-        [MenuItem("ReactiveUITK/Diagnostics/Benchmark/Run Tests")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Benchmark/Run Tests")]
         public static void Open()
         {
             var w = GetWindow<BenchEditorHost>();
-            w.titleContent = new GUIContent("ReactiveUITK Bench");
+            w.titleContent = new GUIContent("Reactive UI Toolkit Bench");
             w.minSize = new Vector2(520, 360);
             w.Show();
         }

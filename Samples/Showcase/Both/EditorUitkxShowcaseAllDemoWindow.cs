@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxShowcaseAllDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Showcase All")]
+        [MenuItem("Reactive UI Toolkit/Demos/Showcase All")]
         public static void ShowWindow()
         {
             EditorUitkxShowcaseAllDemoWindow window = GetWindow<EditorUitkxShowcaseAllDemoWindow>(

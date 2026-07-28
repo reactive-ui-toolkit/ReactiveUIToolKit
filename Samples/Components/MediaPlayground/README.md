@@ -49,7 +49,7 @@ breaks as needed.
 ### 3. Add the bootstrap
 
 Mirror `Samples/Showcase/Editor/EditorUitkxAnimationsDemoWindow.cs`:
-register a `[MenuItem("ReactiveUITK/Demos/Media Playground")]`, call
+register a `[MenuItem("Reactive UI Toolkit/Demos/Media Playground")]`, call
 `EditorRootRendererUtility.Render(rootVisualElement, V.Func(MediaPlayground.Render, key: "media-playground"))`,
 unmount in `OnDisable`.
 

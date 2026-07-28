@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxSignalCounterDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Signal Counter")]
+        [MenuItem("Reactive UI Toolkit/Demos/Signal Counter")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxSignalCounterDemoWindow>("Signal Counter Demo");

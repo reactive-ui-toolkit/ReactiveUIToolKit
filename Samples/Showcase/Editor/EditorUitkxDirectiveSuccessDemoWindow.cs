@@ -10,7 +10,7 @@ namespace ReactiveUITK.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxDirectiveSuccessDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Directive Success")]
+        [MenuItem("Reactive UI Toolkit/Demos/Directive Success")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxDirectiveSuccessDemoWindow>("Directive Success");

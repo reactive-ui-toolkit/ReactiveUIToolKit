@@ -1,13 +1,13 @@
 # Third-Party Licenses
 
-This document lists all third-party dependencies used by ReactiveUIToolKit and
+This document lists all third-party dependencies used by Reactive UI Toolkit — Unity and
 its associated tooling.
 
 ---
 
 ## Runtime Dependencies
 
-### Unity Package (ReactiveUIToolKit)
+### Unity Package (Reactive UI Toolkit — Unity)
 
 No third-party runtime dependencies. The core framework relies only on Unity's
 built-in UI Toolkit APIs.
