@@ -59,7 +59,7 @@ To uninstall: Visual Studio → Extensions → Manage Extensions → search UITK
 ## Step 4 — Publish to Marketplace
 
 ### Via web UI (simplest)
-1. Go to https://marketplace.visualstudio.com/manage/publishers/Ruitk
+1. Go to https://marketplace.visualstudio.com/manage/publishers/ReactiveUITK
 2. Click **+ New Extension** → **Visual Studio**
 3. Drag and drop `bin\Release\net472\UitkxVsix.vsix` onto the upload area
 4. Click **Upload** — extension is live within minutes
@@ -84,7 +84,7 @@ The `publishManifest.json` is a small file (see below).
 #### publishManifest.json
 ```json
 {
-  "extensionId": "UitkxVsix.Ruitk",
+  "extensionId": "UitkxVsix.ReactiveUITK",
   "version": "1.0.0",
   "categories": [ "Coding" ],
   "overview": "README.md",
@@ -100,7 +100,7 @@ The `publishManifest.json` is a small file (see below).
 
 Edit `Version` in `source.extension.vsixmanifest`:
 ```xml
-<Identity Id="UitkxVsix.Ruitk"
+<Identity Id="UitkxVsix.ReactiveUITK"
           Version="1.0.1"   ← bump this
           .../>
 ```
@@ -113,8 +113,8 @@ Then rebuild and republish.
 
 | Field | Value |
 |-------|-------|
-| Extension ID | `UitkxVsix.Ruitk` |
+| Extension ID | `UitkxVsix.ReactiveUITK` |
 | Target | Visual Studio 2022+ (version 17.x) |
 | Framework | net472 |
-| Marketplace | https://marketplace.visualstudio.com/items?itemName=Ruitk.UitkxVsix |
-| Manage | https://marketplace.visualstudio.com/manage/publishers/Ruitk |
+| Marketplace | https://marketplace.visualstudio.com/items?itemName=ReactiveUITK.UitkxVsix |
+| Manage | https://marketplace.visualstudio.com/manage/publishers/ReactiveUITK |

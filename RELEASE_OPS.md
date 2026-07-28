@@ -82,8 +82,13 @@ Monitor progress at: `https://github.com/reactive-ui-toolkit/ruitk-unity/actions
 3. Upload the latest `.unitypackage`:
    - In Unity Editor: right-click the `Assets/ReactiveUIToolkit` folder
    - Select **Export Package…**
-   - Uncheck files listed in `config.json` → `pathsToOmitFromDist`
-     (CICD, Diagnostics, scripts, docs, publisher-secrets, PDBs, deps.json)
+   - Uncheck the files listed in `config.json` → `pathsToOmitFromStore` **and**
+     `pathsToOmitFromDist` (the automated store job concatenates both lists):
+     CICD, Diagnostics, scripts, docs, publisher-secrets, the maintainer docs
+     (CLAUDE / AUTOMATION / RELEASE_OPS / VERSIONING), and the two
+     `Analyzers/*.pdb` files. There is no `deps.json` or `Analyzers/publish/` to
+     uncheck — the `PublishGeneratorToAnalyzers` target only ever copies
+     `.dll` / `.pdb` + `System.Collections.Immutable.dll`.
    - Export as `ReactiveUIToolkit-v1.0.0.unitypackage`
 4. Fill in / update:
    - Version number
@@ -165,7 +170,7 @@ Before publishing:
 After publishing:
 
 - [ ] VS Code Marketplace listing shows new version
-- [ ] `ext install Ruitk.uitkx` installs successfully
+- [ ] `ext install ReactiveUITK.uitkx` installs successfully
 - [ ] Open VSX listing shows new version (if published)
 - [ ] Visual Studio Marketplace listing shows new version (check manually)
 - [ ] Unity Asset Store package is submitted (review pending)

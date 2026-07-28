@@ -1,10 +1,13 @@
 name: Tests
 
 on:
+  # `master` is the release branch — this repo has no `main`, so the previous
+  # [dev, main] triggers meant an entire release wave could merge to master with
+  # zero CI signal (no SG suite, no LSP suite, no docs build, no analyzer drift check).
   pull_request:
-    branches: [dev, main]
+    branches: [dev, master]
   push:
-    branches: [dev, main]
+    branches: [dev, master]
 
 permissions:
   contents: read

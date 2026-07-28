@@ -41,7 +41,7 @@ intellijPlatform {
         }
 
         vendor {
-            name = "Ruitk"
+            name = "ReactiveUITK"
             url  = "https://github.com/reactive-ui-toolkit/ruitk-unity"
         }
     }

@@ -96,7 +96,7 @@ verbatim; the VS2022 template gets fleshed out to the SAME feature list (it is c
 
 ## §4 What does NOT change
 
-- publisher (`Ruitk`), extension ids (`uitkx`, `UitkxVsix.Ruitk`) — renaming ids
+- publisher (`ReactiveUITK`), extension ids (`uitkx`, `UitkxVsix.ReactiveUITK`) — renaming ids
   orphans installs. Display strings only.
 - The Rider plugin (`ide-extensions~/rider/`) — JetBrains marketplace, separate campaign if the
   owner wants matching names there.
@@ -112,7 +112,7 @@ regenerate — never hand-edit README.md / overview.md.
 ## §6 Post-publish verification
 
 - Publisher page rows read `UITKX (Unity - VS Code)` / `UITKX (Unity - VS2022)`.
-- `items?itemName=Ruitk.uitkx` + `items?itemName=Ruitk.uitkx-visualstudio`
+- `items?itemName=ReactiveUITK.uitkx` + `items?itemName=ReactiveUITK.uitkx-visualstudio`
   (the VS2022 marketplace ID per the publish guide's Quick Reference): §1 body structure
   including the Changelog section.
 - Open VSX listing shows the same README.

@@ -82,7 +82,7 @@
     },
     "configurationDefaults": {
       "[uitkx]": {
-        "editor.defaultFormatter": "Ruitk.uitkx",
+        "editor.defaultFormatter": "ReactiveUITK.uitkx",
         "editor.formatOnSave": true,
         "editor.autoIndent": "full",
         "editor.tabSize": 2,

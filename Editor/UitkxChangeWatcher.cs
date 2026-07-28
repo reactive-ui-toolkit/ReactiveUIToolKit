@@ -22,7 +22,7 @@ namespace Ruitk.Editor
     /// HOW IT WORKS (fast, incremental — no CleanBuildCache stall)
     /// ──────────────────────────────────────────────────────────
     /// A .uitkx file is an AdditionalFile of whatever assembly its folder's .asmdef
-    /// defines (e.g. Samples/*.uitkx → Ruitk.Examples; .uitkx with no ancestor
+    /// defines (e.g. Samples/*.uitkx → Ruitk.Samples; .uitkx with no ancestor
     /// .asmdef → the default Assembly-CSharp). To make THAT assembly recompile we
     /// write a tiny trigger .cs into its own folder and bump a value inside it. A real
     /// script change is exactly what a manual .cs edit does: Unity recompiles just that

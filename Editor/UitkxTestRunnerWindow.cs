@@ -15,7 +15,7 @@ namespace Ruitk.Editor
     /// (xUnit, <c>SourceGenerator~/Tests/</c>) via <c>dotnet test</c> and
     /// displays the output inline.
     ///
-    /// Menu path: Ruitk / Diagnostics / Run Unit Tests
+    /// Menu path: Reactive UI Toolkit / Diagnostics / Run Unit Tests
     /// </summary>
     public sealed class UitkxTestRunnerWindow : EditorWindow
     {

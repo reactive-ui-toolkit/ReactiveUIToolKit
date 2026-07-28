@@ -249,7 +249,7 @@ namespace Ruitk.EditorSupport.HMR
                 _hookKeyMap = hookKeyMap;
                 // Effective namespace (matches the SG) so the component's self family key
                 // {ns}.{ComponentName} and the emitted `namespace` agree with the project assembly.
-                _ns = effectiveNs ?? GP<string>(directives, "Namespace") ?? "UITKX.Generated";
+                _ns = effectiveNs ?? GP<string>(directives, "Namespace") ?? "Ruitk.Generated";
                 _componentName = GP<string>(directives, "ComponentName") ?? "Unknown";
                 _propsTypeName = GP<string>(directives, "PropsTypeName");
                 _isFunctionStyle = GP<bool>(directives, "IsFunctionStyle");

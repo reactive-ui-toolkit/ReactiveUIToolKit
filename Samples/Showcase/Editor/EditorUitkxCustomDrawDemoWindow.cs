@@ -15,7 +15,7 @@ namespace Ruitk.Samples.UITKX.Editor
     /// <c>MeshGenerationContext.Allocate</c>, and the <c>redrawKey</c> repaint
     /// trigger paired with a stable callback.
     ///
-    /// Launch from the menu: <b>Ruitk / Demos / Custom Drawing</b>.
+    /// Launch from the menu: <b>Reactive UI Toolkit / Demos / Custom Drawing</b>.
     /// </summary>
     public sealed class EditorUitkxCustomDrawDemoWindow : EditorWindow
     {

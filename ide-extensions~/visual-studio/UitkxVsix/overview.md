@@ -1,4 +1,4 @@
-# Reactive UI - Unity - VS2022 (UITKX)
+# Reactive UI Toolkit - Unity - VS2022 (UITKX)
 
 Syntax highlighting + language intelligence for `.uitkx` markup (ReactiveUIToolkit for Unity). Completions, hover, diagnostics and formatting from the bundled language server — fully offline, no running Unity editor required.
 

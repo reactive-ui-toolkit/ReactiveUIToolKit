@@ -26,11 +26,9 @@
     "Diagnostics/**",
     "scripts/**",
     "ReactiveUIToolkitDocs~/**",
-    "Analyzers/publish",
     "_docs_branch",
     "Analyzers/Ruitk.Language.pdb",
     "Analyzers/Ruitk.SourceGenerator.pdb",
-    "Analyzers/Ruitk.SourceGenerator.deps.json",
     "publisher-secrets.json",
     "publisher-secrets.json.meta"
   ],

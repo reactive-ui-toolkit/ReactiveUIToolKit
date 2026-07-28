@@ -24,7 +24,19 @@ rename, nothing else. See `MIGRATION-0.12.md` for the two-step upgrade
 - **`ReactiveUITKConfig` → `RuitkConfig`** (type + file); the hidden media-host
   object names `__ReactiveUITK_*` → `__Ruitk_*`; editor-prefs key
   `ReactiveUITK.UitkxNavVerbose` → `Ruitk.UitkxNavVerbose` (saved value resets once).
-- **Define `REACTIVEUITK_HAS_TEST_FRAMEWORK` → `RUITK_HAS_TEST_FRAMEWORK`.**
+- **Define `REACTIVEUITK_HAS_TEST_FRAMEWORK` → `RUITK_HAS_TEST_FRAMEWORK`.** If you also
+  carry this define in *Project Settings ▸ Player ▸ Scripting Define Symbols* or in a
+  `csc.rsp`/`mcs.rsp`, rename it there too — a stale define fails **silently** (the
+  guarded block simply stops compiling in, with no diagnostic).
+- **BREAKING for reflection — the default generated namespace for *your* `.uitkx`
+  components changed:** `ReactiveUITK.Uitkx` → `Ruitk.Uitkx`, and
+  `ReactiveUITK.FunctionStyle` → `Ruitk.FunctionStyle`. Every component **without** an
+  explicit `@namespace`/`namespacePrefix` moves namespace. Compile-time references are
+  handled by the codemod, but assembly-qualified **strings** are not reliably fixable:
+  `Type.GetType("ReactiveUITK.Uitkx.UI.HelloWorld, Assembly-CSharp")` and serialized
+  type names break at **runtime**, not at compile time. Grep for `"ReactiveUITK.Uitkx`
+  and `"ReactiveUITK.FunctionStyle` before shipping, or pin the old value with an
+  explicit `@namespace`.
 - **Install folder `Assets/ReactiveUIToolKit` → `Assets/ReactiveUIToolkit`**
   (lowercase k; Linux upgraders: delete the old capital-K folder — case-sensitive
   filesystems keep both).
@@ -34,8 +46,19 @@ rename, nothing else. See `MIGRATION-0.12.md` for the two-step upgrade
   version-bumped family-wide; the credit line is now "Made with Reactive UI Toolkit".
   Licensees under 1.0 keep their 1.0 terms.
 - **New codemod `SourceGenerator~/Tools/RuitkMigrateBrand`** rewrites user projects
-  (usings/namespaces/global:: refs, asmdef references, the define, install-path
-  strings; idempotent, `--check` gate; never edits inside the package folder).
+  (usings/namespaces/global:: refs, asmdef references, menu-path strings, the define,
+  install-path strings; scans `.cs`/`.uitkx`/`.asmdef`/`.asmref`/`.rsp`; idempotent,
+  `--check` gate; never edits inside the package folder; preserves each file's BOM and
+  refuses rather than corrupts non-UTF-8 files; frozen extension marketplace IDs are
+  masked so they survive verbatim). It lives in the **repository**, not in the shipped
+  package — clone `ruitk-unity` and run it against your project path. Requires the
+  .NET 8 SDK (Unity ships none).
+- **After migrating, delete `Assets/ReactiveUITK/`** — the generated trigger+registry
+  folder, which 0.12.0 moved to `Assets/Ruitk/`. It is *not* the package folder and
+  nothing cleans it up. A leftover `Resources/__uitkx_registry.asset` competes with the
+  new registry (`Resources.Load` resolves it by name) and can make `Asset<T>()`/`Ast<T>()`
+  and `uss=` lookups return null in editor **and** player builds; the editor now logs a
+  warning when it detects one.
 - Unchanged on purpose: UPM package id `com.reactiveuitoolkit`, the `.uitkx` language
   and `UITKX` tooling brand, extension marketplace identities, the docs domain, and
   `RUITK`-prefixed titles/pref keys.

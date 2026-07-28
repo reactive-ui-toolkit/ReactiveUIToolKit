@@ -347,8 +347,8 @@ namespace Ruitk.Bench
 
             var hintText = _totalRuns > 1
                 ? $"Results written to {_totalRuns} separate run folders.\n"
-                    + "Open  Ruitk > Diagnostics > Benchmark > Results Viewer  to compare runs."
-                : "Open  Ruitk > Diagnostics > Benchmark > Results Viewer  to compare runs.";
+                    + "Open  Reactive UI Toolkit > Diagnostics > Benchmark > Results Viewer  to compare runs."
+                : "Open  Reactive UI Toolkit > Diagnostics > Benchmark > Results Viewer  to compare runs.";
 
             children.Add(
                 V.Label(

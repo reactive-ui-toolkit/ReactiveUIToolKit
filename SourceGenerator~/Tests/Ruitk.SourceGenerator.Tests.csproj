@@ -27,6 +27,13 @@
          exercise UitkxMigrator directly without a cross-TFM Exe reference. -->
     <Compile Include="../Tools/UitkxMigrateImports/UitkxMigrator.cs" Link="Tools/UitkxMigrator.cs" />
     <Compile Include="../Tools/UitkxMigrateImports/EsModulesMigrator.cs" Link="Tools/EsModulesMigrator.cs" />
+    <!-- Same treatment for the 0.12.0 rebrand codemod (audit finding M9: it shipped with
+         zero tests, so none of the ordering / boundary / idempotency properties its own XML
+         docs assert were pinned by anything). Program.cs is deliberately NOT linked — it
+         carries Main(); its logic lives in BrandMigrator/ScanRules/FileEncodings. -->
+    <Compile Include="../Tools/RuitkMigrateBrand/BrandMigrator.cs" Link="Tools/BrandMigrator.cs" />
+    <Compile Include="../Tools/RuitkMigrateBrand/ScanRules.cs" Link="Tools/ScanRules.cs" />
+    <Compile Include="../Tools/RuitkMigrateBrand/FileEncodings.cs" Link="Tools/FileEncodings.cs" />
   </ItemGroup>
   <ItemGroup>
     <!-- Use the same Roslyn version so types unify correctly. -->
