@@ -1,3 +1,19 @@
+## [0.12.0] - 2026-07-28
+
+### Rebrand - the library is now Reactive UI Toolkit (Unity)
+
+**New name, new home, same library.** The whole family (Godot, Unity, Unreal) now ships under one umbrella: Reactive UI Toolkit. This repo moved to https://github.com/reactive-ui-toolkit/ruitk-unity (old links redirect), and 0.12.0 is the rename release - nothing else changed.
+
+What it means in code:
+- Namespace/assembly root `ReactiveUITK` -> `Ruitk` (`using Ruitk;`, `global::Ruitk.Core.VirtualNode`). All asmdefs are `Ruitk.*`; the analyzer DLLs renamed with GUIDs preserved, so references survive.
+- `ReactiveUITKConfig` -> `RuitkConfig`; the define `REACTIVEUITK_HAS_TEST_FRAMEWORK` -> `RUITK_HAS_TEST_FRAMEWORK`.
+- Install folder is now `Assets/ReactiveUIToolkit` (lowercase k). Delete the old `Assets/ReactiveUIToolKit` before importing - on Linux (case-sensitive) you otherwise end up with both folders.
+- The editor menu moved from `ReactiveUITK/` to `Reactive UI Toolkit/`.
+
+Upgrading is two steps: delete the old folder and import 0.12.0, then run the bundled codemod over your own code - `dotnet run --project Assets/ReactiveUIToolkit/SourceGenerator~/Tools/RuitkMigrateBrand -- Assets` - it rewrites usings, namespaces, and asmdef references with per-file counts, is idempotent (`--check` gates CI), and never edits inside the package folder. Full guide: `MIGRATION-0.12.md` in the repo.
+
+Unchanged on purpose: the UPM package id `com.reactiveuitoolkit`, the `.uitkx` language and the `UITKX` tooling brand, the extension marketplace identities (they update in place: VS Code 1.8.0, VS2022 1.8.0, Rider 1.5.0), and the docs site. License: the Reactive UI Toolkit Community License 1.1 - renamed and version-bumped family-wide, terms unchanged; everything you already downloaded keeps the license it shipped with.
+
 ## [0.11.0] - 2026-07-25
 
 **uGUI support is here.** ReactiveUIToolKit now renders classic Unity UI (uGUI) with the same components, hooks, signals, router, and hot reload you use on UI Toolkit - and it speaks uGUI's native language. No CSS, no flexbox emulation: you position with RectTransform anchors/pivots (including an `anchors` preset prop that mirrors the Inspector widget), you style with sprites, colors, and materials, you stack with LayoutGroups. If you know uGUI, you already know this API.
