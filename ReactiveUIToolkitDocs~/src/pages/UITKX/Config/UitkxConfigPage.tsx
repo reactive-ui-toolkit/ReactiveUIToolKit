@@ -180,7 +180,7 @@ export const UitkxConfigPage: FC = () => (
         <TableBody>
           <TableRow>
             <TableCell><code>editor.defaultFormatter</code></TableCell>
-            <TableCell><code>Ruitk.uitkx</code></TableCell>
+            <TableCell><code>ReactiveUITK.uitkx</code></TableCell>
             <TableCell>Uses the UITKX formatter for <code>.uitkx</code> files</TableCell>
           </TableRow>
           <TableRow>

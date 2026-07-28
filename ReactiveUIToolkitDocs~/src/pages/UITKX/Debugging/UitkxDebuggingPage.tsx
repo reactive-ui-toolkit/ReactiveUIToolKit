@@ -4,7 +4,7 @@ import { CodeBlock } from '../../../components/CodeBlock/CodeBlock'
 import Styles from '../Reference/UitkxReferencePage.style'
 
 const GENERATED_FILE_PATH = `// Generated files are at:
-// Library/PackageCache/com.reactiveuitk/Analyzers~
+// Library/PackageCache/com.reactiveuitoolkit/Analyzers~
 //   or under your project's SourceGenerator~ output folder.
 // Look for files ending in .uitkx.g.cs`
 
@@ -120,7 +120,7 @@ export const UitkxDebuggingPage: FC = () => (
       <li>
         <strong>Ensure format-on-save is using the UITKX formatter</strong> —
         check that <code>editor.defaultFormatter</code> is set to{' '}
-        <code>"Ruitk.uitkx"</code> for <code>[uitkx]</code> files.
+        <code>"ReactiveUITK.uitkx"</code> for <code>[uitkx]</code> files.
       </li>
       <li>
         <strong>Try formatting manually</strong> — press Shift+Alt+F to rule out

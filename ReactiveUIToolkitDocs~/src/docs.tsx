@@ -3,6 +3,7 @@ import type { Page as LegacyPage } from './pages'
 import { pages as legacySections } from './pages'
 import { PAGE_VERSIONS, isAvailableIn, compareVersions } from './versionManifest'
 import { KnownIssuesPage } from './pages/KnownIssues/KnownIssuesPage'
+import { MigrationPage } from './pages/Migration/MigrationPage'
 import { RoadmapPage } from './pages/Roadmap/RoadmapPage'
 import { UitkxAPIPage } from './pages/UITKX/API/UitkxAPIPage'
 import { UitkxComponentReferencePage } from './pages/UITKX/Components/UitkxComponentReferencePage'
@@ -256,7 +257,7 @@ export const sections: DocSection[] = [
         title: 'Hot Module Replacement',
         path: '/tooling/hmr',
         keywords: ['hmr', 'hot reload', 'live editing', 'instant preview'],
-        searchContent: 'hot module replacement hmr edit .uitkx files changes instantly unity editor without domain reload component state quick start open reactiveuitk hmr mode start edit save updates in-place hook state counters refs effects preserved assembly reloads filesystemwatcher detects parsed emitted compiled in-process roslyn microsoft.codeanalysis.csharp csc.dll fallback assembly.load render delegate swapped rootrenderer instances re-render hooks state preservation usestate useref useeffect usememo usecallback usecontext companion hook module .uitkx files custom hooks delegate swap styles types create new hook module auto-detected new component support cs0103 dependency auto-discovery cross-component assembly registry hmr window stats swap count error timing parse emit compile keyboard shortcuts toggle start stop lifecycle limitations old assemblies memory mono unload 10-30 kb per swap first compile jit warmup nuget cache troubleshooting console errors',
+        searchContent: 'hot module replacement hmr edit .uitkx files changes instantly unity editor without domain reload component state quick start open reactive ui toolkit hmr mode start edit save updates in-place hook state counters refs effects preserved assembly reloads filesystemwatcher detects parsed emitted compiled in-process roslyn microsoft.codeanalysis.csharp csc.dll fallback assembly.load render delegate swapped rootrenderer instances re-render hooks state preservation usestate useref useeffect usememo usecallback usecontext companion hook module .uitkx files custom hooks delegate swap styles types create new hook module auto-detected new component support cs0103 dependency auto-discovery cross-component assembly registry hmr window stats swap count error timing parse emit compile keyboard shortcuts toggle start stop lifecycle limitations old assemblies memory mono unload 10-30 kb per swap first compile jit warmup nuget cache troubleshooting console errors',
         element: () => <HmrPage />,
       },
       {
@@ -409,7 +410,7 @@ export const sections: DocSection[] = [
         title: 'Configuration',
         path: '/config',
         keywords: ['config', 'settings', 'vscode', 'extension', 'uitkx.config.json', 'root', '~/'],
-        searchContent: 'configuration reference options editor extensions formatter uitkx.config.json project config root key ~/ alias import specifier asset path source root default Assets nearest config wins UITKX2314 vs code extension settings uitkx.server.path uitkx.server.dotnetpath uitkx.trace.server editor defaults editor.defaultformatter reactiveuitk.uitkx editor.formatonsave editor.tabsize editor.insertspaces editor.bracketpaircolorization semantic tokens',
+        searchContent: 'configuration reference options editor extensions formatter uitkx.config.json project config root key ~/ alias import specifier asset path source root default Assets nearest config wins UITKX2314 vs code extension settings uitkx.server.path uitkx.server.dotnetpath uitkx.trace.server editor defaults editor.defaultformatter ReactiveUITK.uitkx editor.formatonsave editor.tabsize editor.insertspaces editor.bracketpaircolorization semantic tokens',
         element: () => <UitkxConfigPage />,
       },
       {
@@ -451,6 +452,22 @@ export const sections: DocSection[] = [
         searchContent:
           'licensing license free tier 250k threshold reactiveui community license 1.0 commercial license per-title 2000 studio 2500 per year revenue funding trailing 12 months ship commercially credits made with reactiveui noncompete competing product reselling old versions keep their terms grandfather contractor client revenue 60-day cure window nonprofit edge case certificate pdf publisher platform paperwork LICENSE.md LICENSE-COMMERCIAL.md CLA contributor license agreement',
         element: () => <LicensingPage />,
+      },
+    ],
+  },
+  {
+    id: 'migration',
+    title: 'Migration',
+    pages: [
+      {
+        id: 'migration-0-12-page',
+        canonicalId: 'migration-0-12-page',
+        title: 'Migrating to 0.12',
+        path: '/migration-0-12',
+        keywords: ['migration', 'rename', 'ruitk', '0.12', 'upgrade', 'codemod'],
+        searchContent:
+          'migrating 0.12 ruitk rename rebrand reactive ui toolkit family breaking upgrade namespace root ReactiveUITK Ruitk using global asmdef Ruitk.* analyzer dlls Ruitk.Language.dll Ruitk.SourceGenerator.dll guids preserved install folder casing Assets/ReactiveUIToolkit lowercase delete old folder linux case-sensitive both folders define RUITK_HAS_TEST_FRAMEWORK RuitkConfig hidden object names __Ruitk_MediaHost __Ruitk_VideoPeer __Ruitk_AudioPeer __Ruitk_Sfx __Ruitk_RT RuitkMigrateBrand codemod dotnet run idempotent --check per-file counts editorprefs reset Ruitk.UitkxNavVerbose unchanged com.reactiveuitoolkit MIGRATION-0.12.md',
+        element: () => <MigrationPage />,
       },
     ],
   },
