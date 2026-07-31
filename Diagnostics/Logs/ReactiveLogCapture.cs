@@ -1,6 +1,7 @@
 #if UNITY_EDITOR
 using System;
 using System.IO;
+using Ruitk.Core.Config;
 using UnityEditor;
 using UnityEngine;
 
@@ -69,13 +70,12 @@ namespace Ruitk.EditorDiagnostics
 
         private static string EnsureFolder()
         {
-            string folder = Path.Combine(
-                Application.dataPath,
-                "ReactiveUIToolkit",
-                "Diagnostics",
-                "Logs",
-                "Results"
-            );
+            // Captures used to be written into the package itself
+            // (Assets/ReactiveUIToolkit/Diagnostics/Logs/Results) — unwritable in a UPM
+            // PackageCache install and dirtying the package everywhere else. They now land under
+            // RuitkDiagnosticsPaths.GetOutputRoot() (project Logs/ by default, or the
+            // RuitkSettings override), outside the package and the asset database.
+            string folder = Path.Combine(RuitkDiagnosticsPaths.GetOutputRoot(), "Logs");
             if (!Directory.Exists(folder))
             {
                 Directory.CreateDirectory(folder);

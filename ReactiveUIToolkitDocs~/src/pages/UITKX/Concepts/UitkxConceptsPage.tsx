@@ -94,29 +94,52 @@ export const UitkxConceptsPage: FC = () => (
         Environment &amp; tracing configuration
       </Typography>
       <Typography variant="body2" paragraph>
-        Environment labels and diagnostics are configured in{' '}
-        <code>Assets/ReactiveUIToolkit/config.json</code> under the{' '}
-        <code>envVariables</code> object (read once at startup via{' '}
-        <code>RuitkConfig.Current</code>) — no scripting define symbols are involved:
+        Settings live in one window: <strong>Reactive UI Toolkit ▸ Settings</strong>,
+        divided into labeled sections. The <strong>Configuration</strong> section holds the
+        project-scoped values below. Until you create a settings asset the section is
+        read-only and shows the values in effect (compiled defaults); click{' '}
+        <strong>Create settings asset</strong> to create{' '}
+        <code>Assets/ReactiveUIToolkitSettings.asset</code> (a <code>RuitkSettings</code>{' '}
+        ScriptableObject) and edit them — nothing is ever written to your project until you
+        click. No scripting define symbols are involved:
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>"env"</code> — environment label (e.g. <code>development</code>, <code>staging</code>, <code>production</code>). Exposed at runtime as <code>HostContext.Environment["env"]</code>.</>} />
+          <ListItemText primary={<><code>Environment</code> — <code>Auto</code> (default: <code>development</code> in the editor and development builds, <code>production</code> in release builds), <code>Development</code>, or <code>Production</code>. Exposed at runtime as <code>HostContext.Environment["env"]</code>.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>"traceLevel"</code> — reconciler trace level: <code>None</code>, <code>Basic</code>, or <code>Verbose</code>.</>} />
+          <ListItemText primary={<><code>Trace Level</code> — reconciler trace level: <code>None</code>, <code>Basic</code>, or <code>Verbose</code>.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>"diffTracing"</code> — sets <code>DiagnosticsConfig.EnableDiffTracing</code> for detailed Fiber diff diagnostics.</>} />
+          <ListItemText primary={<><code>Diff Tracing</code> — sets <code>DiagnosticsConfig.EnableDiffTracing</code> for detailed Fiber diff diagnostics.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>"exceptionControlFlow"</code> — routes render exceptions through the exception-boundary flow.</>} />
+          <ListItemText primary={<><code>Exception Control Flow</code> — routes render exceptions through the exception-boundary flow.</>} />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText primary={<><code>Diagnostics Output Folder</code> — where benchmark results and log captures are written. Empty = <code>&lt;project&gt;/Logs/ReactiveUIToolkit</code> in the editor and <code>&lt;persistentDataPath&gt;/ReactiveUIToolkit</code> in players; absolute paths are used as-is, relative paths resolve against the project root (editor) or <code>persistentDataPath</code> (player). Diagnostics never write into the package folder.</>} />
         </ListItem>
       </List>
       <Typography variant="body2" paragraph>
-        Example:{' '}
-        <code>{'{ "envVariables": { "env": "development", "traceLevel": "Basic", "diffTracing": false, "exceptionControlFlow": true } }'}</code>.
-        A missing file or key falls back to safe defaults.
+        <strong>Player builds:</strong> the settings asset is added to Preloaded Assets during
+        a build (and removed again afterwards), so the same values apply in players — no
+        manual setup.
+      </Typography>
+      <Typography variant="body2" paragraph>
+        <strong>Per-developer preferences</strong> live in the same window: the{' '}
+        <strong>Hot Reload (HMR)</strong> section (the HMR toggles and the two keybind
+        recorders) and the <strong>Console navigation</strong> section (verbose
+        console-navigation logging). They are EditorPrefs, per machine, not per project. The
+        HMR window itself keeps only Start/Stop, status, and stats, and links to the
+        settings window.
+      </Typography>
+      <Typography variant="body2" paragraph>
+        <strong>Legacy fallback:</strong> projects that edited the old{' '}
+        <code>Assets/ReactiveUIToolkit/config.json</code> (<code>envVariables</code> block,
+        read via <code>RuitkConfig.Current</code>) keep working — those values apply whenever
+        no settings asset exists. The shipped <code>config.json</code> no longer contains an{' '}
+        <code>envVariables</code> block; a missing file, key, or asset falls back to safe
+        compiled defaults.
       </Typography>
     </Box>
 

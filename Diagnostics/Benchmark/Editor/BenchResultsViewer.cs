@@ -3,6 +3,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using Ruitk.Core.Config;
+using Ruitk.EditorSupport;
 using UnityEditor;
 using UnityEngine;
 
@@ -773,29 +775,41 @@ namespace Ruitk.Bench.EditorTools
                 return sel.path;
             }
 
-            var guess = Path.Combine(
-                Application.dataPath,
-                "ReactiveUIToolkit",
-                "Diagnostics",
-                "Benchmark",
-                "Results",
-                "Editor"
-            );
-            if (Directory.Exists(guess))
+            // Results now land under RuitkDiagnosticsPaths.GetOutputRoot()/Benchmark (project
+            // Logs/ by default, or the RuitkSettings override) — outside the package, which a UPM
+            // PackageCache install cannot write into anyway. Seed the picker there first.
+            var benchRoot = Path.Combine(RuitkDiagnosticsPaths.GetOutputRoot(), "Benchmark");
+            var editorBench = Path.Combine(benchRoot, "Editor");
+            if (Directory.Exists(editorBench))
             {
-                return guess;
+                return editorBench;
+            }
+            if (Directory.Exists(benchRoot))
+            {
+                return benchRoot;
             }
 
-            var guessRoot = Path.Combine(
-                Application.dataPath,
-                "ReactiveUIToolkit",
-                "Diagnostics",
-                "Benchmark",
-                "Results"
-            );
-            if (Directory.Exists(guessRoot))
+            // Legacy fallback: runs recorded before the relocation still live inside the package
+            // (Diagnostics/Benchmark/Results). Resolved layout-agnostically (UPM / embedded /
+            // file: / Assets) instead of guessing Assets/ReactiveUIToolkit; this only seeds a
+            // folder picker, so a miss still degrades to Assets/ rather than failing.
+            if (RuitkPackagePaths.TryGetRoot(out string packageRoot))
             {
-                return guessRoot;
+                var resultsRoot = Path.Combine(
+                    packageRoot,
+                    "Diagnostics",
+                    "Benchmark",
+                    "Results"
+                );
+                var editorResults = Path.Combine(resultsRoot, "Editor");
+                if (Directory.Exists(editorResults))
+                {
+                    return editorResults;
+                }
+                if (Directory.Exists(resultsRoot))
+                {
+                    return resultsRoot;
+                }
             }
 
             return Application.dataPath;

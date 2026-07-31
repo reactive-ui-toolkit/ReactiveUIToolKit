@@ -21,7 +21,16 @@ namespace Ruitk.Editor
     /// </summary>
     public static class UitkxConsoleNavigation
     {
-        private static readonly bool s_verboseLogs = EditorPrefs.GetBool("Ruitk.UitkxNavVerbose", false);
+        private const string VerbosePrefKey = "Ruitk.UitkxNavVerbose";
+
+        // Live-reading (was a read-once static readonly) so toggling the pref — e.g. from
+        // the settings window (Reactive UI Toolkit ▸ Settings) — takes effect without a domain reload.
+        internal static bool VerboseLogging
+        {
+            get => EditorPrefs.GetBool(VerbosePrefKey, false);
+            set => EditorPrefs.SetBool(VerbosePrefKey, value);
+        }
+
         private static bool s_isProgrammaticOpenInProgress;
 
         [InitializeOnLoadMethod]
@@ -930,7 +939,7 @@ namespace Ruitk.Editor
 
         private static void LogVerbose(string message)
         {
-            if (s_verboseLogs)
+            if (VerboseLogging)
                 UnityEngine.Debug.LogWarning(message);
         }
     }
