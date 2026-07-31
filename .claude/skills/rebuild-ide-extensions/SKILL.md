@@ -5,7 +5,12 @@ description: Rebuild the VS Code and/or Visual Studio 2022 extensions locally fo
 
 # Rebuild IDE extensions for F5
 
-Repo root (Windows, PowerShell): `C:\Yanivs\GameDev\UnityComponents\Assets\ReactiveUIToolkit`
+Every path below is relative to the **repo root — the checkout you are already in**
+(the folder holding `config.json`, `Analyzers/` and `ide-extensions~/`). Commands are
+PowerShell-flavoured; run them from that root unless a step says otherwise. The root is
+never written down as an absolute path: it differs per clone, and a stale literal is
+exactly how the rebrand wave broke a sibling repo's F5 (see CLAUDE.md
+"Machine-local paths").
 
 Use this skill when the user wants to test changes to the VS Code or
 VS 2022 extension by launching an Extension Development Host (F5) or the
@@ -146,9 +151,11 @@ parity contract tests run against the new SG.
 
 - Reload window in the Extension Development Host (or restart it) to
   pick up the new LSP DLL — VS Code does not hot-swap server processes.
-- Open a `.uitkx` file from a real Unity project (e.g.
-  `c:\Users\neta\Pretty Ui\Assets\UI\…`) to verify diagnostics,
-  hover, completion, and formatting work end-to-end.
+- Open a `.uitkx` file from **any real Unity project of yours that consumes the
+  package** — not a file inside this repo. The point is to exercise the extension
+  against a consumer project's own folder layout (its `Assets/` root, its asmdefs),
+  which is where namespace derivation and import resolution actually get tested.
+  Verify diagnostics, hover, completion, and formatting work end-to-end.
 - The VS Code extension's "Output → UITKX Language Server" pane shows
   the server's stdout/stderr; any unhandled exception there means the
   rebuild produced a binary with a broken dependency graph (most often

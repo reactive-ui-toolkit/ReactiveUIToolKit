@@ -84,9 +84,14 @@ automation~/AstDump/
 *.csx
 !SourceGenerator~/Tests/FormatTest.csx
 
-# ── Credentials — never commit real tokens ─────────────────────
+# ── Credentials / machine-local — never commit ─────────────────
 publisher-secrets.json
 publisher-secrets.json.meta
+# This machine's irreducible tool paths (npm, optionally the Unity editor).
+# Copy .ruitk-local.example.json to create it. No tracked file may name a path
+# that exists only on one machine -- see CLAUDE.md "Machine-local paths",
+# enforced by scripts/check-machine-paths.mjs.
+.ruitk-local.json
 
 # ── Stale/orphan entries ───────────────────────────────────────
 # NOTE: Resources/__uitkx_registry.asset is intentionally NOT ignored.

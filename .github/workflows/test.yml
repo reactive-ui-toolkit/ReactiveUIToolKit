@@ -30,6 +30,24 @@ jobs:
       - name: Check family-core corpus hash (drift = fail)
         run: node scripts/corpus-hash.mjs --check
 
+  # No tracked file may name a path that exists only on one machine. The rebrand wave rewrote a
+  # repo-folder segment inside a hardcoded absolute path in a sibling repo's .vscode/launch.json and
+  # silently broke F5 for every other clone; three audits read the line and moved on. See the
+  # "Machine-local paths" section of CLAUDE.md. Engine-free (node only), same as the corpus gate.
+  machine-path-gate:
+    name: Machine-Local Path Gate
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Check for machine-local paths in tracked files
+        run: node scripts/check-machine-paths.mjs
+
   source-generator-tests:
     name: Source Generator Tests
     runs-on: ubuntu-latest

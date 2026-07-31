@@ -77,6 +77,15 @@ cd ReactiveUIToolkitDocs~ && npm run dev                  # or: npm run build
 - `VirtualNode` is pooled (`__Rent`); don't hold references across renders.
 - Git author is the user's alone — do not add a `Co-Authored-By` trailer, and don't stage/commit/push unless explicitly asked.
 
+## Machine-local paths
+
+**No tracked file may name a path that exists only on one machine.** `node scripts/check-machine-paths.mjs` enforces it in the hygiene-gates job of `.github/workflows/test.yml`; `--list` prints every absolute path it found with a verdict.
+
+- **Repo locations are derived, never written down.** `${workspaceFolder}` in VS Code configs, the script's own `..` in Node tooling, `$(MSBuildThisFileDirectory)` in MSBuild, `git worktree list` for worktrees, `[CallerFilePath]` in a `.csx`. A committed absolute path breaks every clone whose folder name differs — which is exactly how the rebrand wave broke a sibling repo's F5, by rewriting a folder segment *inside* a hardcoded path in `.vscode/launch.json`.
+- **Tools are probed, then overridden.** The chain is `$ENV_VAR` → `.ruitk-local.json` → PATH + standard install roots → an error naming all three. Standard roots (`C:\Program Files\…`, `/usr/…`) MAY appear in discovery code and CI workflows, and the gate allows them; `ide-extensions~/lsp-server/Roslyn/ReferenceAssemblyLocator.cs` is the model (it probes the Unity Hub locations per-OS). `CICD/Editor/PublishUtility.cs` resolves npm this way: `$RUITK_NPM` → `.ruitk-local.json` `npmPath` → `npm` on PATH.
+- **`.ruitk-local.json`** holds this machine's irreducible values — here npm, optionally the Unity editor. It is gitignored and copied from the tracked `.ruitk-local.example.json` (same shape as `publisher-secrets.example.json` ↔ `publisher-secrets.json`). Every key is an override, never a requirement.
+- Exemptions are data in the gate and each carries a reason: frozen tiers (archived plans, shipped changelog bodies) and test trees whose synthetic `"C:/proj/Assets/UI"` fixtures are the thing under test. A single line can opt out with a trailing `path-gate-allow: <reason>` comment. Never widen the allow-list to make a leak pass. <!-- path-gate-allow: the C:/proj example above is this section's own illustration of a synthetic fixture -->
+
 ## Skills (`.claude/skills/`)
 
 Project skills live in `.claude/skills/` (this repo dropped the Copilot `.github/instructions|prompts|skills` conventions — everything migrated 2026-07-16). Use them; don't improvise their subject matter:
