@@ -1,23 +1,43 @@
 name: Tests
 
+# `master` is the release branch — this repo has no `main`, so the previous
+# [dev, main] triggers meant an entire release wave could merge to master with
+# zero CI signal (no SG suite, no LSP suite, no docs build, no analyzer drift check).
+#
+# Family CI contract (same shape in ruitk-godot / ruitk-unreal): this workflow
+# exposes EXACTLY four check contexts — `gates`, `tests`, `extensions`, `docs`.
+# The job `name:` fields ARE those contexts, and the family branch rulesets
+# (.github/rulesets/protect-dev.json) require them by name — rename one and the
+# ruleset waits forever for a context that no longer reports.
+#
+# Deliberately NO `paths:` filters on these jobs. A required status check whose
+# workflow gets path-filtered out never reports at all, so the PR sits at
+# "Expected — waiting for status" with no way to merge. That is the same trap as
+# the [dev, main] lesson above, one level down: a trigger that doesn't fire gives
+# zero CI signal, and here zero signal also blocks the merge. Every job runs
+# unconditionally instead — they are cheap enough that correctness wins.
+
 on:
-  # `master` is the release branch — this repo has no `main`, so the previous
-  # [dev, main] triggers meant an entire release wave could merge to master with
-  # zero CI signal (no SG suite, no LSP suite, no docs build, no analyzer drift check).
-  pull_request:
-    branches: [dev, master]
   push:
-    branches: [dev, master]
+    branches: [master, dev]
+  pull_request:
+    branches: [master, dev]
 
 permissions:
   contents: read
 
+# One live run per ref. A superseded push to a PR branch cancels the stale run;
+# push builds on dev/master always run to completion (they are the permanent
+# record of what the branch actually did).
+concurrency:
+  group: "${{ github.workflow }}-${{ github.ref }}"
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
 jobs:
-  # TD-009 family-corpus drift gate: the .uitkx scanner corpus familyCore tiers must hash to the
-  # frozen family value shared byte-identically across the Unreal/Godot/Unity repos. Engine-free
-  # (node only) so it runs even though the Unity build job is heavier.
-  corpus-hash-gate:
-    name: Family Corpus Hash Gate
+  # Engine-free script gates (Node only — no Unity, no .NET), so they stay green
+  # even when the heavier suites are unavailable.
+  gates:
+    name: gates
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -27,29 +47,22 @@ jobs:
         with:
           node-version: "20"
 
+      # TD-009 family-corpus drift gate: the .uitkx scanner corpus familyCore tiers must hash to
+      # the frozen family value shared byte-identically across the Unreal/Godot/Unity repos.
       - name: Check family-core corpus hash (drift = fail)
         run: node scripts/corpus-hash.mjs --check
 
-  # No tracked file may name a path that exists only on one machine. The rebrand wave rewrote a
-  # repo-folder segment inside a hardcoded absolute path in a sibling repo's .vscode/launch.json and
-  # silently broke F5 for every other clone; three audits read the line and moved on. See the
-  # "Machine-local paths" section of CLAUDE.md. Engine-free (node only), same as the corpus gate.
-  machine-path-gate:
-    name: Machine-Local Path Gate
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
+      # No tracked file may name a path that exists only on one machine. The rebrand wave rewrote a
+      # repo-folder segment inside a hardcoded absolute path in a sibling repo's .vscode/launch.json
+      # and silently broke F5 for every other clone; three audits read the line and moved on. See
+      # the "Machine-local paths" section of CLAUDE.md.
       - name: Check for machine-local paths in tracked files
         run: node scripts/check-machine-paths.mjs
 
-  source-generator-tests:
-    name: Source Generator Tests
+  # The source-generator suite — the closest thing this repo has to an engine
+  # test lane without a licensed Unity editor on the runner.
+  tests:
+    name: tests
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -92,8 +105,10 @@ jobs:
           name: source-generator-test-results
           path: SourceGenerator~/Tests/TestResults/results.trx
 
-  lsp-server-tests:
-    name: LSP Server Tests
+  # IDE tooling lane: LSP server suite first (fail fast on logic), then the
+  # VS Code extension build + package dry-run on top of a published server.
+  extensions:
+    name: extensions
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -103,34 +118,23 @@ jobs:
         with:
           dotnet-version: "8.x"
 
-      - name: Restore
+      - name: Restore LSP server tests
         run: dotnet restore ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj
 
-      - name: Build
+      - name: Build LSP server tests
         run: dotnet build ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj -c Release --no-restore
 
-      - name: Test
+      - name: Run LSP server tests
         run: dotnet test ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj -c Release --no-build --logger "trx;LogFileName=results.trx"
 
-      - name: Upload test results
+      - name: Upload LSP test results
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: lsp-server-test-results
           path: ide-extensions~/lsp-server/Tests/TestResults/results.trx
 
-  vscode-extension-build:
-    name: VS Code Extension Build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "8.x"
-
-      - name: Build LSP server
+      - name: Build LSP server (for the extension package)
         run: |
           dotnet publish ide-extensions~/lsp-server/UitkxLanguageServer.csproj \
             -c Release \
@@ -142,7 +146,7 @@ jobs:
         with:
           node-version: "20"
 
-      - name: Install and build
+      - name: Install and build VS Code extension
         working-directory: ide-extensions~/vscode
         run: |
           npm ci
@@ -152,8 +156,8 @@ jobs:
         working-directory: ide-extensions~/vscode
         run: npx vsce package --no-dependencies -o test.vsix
 
-  docs-build:
-    name: Docs Site Build
+  docs:
+    name: docs
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4

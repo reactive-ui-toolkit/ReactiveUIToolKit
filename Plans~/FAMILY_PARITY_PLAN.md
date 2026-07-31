@@ -139,7 +139,7 @@ U-04 for the decision.
 
 - **Engine-free gates** (run from the repo root, no Unity needed):
   ```bash
-  node scripts/check-machine-paths.mjs      # machine-local path gate (CI: test.yml machine-path-gate)
+  node scripts/check-machine-paths.mjs      # machine-local path gate (CI: a step of test.yml's `gates` job)
   node scripts/corpus-hash.mjs --check      # family corpus (untouched by this campaign — must STAY green)
   ```
 - **Compile harness — the host Unity project.** This package is consumed as a UPM `file:`
