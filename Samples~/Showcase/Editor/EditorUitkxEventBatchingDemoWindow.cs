@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.EventBatchingDemoFunc;
-using ReactiveUITK.Samples.Components.EventBatchingDemoFunc.EventBatchingDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.EventBatchingDemoFunc;
+using Ruitk.Samples.Components.EventBatchingDemoFunc.EventBatchingDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxEventBatchingDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(13-17-18-26)/Event Batching")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(13-17-18-26)/Event Batching")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxEventBatchingDemoWindow>("Event Batching Demo");

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>Tag-name → adapter map for the uGUI backend (one per vocabulary).</summary>
     public sealed class UguiElementRegistry

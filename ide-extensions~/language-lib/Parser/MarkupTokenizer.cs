@@ -1,7 +1,7 @@
 using System;
 using System.Diagnostics;
 
-namespace ReactiveUITK.Language.Parser
+namespace Ruitk.Language.Parser
 {
     /// <summary>
     /// Character-level scanner for UITKX markup source.

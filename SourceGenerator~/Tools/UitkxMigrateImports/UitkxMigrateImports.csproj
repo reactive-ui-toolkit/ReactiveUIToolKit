@@ -21,7 +21,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
     <AssemblyName>UitkxMigrateImports</AssemblyName>
-    <RootNamespace>ReactiveUITK.SourceGenerator.Tools</RootNamespace>
+    <RootNamespace>Ruitk.SourceGenerator.Tools</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

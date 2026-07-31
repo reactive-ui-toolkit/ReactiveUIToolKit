@@ -2,14 +2,14 @@
 #if UNITY_EDITOR
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Props;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props;
+using Ruitk.Props.Typed;
 using UnityEditor;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public sealed class PropertyFieldElementAdapter : BaseElementAdapter
     {

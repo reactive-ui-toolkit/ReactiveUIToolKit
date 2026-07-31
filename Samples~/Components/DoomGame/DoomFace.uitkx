@@ -1,5 +1,5 @@
 import "@UnityEngine.UIElements"
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTypes"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTypes"
 
 export VirtualNode DoomFace(int frame) {
   var idx = Mathf.Clamp(frame, 0, 7);

@@ -321,14 +321,14 @@ permanent second maintenance leg (every future element/prop/Unity-version wave g
 uGUI column — `add-unity-version` skill must grow a step).
 
 ### M8 docs & changelog deliverables (the repo's specific machinery, not generic "docs")
-- Docs site (`ReactiveUIToolKitDocs~`): new "uGUI backend" section — getting started
+- Docs site (`ReactiveUIToolkitDocs~`): new "uGUI backend" section — getting started
   for uGUI (mount, first component, anchor presets), full element/prop reference
   (generated-page style matching the UITK reference), the prefab migration-bridge
   guide, and a "which backend when" page; getting-started updated to present the
   backend choice. Redeploy = the owner's republish flow.
 - `CHANGELOG.md` (source of truth): minor-version entry via `scripts/changelog.mjs`
   assist, per VERSIONING.md (additive = minor).
-- `Plans~/DISCORD_CHANGELOG.md`: release post under the hard 2000-char-per-entry cap
+- `plans/DISCORD_CHANGELOG.md`: release post under the hard 2000-char-per-entry cap
   (discord-changelog skill rules: ASCII-only, prepend-only).
 - IDE extensions: entries added to `ide-extensions~/changelog.json` (`@backend`
   directive, ugui schema completions/hover/diagnostics) and marketplace pages

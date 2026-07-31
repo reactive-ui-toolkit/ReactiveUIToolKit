@@ -1,7 +1,7 @@
-using ReactiveUITK.Language.Formatter;
+using Ruitk.Language.Formatter;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// ES-modules campaign (Plans~/ES_MODULES_EXECUTION_PLAN.md M6, U-10): the formatter's

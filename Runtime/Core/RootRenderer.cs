@@ -1,13 +1,14 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Diagnostics;
-using ReactiveUITK.Elements;
-using ReactiveUITK.Signals;
+using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
+using Ruitk.Core.Fiber;
+using Ruitk.Elements;
+using Ruitk.Signals;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     public sealed class RootRenderer : MonoBehaviour
     {
@@ -65,8 +66,17 @@ namespace ReactiveUITK.Core
                 // Initialize global diagnostics configuration from build defines.
                 DiagnosticsConfig.CurrentTraceLevel = BuildDefinesConfig.ResolveTraceLevel();
                 DiagnosticsConfig.EnableDiffTracing = BuildDefinesConfig.ResolveEnableDiffTracing();
-                DiagnosticsConfig.UseExceptionBoundaryFlow =
-                    BuildDefinesConfig.ResolveExceptionBoundaryFlow();
+
+                // Reconciler knobs — defaults reproduce the former constants exactly.
+                FiberConfig.TimeSlicingEnabled = BuildDefinesConfig.ResolveTimeSlicing();
+                FiberConfig.TimeSliceMs = BuildDefinesConfig.ResolveTimeSliceMs();
+
+                // Strict knobs — the two tri-states resolve auto = on in the editor and
+                // development builds, off in release players; strict_mode additionally
+                // force-resolves off in release players regardless of the stored value.
+                Hooks.EnableHookValidation = BuildDefinesConfig.ResolveHookValidation();
+                Hooks.EnableStrictDiagnostics = BuildDefinesConfig.ResolveStrictDiagnostics();
+                FiberConfig.StrictModeEnabled = BuildDefinesConfig.ResolveStrictMode();
 
                 // For now, drive internal logs off the verbose trace level.
                 InternalLogOptions.EnableInternalLogs =
@@ -160,7 +170,7 @@ namespace ReactiveUITK.Core
             {
                 return;
             }
-            hostDocumentTickUnsubscribe = ReactiveUITK.Core.Animation.AnimationTicker.Subscribe(
+            hostDocumentTickUnsubscribe = Ruitk.Core.Animation.AnimationTicker.Subscribe(
                 PollHostDocument
             );
         }

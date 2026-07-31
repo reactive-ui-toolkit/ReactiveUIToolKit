@@ -1,7 +1,7 @@
 import * as GameLogic from "./GameLogic"
 import "@UnityEngine.InputSystem"
 import "@UnityEngine.UIElements"
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTypes"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTypes"
 
 export (
   GameState state,

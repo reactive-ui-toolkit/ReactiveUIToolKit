@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Language.Roslyn
+namespace Ruitk.Language.Roslyn
 {
     /// <summary>
     /// Provides element → props-type mapping so the virtual document generator

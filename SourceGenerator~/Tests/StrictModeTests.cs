@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.SourceGenerator;
+using Ruitk.Language.Parser;
+using Ruitk.SourceGenerator;
 using Xunit;
-using static ReactiveUITK.Language.StrictImportDetector;
+using static Ruitk.Language.StrictImportDetector;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// The strict reference detector (plan §6 / §15 StrictModeTests): 2305 (peer-exported but not

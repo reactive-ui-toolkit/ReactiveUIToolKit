@@ -1,6 +1,6 @@
 ﻿using System.Collections.Immutable;
 
-namespace ReactiveUITK.Language.Nodes
+namespace Ruitk.Language.Nodes
 {
     // ── Base ─────────────────────────────────────────────────────────────────
 

@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Formatter;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.Formatter;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.SourceGenerator.Tools
+namespace Ruitk.SourceGenerator.Tools
 {
     /// <summary>
     /// One <c>.uitkx</c> file handed to the migrator: its absolute path (for relative-specifier

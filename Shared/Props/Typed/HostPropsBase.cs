@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK.Props.Typed
+namespace Ruitk.Props.Typed
 {
     /// <summary>
     /// Backend-neutral base for typed host-element props. The fiber stores and
@@ -8,7 +8,7 @@ namespace ReactiveUITK.Props.Typed
     /// (UI Toolkit's <see cref="BaseProps"/>, the uGUI props family) supplies
     /// its own fields, equality, and pooling underneath it.
     /// </summary>
-    public abstract class HostPropsBase : global::ReactiveUITK.Core.IProps
+    public abstract class HostPropsBase : global::Ruitk.Core.IProps
     {
         // ═══════════════════════════════════════════════════════════════════
         //  Pool generation stamp (shared by all families)

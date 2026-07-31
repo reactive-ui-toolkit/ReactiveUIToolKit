@@ -12,10 +12,10 @@ using OmniSharp.Extensions.LanguageServer.Protocol;
 using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Document;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 
 using LspLocation = OmniSharp.Extensions.LanguageServer.Protocol.Models.Location;
-using ReactiveUITK.Language.Roslyn;
+using Ruitk.Language.Roslyn;
 using UitkxLanguageServer.Roslyn;
 using LspRange = OmniSharp.Extensions.LanguageServer.Protocol.Models.Range;
 

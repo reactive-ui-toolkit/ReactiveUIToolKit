@@ -1,12 +1,12 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Diagnostics;
-using ReactiveUITK.Props.Typed;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
+using Ruitk.Props.Typed;
 using UnityEngine;
 
-namespace ReactiveUITK.Router
+namespace Ruitk.Router
 {
     public static class RouterFunc
     {

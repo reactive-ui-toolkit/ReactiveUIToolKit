@@ -9,7 +9,7 @@
         private static void useEffect(
             global::System.Func<global::System.Action> effectFactory,
             params object[] deps) { }
-        private static global::ReactiveUITK.Core.Ref<T> useRef<T>(T initial = default) => new();
+        private static global::Ruitk.Core.Ref<T> useRef<T>(T initial = default) => new();
         private static global::UnityEngine.UIElements.VisualElement useRef() => null!;
         private static global::System.Func<T> useCallback<T>(
             global::System.Func<T> callback, params object[] deps) => callback!;
@@ -31,9 +31,9 @@
         private static global::System.Func<T> useStableFunc<T>(global::System.Func<T> function) => function;
         private static global::System.Action<T> useStableAction<T>(global::System.Action<T> action) => action;
         private static global::System.Action useStableCallback(global::System.Action callback) => callback;
-        private static void useTweenFloat(float from, float to, float duration, global::ReactiveUITK.Core.Animation.Ease ease, float delay, global::System.Action<float> onUpdate, global::System.Action onComplete, params object[] deps) { }
-        private static void useAnimate(global::System.Collections.Generic.IReadOnlyList<global::ReactiveUITK.Core.Animation.AnimateTrack> tracks, bool autoplay = true, params object[] deps) { }
-        private static global::ReactiveUITK.Core.SafeAreaInsets useSafeArea(float tolerance = 0.5f) => default!;
+        private static void useTweenFloat(float from, float to, float duration, global::Ruitk.Core.Animation.Ease ease, float delay, global::System.Action<float> onUpdate, global::System.Action onComplete, params object[] deps) { }
+        private static void useAnimate(global::System.Collections.Generic.IReadOnlyList<global::Ruitk.Core.Animation.AnimateTrack> tracks, bool autoplay = true, params object[] deps) { }
+        private static global::Ruitk.Core.SafeAreaInsets useSafeArea(float tolerance = 0.5f) => default!;
         private static (bool isPending, global::System.Action<global::System.Action> startTransition) useTransition() => (false, _ => { });
         private static T Asset<T>(string path) where T : global::UnityEngine.Object => default!;
         private static T Ast<T>(string path) where T : global::UnityEngine.Object => default!;

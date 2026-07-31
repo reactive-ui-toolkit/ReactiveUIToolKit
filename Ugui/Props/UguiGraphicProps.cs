@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Shared prop surface for elements backed by a <c>Graphic</c>

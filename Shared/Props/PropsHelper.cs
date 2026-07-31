@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq.Expressions;
 using System.Reflection;
-using ReactiveUITK.Signals;
+using Ruitk.Signals;
 
-namespace ReactiveUITK.Props
+namespace Ruitk.Props
 {
     /// <summary>
     /// Runtime helper for bridging C# reactive data sources to UITKX component props.

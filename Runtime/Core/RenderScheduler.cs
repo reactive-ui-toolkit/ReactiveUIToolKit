@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEngine;
 
-namespace ReactiveUITK
+namespace Ruitk
 {
     public sealed class RenderScheduler : MonoBehaviour, IScheduler
     {
@@ -35,6 +35,9 @@ namespace ReactiveUITK
             if (Instance == null)
             {
                 Instance = this;
+                // frame_budget_ms: bootstrap-read like every other knob. The serialized field
+                // stays (harmless); the resolver wins for the runtime-created instance.
+                frameBudgetMs = BuildDefinesConfig.ResolveFrameBudgetMs();
             }
             else
             {

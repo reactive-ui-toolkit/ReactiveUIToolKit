@@ -2,7 +2,7 @@
 //  HmrStaticReadonlyStripper — HMR-side mirror of the SG's
 //  StaticReadonlyStripper. Rewrites `static readonly` field declarations in
 //  a `module { … }` body to plain `static` fields decorated with
-//  `[global::ReactiveUITK.UitkxHmrSwap]`.
+//  `[global::Ruitk.UitkxHmrSwap]`.
 //
 //  Why a hand-written scanner (and not Roslyn):
 //    The Editor assembly does NOT directly reference Microsoft.CodeAnalysis —
@@ -20,7 +20,7 @@
 //    of each statement and look forward through modifier keywords. If the
 //    sequence of modifier tokens contains BOTH `static` AND `readonly` and
 //    NOT `const`, rewrite the statement: drop the `readonly` token and
-//    prepend `[global::ReactiveUITK.UitkxHmrSwap] `.
+//    prepend `[global::Ruitk.UitkxHmrSwap] `.
 //
 //  Edge-case policy (matches SG-side stripper):
 //    • const            → untouched
@@ -37,11 +37,11 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     internal static class HmrStaticReadonlyStripper
     {
-        public const string AttributePrefix = "[global::ReactiveUITK.UitkxHmrSwap] ";
+        public const string AttributePrefix = "[global::Ruitk.UitkxHmrSwap] ";
 
         // C# field-modifier keywords. Any token in this set encountered at
         // statement start (depth 0) is considered part of the modifier prefix.

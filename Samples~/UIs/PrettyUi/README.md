@@ -1,6 +1,6 @@
 # PrettyUi sample
 
-Faithful in-repo mirror of an external consumer project (`C:\Users\neta\Pretty Ui\Assets\UI`).
+Faithful in-repo mirror of an external consumer project's `Assets/UI` tree.
 Exists so HMR-time bugs that only surface against this exact shape can be
 reproduced and iterated on inside this repo, without round-tripping through
 publish → install → Unity launch.

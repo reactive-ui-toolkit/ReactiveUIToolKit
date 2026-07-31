@@ -12,11 +12,11 @@ using Debug = UnityEngine.Debug;
 // Roslyn in-process compilation (reflection handles)
 // Uses Microsoft.CodeAnalysis.CSharp 4.3.1 netstandard2.0 loaded at runtime
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     /// <summary>
     /// Compiles a .uitkx file in-process:
-    ///   1. Parse via ReactiveUITK.Language.dll (loaded at runtime, Roslyn-free)
+    ///   1. Parse via Ruitk.Language.dll (loaded at runtime, Roslyn-free)
     ///   2. Emit C# via built-in HMR emitter
     ///   3. Compile via in-process Roslyn (fast) or external csc.dll (fallback)
     ///   4. Load via Assembly.Load
@@ -195,7 +195,7 @@ namespace ReactiveUITK.EditorSupport.HMR
         // duplicate-type errors whenever the project legitimately defines the
         // same type name in two non-cross-referencing asmdefs (e.g. a user
         // component `AppButton` in Assembly-CSharp and a sample `AppButton`
-        // in ReactiveUITK.Samples — Unity's normal compile never sees both
+        // in Ruitk.Samples — Unity's normal compile never sees both
         // because Assembly-CSharp.csproj does not reference Samples). The
         // fix mirrors Unity's per-asmdef reference closure via
         // CompilationPipeline.GetAssemblies(...).allReferences. Caches are
@@ -1576,7 +1576,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                         // container exists for stamp-less companions.
                         string hookNs = companionNs;
                         if (string.IsNullOrEmpty(hookNs))
-                            hookNs = componentNs ?? "ReactiveUITK.Generated";
+                            hookNs = componentNs ?? "Ruitk.Generated";
                         hookContainerFqns.Add($"{hookNs}.{containerClass}");
 
                         try
@@ -1826,10 +1826,10 @@ namespace ReactiveUITK.EditorSupport.HMR
                     Assembly.LoadFrom(immutablePath);
             }
 
-            string langPath = Path.Combine(analyzersDir, "ReactiveUITK.Language.dll");
+            string langPath = Path.Combine(analyzersDir, "Ruitk.Language.dll");
             if (!File.Exists(langPath))
                 throw new FileNotFoundException(
-                    $"ReactiveUITK.Language.dll not found at {langPath}"
+                    $"Ruitk.Language.dll not found at {langPath}"
                 );
 
             _languageAsm = Assembly.LoadFrom(langPath);
@@ -1838,7 +1838,7 @@ namespace ReactiveUITK.EditorSupport.HMR
         private void CacheReflectionHandles()
         {
             // DirectiveParser
-            var dpType = _languageAsm.GetType("ReactiveUITK.Language.Parser.DirectiveParser");
+            var dpType = _languageAsm.GetType("Ruitk.Language.Parser.DirectiveParser");
             if (dpType == null)
                 throw new TypeLoadException("DirectiveParser not found");
             _directiveParse = dpType.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static);
@@ -1871,10 +1871,10 @@ namespace ReactiveUITK.EditorSupport.HMR
             // legacy + 4-arg mode-aware), so a bare name-only GetMethod throws
             // AmbiguousMatchException. Bind the 4-arg overload BY PARAMETER TYPES; a DLL that
             // has EffectiveNamespace but NOT the 4-arg overload is a stale committed
-            // Analyzers/ReactiveUITK.Language.dll — fail loudly (a silent 3-arg fallback would
+            // Analyzers/Ruitk.Language.dll — fail loudly (a silent 3-arg fallback would
             // put every migrated file's HMR family key in the WRONG namespace, the exact
             // split-brain class of bug the effective-namespace seam exists to prevent).
-            var effNsType = _languageAsm.GetType("ReactiveUITK.Language.EffectiveNamespace");
+            var effNsType = _languageAsm.GetType("Ruitk.Language.EffectiveNamespace");
             if (effNsType != null)
             {
                 _effectiveNamespaceResolve = effNsType.GetMethod(
@@ -1893,34 +1893,34 @@ namespace ReactiveUITK.EditorSupport.HMR
                 {
                     throw new MissingMethodException(
                         "EffectiveNamespace.Resolve(bool, string, string, bool) not found — the committed "
-                        + "Analyzers/ReactiveUITK.Language.dll predates the ES-modules namespace overload. "
+                        + "Analyzers/Ruitk.Language.dll predates the ES-modules namespace overload. "
                         + "Rebuild it with scripts/build-generator.ps1 and restart Unity.");
                 }
             }
             _uiSourceRootDir = effNsType?.GetMethod("UiSourceRootDir", BindingFlags.Public | BindingFlags.Static);
             _importResolverMap = _languageAsm
-                .GetType("ReactiveUITK.Language.ImportResolver")
+                .GetType("Ruitk.Language.ImportResolver")
                 ?.GetMethod("MapSpecifierToPath", BindingFlags.Public | BindingFlags.Static);
             _importScopePayloads = _languageAsm
-                .GetType("ReactiveUITK.Language.ImportScopeFacts")
+                .GetType("Ruitk.Language.ImportScopeFacts")
                 ?.GetMethod("ComputeInjectedUsingPayloads", BindingFlags.Public | BindingFlags.Static);
             _importedMemberBridgeLines = _languageAsm
-                .GetType("ReactiveUITK.Language.ImportScopeFacts")
+                .GetType("Ruitk.Language.ImportScopeFacts")
                 ?.GetMethod("ComputeImportedMemberBridgeLines", BindingFlags.Public | BindingFlags.Static);
             _starImportNamespacesFn = _languageAsm
-                .GetType("ReactiveUITK.Language.ImportScopeFacts")
+                .GetType("Ruitk.Language.ImportScopeFacts")
                 ?.GetMethod("ComputeStarImportNamespaces", BindingFlags.Public | BindingFlags.Static);
             _importAliasTypeMapFn = _languageAsm
-                .GetType("ReactiveUITK.Language.ImportScopeFacts")
+                .GetType("Ruitk.Language.ImportScopeFacts")
                 ?.GetMethod("ComputeImportAliasTypeMap", BindingFlags.Public | BindingFlags.Static);
 
             // ParseDiagnostic type (for creating List<ParseDiagnostic>)
-            _parseDiagnosticType = _languageAsm.GetType("ReactiveUITK.Language.ParseDiagnostic");
+            _parseDiagnosticType = _languageAsm.GetType("Ruitk.Language.ParseDiagnostic");
             if (_parseDiagnosticType == null)
                 throw new TypeLoadException("ParseDiagnostic type not found");
 
             // UitkxParser
-            var upType = _languageAsm.GetType("ReactiveUITK.Language.Parser.UitkxParser");
+            var upType = _languageAsm.GetType("Ruitk.Language.Parser.UitkxParser");
             if (upType == null)
                 throw new TypeLoadException("UitkxParser not found");
             _uitkxParse = upType.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static);
@@ -1928,7 +1928,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 throw new MissingMethodException("UitkxParser.Parse not found");
 
             // CanonicalLowering
-            var clType = _languageAsm.GetType("ReactiveUITK.Language.Lowering.CanonicalLowering");
+            var clType = _languageAsm.GetType("Ruitk.Language.Lowering.CanonicalLowering");
             if (clType == null)
                 throw new TypeLoadException("CanonicalLowering not found");
             _canonicalLower = clType.GetMethod(
@@ -3311,53 +3311,68 @@ namespace ReactiveUITK.EditorSupport.HMR
 
         // ── Utility ───────────────────────────────────────────────────────────
 
+        /// <summary>
+        /// Absolute path of the package's <c>Analyzers/</c> directory (which holds
+        /// <c>Ruitk.Language.dll</c>) — in EVERY install layout.
+        ///
+        /// <para>This used to probe only under <c>Application.dataPath</c>: it walked up a
+        /// FIXED three levels from an AssetDatabase hit and then re-rooted the result at the project
+        /// folder, plus two <c>Assets/</c>-only fallbacks. A UPM git-URL install (the primary channel,
+        /// where the package physically lives in <c>Library/PackageCache/com.reactiveuitoolkit@&lt;hash&gt;</c>)
+        /// exhausted all three probes and threw <see cref="DirectoryNotFoundException"/>, so Hot Module
+        /// Reload could not work at all. It now goes through the one layout-agnostic resolver,
+        /// <see cref="RuitkPackagePaths"/>.</para>
+        ///
+        /// <para>READ-ONLY use, deliberately: nothing in HMR writes under the package root — every
+        /// emitted <c>.cs</c>/<c>.rsp</c>/<c>.dll</c> goes to <c>%TEMP%/UitkxHmr</c> (see
+        /// <c>_tempDir</c>). That is what makes a read-only PackageCache install legal here.</para>
+        /// </summary>
         private static string FindAnalyzersDirectory()
         {
-            // Primary: use the package root via ScriptableObject asset path lookup
-            // The Editor/HMR/ folder is inside the package — find the package root
-            // by locating this script via AssetDatabase
-            string[] guids = UnityEditor.AssetDatabase.FindAssets("UitkxHmrCompiler t:MonoScript");
-            if (guids.Length > 0)
+            // Layout-agnostic: PackageInfo (UPM / embedded / file:) → asset-database sentinel
+            // walk-up (Assets/, folder-name-agnostic) → legacy Assets/ReactiveUIToolkit.
+            bool rootResolved = RuitkPackagePaths.TryGetRoot(out string packageRoot);
+            if (rootResolved)
             {
-                string scriptPath = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                // scriptPath is like "Assets/ReactiveUIToolKit/Editor/HMR/UitkxHmrCompiler.cs"
-                // Walk up to package root then into Analyzers/
-                string dir = Path.GetDirectoryName(scriptPath); // Editor/HMR
-                dir = Path.GetDirectoryName(dir); // Editor
-                dir = Path.GetDirectoryName(dir); // package root
-                string analyzersDir = Path.Combine(
-                    Path.GetFullPath(Path.Combine(Application.dataPath, "..")),
-                    dir,
-                    "Analyzers"
-                );
+                string analyzersDir = Path.Combine(packageRoot, "Analyzers");
                 if (Directory.Exists(analyzersDir))
                     return analyzersDir;
             }
 
-            // Fallback: try the well-known path
-            string packageRoot = Path.GetFullPath(
-                Path.Combine(Application.dataPath, "ReactiveUIToolKit")
-            );
-            string fallback = Path.Combine(packageRoot, "Analyzers");
-            if (Directory.Exists(fallback))
-                return fallback;
-
-            // Fallback 2: search all Assets subfolders for ReactiveUIToolKit/Analyzers
-            string assetsDir = Application.dataPath;
-            foreach (
-                var candidate in Directory.GetDirectories(
-                    assetsDir,
-                    "Analyzers",
-                    SearchOption.AllDirectories
-                )
-            )
+            // Rescue for an oddly-shaped tree (package root unresolvable, or present but missing its
+            // Analyzers/): the pre-existing Assets-wide scan. Only ever reached on the path that would
+            // otherwise throw, so it costs nothing in the happy path.
+            try
             {
-                if (File.Exists(Path.Combine(candidate, "ReactiveUITK.Language.dll")))
-                    return candidate;
+                foreach (
+                    var candidate in Directory.GetDirectories(
+                        Application.dataPath,
+                        "Analyzers",
+                        SearchOption.AllDirectories
+                    )
+                )
+                {
+                    if (File.Exists(Path.Combine(candidate, "Ruitk.Language.dll")))
+                        return candidate;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning(
+                    "[HMR] Assets-wide Analyzers/ scan failed: " + ex.Message
+                );
             }
 
             throw new DirectoryNotFoundException(
-                "Cannot find Analyzers/ directory containing ReactiveUITK.Language.dll"
+                "Cannot find the Analyzers/ directory containing Ruitk.Language.dll — Hot Module "
+                + "Reload cannot run without it.\n"
+                + (rootResolved
+                    ? "The package root resolved to '" + packageRoot + "', but '"
+                      + Path.Combine(packageRoot, "Analyzers")
+                      + "' does not exist and no Analyzers/ holding Ruitk.Language.dll was found under "
+                      + Application.dataPath
+                      + ". Analyzers/ is a must-ship folder, so the install looks incomplete."
+                    : RuitkPackagePaths.FailureMessage)
             );
         }
 

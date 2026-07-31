@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "/home/runner/work/ReactiveUIToolKit/ReactiveUIToolKit/ide-extensions~/language-lib/UitkxLanguage.csproj": {}
+    "/home/runner/work/ruitk-unity/ruitk-unity/ide-extensions~/language-lib/UitkxLanguage.csproj": {}
   },
   "projects": {
-    "/home/runner/work/ReactiveUIToolKit/ReactiveUIToolKit/ide-extensions~/language-lib/UitkxLanguage.csproj": {
+    "/home/runner/work/ruitk-unity/ruitk-unity/ide-extensions~/language-lib/UitkxLanguage.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/runner/work/ReactiveUIToolKit/ReactiveUIToolKit/ide-extensions~/language-lib/UitkxLanguage.csproj",
-        "projectName": "ReactiveUITK.Language",
-        "projectPath": "/home/runner/work/ReactiveUIToolKit/ReactiveUIToolKit/ide-extensions~/language-lib/UitkxLanguage.csproj",
+        "projectUniqueName": "/home/runner/work/ruitk-unity/ruitk-unity/ide-extensions~/language-lib/UitkxLanguage.csproj",
+        "projectName": "Ruitk.Language",
+        "projectPath": "/home/runner/work/ruitk-unity/ruitk-unity/ide-extensions~/language-lib/UitkxLanguage.csproj",
         "packagesPath": "/home/runner/.nuget/packages/",
-        "outputPath": "/home/runner/work/ReactiveUIToolKit/ReactiveUIToolKit/ide-extensions~/language-lib/obj/",
+        "outputPath": "/home/runner/work/ruitk-unity/ruitk-unity/ide-extensions~/language-lib/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "/home/runner/.nuget/NuGet/NuGet.Config"

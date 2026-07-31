@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// The RectTransform anchor-preset widget as a value. Each preset expands

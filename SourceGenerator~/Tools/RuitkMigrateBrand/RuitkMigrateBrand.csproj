@@ -1,0 +1,46 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    RuitkMigrateBrand — the 0.12.0 rebrand codemod (REBRAND_PLAN §7.G1).
+
+    Rewrites a USER project for the ReactiveUITK -> Ruitk identifier rename
+    (family umbrella "Reactive UI Toolkit", wave 0.12.0):
+      • F  frozen marketplace identities (ReactiveUITK.uitkx, UitkxVsix.ReactiveUITK,
+        ...) are masked first and round-trip verbatim — the release froze them;
+      • C1 composites (enumerated table): ReactiveUITKConfig -> RuitkConfig, plus the
+        hidden media host/peer object names (__ReactiveUITK_* -> __Ruitk_*);
+      • C1b editor menu root inside string literals: "ReactiveUITK/ -> "Reactive UI Toolkit/;
+      • C2 bare token: ReactiveUITK with BOTH word boundaries -> Ruitk (namespaces,
+        usings, global:: refs, asmdef names/references);
+      • the REACTIVEUITK_HAS_TEST_FRAMEWORK define -> RUITK_HAS_TEST_FRAMEWORK;
+      • D  install-path segment ReactiveUIToolKit -> ReactiveUIToolkit, any prefix
+        (Assets/, Assets\, Assets\\, Packages/, or a bare Path.Combine segment),
+        boundaried so ReactiveUIToolKitExtras is left alone.
+
+    Scans .cs .uitkx .asmdef .asmref .rsp. Idempotent + re-runnable (a second run
+    reports 0). Prints per-file replacement counts, preserves each file's BOM, and
+    skips (with a warning) any file that is not valid UTF-8 rather than corrupting it.
+    Per-file try/catch: a read-only file no longer aborts the run — the tool reports
+    every failure plus the list of files it did write, and exits non-zero.
+
+    NEVER edits inside the package folder itself (any path segment named
+    ReactiveUIToolKit / ReactiveUIToolkit / com.reactiveuitoolkit is skipped), nor the
+    tool-generated Assets/ReactiveUITK and Assets/Ruitk trigger+registry folders, nor
+    ~-suffixed tooling folders and build/VCS folders.
+
+    Behaviour is pinned by SourceGenerator~/Tests/BrandCodemodTests.cs.
+
+    Modeled 1:1 on Tools/UitkxMigrateImports. Not shipped to Unity (under a `~`
+    tools folder).
+  -->
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <AssemblyName>RuitkMigrateBrand</AssemblyName>
+    <RootNamespace>Ruitk.SourceGenerator.Tools</RootNamespace>
+  </PropertyGroup>
+
+</Project>

@@ -1,10 +1,10 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 // Stage 3d asmdef-boundary coverage. With the cross-namespace fix in place,
 // the only remaining filter that prevents `using static` injection across
@@ -42,7 +42,7 @@ component RuntimeComp {
         string runtimeDir = System.IO.Path.Combine(System.IO.Path.GetTempPath(), "uitkx_tests_asmdef", "Runtime");
 
         var stubTree = CSharpSyntaxTree.ParseText(
-            "namespace ReactiveUITK.Core { public abstract class VirtualNode { } }",
+            "namespace Ruitk.Core { public abstract class VirtualNode { } }",
             path: System.IO.Path.Combine(runtimeDir, "_Stubs.g.cs"));
 
         var compilation = CSharpCompilation.Create(

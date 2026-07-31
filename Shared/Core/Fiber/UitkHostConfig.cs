@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using ReactiveUITK.Elements;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Elements;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// UI Toolkit host backend. Host handles are <see cref="VisualElement"/>s;
@@ -145,7 +145,7 @@ namespace ReactiveUITK.Core.Fiber
         public override void OnHostRemoved(object element)
         {
             // Clean up previousStyles tracking to prevent memory leak (P0-5)
-            ReactiveUITK.Props.PropsApplier.NotifyElementRemoved((VisualElement)element);
+            Ruitk.Props.PropsApplier.NotifyElementRemoved((VisualElement)element);
         }
 
         public override string GetDebugName(object element)

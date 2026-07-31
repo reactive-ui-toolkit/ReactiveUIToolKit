@@ -2,7 +2,7 @@ using System.IO;
 using System.Reflection;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 // Parity check: the SG's UitkxPipeline.IsOwnedByCompilation /
 // FindOwningAsmdefAssemblyName logic is mirrored verbatim by the editor-side

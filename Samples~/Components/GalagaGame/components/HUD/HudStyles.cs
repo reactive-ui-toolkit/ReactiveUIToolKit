@@ -1,7 +1,7 @@
 using UnityEngine;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Samples.Components.GalagaGame.components.HUD {
+namespace Ruitk.Samples.Components.GalagaGame.components.HUD {
   public static class HudStyles {
     public static readonly Style Container = new Style {
       (StyleKeys.Display, "flex"),

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ReactiveUITK.Language.Parser
+namespace Ruitk.Language.Parser
 {
     /// <summary>
     /// Shared utilities for finding <c>return (...)</c> statements and matching

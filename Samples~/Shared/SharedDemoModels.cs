@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK.Samples.UITKXShared
+namespace Ruitk.Samples.UITKXShared
 {
     public class SharedRowItem
     {

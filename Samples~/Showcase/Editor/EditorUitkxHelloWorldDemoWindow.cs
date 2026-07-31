@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.HelloWorldFunc;
-using ReactiveUITK.Samples.Components.HelloWorldFunc.HelloWorldFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.HelloWorldFunc;
+using Ruitk.Samples.Components.HelloWorldFunc.HelloWorldFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxHelloWorldDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Hello World")]
+        [MenuItem("Reactive UI Toolkit/Demos/Hello World")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxHelloWorldDemoWindow>("Hello World Demo");

@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-namespace ReactiveUITK.SourceGenerator
+namespace Ruitk.SourceGenerator
 {
     /// <summary>
     /// Lightweight descriptor for a hook container class discovered during

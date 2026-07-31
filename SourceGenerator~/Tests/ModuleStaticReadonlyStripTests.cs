@@ -1,13 +1,13 @@
 using System.Linq;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// End-to-end coverage for B28 — the SG strips `readonly` from every
 /// top-level <c>static readonly</c> module field and decorates the result
-/// with <c>[global::ReactiveUITK.UitkxHmrSwap]</c>.
+/// with <c>[global::Ruitk.UitkxHmrSwap]</c>.
 /// </summary>
 public class ModuleStaticReadonlyStripTests
 {
@@ -24,7 +24,7 @@ public class ModuleStaticReadonlyStripTests
 
         Assert.True(result.SourceWasProduced,
             $"No source produced. Diagnostics: {string.Join(", ", result.Diagnostics.Select(d => d.GetMessage()))}");
-        Assert.Contains("[global::ReactiveUITK.UitkxHmrSwap]", result.GeneratedSource);
+        Assert.Contains("[global::Ruitk.UitkxHmrSwap]", result.GeneratedSource);
         Assert.Contains("public static int X = 16", result.GeneratedSource);
         Assert.DoesNotContain("public static readonly int X", result.GeneratedSource);
     }
@@ -43,7 +43,7 @@ public class ModuleStaticReadonlyStripTests
 
         Assert.True(result.SourceWasProduced);
         // Both fields must be decorated.
-        int attrCount = CountOccurrences(result.GeneratedSource, "[global::ReactiveUITK.UitkxHmrSwap]");
+        int attrCount = CountOccurrences(result.GeneratedSource, "[global::Ruitk.UitkxHmrSwap]");
         Assert.True(attrCount >= 2,
             $"Expected at least 2 [UitkxHmrSwap] attributes, found {attrCount}. Got:\n{result.GeneratedSource}");
         Assert.DoesNotContain("static readonly", result.GeneratedSource);
@@ -62,7 +62,7 @@ public class ModuleStaticReadonlyStripTests
 
         Assert.True(result.SourceWasProduced);
         Assert.Contains("public const int VERSION = 7", result.GeneratedSource);
-        Assert.DoesNotContain("[global::ReactiveUITK.UitkxHmrSwap]", result.GeneratedSource);
+        Assert.DoesNotContain("[global::Ruitk.UitkxHmrSwap]", result.GeneratedSource);
     }
 
     [Fact]
@@ -78,7 +78,7 @@ public class ModuleStaticReadonlyStripTests
 
         Assert.True(result.SourceWasProduced);
         Assert.Contains("public static int Counter", result.GeneratedSource);
-        Assert.DoesNotContain("[global::ReactiveUITK.UitkxHmrSwap]", result.GeneratedSource);
+        Assert.DoesNotContain("[global::Ruitk.UitkxHmrSwap]", result.GeneratedSource);
     }
 
     [Fact]
@@ -96,7 +96,7 @@ public class ModuleStaticReadonlyStripTests
 
         Assert.True(result.SourceWasProduced);
         Assert.Contains("[System.Obsolete]", result.GeneratedSource);
-        Assert.Contains("[global::ReactiveUITK.UitkxHmrSwap]", result.GeneratedSource);
+        Assert.Contains("[global::Ruitk.UitkxHmrSwap]", result.GeneratedSource);
         Assert.DoesNotContain("static readonly", result.GeneratedSource);
     }
 

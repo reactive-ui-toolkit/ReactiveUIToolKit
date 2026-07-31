@@ -44,7 +44,7 @@
 //
 //    A. The source generator (and the HMR emitter) STRIP the `readonly`
 //       keyword from every module-scope `static readonly` field and decorate
-//       it with [global::ReactiveUITK.UitkxHmrSwap]. Without `initonly` the
+//       it with [global::Ruitk.UitkxHmrSwap]. Without `initonly` the
 //       JIT cannot legally inline the reference; every read goes through the
 //       slot. The attribute discriminates "generator-managed, HMR-swap me"
 //       from "user-authored mutable static, preserve my value".
@@ -141,7 +141,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UnityEngine;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     /// <summary>
     /// Result of a single <see cref="UitkxHmrModuleStaticSwapper.SwapModuleStatics"/>
@@ -469,7 +469,7 @@ namespace ReactiveUITK.EditorSupport.HMR
         }
 
         // Cached attribute Type lookup. The attribute lives in
-        // ReactiveUITK.Shared.dll so we resolve it by AssemblyQualifiedName
+        // Ruitk.Shared.dll so we resolve it by AssemblyQualifiedName
         // once. We avoid a typed reference to keep the Editor assembly's
         // dependencies minimal.
         private static Type s_hmrSwapAttrType;
@@ -483,7 +483,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 try
                 {
                     s_hmrSwapAttrType = Type.GetType(
-                        "ReactiveUITK.UitkxHmrSwapAttribute, ReactiveUITK.Shared",
+                        "Ruitk.UitkxHmrSwapAttribute, Ruitk.Shared",
                         throwOnError: false
                     );
                 }

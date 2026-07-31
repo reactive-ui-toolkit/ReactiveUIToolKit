@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text.RegularExpressions;
-using ReactiveUITK.Core;
+using Ruitk.Core;
 using UnityEditor;
 using UnityEngine;
 
-namespace ReactiveUITK.Editor
+namespace Ruitk.Editor
 {
     /// <summary>
     /// Populates the <see cref="UitkxAssetRegistry"/> ScriptableObject by scanning
@@ -23,8 +23,20 @@ namespace ReactiveUITK.Editor
     [InitializeOnLoad]
     internal static class UitkxAssetRegistrySync
     {
-        private const string RegistryFolder = "Assets/ReactiveUITK/Resources";
+        private const string RegistryFolder = "Assets/Ruitk/Resources";
         private const string RegistryAssetPath = RegistryFolder + "/__uitkx_registry.asset";
+
+        // 0.11.x location. The 0.12.0 rebrand moved the folder (ReactiveUITK -> Ruitk) but NOT
+        // the asset name, and the runtime read is name-based
+        // (Resources.Load<UitkxAssetRegistry>("__uitkx_registry")). If an upgraded project still
+        // has the old asset, Resources.Load sees two same-named assets and resolves ambiguously —
+        // when the stale one wins, every Asset<T>()/Ast<T>() and @uss lookup added after the
+        // upgrade returns null, in the editor AND in player builds. Nothing self-heals it:
+        // ClearRegistryIfExists only touches the new path. So: warn, loudly, once per reload.
+        private const string LegacyRegistryAssetPath =
+            "Assets/ReactiveUITK/Resources/__uitkx_registry.asset";
+
+        private static bool s_warnedStaleRegistry;
 
         private static readonly Regex s_assetCallRe = new(
             @"(?:Asset|Ast)\s*<\s*(\w+)\s*>\s*\(\s*""([^""]+)""\s*\)",
@@ -100,6 +112,8 @@ namespace ReactiveUITK.Editor
         /// </summary>
         public static void FullRescan()
         {
+            WarnIfStaleRegistryExists();
+
             string dataPath = Application.dataPath; // …/Assets
             string[] uitkxFiles;
             try
@@ -287,6 +301,33 @@ namespace ReactiveUITK.Editor
                 EditorUtility.SetDirty(registry);
                 AssetDatabase.SaveAssetIfDirty(registry);
             }
+        }
+
+        /// <summary>
+        /// 0.12.0 upgrade guard: the registry folder moved from <c>Assets/ReactiveUITK/Resources</c>
+        /// to <c>Assets/Ruitk/Resources</c>, but <c>Resources.Load</c> looks the asset up BY NAME.
+        /// A leftover 0.11.x registry therefore competes with the new one and can win, silently
+        /// returning stale/null assets at runtime. Warn once per domain reload with the exact
+        /// remedy — nothing else detects this.
+        /// </summary>
+        private static void WarnIfStaleRegistryExists()
+        {
+            if (s_warnedStaleRegistry) return;
+
+            var stale = AssetDatabase.LoadAssetAtPath<UitkxAssetRegistry>(LegacyRegistryAssetPath);
+            if (stale == null) return;
+
+            s_warnedStaleRegistry = true;
+            Debug.LogWarning(
+                "[UITKX] A stale 0.11.x asset registry is still present at "
+                    + $"'{LegacyRegistryAssetPath}'. The 0.12.0 rebrand moved it to "
+                    + $"'{RegistryAssetPath}', but Resources.Load resolves it BY NAME "
+                    + "(\"__uitkx_registry\"), so two same-named registries now compete and the "
+                    + "stale one can win — Asset<T>()/Ast<T>() and @uss lookups added or changed "
+                    + "since the upgrade would then return null, in the editor and in player "
+                    + "builds. FIX: delete the whole 'Assets/ReactiveUITK' folder (and its .meta). "
+                    + "It also holds the obsolete UITKX_GeneratorTrigger.g.cs. "
+                    + "See MIGRATION-0.12.md, 'Upgrade steps'.");
         }
 
         private static string GetProjectRoot()

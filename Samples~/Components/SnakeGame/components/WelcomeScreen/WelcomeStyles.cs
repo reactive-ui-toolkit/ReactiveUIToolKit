@@ -1,7 +1,7 @@
 using UnityEngine;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Samples.Components.SnakeGame.components.WelcomeScreen {
+namespace Ruitk.Samples.Components.SnakeGame.components.WelcomeScreen {
   public static class WelcomeStyles
   {
     public static readonly Style Container = new Style

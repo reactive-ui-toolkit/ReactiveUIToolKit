@@ -1,9 +1,9 @@
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Ugui;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Ugui;
 using UnityEngine;
 
-namespace ReactiveUITK.Samples.UguiDemo
+namespace Ruitk.Samples.UguiDemo
 {
     /// <summary>
     /// Minimal uGUI backend demo: attach to a GameObject with a

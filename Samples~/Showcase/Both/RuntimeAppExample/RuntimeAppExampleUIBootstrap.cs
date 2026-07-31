@@ -1,12 +1,12 @@
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
-using ReactiveUITK.Samples.Components.StressTest;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
+using Ruitk.Samples.Components.StressTest;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Components.StressTest.StressTest;
+using Ruitk.Samples.Components.StressTest.StressTest;
 
-namespace ReactiveUITK.Samples.FunctionalComponents
+namespace Ruitk.Samples.FunctionalComponents
 {
     public class RuntimeAppExampleUIBootstrap : MonoBehaviour
     {

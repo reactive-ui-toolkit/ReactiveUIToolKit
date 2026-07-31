@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 
-namespace ReactiveUITK.SourceGenerator
+namespace Ruitk.SourceGenerator
 {
     /// <summary>
     /// Immutable result produced by <see cref="UitkxPipeline.Run"/> for a single

@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 using System.IO;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 using UitkxLanguageServer;
 using Xunit;
 

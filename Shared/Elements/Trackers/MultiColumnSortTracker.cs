@@ -2,11 +2,11 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     internal sealed class MultiColumnSortTracker<TView, TState>
         : IElementStateTracker<TView, TState>

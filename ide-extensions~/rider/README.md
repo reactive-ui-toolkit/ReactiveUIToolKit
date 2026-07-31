@@ -1,6 +1,6 @@
 # UITKX — Rider Plugin
 
-Adds language support for `.uitkx` ReactiveUIToolKit component templates in **Rider 2024.1+**.
+Adds language support for `.uitkx` ReactiveUIToolkit component templates in **Rider 2024.1+**.
 
 💬 Join the community on Discord: https://discord.gg/Knedqu4Wyv
 
@@ -23,7 +23,7 @@ Adds language support for `.uitkx` ReactiveUIToolKit component templates in **Ri
 3. Click **Install** and restart Rider
 
 ### From disk
-1. Download `uitkx-rider-x.x.x.zip` from the [Releases page](https://github.com/your-org/ReactiveUIToolKit/releases)
+1. Download `uitkx-rider-x.x.x.zip` from the [Releases page](https://github.com/reactive-ui-toolkit/ruitk-unity/releases)
 2. Open **Rider → Settings → Plugins → ⚙ → Install Plugin from Disk…**
 3. Select the zip file and restart Rider
 
@@ -47,9 +47,9 @@ Requires JDK 17 and a Rider 2024.1 download (handled automatically by
 
 ## License
 
-ReactiveUI Community License 1.0 — free to use and to ship inside your own
+Reactive UI Toolkit Community License 1.1 — free to use and to ship inside your own
 projects and commercial games if your company earned under US $250k in the last
 12 months; above that, shipping needs a commercial license ($2,000/title or
 $2,500/studio/year — see the repository's `LICENSE-COMMERCIAL.md`). Credit
-"Made with ReactiveUI"; not to be redistributed or sold as a competing product.
+"Made with Reactive UI Toolkit"; not to be redistributed or sold as a competing product.
 Full text in the repository's `LICENSE.md`.

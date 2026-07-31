@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Diagnostics;
+using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
 
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// Function component support for Fiber reconciler
@@ -40,10 +40,9 @@ namespace ReactiveUITK.Core.Fiber
             // Apply any queued state updates before rendering
             Hooks.FlushQueuedStateUpdates(componentState);
 
-            // Reset hook indices
-            componentState.HookIndex = 0;
-            componentState.EffectIndex = 0;
-            componentState.LayoutEffectIndex = 0;
+            // (Hook cursors are reset per render pass inside RunRenderPass below — under
+            // strict_mode BOTH invokes re-run that preparation, so the second pass
+            // overwrites the first's index-keyed hook slots in place.)
 
             // Wire up state updates to Fiber reconciler
             // CRITICAL FIX: Use componentState.Fiber (kept current by UpdateComponentStateReferences)
@@ -129,13 +128,27 @@ namespace ReactiveUITK.Core.Fiber
             HookContext.Current = componentState;
             componentState.IsRendering = true;
 
-            // NOW clear context deps right before render — UseContext will rebuild them
-            if (componentState.ContextDependencies != null)
-            {
-                componentState.ContextDependencies.Clear();
-            }
-
             VirtualNode childVNode = null;
+
+            // One render pass: reset the per-pass state — hook cursors restart from zero,
+            // and context deps are cleared right before render (UseContext rebuilds them) —
+            // then call the render function (typed IProps path — all function components).
+            // Children may be null on the very first render before parent sets them; fall
+            // back to empty list for safety.
+            VirtualNode RunRenderPass()
+            {
+                componentState.HookIndex = 0;
+                componentState.EffectIndex = 0;
+                componentState.LayoutEffectIndex = 0;
+                if (componentState.ContextDependencies != null)
+                {
+                    componentState.ContextDependencies.Clear();
+                }
+                return wipFiber.TypedRender(
+                    wipFiber.TypedPendingProps ?? EmptyProps.Instance,
+                    wipFiber.Children ?? VirtualNode.EmptyChildren
+                );
+            }
 
             s_renderDepth++;
             try
@@ -154,13 +167,24 @@ namespace ReactiveUITK.Core.Fiber
                     return null;
                 }
 
-                // Call the render function (typed IProps path — all function components).
-                // Children may be null on the very first render before parent sets them.
-                // Fall back to empty list for safety.
-                childVNode = wipFiber.TypedRender(
-                    wipFiber.TypedPendingProps ?? EmptyProps.Instance,
-                    wipFiber.Children ?? VirtualNode.EmptyChildren
-                );
+                childVNode = RunRenderPass();
+
+                // strict_mode (U-07): double-invoke the render function so impure render
+                // bodies surface in development. The FIRST result is discarded, the SECOND
+                // is the one reconciled (the family's shared shape — see the sibling legs'
+                // RunOnce(); if strict, Result = RunOnce()). Hook slots are index-keyed and
+                // overwritten in place by the second pass (never appended); effect and
+                // layout-effect registrations re-capture into the same slot and run once,
+                // at commit; the depth guard counts ONE logical render (both invokes run
+                // inside a single increment). The discarded first tree is strict-mode-only
+                // per-render garbage BY DESIGN: memoized subtrees (UseMemo-cached vnodes
+                // with deps unchanged between the invokes) are SHARED between the two
+                // results, so an explicit pool release of the first tree would corrupt the
+                // second — no safe release exists.
+                if (FiberConfig.StrictModeEnabled)
+                {
+                    childVNode = RunRenderPass();
+                }
             }
             finally
             {
@@ -247,6 +271,9 @@ namespace ReactiveUITK.Core.Fiber
             // Delete all old children
             if (currentChild != null)
             {
+                // structural gate (§6): the component's root changed type — the old
+                // subtree is torn down and a fresh one takes its slot.
+                FiberChildReconciliation.TraceReplace(currentChild, newVNode);
                 var child = currentChild;
                 while (child != null)
                 {

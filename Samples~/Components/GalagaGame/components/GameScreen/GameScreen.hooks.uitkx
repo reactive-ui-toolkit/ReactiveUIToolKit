@@ -1,8 +1,8 @@
 import "@UnityEngine.UIElements"
-import "@static ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes"
-import "@static ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes.C"
-import "@static ReactiveUITK.Samples.Components.GalagaGame.GameLogic"
-import "@GameState = ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes.GameState"
+import "@static Ruitk.Samples.Components.GalagaGame.GalagaTypes"
+import "@static Ruitk.Samples.Components.GalagaGame.GalagaTypes.C"
+import "@static Ruitk.Samples.Components.GalagaGame.GameLogic"
+import "@GameState = Ruitk.Samples.Components.GalagaGame.GalagaTypes.GameState"
 
 export (
   GameState state,

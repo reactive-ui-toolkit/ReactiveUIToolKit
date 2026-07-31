@@ -67,9 +67,9 @@ namespace UitkxLanguageServer.Roslyn
         // their disappearance is the canonical symptom of a poisoned scan.
         private static readonly string[] s_reactiveAssemblyNames =
         {
-            "ReactiveUITK.Shared.dll",
-            "ReactiveUITK.Runtime.dll",
-            "ReactiveUITK.Core.dll",
+            "Ruitk.Shared.dll",
+            "Ruitk.Runtime.dll",
+            "Ruitk.Core.dll",
         };
 
         // ── Public API ────────────────────────────────────────────────────────
@@ -185,7 +185,7 @@ namespace UitkxLanguageServer.Roslyn
         //   1. Mid-recompile scans are always suspicious (caller may be racing
         //      with Unity's multi-stage DLL writes).
         //   2. A scan whose count dropped by more than half versus the last
-        //      good scan, or whose ReactiveUITK runtime assembly disappeared
+        //      good scan, or whose Ruitk runtime assembly disappeared
         //      after previously being present, indicates the file system is
         //      mid-rewrite (or a watcher event was missed).
         // No rejection until a baseline has been established (first scan in

@@ -1,7 +1,7 @@
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// The shared payload classifier (namespace-import unification plan): both the SG (UITKX2316) and

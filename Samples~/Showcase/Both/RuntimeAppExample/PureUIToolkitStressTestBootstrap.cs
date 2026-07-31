@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Samples.PureUIToolkit
+namespace Ruitk.Samples.PureUIToolkit
 {
     public class PureUIToolkitStressTestBootstrap : MonoBehaviour
     {

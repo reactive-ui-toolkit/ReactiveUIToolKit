@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ReactiveUITK.Core.Diagnostics;
-using ReactiveUITK.Core.Fiber;
-using ReactiveUITK.Core.Util;
-using ReactiveUITK.Signals;
+using Ruitk.Core.Diagnostics;
+using Ruitk.Core.Fiber;
+using Ruitk.Core.Util;
+using Ruitk.Signals;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     internal static class HookContext
     {
@@ -157,7 +157,7 @@ namespace ReactiveUITK.Core
                         state,
                         metadata,
                         "state-update-during-render",
-                        $"[Hooks][StrictMode] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
+                        $"[Hooks][Strict] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
                     );
                 }
                 var previous = GetProjectedState();
@@ -570,7 +570,7 @@ namespace ReactiveUITK.Core
                 state,
                 metadata,
                 key,
-                $"[Hooks][StrictMode] {hookName} in component '{component}' was invoked without a dependency array; it will re-run every render. Provide explicit dependencies or refactor the logic."
+                $"[Hooks][Strict] {hookName} in component '{component}' was invoked without a dependency array; it will re-run every render. Provide explicit dependencies or refactor the logic."
             );
         }
 
@@ -604,7 +604,7 @@ namespace ReactiveUITK.Core
                         state,
                         metadata,
                         "state-update-during-render",
-                        $"[Hooks][StrictMode] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
+                        $"[Hooks][Strict] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
                     );
                     metadata?.SyncComponentState(state);
                 }
@@ -1063,6 +1063,17 @@ namespace ReactiveUITK.Core
                 return (false, s_noOpStartTransition);
             }
             RecordHook(metadata, state, HookIdTransition);
+            // Materialize the slot before bumping the cursor. HookIndex and
+            // HookStates.Count must stay in lockstep: a bare cursor bump leaves the
+            // list one short, so the NEXT Add-if-fresh hook (UseState, UseMemo,
+            // UseImperativeHandle, ...) appends one element and then indexes one past
+            // the end — ArgumentOutOfRangeException on the first render of any
+            // component that calls another slot hook after UseTransition.
+            state.HookStates ??= new List<object>();
+            if (state.HookIndex >= state.HookStates.Count)
+            {
+                state.HookStates.Add(null);
+            }
             state.HookIndex++;
             SyncState(metadata, state);
             return (false, s_noOpStartTransition);
@@ -1238,7 +1249,11 @@ namespace ReactiveUITK.Core
                 entry.deps = dependencies;
                 state.FunctionEffects[index] = entry;
             }
-            if (DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose)
+            // detail gate (§6): routed through InternalLogOptions (the file's majority
+            // style) — EnableInternalLogs is set from == Verbose at the mount seams, so the
+            // meaning is unchanged. Under strict_mode this logs per invoke (twice) at
+            // Verbose — truthful: two captures happened.
+            if (InternalLogOptions.EnableInternalLogs)
             {
                 try
                 {
@@ -1256,7 +1271,7 @@ namespace ReactiveUITK.Core
         }
 
         public static void UseAnimate(
-            System.Collections.Generic.IReadOnlyList<ReactiveUITK.Core.Animation.AnimateTrack> tracks,
+            System.Collections.Generic.IReadOnlyList<Ruitk.Core.Animation.AnimateTrack> tracks,
             bool autoplay = true,
             params object[] dependencies
         )
@@ -1283,7 +1298,7 @@ namespace ReactiveUITK.Core
                 {
                     var prev =
                         state.HookStates[index]
-                        as System.Collections.Generic.List<ReactiveUITK.Core.Animation.AnimationHandle>;
+                        as System.Collections.Generic.List<Ruitk.Core.Animation.AnimationHandle>;
                     if (prev != null)
                     {
                         foreach (var h in prev)
@@ -1297,11 +1312,11 @@ namespace ReactiveUITK.Core
                     }
 
                     var target = ResolveAnimationTarget(metadata, state);
-                    System.Collections.Generic.List<ReactiveUITK.Core.Animation.AnimationHandle> handles =
+                    System.Collections.Generic.List<Ruitk.Core.Animation.AnimationHandle> handles =
                         null;
                     if (autoplay && tracks != null && tracks.Count > 0 && target != null)
                     {
-                        handles = ReactiveUITK.Core.Animation.Animator.PlayTracks(target, tracks);
+                        handles = Ruitk.Core.Animation.Animator.PlayTracks(target, tracks);
                     }
                     state.HookStates[index] = handles;
                     SyncState(metadata, state);
@@ -1309,7 +1324,7 @@ namespace ReactiveUITK.Core
                     {
                         var hs =
                             state.HookStates[index]
-                            as System.Collections.Generic.List<ReactiveUITK.Core.Animation.AnimationHandle>;
+                            as System.Collections.Generic.List<Ruitk.Core.Animation.AnimationHandle>;
                         if (hs != null)
                         {
                             foreach (var h in hs)
@@ -1350,7 +1365,7 @@ namespace ReactiveUITK.Core
         /// so the portal is unrendered while the panel is between rebuilds.
         ///
         /// In the editor, detection uses a per-frame ReferenceEquals poll on
-        /// the panel-independent <see cref="ReactiveUITK.Core.Animation.AnimationTicker"/>
+        /// the panel-independent <see cref="Ruitk.Core.Animation.AnimationTicker"/>
         /// because <c>UIDocument</c> exposes no public event for panel
         /// rebuilds. Those rebuilds are editor-only hookless mutations, so in
         /// player builds the poll is compiled out: the hook returns the root
@@ -1391,7 +1406,7 @@ namespace ReactiveUITK.Core
                     // players have no hookless swaps, so this is compiled out
                     // and the root synced above is returned as a stable value.
                     System.Action unsubscribe = null;
-                    unsubscribe = ReactiveUITK.Core.Animation.AnimationTicker.Subscribe(() =>
+                    unsubscribe = Ruitk.Core.Animation.AnimationTicker.Subscribe(() =>
                     {
                         if (doc == null)
                         {
@@ -1495,7 +1510,7 @@ namespace ReactiveUITK.Core
                 {
                     if (clip == null)
                         return;
-                    var src = ReactiveUITK.Core.Media.MediaHost.Instance.SfxSource;
+                    var src = Ruitk.Core.Media.MediaHost.Instance.SfxSource;
                     if (capturedMixer != null)
                         src.outputAudioMixerGroup = capturedMixer;
                     src.PlayOneShot(clip, UnityEngine.Mathf.Clamp01(volumeScale));
@@ -1513,7 +1528,7 @@ namespace ReactiveUITK.Core
             float from,
             float to,
             float duration,
-            ReactiveUITK.Core.Animation.Ease ease,
+            Ruitk.Core.Animation.Ease ease,
             float delay,
             System.Action<float> onUpdate,
             System.Action onComplete,
@@ -1548,7 +1563,7 @@ namespace ReactiveUITK.Core
                     {
                         return null;
                     }
-                    unsubscribe = ReactiveUITK.Core.Animation.AnimationTicker.Subscribe(() =>
+                    unsubscribe = Ruitk.Core.Animation.AnimationTicker.Subscribe(() =>
                     {
                         if (completed)
                         {
@@ -1576,7 +1591,7 @@ namespace ReactiveUITK.Core
                             duration <= 0f
                                 ? 1f
                                 : UnityEngine.Mathf.Clamp01((float)((now - start) / duration));
-                        float eased = ReactiveUITK.Core.Animation.Easing.Evaluate(ease, t);
+                        float eased = Ruitk.Core.Animation.Easing.Evaluate(ease, t);
                         float v = UnityEngine.Mathf.Lerp(from, to, eased);
                         // onUpdate is the consumer's writeback; the consumer is
                         // responsible for any panel-presence gating it needs.
@@ -1746,7 +1761,7 @@ namespace ReactiveUITK.Core
 
         public static T UseSignal<T>(string key, T initialValue = default)
         {
-            return UseSignal(ReactiveUITK.Signals.SignalFactory.Get<T>(key, initialValue));
+            return UseSignal(Ruitk.Signals.SignalFactory.Get<T>(key, initialValue));
         }
 
         public static TSlice UseSignal<T, TSlice>(
@@ -1757,7 +1772,7 @@ namespace ReactiveUITK.Core
         )
         {
             return UseSignal(
-                ReactiveUITK.Signals.SignalFactory.Get<T>(key, initialValue),
+                Ruitk.Signals.SignalFactory.Get<T>(key, initialValue),
                 selector,
                 comparer
             );

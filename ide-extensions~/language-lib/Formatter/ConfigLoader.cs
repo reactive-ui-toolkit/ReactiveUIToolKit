@@ -1,6 +1,6 @@
 using System.IO;
 
-namespace ReactiveUITK.Language.Formatter
+namespace Ruitk.Language.Formatter
 {
     /// <summary>
     /// Locates and loads <c>uitkx.config.json</c> using the same directory-walk

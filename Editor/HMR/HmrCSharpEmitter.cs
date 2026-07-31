@@ -7,10 +7,10 @@ using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace ReactiveUITK.EditorSupport.HMR
+namespace Ruitk.EditorSupport.HMR
 {
     /// <summary>
-    /// Walks the AST produced by ReactiveUITK.Language.dll (accessed via reflection)
+    /// Walks the AST produced by Ruitk.Language.dll (accessed via reflection)
     /// and emits compilable C# source code equivalent to CSharpEmitter from the
     /// source generator - but without requiring Roslyn types.
     /// </summary>
@@ -19,7 +19,7 @@ namespace ReactiveUITK.EditorSupport.HMR
         // -- Built-in tag -> resolution map -----------------------------------
         //
         // Auto-discovered at type-init via reflection over
-        // <c>typeof(global::ReactiveUITK.V).GetMethods()</c>. Mirrors the
+        // <c>typeof(global::Ruitk.V).GetMethods()</c>. Mirrors the
         // source generator's <c>PropsResolver.BuildBuiltinMapFromCompilation</c>
         // (Roslyn-based auto-scan) one-for-one - same classification rules,
         // same key casing - so adding a new <c>V.Foo(FooProps, ...)</c> factory
@@ -43,9 +43,9 @@ namespace ReactiveUITK.EditorSupport.HMR
         // and this HMR emitter consume the same dictionary so that markup tag
         // resolution stays in lock-step across cold-build and hot-reload.
         private static readonly IReadOnlyDictionary<string, string> s_componentAliases =
-            global::ReactiveUITK.Router.RouterTagAliases.Map;
+            global::Ruitk.Router.RouterTagAliases.Map;
 
-        private const string QVNode = "global::ReactiveUITK.Core.VirtualNode";
+        private const string QVNode = "global::Ruitk.Core.VirtualNode";
 
         // -- Public entry point ------------------------------------------------
 
@@ -214,7 +214,7 @@ namespace ReactiveUITK.EditorSupport.HMR
             private readonly string _factory;
 
             private string QualifiedProps(string propsType) =>
-                _isUgui ? $"global::ReactiveUITK.Ugui.{propsType}" : propsType;
+                _isUgui ? $"global::Ruitk.Ugui.{propsType}" : propsType;
             private readonly IList _usings;
             private readonly IList _ussFiles;
             private readonly IList _functionParams;
@@ -249,12 +249,12 @@ namespace ReactiveUITK.EditorSupport.HMR
                 _hookKeyMap = hookKeyMap;
                 // Effective namespace (matches the SG) so the component's self family key
                 // {ns}.{ComponentName} and the emitted `namespace` agree with the project assembly.
-                _ns = effectiveNs ?? GP<string>(directives, "Namespace") ?? "UITKX.Generated";
+                _ns = effectiveNs ?? GP<string>(directives, "Namespace") ?? "Ruitk.Generated";
                 _componentName = GP<string>(directives, "ComponentName") ?? "Unknown";
                 _propsTypeName = GP<string>(directives, "PropsTypeName");
                 _isFunctionStyle = GP<bool>(directives, "IsFunctionStyle");
                 _isUgui = GP<string>(directives, "Backend") == "ugui";
-                _factory = _isUgui ? "global::ReactiveUITK.Ugui.U" : "V";
+                _factory = _isUgui ? "global::Ruitk.Ugui.U" : "V";
                 _usings = UitkxHmrCompiler.GetItems(UitkxHmrCompiler.GetProp(directives, "Usings"));
                 _ussFiles = UitkxHmrCompiler.GetItems(
                     UitkxHmrCompiler.GetProp(directives, "UssFiles")
@@ -292,15 +292,15 @@ namespace ReactiveUITK.EditorSupport.HMR
                 L("using System;");
                 L("using System.Collections.Generic;");
                 L("using System.Linq;");
-                L("using ReactiveUITK;");
-                L("using ReactiveUITK.Core;");
-                L("using ReactiveUITK.Core.Animation;");
-                L("using ReactiveUITK.Router;");
-                L("using ReactiveUITK.Props.Typed;");
+                L("using Ruitk;");
+                L("using Ruitk.Core;");
+                L("using Ruitk.Core.Animation;");
+                L("using Ruitk.Router;");
+                L("using Ruitk.Props.Typed;");
                 L("using UnityEngine;");
-                L("using static ReactiveUITK.Props.Typed.StyleKeys;");
-                L("using static ReactiveUITK.Props.Typed.CssHelpers;");
-                L("using static ReactiveUITK.AssetHelpers;");
+                L("using static Ruitk.Props.Typed.StyleKeys;");
+                L("using static Ruitk.Props.Typed.CssHelpers;");
+                L("using static Ruitk.AssetHelpers;");
                 L("using UColor = UnityEngine.Color;");
                 // NEW-MODE files: user + injected usings move INSIDE the namespace block (mirror
                 // of the SG's CSharpEmitter) — file-keyed namespaces make sibling file stems
@@ -348,9 +348,9 @@ namespace ReactiveUITK.EditorSupport.HMR
                     L("");
                 }
                 L(
-                    $"    [global::ReactiveUITK.UitkxSource(@\"{_filePath.Replace("\"", "\"\"")}\")]"
+                    $"    [global::Ruitk.UitkxSource(@\"{_filePath.Replace("\"", "\"\"")}\")]"
                 );
-                L($"    [global::ReactiveUITK.UitkxElement(\"{_componentName}\")]");
+                L($"    [global::Ruitk.UitkxElement(\"{_componentName}\")]");
 
                 // Emit hook signature for proactive HMR state-reset detection.
                 // customHookKeys are §7 PATH-QUALIFIED via _hookKeyMap so they match the
@@ -363,11 +363,11 @@ namespace ReactiveUITK.EditorSupport.HMR
                 {
                     if (customHookKeys.Length > 0)
                     {
-                        L($"    [global::ReactiveUITK.HookSignature(\"{hookSig}\", {RenderCustomHookFamilyKeysLiteral(customHookKeys)})]");
+                        L($"    [global::Ruitk.HookSignature(\"{hookSig}\", {RenderCustomHookFamilyKeysLiteral(customHookKeys)})]");
                     }
                     else
                     {
-                        L($"    [global::ReactiveUITK.HookSignature(\"{hookSig}\")]");
+                        L($"    [global::Ruitk.HookSignature(\"{hookSig}\")]");
                     }
                 }
 
@@ -412,7 +412,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 if (_ussFiles.Count > 0)
                 {
                     _sb.Append(
-                        "        [global::ReactiveUITK.UitkxHmrSwap] internal static string[] __uitkx_ussKeys = new string[] { "
+                        "        [global::Ruitk.UitkxHmrSwap] internal static string[] __uitkx_ussKeys = new string[] { "
                     );
                     for (int i = 0; i < _ussFiles.Count; i++)
                     {
@@ -435,7 +435,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 // is now a thin forwarder to __Render_body. Family-handle
                 // indirection at call sites (below) handles HMR identity.
                 L($"        public static {QVNode} Render(");
-                L($"            global::ReactiveUITK.Core.IProps __rawProps,");
+                L($"            global::Ruitk.Core.IProps __rawProps,");
                 L($"            IReadOnlyList<{QVNode}> __children)");
                 L("        {");
                 L($"            return __Render_body(__rawProps, __children);");
@@ -449,7 +449,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 // reference __Render_body via `() => Component.__Render_body`
                 // without triggering Mono's beforefieldinit-divergence cctor.
                 L($"        internal static {QVNode} __Render_body(");
-                L($"            global::ReactiveUITK.Core.IProps __rawProps,");
+                L($"            global::Ruitk.Core.IProps __rawProps,");
                 L($"            IReadOnlyList<{QVNode}> __children)");
                 L("        {");
 
@@ -584,9 +584,9 @@ namespace ReactiveUITK.EditorSupport.HMR
                         // long comment there. SG-emitted children are
                         // satisfied by their companion's [ModuleInitializer]
                         // Register; this fallback covers hand-written
-                        // components (e.g. ReactiveUITK.Router) which have
+                        // components (e.g. Ruitk.Router) which have
                         // no Register call of their own.
-                        L($"        private static readonly global::ReactiveUITK.Refresh.Family {famField} = global::ReactiveUITK.Refresh.RefreshRuntime.GetFamily(\"{famKey}\", () => {childFqn}.Render);");
+                        L($"        private static readonly global::Ruitk.Refresh.Family {famField} = global::Ruitk.Refresh.RefreshRuntime.GetFamily(\"{famKey}\", () => {childFqn}.Render);");
                     }
                 }
                 string selfKey = string.IsNullOrEmpty(_ns) ? _componentName : _ns + "." + _componentName;
@@ -612,7 +612,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 L($"        [global::System.Runtime.CompilerServices.ModuleInitializer]");
                 L($"        internal static void __Register()");
                 L($"        {{");
-                L($"            global::ReactiveUITK.Refresh.RefreshRuntime.Register(");
+                L($"            global::Ruitk.Refresh.RefreshRuntime.Register(");
                 L($"                \"{selfKey}\",");
                 L($"                () => {componentRef}.__Render_body,");
                 L($"                \"{hookSig}\",");
@@ -797,7 +797,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 int absLine = sourceLine + (lineInRange - 1);
                 emitJsxFragment(spliced, jsxText, absLine);
 
-                spliced.Append(" : (global::ReactiveUITK.Core.VirtualNode?)null)");
+                spliced.Append(" : (global::Ruitk.Core.VirtualNode?)null)");
                 return true;
             }
 
@@ -1277,7 +1277,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                 // BodyMarkupRanges, BodyBareJsxRanges) moved OFF the node itself
                 // (IfBranch / ForeachNode / ForNode / WhileNode / SwitchCase) and
                 // onto a shared nested `ControlBlockPayload` record. This reflection
-                // reader talks to the committed ReactiveUITK.Language.dll by property
+                // reader talks to the committed Ruitk.Language.dll by property
                 // NAME, so it must dereference `.Payload` first — otherwise every
                 // read silently returns default (the props no longer exist directly
                 // on the node), TransformBodyCode returns "", and every @if/@foreach/
@@ -1515,8 +1515,8 @@ namespace ReactiveUITK.EditorSupport.HMR
                     string propsVar = $"__p_{pId}";
                     _rentBuffer.Append(
                         _isUgui
-                            ? $"var {propsVar} = global::ReactiveUITK.Ugui.UguiBaseProps.__Rent<global::ReactiveUITK.Ugui.{res.PropsType}>(); "
-                            : $"var {propsVar} = global::ReactiveUITK.Props.Typed.BaseProps.__Rent<{res.PropsType}>(); "
+                            ? $"var {propsVar} = global::Ruitk.Ugui.UguiBaseProps.__Rent<global::Ruitk.Ugui.{res.PropsType}>(); "
+                            : $"var {propsVar} = global::Ruitk.Props.Typed.BaseProps.__Rent<{res.PropsType}>(); "
                     );
 
                     string styleVarName = null;
@@ -1537,7 +1537,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                                 int sId = _poolVarId++;
                                 styleVarName = $"__s_{sId}";
                                 _rentBuffer.Append(
-                                    $"var {styleVarName} = global::ReactiveUITK.Props.Typed.Style.__Rent(); "
+                                    $"var {styleVarName} = global::Ruitk.Props.Typed.Style.__Rent(); "
                                 );
                                 var inits = SplitTopLevelCommas(body);
                                 foreach (var init in inits)
@@ -1758,7 +1758,7 @@ namespace ReactiveUITK.EditorSupport.HMR
             /// <list type="number">
             ///   <item>A sibling top-level <c>{typeName}Props</c> class in the same
             ///     namespace as the component (e.g. <c>RouterFunc</c> +
-            ///     <c>RouterFuncProps</c> in <c>ReactiveUITK.Router</c>).</item>
+            ///     <c>RouterFuncProps</c> in <c>Ruitk.Router</c>).</item>
             ///   <item>A nested <c>{typeName}.{typeName}Props</c> implementing
             ///     <c>IProps</c> (the convention emitted by the source generator
             ///     for UITKX function components compiled into referenced assemblies).</item>
@@ -1841,7 +1841,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                         var sibling = asm.GetType(siblingFullName, throwOnError: false);
                         if (
                             sibling != null
-                            && sibling.GetInterface("ReactiveUITK.Core.IProps") != null
+                            && sibling.GetInterface("Ruitk.Core.IProps") != null
                         )
                         {
                             resolvedName = "global::" + siblingFullName;
@@ -1854,7 +1854,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                         var nestedNamed = type.GetNestedType(siblingName);
                         if (
                             nestedNamed != null
-                            && nestedNamed.GetInterface("ReactiveUITK.Core.IProps") != null
+                            && nestedNamed.GetInterface("Ruitk.Core.IProps") != null
                         )
                         {
                             resolvedName = $"{typeName}.{siblingName}";
@@ -1865,7 +1865,7 @@ namespace ReactiveUITK.EditorSupport.HMR
                         // Step 3 - any nested IProps (legacy fallback).
                         foreach (var nested in type.GetNestedTypes())
                         {
-                            if (nested.GetInterface("ReactiveUITK.Core.IProps") != null)
+                            if (nested.GetInterface("Ruitk.Core.IProps") != null)
                             {
                                 resolvedName = $"{typeName}.{nested.Name}";
                                 resolvedPropsType = nested;
@@ -1892,7 +1892,7 @@ namespace ReactiveUITK.EditorSupport.HMR
             /// <summary>
             /// Scans <paramref name="propsType"/>'s public instance properties for
             /// the first one whose declared type is a generic instantiation of
-            /// <see cref="global::ReactiveUITK.Core.Ref{T}"/> or the deprecated
+            /// <see cref="global::Ruitk.Core.Ref{T}"/> or the deprecated
             /// <c>Hooks.MutableRef&lt;T&gt;</c>. Returns the property name (the
             /// slot HMR should assign <c>ref={x}</c> into) or <c>null</c> when
             /// the props type has no such slot. Mirrors
@@ -1912,14 +1912,14 @@ namespace ReactiveUITK.EditorSupport.HMR
                     if (!pt.IsGenericType)
                         continue;
                     var def = pt.GetGenericTypeDefinition();
-                    if (def == typeof(global::ReactiveUITK.Core.Ref<>))
+                    if (def == typeof(global::Ruitk.Core.Ref<>))
                         return prop.Name;
                     // [Obsolete] backward-compat shape used in older user code.
                     // Suppress CS0618: this is *exactly* the call site that has
                     // to know about the legacy type so HMR can keep routing
                     // ref={x} into pre-existing user components.
 #pragma warning disable CS0618
-                    if (def == typeof(global::ReactiveUITK.Core.Hooks.MutableRef<>))
+                    if (def == typeof(global::Ruitk.Core.Hooks.MutableRef<>))
                         return prop.Name;
 #pragma warning restore CS0618
                 }
@@ -2265,7 +2265,7 @@ namespace ReactiveUITK.EditorSupport.HMR
 
                 // Cross-assembly reflection helper for reading props
                 L(
-                    "        private static T __HmrProp<T>(global::ReactiveUITK.Core.IProps props, string name, T fallback)"
+                    "        private static T __HmrProp<T>(global::Ruitk.Core.IProps props, string name, T fallback)"
                 );
                 L("        {");
                 L("            if (props == null) return fallback;");
@@ -2280,7 +2280,7 @@ namespace ReactiveUITK.EditorSupport.HMR
             {
                 L("");
                 L(
-                    $"        public sealed class {_componentName}Props : global::ReactiveUITK.Core.IProps"
+                    $"        public sealed class {_componentName}Props : global::Ruitk.Core.IProps"
                 );
                 L("        {");
                 foreach (var fp in _functionParams)
@@ -2495,10 +2495,10 @@ namespace ReactiveUITK.EditorSupport.HMR
                 hoistName = $"__sty_{hid}";
                 _hoistedStyleFields.Append("        ");
                 _hoistedStyleFields.Append(
-                    "[global::ReactiveUITK.UitkxHmrSwap] private static global::ReactiveUITK.Props.Typed.Style "
+                    "[global::Ruitk.UitkxHmrSwap] private static global::Ruitk.Props.Typed.Style "
                 );
                 _hoistedStyleFields.Append(hoistName);
-                _hoistedStyleFields.Append(" = new global::ReactiveUITK.Props.Typed.Style { ");
+                _hoistedStyleFields.Append(" = new global::Ruitk.Props.Typed.Style { ");
                 _hoistedStyleFields.Append(body);
                 _hoistedStyleFields.AppendLine(" };");
                 return true;
@@ -2869,17 +2869,17 @@ namespace ReactiveUITK.EditorSupport.HMR
 
         // -- Hook alias substitution (mirrors CSharpEmitter.ApplyHookAliases) --
         //
-        // Sourced from ReactiveUITK.Core.HookRegistry - the single source of
+        // Sourced from Ruitk.Core.HookRegistry - the single source of
         // truth for hook metadata.  This eliminates the previous hand-mirrored
         // copy of the alias table and generic regex that could drift from the
         // source generator's copy without detection.
 
         private static readonly (string From, string To)[] s_hookAliases =
-            global::ReactiveUITK.Core.HookRegistry.GetAliasTable();
+            global::Ruitk.Core.HookRegistry.GetAliasTable();
 
         // Matches generic hook calls: useRef<VisualElement?>(, useState<int>( etc.
         private static readonly Regex s_genericHookAliasRe = new Regex(
-            global::ReactiveUITK.Core.HookRegistry.GetGenericHookPattern(),
+            global::Ruitk.Core.HookRegistry.GetGenericHookPattern(),
             RegexOptions.Compiled
         );
 
@@ -3310,7 +3310,7 @@ namespace ReactiveUITK.EditorSupport.HMR
         /// Pattern is sourced from HookRegistry.
         /// </summary>
         private static readonly Regex s_hookSignatureRe = new Regex(
-            global::ReactiveUITK.Core.HookRegistry.GetSignatureRegexPattern(),
+            global::Ruitk.Core.HookRegistry.GetSignatureRegexPattern(),
             RegexOptions.Compiled
         );
 
@@ -3656,7 +3656,7 @@ namespace ReactiveUITK.EditorSupport.HMR
         // PropsResolver.BuildBuiltinMapFromCompilation) ---------------------
         //
         // Walks every public static <c>VirtualNode</c>-returning method on
-        // <c>global::ReactiveUITK.V</c> and classifies each by its first
+        // <c>global::Ruitk.V</c> and classifies each by its first
         // parameter's type:
         //
         //   - first param ends in "Props"  -> Typed (or TypedC if last param is
@@ -3690,7 +3690,7 @@ namespace ReactiveUITK.EditorSupport.HMR
             public static Dictionary<string, TagRes> BuildUguiTagMap()
             {
                 var map = Discover(
-                    typeof(global::ReactiveUITK.Ugui.U),
+                    typeof(global::Ruitk.Ugui.U),
                     // U.Text has a typed UguiTextProps overload that must win the
                     // "text" tag (SG parity: BuiltinTyped overwrites) — so the
                     // string-sugar special case is disabled for this factory.
@@ -3703,7 +3703,7 @@ namespace ReactiveUITK.EditorSupport.HMR
 
             public static Dictionary<string, TagRes> BuildAutoDiscoveredTagMap()
             {
-                var map = Discover(typeof(global::ReactiveUITK.V), treatStringTextAsTextNode: true);
+                var map = Discover(typeof(global::Ruitk.V), treatStringTextAsTextNode: true);
                 return FinishVMap(map);
             }
 
@@ -3714,8 +3714,8 @@ namespace ReactiveUITK.EditorSupport.HMR
             {
                 var map = new Dictionary<string, TagRes>(StringComparer.OrdinalIgnoreCase);
                 var vType = factoryType;
-                var vNodeType = typeof(global::ReactiveUITK.Core.VirtualNode);
-                var vNodeArrayType = typeof(global::ReactiveUITK.Core.VirtualNode[]);
+                var vNodeType = typeof(global::Ruitk.Core.VirtualNode);
+                var vNodeArrayType = typeof(global::Ruitk.Core.VirtualNode[]);
                 var paramArrayAttr = typeof(ParamArrayAttribute);
 
                 foreach (

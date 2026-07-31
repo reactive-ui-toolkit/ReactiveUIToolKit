@@ -4,11 +4,11 @@ using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Diagnostics;
 using Microsoft.CodeAnalysis.Operations;
 
-namespace ReactiveUITK.SourceGenerator.Analyzers
+namespace Ruitk.SourceGenerator.Analyzers
 {
     /// <summary>
     /// UITKX0210 — flags writes to fields decorated with
-    /// <c>[ReactiveUITK.UitkxHmrSwap]</c> from anywhere other than the
+    /// <c>[Ruitk.UitkxHmrSwap]</c> from anywhere other than the
     /// containing type's static constructor.
     ///
     /// The attribute marks generator-managed module statics whose
@@ -25,7 +25,7 @@ namespace ReactiveUITK.SourceGenerator.Analyzers
     {
         public const string DiagnosticId = "UITKX0210";
 
-        private const string AttributeFullName = "ReactiveUITK.UitkxHmrSwapAttribute";
+        private const string AttributeFullName = "Ruitk.UitkxHmrSwapAttribute";
 
         private static readonly DiagnosticDescriptor s_rule = new DiagnosticDescriptor(
             id: DiagnosticId,
@@ -35,7 +35,7 @@ namespace ReactiveUITK.SourceGenerator.Analyzers
                 + "Writing to it from non-cctor code defeats hot-reload and is "
                 + "almost certainly a bug. If this is intentional, suppress with "
                 + "'#pragma warning disable UITKX0210'.",
-            category: "ReactiveUITK.Hmr",
+            category: "Ruitk.Hmr",
             defaultSeverity: DiagnosticSeverity.Warning,
             isEnabledByDefault: true,
             description:

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Language;
+using Ruitk.Language;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Plan §6 — import specifier resolution + the frozen 2300/2308/2314 codes (mirrors the

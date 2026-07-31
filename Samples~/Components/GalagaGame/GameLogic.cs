@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using static ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes;
-using static ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes.C;
-using GCollision = ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes.Collision;
+using static Ruitk.Samples.Components.GalagaGame.GalagaTypes;
+using static Ruitk.Samples.Components.GalagaGame.GalagaTypes.C;
+using GCollision = Ruitk.Samples.Components.GalagaGame.GalagaTypes.Collision;
 
-namespace ReactiveUITK.Samples.Components.GalagaGame {
+namespace Ruitk.Samples.Components.GalagaGame {
   public static class GameLogic {
     public static class Tick {
       public static GameState CreateInitialState() {

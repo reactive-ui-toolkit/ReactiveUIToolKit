@@ -1,10 +1,10 @@
 using System;
 
-namespace ReactiveUITK.Core.Diagnostics
+namespace Ruitk.Core.Diagnostics
 {
     /// <summary>
     /// Global diagnostics configuration, independent of any particular reconciler.
-    /// Backed by ReactiveUITKConfig / BuildDefinesConfig at startup.
+    /// Backed by RuitkConfig / BuildDefinesConfig at startup.
     /// </summary>
     public static class DiagnosticsConfig
     {
@@ -24,12 +24,6 @@ namespace ReactiveUITK.Core.Diagnostics
         /// When true, additional diff / reconciliation tracing is enabled.
         /// </summary>
         public static bool EnableDiffTracing { get; set; } = false;
-
-        /// <summary>
-        /// When true, error boundaries may use exception-based control flow.
-        /// This mirrors the existing configuration value but is reconciler-agnostic.
-        /// </summary>
-        public static bool UseExceptionBoundaryFlow { get; set; } = false;
     }
 }
 

@@ -1,8 +1,8 @@
 using System.Collections.Immutable;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.Language.Lowering;
+namespace Ruitk.Language.Lowering;
 
 /// <summary>
 /// Canonical lowering stage that normalizes function-style components.

@@ -45,7 +45,7 @@ if (!diffPath || !targetVersion) {
 
 const diffFile = resolve(diffPath)
 const schemaFile = resolve(__dirname, '..', 'ide-extensions~', 'grammar', 'uitkx-schema.json')
-const versionManifestFile = resolve(__dirname, '..', 'ReactiveUIToolKitDocs~', 'src', 'versionManifest.ts')
+const versionManifestFile = resolve(__dirname, '..', 'ReactiveUIToolkitDocs~', 'src', 'versionManifest.ts')
 
 const diff = JSON.parse(readFileSync(diffFile, 'utf8'))
 const schema = JSON.parse(readFileSync(schemaFile, 'utf8'))

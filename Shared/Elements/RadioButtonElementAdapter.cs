@@ -1,10 +1,10 @@
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
-using ReactiveUITK.Props;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props;
+using Ruitk.Props.Typed;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public sealed class RadioButtonElementAdapter : BaseElementAdapter
     {
@@ -74,14 +74,16 @@ namespace ReactiveUITK.Elements
                         radioButtonElement.value = value;
                     }
                 );
+                // diff gate (§6): diff_tracing is INDEPENDENT of the trace level (the
+                // legacy OR — Verbose alone also lights this).
                 if (
-                    ReactiveUITK.Core.Diagnostics.DiagnosticsConfig.EnableDiffTracing
-                    && ReactiveUITK.Core.Diagnostics.DiagnosticsConfig.CurrentTraceLevel
-                        != ReactiveUITK.Core.Diagnostics.DiagnosticsConfig.TraceLevel.None
+                    Ruitk.Core.Diagnostics.DiagnosticsConfig.EnableDiffTracing
+                    || Ruitk.Core.Diagnostics.DiagnosticsConfig.CurrentTraceLevel
+                        == Ruitk.Core.Diagnostics.DiagnosticsConfig.TraceLevel.Verbose
                 )
                 {
                     UnityEngine.Debug.Log(
-                        $"[RadioButtonDiff] key={(element.userData as ReactiveUITK.Core.NodeMetadata)?.Key} value={radioButtonElement.value}"
+                        $"[RadioButtonDiff] key={(element.userData as Ruitk.Core.NodeMetadata)?.Key} value={radioButtonElement.value}"
                     );
                 }
                 DiffSlot(radioButtonElement, previous, next, "label");

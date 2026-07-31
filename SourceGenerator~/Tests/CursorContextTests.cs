@@ -1,13 +1,13 @@
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.IntelliSense;
-using ReactiveUITK.Language.Lowering;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language;
+using Ruitk.Language.IntelliSense;
+using Ruitk.Language.Lowering;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// Tests for <see cref="AstCursorContext"/> — verifies that cursor positions

@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 
-namespace ReactiveUITK.SourceGenerator.Tools
+namespace Ruitk.SourceGenerator.Tools
 {
     /// <summary>
     /// CLI wrapper around <see cref="UitkxMigrator"/> — the only layer that touches the filesystem.
@@ -53,8 +53,8 @@ namespace ReactiveUITK.SourceGenerator.Tools
             // no import/export migration. Useful in CI to enforce FormatterSnapshotTests' idempotency.
             if (format)
             {
-                var fmt = new ReactiveUITK.Language.Formatter.AstFormatter(
-                    ReactiveUITK.Language.Formatter.FormatterOptions.Default);
+                var fmt = new Ruitk.Language.Formatter.AstFormatter(
+                    Ruitk.Language.Formatter.FormatterOptions.Default);
                 var fmtChanged = new List<string>();
                 foreach (var f in files)
                 {

@@ -50,7 +50,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace ReactiveUITK.Refresh
+namespace Ruitk.Refresh
 {
     /// <summary>
     /// Stable identity handle for a UITKX function component across HMR cycles.
@@ -123,7 +123,7 @@ namespace ReactiveUITK.Refresh
         /// so parents can supply a direct `() =&gt; Child.Render` factory
         /// for hand-written components that don't have an SG-emitted
         /// `[ModuleInitializer]` Register call (e.g. router types in the
-        /// ReactiveUITK package). A subsequent Register call still takes
+        /// Ruitk package). A subsequent Register call still takes
         /// precedence and clears the factory.
         /// </summary>
         internal bool TrySetFallbackFactory(
@@ -229,7 +229,7 @@ namespace ReactiveUITK.Refresh
             IReadOnlyList<Core.VirtualNode> __)
         {
             throw new InvalidOperationException(
-                $"[ReactiveUITK Refresh] Family '{Id}' has no registered body. " +
+                $"[Ruitk Refresh] Family '{Id}' has no registered body. " +
                 "Either no [ModuleInitializer] Register call ran for this " +
                 "component (likely cause: it lives in a package without UITKX " +
                 "source generation), or a parent component was emitted by a " +

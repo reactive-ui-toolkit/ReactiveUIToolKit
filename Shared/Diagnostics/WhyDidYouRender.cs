@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ReactiveUITK.Diagnostics
+namespace Ruitk.Diagnostics
 {
     public static class WhyDidYouRender
     {

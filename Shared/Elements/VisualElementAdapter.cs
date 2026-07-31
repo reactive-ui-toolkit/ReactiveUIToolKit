@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using ReactiveUITK.Props;
+using Ruitk.Props;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Elements
+namespace Ruitk.Elements
 {
     public sealed class VisualElementAdapter : BaseElementAdapter
     {

@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.IO;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Lowering;
-using ReactiveUITK.Language.Parser;
-using ReactiveUITK.Language.Roslyn;
+using Ruitk.Language;
+using Ruitk.Language.Lowering;
+using Ruitk.Language.Parser;
+using Ruitk.Language.Roslyn;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests
+namespace Ruitk.SourceGenerator.Tests
 {
     /// <summary>
     /// Virtual-document import lowering (import/export grammar §10): a file's <c>import</c>s become

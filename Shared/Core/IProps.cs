@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     /// <summary>
     /// Marker interface implemented by all typed component prop objects.

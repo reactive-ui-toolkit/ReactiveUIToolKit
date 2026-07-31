@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReactiveUITK.Core.Util
+namespace Ruitk.Core.Util
 {
     public struct SafeAreaInsets
     {

@@ -1,7 +1,7 @@
 using UnityEngine;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Samples.Components.MarioGame.components.MainMenu {
+namespace Ruitk.Samples.Components.MarioGame.components.MainMenu {
   public static class MainMenuStyles {
     public static readonly Style Container = new Style {
       (StyleKeys.Display, "flex"),

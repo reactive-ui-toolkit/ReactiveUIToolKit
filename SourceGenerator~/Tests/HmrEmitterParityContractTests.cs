@@ -1,15 +1,15 @@
 using System.Linq;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 /// <summary>
 /// HMR ↔ Source-Generator emitter parity contract tests.
 ///
 /// <para>
 /// HMR's <c>HmrCSharpEmitter</c> (under <c>Editor/HMR/</c>, in the Unity
-/// <c>ReactiveUITK.Editor</c> assembly) is a hand-written transpiler that
+/// <c>Ruitk.Editor</c> assembly) is a hand-written transpiler that
 /// must emit the same C# shape as the Roslyn-based source generator
 /// (<c>SourceGenerator~/Emitter/CSharpEmitter.cs</c>) for any given
 /// <c>.uitkx</c> input. When the SG learns a new emit shape, HMR must be
@@ -36,6 +36,72 @@ namespace ReactiveUITK.SourceGenerator.Tests;
 /// </summary>
 public class HmrEmitterParityContractTests
 {
+    // ── Null-only components (React case 2) ─────────────────────────────────
+
+    /// <summary>
+    /// A component whose only top-level return is <c>return null;</c> is valid
+    /// (always renders nothing). SG emits the whole body as setup code —
+    /// including the author's <c>return null;</c> — followed by the
+    /// empty-markup fallback <c>return (VirtualNode)null;</c>. HMR mirrors
+    /// this via the same <c>markupNodes.Count == 0</c> branch in
+    /// <c>HmrCSharpEmitter</c>; its header pragma already suppresses the
+    /// CS0162 the unreachable fallback produces.
+    /// </summary>
+    [Fact]
+    public void Sg_NullOnlyComponent_EmitsSetupThenFallbackReturn()
+    {
+        var result = GeneratorTestHelper.Run(
+            """
+            export VirtualNode Gone() {
+              useEffect(() => {
+                return null;
+              }, new object[] { });
+              return null;
+            }
+            """
+        );
+
+        Assert.True(result.SourceWasProduced);
+        Assert.True(result.SourceContains("__Render_body"));
+        Assert.True(
+            result.SourceContains("return null;"),
+            "The author's explicit return null must be spliced verbatim"
+        );
+        Assert.True(
+            result.SourceContains("return (global::Ruitk.Core.VirtualNode)null;"),
+            "The empty-markup fallback return must close the render body"
+        );
+    }
+
+    /// <summary>
+    /// The full React shape: a braced markup guard plus a final top-level
+    /// <c>return null;</c>. The guard's JSX is converted by the setup-code
+    /// splicer (paren-block ranges), so V.* factories must appear even though
+    /// the component has no top-level markup return. HMR shares
+    /// <c>SpliceSetupCodeMarkup</c> semantics.
+    /// </summary>
+    [Fact]
+    public void Sg_NullOnlyComponent_WithBracedMarkupGuard_SplicesGuardJsx()
+    {
+        var result = GeneratorTestHelper.Run(
+            """
+            export VirtualNode MaybeBadge(bool show = false) {
+              if (show) {
+                return (<Label text="badge" />);
+              }
+              return null;
+            }
+            """
+        );
+
+        Assert.True(result.SourceWasProduced);
+        Assert.True(
+            result.SourceContains("V.Label("),
+            "Braced guard JSX must be spliced into V.* calls"
+        );
+        Assert.True(result.SourceContains("return (global::Ruitk.Core.VirtualNode)null;"));
+    }
+
     // ── Issue 5 — ref={x} routing on function components ────────────────────────
 
     /// <summary>
@@ -58,8 +124,8 @@ public class HmrEmitterParityContractTests
                 (
                     "MyTextField.uitkx",
                     """
-                    @namespace ReactiveUITK.HmrParity
-                    @using ReactiveUITK.Core
+                    @namespace Ruitk.HmrParity
+                    @using Ruitk.Core
 
                     component MyTextField(Ref<object> inputRef = null) {
                         return (<TextField />);
@@ -69,9 +135,9 @@ public class HmrEmitterParityContractTests
                 (
                     "App.uitkx",
                     """
-                    @namespace ReactiveUITK.HmrParity
-                    @using ReactiveUITK.Core
-                    @using ReactiveUITK.HmrParity
+                    @namespace Ruitk.HmrParity
+                    @using Ruitk.Core
+                    @using Ruitk.HmrParity
 
                     component App {
                         var myRef = Hooks.UseRef<object>();
@@ -116,8 +182,8 @@ public class HmrEmitterParityContractTests
                 (
                     "Wrapper.uitkx",
                     """
-                    @namespace ReactiveUITK.HmrParity
-                    @using ReactiveUITK.Core
+                    @namespace Ruitk.HmrParity
+                    @using Ruitk.Core
 
                     component Wrapper(VirtualNode header = null) {
                         return (<VisualElement />);
@@ -127,8 +193,8 @@ public class HmrEmitterParityContractTests
                 (
                     "Page.uitkx",
                     """
-                    @namespace ReactiveUITK.HmrParity
-                    @using ReactiveUITK.HmrParity
+                    @namespace Ruitk.HmrParity
+                    @using Ruitk.HmrParity
 
                     component Page {
                         return (
@@ -171,7 +237,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component Conditional {
                 bool flag = true;
@@ -205,7 +271,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component Dup {
                 return (
@@ -231,7 +297,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component Distinct {
                 return (
@@ -265,7 +331,7 @@ public class HmrEmitterParityContractTests
                 (
                     "Greeter.uitkx",
                     """
-                    @namespace ReactiveUITK.HmrParity
+                    @namespace Ruitk.HmrParity
 
                     component Greeter(string name = "world") {
                         return (<Label text={"hi " + name} />);
@@ -275,8 +341,8 @@ public class HmrEmitterParityContractTests
                 (
                     "Host.uitkx",
                     """
-                    @namespace ReactiveUITK.HmrParity
-                    @using ReactiveUITK.HmrParity
+                    @namespace Ruitk.HmrParity
+                    @using Ruitk.HmrParity
 
                     component Host {
                         return (<Greeter name="copilot" />);
@@ -293,7 +359,7 @@ public class HmrEmitterParityContractTests
         // The synthesized {Name}Props class derives from IProps (not BaseProps)
         // and cannot be pooled. SG emits the FQN form.
         Assert.Contains(
-            "new global::ReactiveUITK.HmrParity.Greeter.GreeterProps",
+            "new global::Ruitk.HmrParity.Greeter.GreeterProps",
             output.GeneratedSource
         );
         Assert.DoesNotContain("__Rent", output.GeneratedSource);
@@ -323,7 +389,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component MyComponent {
                 return (<VisualElement />);
@@ -336,16 +402,16 @@ public class HmrEmitterParityContractTests
 
         // Public Render forwards plainly to the body - no HmrState branch,
         // no __hmr_Render field.
-        Assert.Contains("public static global::ReactiveUITK.Core.VirtualNode Render(", src);
+        Assert.Contains("public static global::Ruitk.Core.VirtualNode Render(", src);
         Assert.DoesNotContain("__hmr_Render", src);
-        Assert.DoesNotContain("global::ReactiveUITK.Core.HmrState.IsActive", src);
+        Assert.DoesNotContain("global::Ruitk.Core.HmrState.IsActive", src);
 
         // Body method exists and is EditorBrowsable-suppressed.
         // Emitted as `internal` so the editor-only companion class
         // `{ComponentName}__UitkxRefresh` (which holds [ModuleInitializer])
         // can reference it via `() => Component.__Render_body` without
         // triggering the component .cctor on Mono.
-        Assert.Contains("internal static global::ReactiveUITK.Core.VirtualNode __Render_body(", src);
+        Assert.Contains("internal static global::Ruitk.Core.VirtualNode __Render_body(", src);
         Assert.Contains(
             "[global::System.ComponentModel.EditorBrowsable(global::System.ComponentModel.EditorBrowsableState.Never)]",
             src);
@@ -355,7 +421,7 @@ public class HmrEmitterParityContractTests
         Assert.Contains(
             "[global::System.Runtime.CompilerServices.ModuleInitializer]",
             src);
-        Assert.Contains("global::ReactiveUITK.Refresh.RefreshRuntime.Register(", src);
+        Assert.Contains("global::Ruitk.Refresh.RefreshRuntime.Register(", src);
         Assert.Contains("\"MyComponent\"", src);
         Assert.Contains("__Render_body", src);
     }
@@ -372,7 +438,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component Counter(int initial = 0) {
                 var (count, setCount) = useState(initial);
@@ -404,7 +470,7 @@ public class HmrEmitterParityContractTests
         Assert.Contains("HookSignature", src);
 
         // Signature is published to the runtime via the registration call.
-        Assert.Contains("global::ReactiveUITK.Refresh.RefreshRuntime.Register(", src);
+        Assert.Contains("global::Ruitk.Refresh.RefreshRuntime.Register(", src);
     }
 
     // ── Module static-method HMR rewrite (v0.4.20, Issue (a)) ───────────────────
@@ -421,7 +487,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             module Calculator {
                 public static int Add(int a, int b) {
@@ -437,7 +503,7 @@ public class HmrEmitterParityContractTests
         // Body method synthesized with __<Name>_body_h<sig> shape.
         Assert.Contains("__Add_body_h", output.GeneratedSource);
         // Trampoline guards on HmrState.IsActive — exact pattern match.
-        Assert.Contains("global::ReactiveUITK.Core.HmrState.IsActive", output.GeneratedSource);
+        Assert.Contains("global::Ruitk.Core.HmrState.IsActive", output.GeneratedSource);
         // Public surface is preserved (caller signature unchanged).
         Assert.Contains("public static int Add(int a, int b)", output.GeneratedSource);
     }
@@ -453,7 +519,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             module RefHolder {
                 public static void Bump(ref int value) {
@@ -486,7 +552,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             module Overloaded {
                 public static int Foo(int x) => x;
@@ -527,7 +593,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             module Box {
                 public static T Identity<T>(T x) {
@@ -589,7 +655,7 @@ public class HmrEmitterParityContractTests
         // RegisterComponent, Open, TryResolve, TryClose, IsRegistered).
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             module Dialogs {
                 public static int Register<TProps, TResult>(TProps props, TResult result)
@@ -608,9 +674,9 @@ public class HmrEmitterParityContractTests
 
         Assert.NotNull(output.GeneratedSource);
 
-        // Stub for ReactiveUITK.Core.HmrState (referenced by the trampoline).
+        // Stub for Ruitk.Core.HmrState (referenced by the trampoline).
         const string Stubs = """
-            namespace ReactiveUITK.Core
+            namespace Ruitk.Core
             {
                 public static class HmrState
                 {
@@ -658,7 +724,7 @@ public class HmrEmitterParityContractTests
         );
 
         // Bug-targeted assertion. We don't try to compile the *whole*
-        // generated file (it `using`s UnityEngine, ReactiveUITK.Props,
+        // generated file (it `using`s UnityEngine, Ruitk.Props,
         // AssetHelpers, etc. — providing all those stubs would balloon
         // this test). Instead we filter to the two diagnostic IDs that
         // pinpoint the v0.4.19 / v0.5.0 regression:
@@ -696,7 +762,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
             @using System
 
             module Mixed {
@@ -717,7 +783,7 @@ public class HmrEmitterParityContractTests
         // `static readonly` is rewritten to `[UitkxHmrSwap] static` for HMR
         // re-initialisation. The `readonly` keyword must be GONE from the
         // emitted output and the attribute must be present.
-        Assert.Contains("[global::ReactiveUITK.UitkxHmrSwap]", output.GeneratedSource);
+        Assert.Contains("[global::Ruitk.UitkxHmrSwap]", output.GeneratedSource);
         Assert.Contains("public static string Tag", output.GeneratedSource);
         Assert.DoesNotContain("public static readonly string Tag", output.GeneratedSource);
         Assert.Contains("private static int _counter", output.GeneratedSource);
@@ -735,7 +801,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             module HasInstanceMethod {
                 public void Foo() { }
@@ -761,7 +827,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             module Defaults {
                 public static int Add(int a, int b = 5) {
@@ -793,7 +859,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component MusicPlayer {
                 return (<Audio Autoplay={true} Loop={true} Volume={0.5f} />);
@@ -823,7 +889,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component VideoPanel {
                 return (<Video Url="https://example.com/clip.mp4" Autoplay={true} Muted={true} />);
@@ -849,7 +915,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component VideoWithOverlay {
                 return (
@@ -879,7 +945,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component SfxButton {
                 var playSfx = useSfx();
@@ -905,7 +971,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component SfxButtonPascal {
                 var playSfx = Hooks.UseSfx();
@@ -931,7 +997,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component SafeAreaUser {
                 var insets = useSafeArea();
@@ -949,7 +1015,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component StableFuncUser {
                 var f = useStableFunc<int>(() => 42);
@@ -967,7 +1033,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component StableActionUser {
                 var a = useStableAction<int>(v => { });
@@ -985,7 +1051,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component StableCallbackUser {
                 var cb = useStableCallback(() => { });
@@ -1003,7 +1069,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component ImperativeHandleUser {
                 var h = useImperativeHandle<object>(() => null);
@@ -1021,7 +1087,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component AnimateUser {
                 useAnimate(null, false);
@@ -1039,7 +1105,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component TweenFloatUser {
                 useTweenFloat(0f, 1f, 1f, default, 0f, v => { }, null);
@@ -1057,7 +1123,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component TransitionUser {
                 var (isPending, startTransition) = useTransition();
@@ -1085,7 +1151,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component BadgeUser {
                 var isOn = true;
@@ -1096,8 +1162,8 @@ public class HmrEmitterParityContractTests
         );
         Assert.NotNull(output.GeneratedSource);
         Assert.Contains("isOn) ?", output.GeneratedSource);
-        Assert.Contains(": (global::ReactiveUITK.Core.VirtualNode?)null)", output.GeneratedSource);
-        Assert.DoesNotContain("isOn && global::ReactiveUITK.Core.V.", output.GeneratedSource);
+        Assert.Contains(": (global::Ruitk.Core.VirtualNode?)null)", output.GeneratedSource);
+        Assert.DoesNotContain("isOn && global::Ruitk.Core.V.", output.GeneratedSource);
     }
 
     // ── §7 path-qualified hook family keys (SG↔HMR parity) ──────────────────
@@ -1117,10 +1183,10 @@ public class HmrEmitterParityContractTests
     public void Sg_HookRegistration_UsesPathQualifiedFamilyKey_HmrMustMirror()
     {
         var output = GeneratorTestHelper.Run(
-            "@namespace ReactiveUITK.HmrParity\nhook useThing() {\n  return 0;\n}");
+            "@namespace Ruitk.HmrParity\nhook useThing() {\n  return 0;\n}");
 
         Assert.NotNull(output.GeneratedSource);
-        Assert.Contains("RegisterHook(\"ReactiveUITK.HmrParity.", output.GeneratedSource);
+        Assert.Contains("RegisterHook(\"Ruitk.HmrParity.", output.GeneratedSource);
         Assert.Contains("::useThing\"", output.GeneratedSource);
         // The bare-name key must NOT be emitted.
         Assert.DoesNotContain("RegisterHook(\"useThing\"", output.GeneratedSource);
@@ -1145,7 +1211,7 @@ public class HmrEmitterParityContractTests
     {
         var exported = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             export component Widget {
                 return (<Box />);
@@ -1157,7 +1223,7 @@ public class HmrEmitterParityContractTests
 
         var internalComp = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component Widget {
                 return (<Box />);
@@ -1179,7 +1245,7 @@ public class HmrEmitterParityContractTests
     {
         var output = GeneratorTestHelper.Run(
             """
-            @namespace ReactiveUITK.HmrParity
+            @namespace Ruitk.HmrParity
 
             component First {
                 return (<Box />);

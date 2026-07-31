@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ReactiveUITK.Core.Util
+namespace Ruitk.Core.Util
 {
     public static class VNodeSnapshot
     {

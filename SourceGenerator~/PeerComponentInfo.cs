@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.SourceGenerator
+namespace Ruitk.SourceGenerator
 {
     public sealed record PeerComponentInfo(
         string Name,

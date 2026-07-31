@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.KeyedDiffLisDemoFunc;
-using ReactiveUITK.Samples.Components.KeyedDiffLisDemoFunc.KeyedDiffLisDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.KeyedDiffLisDemoFunc;
+using Ruitk.Samples.Components.KeyedDiffLisDemoFunc.KeyedDiffLisDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxKeyedDiffLisDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(13-17-18-26)/Keyed Diff (LIS)")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(13-17-18-26)/Keyed Diff (LIS)")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxKeyedDiffLisDemoWindow>("Keyed Diff (LIS)");

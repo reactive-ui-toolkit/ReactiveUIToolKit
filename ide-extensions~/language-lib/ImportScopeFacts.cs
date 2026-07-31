@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Text;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>
     /// The single source of truth for "what <c>using</c> lines does a file's <c>import</c> set
@@ -507,8 +507,8 @@ namespace ReactiveUITK.Language
         /// <summary>
         /// Rewrites a using payload for emission INSIDE a namespace block (ES-modules campaign,
         /// M7): inside-namespace usings resolve RELATIVE to the enclosing namespaces, so
-        /// <c>using Samples.X;</c> inside <c>ReactiveUITK.Samples…</c> re-resolves `Samples`
-        /// against <c>ReactiveUITK.Samples</c> and breaks (found live). <c>global::</c> makes the
+        /// <c>using Samples.X;</c> inside <c>Ruitk.Samples…</c> re-resolves `Samples`
+        /// against <c>Ruitk.Samples</c> and breaks (found live). <c>global::</c> makes the
         /// payload absolute: plain → <c>global::Ns</c>; <c>static T</c> → <c>static global::T</c>;
         /// <c>A = T</c> → <c>A = global::T</c>. Idempotent on already-global payloads.
         /// </summary>

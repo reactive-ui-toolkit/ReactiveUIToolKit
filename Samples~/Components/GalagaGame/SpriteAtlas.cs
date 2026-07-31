@@ -1,10 +1,10 @@
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Props.Typed;
-using static ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes;
-using static ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes.C;
+using Ruitk.Props.Typed;
+using static Ruitk.Samples.Components.GalagaGame.GalagaTypes;
+using static Ruitk.Samples.Components.GalagaGame.GalagaTypes.C;
 
-namespace ReactiveUITK.Samples.Components.GalagaGame {
+namespace Ruitk.Samples.Components.GalagaGame {
   public static class SpriteAtlas {
     // ───── Sprite frame definition ─────
 

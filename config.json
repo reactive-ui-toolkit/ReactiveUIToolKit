@@ -1,11 +1,6 @@
 {
-  "envVariables": {
-    "env": "development",
-    "traceLevel": "Basic",
-    "diffTracing": false,
-    "exceptionControlFlow": true
-  },
   "pathsToOmitFromStore": [
+    "Ugui/Tests/**",
     "Samples/Components/UitkxTestFileDoNotTouch/**",
     "Samples/Shared/MediaPlaygroundDemoPage.uitkx",
     "Samples/Shared/MediaPlaygroundRuntimeBootstrap.cs",
@@ -15,8 +10,10 @@
     "AUTOMATION.md",
     "RELEASE_OPS.md",
     "VERSIONING.md",
+    "plans/**",
     "publisher-secrets.example.json",
-    "ReactiveUIToolKit.code-workspace",
+    ".ruitk-local.example.json",
+    "ReactiveUIToolkit.code-workspace",
     ".csharpierignore"
   ],
   "pathsToOmitFromDist": [
@@ -24,14 +21,12 @@
     "dist~/**",
     "Diagnostics/**",
     "scripts/**",
-    "ReactiveUIToolKitDocs~/**",
-    "Analyzers/publish",
+    "ReactiveUIToolkitDocs~/**",
     "_docs_branch",
-    "Analyzers/ReactiveUITK.Language.pdb",
-    "Analyzers/ReactiveUITK.SourceGenerator.pdb",
-    "Analyzers/ReactiveUITK.SourceGenerator.deps.json",
+    "Analyzers/Ruitk.Language.pdb",
+    "Analyzers/Ruitk.SourceGenerator.pdb",
     "publisher-secrets.json",
-    "publisher-secrets.json.meta"
-  ],
-  "npmPath": "C:\\nvm4w\\nodejs\\npm.cmd"
+    "publisher-secrets.json.meta",
+    ".ruitk-local.json"
+  ]
 }

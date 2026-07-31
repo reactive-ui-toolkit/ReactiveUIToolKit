@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Diagnostics;
-using ReactiveUITK.SourceGenerator.Analyzers;
+using Ruitk.SourceGenerator.Analyzers;
 using Xunit;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 public class UitkxHmrSwapWriteAnalyzerTests
 {
     // Minimal stub of the attribute so the analyzer can resolve it against
-    // the test compilation. (The real attribute lives in ReactiveUITK.Shared.
+    // the test compilation. (The real attribute lives in Ruitk.Shared.
     // For analyzer-only unit tests we don't want to drag in Shared, so we
     // declare a same-namespace+same-name shadow.)
     private const string AttrShim = """
-        namespace ReactiveUITK
+        namespace Ruitk
         {
             [System.AttributeUsage(System.AttributeTargets.Field)]
             public sealed class UitkxHmrSwapAttribute : System.Attribute { }
@@ -58,7 +58,7 @@ public class UitkxHmrSwapWriteAnalyzerTests
         const string src = """
             public class Mod
             {
-                [global::ReactiveUITK.UitkxHmrSwap]
+                [global::Ruitk.UitkxHmrSwap]
                 public static int X = 1;
 
                 public static void DoStuff()
@@ -77,7 +77,7 @@ public class UitkxHmrSwapWriteAnalyzerTests
         const string src = """
             public class Mod
             {
-                [global::ReactiveUITK.UitkxHmrSwap]
+                [global::Ruitk.UitkxHmrSwap]
                 public static int X = 1;
 
                 static Mod()
@@ -114,7 +114,7 @@ public class UitkxHmrSwapWriteAnalyzerTests
         const string src = """
             public class Mod
             {
-                [global::ReactiveUITK.UitkxHmrSwap]
+                [global::Ruitk.UitkxHmrSwap]
                 public static int X = 1;
 
                 public static void DoStuff()
@@ -133,7 +133,7 @@ public class UitkxHmrSwapWriteAnalyzerTests
         const string src = """
             public class Mod
             {
-                [global::ReactiveUITK.UitkxHmrSwap]
+                [global::Ruitk.UitkxHmrSwap]
                 public static int X = 1;
 
                 public static void DoStuff()
@@ -153,7 +153,7 @@ public class UitkxHmrSwapWriteAnalyzerTests
         const string src = """
             public class Mod
             {
-                [global::ReactiveUITK.UitkxHmrSwap]
+                [global::Ruitk.UitkxHmrSwap]
                 public static int X = 42;
             }
             """;

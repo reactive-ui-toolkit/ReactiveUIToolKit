@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.SnakeGame;
-using ReactiveUITK.Samples.Components.SnakeGame.SnakeGame;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.SnakeGame;
+using Ruitk.Samples.Components.SnakeGame.SnakeGame;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxSnakeGameDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Snake Game")]
+        [MenuItem("Reactive UI Toolkit/Demos/Snake Game")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxSnakeGameDemoWindow>("Snake Game Demo");

@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Microsoft.CodeAnalysis;
-using ReactiveUITK.Language;
-using ReactiveUITK.Language.Diagnostics;
-using ReactiveUITK.Language.Roslyn;
+using Ruitk.Language;
+using Ruitk.Language.Diagnostics;
+using Ruitk.Language.Roslyn;
 using RoslynDiagnosticSeverity = Microsoft.CodeAnalysis.DiagnosticSeverity;
 
 namespace UitkxLanguageServer.Roslyn

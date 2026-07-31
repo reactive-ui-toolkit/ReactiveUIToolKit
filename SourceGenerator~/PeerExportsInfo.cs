@@ -1,7 +1,7 @@
 using System.Collections.Immutable;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.SourceGenerator
+namespace Ruitk.SourceGenerator
 {
     /// <summary>
     /// Per-file descriptor of a NEW-MODE (plain-declaration, ES-modules campaign) peer's export

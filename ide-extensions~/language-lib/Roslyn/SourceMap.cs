@@ -1,6 +1,6 @@
 using System.Collections.Immutable;
 
-namespace ReactiveUITK.Language.Roslyn
+namespace Ruitk.Language.Roslyn
 {
     // ── Region kind ───────────────────────────────────────────────────────────
 

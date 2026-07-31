@@ -3,7 +3,7 @@ using System.Reflection;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     internal static class RefUtility
     {
@@ -57,7 +57,7 @@ namespace ReactiveUITK.Core
             {
                 try
                 {
-                    Debug.LogWarning($"ReactiveUITK: ref assignment failed: {ex}");
+                    Debug.LogWarning($"Ruitk: ref assignment failed: {ex}");
                 }
                 catch { }
             }

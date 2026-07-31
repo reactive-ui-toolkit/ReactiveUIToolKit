@@ -1,7 +1,7 @@
 // ───── Public API ─────
 import * as Raycast from "./Raycast"
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTypes"
-import "@static ReactiveUITK.Samples.Components.DoomGame.DoomTextures"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTypes"
+import "@static Ruitk.Samples.Components.DoomGame.DoomTextures"
 
 export GameState NewGame(int level, Difficulty diff) {
   var start = DoomMaps.BuildLevel(level);

@@ -1,5 +1,5 @@
-import "@static ReactiveUITK.Samples.Components.GalagaGame.GalagaTypes.C"
-import "@static ReactiveUITK.Samples.Components.GalagaGame.SpriteAtlas"
+import "@static Ruitk.Samples.Components.GalagaGame.GalagaTypes.C"
+import "@static Ruitk.Samples.Components.GalagaGame.SpriteAtlas"
 
 export VirtualNode HUD(Texture2D spriteSheet, int score, int lives, int wave) {
   return (

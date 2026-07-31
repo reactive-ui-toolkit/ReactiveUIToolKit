@@ -1,7 +1,7 @@
 using UnityEngine;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Samples.Components.SnakeGame {
+namespace Ruitk.Samples.Components.SnakeGame {
   public static class Styles
   {
     public static readonly Style Root = new Style

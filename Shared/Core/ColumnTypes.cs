@@ -2,13 +2,13 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // Shared data types for multi-column list/tree views.
 // Moved to Core so ColumnSortEventHandler and ColumnLayoutEventHandler can be
-// strongly typed without depending on ReactiveUITK.Props.Typed.
+// strongly typed without depending on Ruitk.Props.Typed.
 // ─────────────────────────────────────────────────────────────────────────────
 
 using System.Collections.Generic;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     /// <summary>
     /// Describes the sort state of a single column in a

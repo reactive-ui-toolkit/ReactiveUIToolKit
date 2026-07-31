@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace ReactiveUITK.Core
+namespace Ruitk.Core
 {
     /// <summary>
     /// Schedules a one-shot main-thread callback to run on the next frame
@@ -63,7 +63,7 @@ namespace ReactiveUITK.Core
 #else
             Action unsub = null;
             bool firedRt = false;
-            unsub = ReactiveUITK.Core.Media.MediaHost.Instance.SubscribeTick(() =>
+            unsub = Ruitk.Core.Media.MediaHost.Instance.SubscribeTick(() =>
             {
                 if (firedRt)
                 {

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Shared props for the layout-group container elements. Names mirror the

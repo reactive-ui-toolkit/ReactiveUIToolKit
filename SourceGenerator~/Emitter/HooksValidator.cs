@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.Text;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.SourceGenerator.Emitter
+namespace Ruitk.SourceGenerator.Emitter
 {
     /// <summary>
-    /// Walks the AST and enforces ReactiveUITK's Rules of Hooks:
+    /// Walks the AST and enforces Ruitk's Rules of Hooks:
     ///
     ///   UITKX0013 - Hook called inside @if / @else branch
     ///   UITKX0014 - Hook called inside @foreach loop
@@ -149,12 +149,12 @@ namespace ReactiveUITK.SourceGenerator.Emitter
         // Patterns that indicate a hook call. We match on the call site name only -
         // the leading `Hooks.` prefix is optional so hand-written using-aliases work too.
         //
-        // Sourced from ReactiveUITK.Core.HookRegistry so this list cannot drift
+        // Sourced from Ruitk.Core.HookRegistry so this list cannot drift
         // from the source generator's alias table and the IDE diagnostics
         // analyzer's scanner.  This is also where useLayoutEffect coverage
         // arrives - pre-0.5.23 this table was missing it entirely.
         private static readonly string[] s_hookPatterns =
-            global::ReactiveUITK.Core.HookRegistry.GetValidationPatterns();
+            global::Ruitk.Core.HookRegistry.GetValidationPatterns();
 
         // -- UITKX0016 - hook inside attribute expression ---------------------
 

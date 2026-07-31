@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Core;
-using ReactiveUITK.Core.Diagnostics;
-using ReactiveUITK.Core.Fiber;
-using ReactiveUITK.Elements;
-using ReactiveUITK.Signals;
+using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
+using Ruitk.Core.Fiber;
+using Ruitk.Elements;
+using Ruitk.Signals;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Mounts a fiber tree under a RectTransform inside any existing Canvas —
@@ -61,8 +61,17 @@ namespace ReactiveUITK.Ugui
 
             DiagnosticsConfig.CurrentTraceLevel = BuildDefinesConfig.ResolveTraceLevel();
             DiagnosticsConfig.EnableDiffTracing = BuildDefinesConfig.ResolveEnableDiffTracing();
-            DiagnosticsConfig.UseExceptionBoundaryFlow =
-                BuildDefinesConfig.ResolveExceptionBoundaryFlow();
+
+            // Reconciler knobs — defaults reproduce the former constants exactly.
+            FiberConfig.TimeSlicingEnabled = BuildDefinesConfig.ResolveTimeSlicing();
+            FiberConfig.TimeSliceMs = BuildDefinesConfig.ResolveTimeSliceMs();
+
+            // Strict knobs — the two tri-states resolve auto = on in the editor and
+            // development builds, off in release players; strict_mode additionally
+            // force-resolves off in release players regardless of the stored value.
+            Hooks.EnableHookValidation = BuildDefinesConfig.ResolveHookValidation();
+            Hooks.EnableStrictDiagnostics = BuildDefinesConfig.ResolveStrictDiagnostics();
+            FiberConfig.StrictModeEnabled = BuildDefinesConfig.ResolveStrictMode();
 
             InternalLogOptions.EnableInternalLogs =
                 DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose;
@@ -104,7 +113,7 @@ namespace ReactiveUITK.Ugui
             if (mount == null)
             {
                 Debug.LogError(
-                    "[ReactiveUITK.Ugui] UguiRootRenderer has no mount target. Assign a "
+                    "[Ruitk.Ugui] UguiRootRenderer has no mount target. Assign a "
                         + "RectTransform in the Inspector, call Initialize(rectTransform), or "
                         + "place the component on a RectTransform under a Canvas.",
                     this
@@ -147,7 +156,7 @@ namespace ReactiveUITK.Ugui
             if (EventSystem.current == null)
             {
                 Debug.LogWarning(
-                    "[ReactiveUITK.Ugui] No EventSystem found in the scene — uGUI "
+                    "[Ruitk.Ugui] No EventSystem found in the scene — uGUI "
                         + "interaction events (Button.onClick, pointer handlers) will not "
                         + "fire. Add one via GameObject > UI > Event System.",
                     this

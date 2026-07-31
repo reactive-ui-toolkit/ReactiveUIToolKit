@@ -4,7 +4,7 @@
 
 .DESCRIPTION
     Loads UnityEngine.UIElementsModule.dll from two Unity installations and diffs
-    the public API surface relevant to ReactiveUIToolKit:
+    the public API surface relevant to ReactiveUIToolkit:
       - IStyle properties (name + type)
       - VisualElement subclasses
       - Enums in UnityEngine.UIElements namespace
@@ -34,7 +34,11 @@
 .EXAMPLE
     .\unity-api-diff.ps1 -From 6000.2 -To 6000.3
     .\unity-api-diff.ps1 -From 6000.2 -To 6000.3 -OutFile .\diff-reports\6000.2-to-6000.3.json
-    .\unity-api-diff.ps1 -FromDll "C:\...\6000.2.0f1\...\dll" -ToDll "C:\...\6000.3.0f1\...\dll"
+
+    # Explicit DLLs, for editors installed outside the Hub roots this script probes.
+    # The DLL sits at a fixed offset under any Unity install directory:
+    $dll = "Editor\Data\Managed\UnityEngine\UnityEngine.UIElementsModule.dll"
+    .\unity-api-diff.ps1 -FromDll "$oldUnityInstall\$dll" -ToDll "$newUnityInstall\$dll"
 #>
 
 [CmdletBinding()]

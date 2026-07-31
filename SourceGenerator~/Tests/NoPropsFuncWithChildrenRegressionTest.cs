@@ -5,11 +5,11 @@ using System.Text;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.Text;
-using ReactiveUITK.SourceGenerator.Tests.Helpers;
+using Ruitk.SourceGenerator.Tests.Helpers;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace ReactiveUITK.SourceGenerator.Tests;
+namespace Ruitk.SourceGenerator.Tests;
 
 // ─────────────────────────────────────────────────────────────────────────────
 // Regression: emitting a no-props user component that wraps element children
@@ -46,22 +46,22 @@ public sealed class NoPropsFuncWithChildrenRegressionTest
     private const string ApiStub = """
         using System.Collections.Generic;
 
-        namespace ReactiveUITK.Core
+        namespace Ruitk.Core
         {
             public abstract class VirtualNode { }
             public interface IProps { }
             public static class EmptyProps { public static readonly IProps Instance = null; }
         }
 
-        namespace ReactiveUITK.Hooks
+        namespace Ruitk.Hooks
         {
             // Surface used by generated setup code (none here, but keeps emitter happy
             // if its preamble imports change).
         }
 
-        namespace ReactiveUITK
+        namespace Ruitk
         {
-            using ReactiveUITK.Core;
+            using Ruitk.Core;
 
             public static class V
             {
@@ -100,7 +100,7 @@ public sealed class NoPropsFuncWithChildrenRegressionTest
         namespace UI.App
         {
             using System.Collections.Generic;
-            using ReactiveUITK.Core;
+            using Ruitk.Core;
 
             public static class Inner
             {

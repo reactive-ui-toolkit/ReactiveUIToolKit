@@ -1,6 +1,6 @@
 is_global = true
-build_property.RootNamespace = ReactiveUITK.Language
-build_property.ProjectDir = /home/runner/work/ReactiveUIToolKit/ReactiveUIToolKit/ide-extensions~/language-lib/
+build_property.RootNamespace = Ruitk.Language
+build_property.ProjectDir = /home/runner/work/ruitk-unity/ruitk-unity/ide-extensions~/language-lib/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.CsWinRTUseWindowsUIXamlProjections = false

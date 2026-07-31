@@ -1,10 +1,10 @@
-using ReactiveUITK.Core;
+using Ruitk.Core;
 
-namespace ReactiveUITK
+namespace Ruitk
 {
     /// <summary>
     /// Short helpers for loading Unity assets by path from the UITKX asset registry.
-    /// Import via <c>using static ReactiveUITK.AssetHelpers;</c>
+    /// Import via <c>using static Ruitk.AssetHelpers;</c>
     /// <code>
     /// Asset&lt;Texture2D&gt;("Assets/UI/avatar")
     /// Ast&lt;Sprite&gt;("Assets/UI/icon")

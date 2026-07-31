@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.LatestFeaturesDemoFunc;
-using ReactiveUITK.Samples.Components.LatestFeaturesDemoFunc.LatestFeaturesDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.LatestFeaturesDemoFunc;
+using Ruitk.Samples.Components.LatestFeaturesDemoFunc.LatestFeaturesDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxLatestFeaturesDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Latest Features Showcase")]
+        [MenuItem("Reactive UI Toolkit/Demos/Latest Features Showcase")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxLatestFeaturesDemoWindow>("Latest Features Demo");

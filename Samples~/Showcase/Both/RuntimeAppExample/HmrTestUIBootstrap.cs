@@ -1,12 +1,12 @@
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
-using ReactiveUITK.Samples.Components.HmrTests;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
+using Ruitk.Samples.Components.HmrTests;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Components.HmrTests.HmrTests;
+using Ruitk.Samples.Components.HmrTests.HmrTests;
 
-namespace ReactiveUITK.Samples.FunctionalComponents
+namespace Ruitk.Samples.FunctionalComponents
 {
     public class HmrTestUIBootstrap : MonoBehaviour
     {

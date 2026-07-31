@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Samples.Components.DoomGame {
+namespace Ruitk.Samples.Components.DoomGame {
   internal struct RayHit {
     public float Distance;
     public byte WallTexIdx;

@@ -1,4 +1,4 @@
-namespace ReactiveUITK.Language.SemanticTokens
+namespace Ruitk.Language.SemanticTokens
 {
     /// <summary>Semantic token type identifiers used by the UITKX language server.</summary>
     public static class SemanticTokenTypes

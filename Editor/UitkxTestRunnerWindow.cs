@@ -4,22 +4,23 @@ using System.Diagnostics;
 using System.IO;
 using System.Text;
 using System.Threading.Tasks;
+using Ruitk.EditorSupport;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-namespace ReactiveUITK.Editor
+namespace Ruitk.Editor
 {
     /// <summary>
     /// Editor window that runs the UITKX Source Generator unit tests
     /// (xUnit, <c>SourceGenerator~/Tests/</c>) via <c>dotnet test</c> and
     /// displays the output inline.
     ///
-    /// Menu path: ReactiveUITK / Diagnostics / Run Unit Tests
+    /// Menu path: Reactive UI Toolkit / Diagnostics / Run Unit Tests
     /// </summary>
     public sealed class UitkxTestRunnerWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Diagnostics/Run Unit Tests")]
+        [MenuItem("Reactive UI Toolkit/Diagnostics/Run Unit Tests")]
         public static void Open()
         {
             var window = GetWindow<UitkxTestRunnerWindow>("UITKX Unit Tests");
@@ -83,7 +84,11 @@ namespace ReactiveUITK.Editor
 
             // ── Path info ────────────────────────────────────────────────────
             string testDir = GetTestsDirectory();
-            var pathLabel = new Label($"Project: {testDir}")
+            var pathLabel = new Label(
+                testDir != null
+                    ? $"Project: {testDir}"
+                    : "Project: <package root not found — see the Console for the paths tried>"
+            )
             {
                 style =
                 {
@@ -129,12 +134,30 @@ namespace ReactiveUITK.Editor
         {
             if (_running)
                 return;
+
+            string testDir = GetTestsDirectory();
+            if (testDir == null)
+            {
+                SetOutput(RuitkPackagePaths.FailureMessage + "\n");
+                SetStatus(StatusKind.Failed);
+                return;
+            }
+            if (!Directory.Exists(testDir))
+            {
+                SetOutput(
+                    "Test project not found:\n  " + testDir + "\n\n"
+                    + "SourceGenerator~/ is a development-only folder and is not part of an Asset "
+                    + "Store install — run these tests from a source checkout.\n"
+                );
+                SetStatus(StatusKind.Failed);
+                return;
+            }
+
             _running = true;
             _runButton.SetEnabled(false);
             SetOutput("Running dotnet test…\n");
             SetStatus(StatusKind.Running);
 
-            string testDir = GetTestsDirectory();
             _ = RunDotnetTestAsync(testDir);
         }
 
@@ -277,17 +300,25 @@ namespace ReactiveUITK.Editor
         }
 
         /// <summary>
-        /// Returns the absolute path to <c>SourceGenerator~/Tests/</c>,
-        /// which sits directly alongside the <c>Assets/</c> folder.
+        /// Absolute path to the package's <c>SourceGenerator~/Tests/</c>, or <c>null</c> when the
+        /// package root cannot be resolved.
+        ///
+        /// <para>Resolved through <see cref="RuitkPackagePaths"/> rather than assuming
+        /// <c>Assets/ReactiveUIToolkit</c>, so this works in the UPM, embedded and <c>file:</c> layouts
+        /// too. Note that <c>SourceGenerator~</c> is tilde-suffixed: it ships inside the UPM package but
+        /// is absent from an Asset Store <c>.unitypackage</c> (the exporter walks the asset database,
+        /// which ignores <c>~</c> folders), so a missing directory here is expected for store installs
+        /// and is reported rather than run against.</para>
+        ///
+        /// <para>Must not throw — it is called while the window is being built.</para>
         /// </summary>
         private static string GetTestsDirectory()
         {
-            // Application.dataPath = <project>/Assets
-            string projectRoot = Path.GetDirectoryName(Application.dataPath);
-            // The package lives inside Assets/ReactiveUIToolKit
-            string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolKit");
-            string testsDir = Path.Combine(packageRoot, "SourceGenerator~", "Tests");
-            return Path.GetFullPath(testsDir);
+            if (!RuitkPackagePaths.TryGetRoot(out string packageRoot))
+            {
+                return null;
+            }
+            return Path.GetFullPath(Path.Combine(packageRoot, "SourceGenerator~", "Tests"));
         }
 
         private static string FindDotnet()

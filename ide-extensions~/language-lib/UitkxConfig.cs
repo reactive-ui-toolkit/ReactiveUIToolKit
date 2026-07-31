@@ -1,14 +1,14 @@
 using System.IO;
 using System.Text.RegularExpressions;
 
-namespace ReactiveUITK.Language
+namespace Ruitk.Language
 {
     /// <summary>
     /// Reads project-level settings from <c>uitkx.config.json</c>. Keys today: <c>"root"</c> — the UI
     /// source root that a <c>~/</c> specifier (in an <c>import</c> or an <c>Asset&lt;T&gt;</c>/<c>@uss</c>
     /// path) resolves against, project-relative, engine default <c>Assets</c>; and
     /// <c>"namespacePrefix"</c> — the root of every path-derived namespace (namespace-import
-    /// unification plan), overriding the <c>ReactiveUITK.Uitkx</c> default so a whole project can carry
+    /// unification plan), overriding the <c>Ruitk.Uitkx</c> default so a whole project can carry
     /// its own namespace root without a per-file <c>@namespace</c>.
     ///
     /// Discovery is a directory walk-up (same as the formatter's <c>ConfigLoader</c>) with
@@ -32,7 +32,7 @@ namespace ReactiveUITK.Language
         /// <summary>
         /// The configured namespace prefix (<c>"namespacePrefix"</c> in the nearest
         /// <c>uitkx.config.json</c>) for a file whose directory is <paramref name="fileDirectory"/>,
-        /// or <c>null</c> when unset. Overrides the <c>ReactiveUITK.Uitkx</c> default root for
+        /// or <c>null</c> when unset. Overrides the <c>Ruitk.Uitkx</c> default root for
         /// path-derived namespaces. Nearest-config-WINS (no merge upward), matching <see cref="LoadRoot"/>.
         /// </summary>
         public static string? LoadNamespacePrefix(string? fileDirectory)

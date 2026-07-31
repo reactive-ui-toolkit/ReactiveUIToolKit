@@ -1,7 +1,7 @@
 using UnityEngine;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 
-namespace ReactiveUITK.Samples.Components.GalagaGame.components.MainMenu {
+namespace Ruitk.Samples.Components.GalagaGame.components.MainMenu {
   public static class MainMenuStyles {
     public static readonly Style Container = new Style {
       (StyleKeys.Display, "flex"),

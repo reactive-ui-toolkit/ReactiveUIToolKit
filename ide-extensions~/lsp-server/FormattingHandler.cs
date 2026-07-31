@@ -3,7 +3,7 @@ using System.IO;
 using OmniSharp.Extensions.LanguageServer.Protocol.Client.Capabilities;
 using OmniSharp.Extensions.LanguageServer.Protocol.Document;
 using OmniSharp.Extensions.LanguageServer.Protocol.Models;
-using ReactiveUITK.Language.Formatter;
+using Ruitk.Language.Formatter;
 using UitkxLanguageServer.Roslyn;
 
 namespace UitkxLanguageServer;

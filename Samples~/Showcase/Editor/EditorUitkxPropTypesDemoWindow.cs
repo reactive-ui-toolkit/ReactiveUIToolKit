@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.PropTypesDemoFunc;
-using ReactiveUITK.Samples.Components.PropTypesDemoFunc.PropTypesDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.PropTypesDemoFunc;
+using Ruitk.Samples.Components.PropTypesDemoFunc.PropTypesDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxPropTypesDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Tests-(35-37-40)/PropTypes Validation")]
+        [MenuItem("Reactive UI Toolkit/Demos/Tests-(35-37-40)/PropTypes Validation")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxPropTypesDemoWindow>("PropTypes Demo");

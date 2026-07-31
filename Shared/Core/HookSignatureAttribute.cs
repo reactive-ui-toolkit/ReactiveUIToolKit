@@ -1,6 +1,6 @@
 using System;
 
-namespace ReactiveUITK
+namespace Ruitk
 {
     /// <summary>
     /// Records the ordered hook call signature (e.g. "UseState,UseEffect,UseMemo")

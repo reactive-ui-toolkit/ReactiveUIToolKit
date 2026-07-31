@@ -1,6 +1,6 @@
 using Microsoft.CodeAnalysis;
 
-namespace ReactiveUITK.SourceGenerator
+namespace Ruitk.SourceGenerator
 {
     /// <summary>
     /// Central registry of all <see cref="DiagnosticDescriptor"/> instances used
@@ -34,7 +34,7 @@ namespace ReactiveUITK.SourceGenerator
     /// </summary>
     internal static class UitkxDiagnostics
     {
-        private const string Category = "ReactiveUITK.Parser";
+        private const string Category = "Ruitk.Parser";
 
         // ── Phase 3 — tag resolution ──────────────────────────────────────────
 

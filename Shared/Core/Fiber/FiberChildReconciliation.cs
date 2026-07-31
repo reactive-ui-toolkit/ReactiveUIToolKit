@@ -1,9 +1,10 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK;
-using ReactiveUITK.Core;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
 
-namespace ReactiveUITK.Core.Fiber
+namespace Ruitk.Core.Fiber
 {
     /// <summary>
     /// Child reconciliation - the heart of the diffing algorithm
@@ -87,6 +88,10 @@ namespace ReactiveUITK.Core.Fiber
                     newFiber = UpdateSlot(oldFiber, newChild);
                     if (newFiber == null)
                     {
+                        // structural gate (§6): the occupied slot's old fiber cannot
+                        // serve this vnode — a fresh node supplants it.
+                        if (newChild != null)
+                            TraceReplace(oldFiber, newChild);
                         // Can't reuse, create new
                         newFiber = CreateFiber(newChild, wipFiber, newIdx);
                     }
@@ -201,6 +206,12 @@ namespace ReactiveUITK.Core.Fiber
                         {
                             lastPlacedIndex = oldIndex;
                         }
+                    }
+                    else
+                    {
+                        // structural gate (§6): same key, incompatible type — the old
+                        // subtree is torn down and a fresh one takes the key.
+                        TraceReplace(oldFiber, newChild);
                     }
                 }
 
@@ -461,6 +472,26 @@ namespace ReactiveUITK.Core.Fiber
             {
                 DeleteChild(parentFiber, child);
                 child = child.Sibling;
+            }
+        }
+
+        /// <summary>
+        /// structural gate (§6, family Basic set): one line per node-replacement
+        /// decision — the slot/key keeps its tree position but the old subtree
+        /// cannot serve the new vnode, so a fresh node is built in its place.
+        /// The teardown/build themselves still log their own <c>[Fiber] Delete</c>
+        /// and placement lines at commit; this line records the DECISION, matching
+        /// the sibling reconcilers (Godot <c>reconciler.gd</c> "[Fiber] Replace",
+        /// Unreal <c>RuitkReconciler.cpp</c> "[Ruitk][trace] Replace").
+        /// </summary>
+        internal static void TraceReplace(FiberNode oldFiber, VirtualNode newVNode)
+        {
+            if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
+            {
+                UnityEngine.Debug.Log(
+                    $"[Fiber] Replace {oldFiber.ElementType ?? oldFiber.Tag.ToString()}"
+                        + $" -> {newVNode.ElementTypeName ?? newVNode.NodeType.ToString()}"
+                );
             }
         }
 

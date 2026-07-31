@@ -1,12 +1,12 @@
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
-using ReactiveUITK.Samples.Components.PortalsPlayground;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
+using Ruitk.Samples.Components.PortalsPlayground;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Components.PortalsPlayground.PortalsPlayground;
+using Ruitk.Samples.Components.PortalsPlayground.PortalsPlayground;
 
-namespace ReactiveUITK.Samples.PortalsPlayground
+namespace Ruitk.Samples.PortalsPlayground
 {
     /// <summary>
     /// Runtime mount for <see cref="PortalsPlayground"/>.
@@ -68,7 +68,7 @@ namespace ReactiveUITK.Samples.PortalsPlayground
             );
 
             var hostProps = new VisualElementProps { PickingMode = PickingMode.Position };
-            rootRenderer.Render(V.Host(hostProps, null, V.Func(global::ReactiveUITK.Samples.Components.PortalsPlayground.PortalsPlayground.PortalsPlayground.Render)));
+            rootRenderer.Render(V.Host(hostProps, null, V.Func(global::Ruitk.Samples.Components.PortalsPlayground.PortalsPlayground.PortalsPlayground.Render)));
         }
     }
 }

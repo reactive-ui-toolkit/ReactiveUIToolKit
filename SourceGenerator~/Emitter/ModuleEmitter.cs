@@ -4,9 +4,9 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Text;
 using Microsoft.CodeAnalysis;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.SourceGenerator.Emitter
+namespace Ruitk.SourceGenerator.Emitter
 {
     /// <summary>
     /// Emits C# source for <c>module</c> declarations parsed from .uitkx files.
@@ -43,15 +43,15 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             sb.AppendLine("using System;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using System.Linq;");
-            sb.AppendLine("using ReactiveUITK;");
-            sb.AppendLine("using ReactiveUITK.Core;");
-            sb.AppendLine("using ReactiveUITK.Core.Animation;");
-            sb.AppendLine("using ReactiveUITK.Router;");
-            sb.AppendLine("using ReactiveUITK.Props.Typed;");
+            sb.AppendLine("using Ruitk;");
+            sb.AppendLine("using Ruitk.Core;");
+            sb.AppendLine("using Ruitk.Core.Animation;");
+            sb.AppendLine("using Ruitk.Router;");
+            sb.AppendLine("using Ruitk.Props.Typed;");
             sb.AppendLine("using UnityEngine;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.StyleKeys;");
-            sb.AppendLine("using static ReactiveUITK.Props.Typed.CssHelpers;");
-            sb.AppendLine("using static ReactiveUITK.AssetHelpers;");
+            sb.AppendLine("using static Ruitk.Props.Typed.StyleKeys;");
+            sb.AppendLine("using static Ruitk.Props.Typed.CssHelpers;");
+            sb.AppendLine("using static Ruitk.AssetHelpers;");
             sb.AppendLine("using UColor = UnityEngine.Color;");
             foreach (var u in directives.Usings)
                 sb.AppendLine($"using {u};");
@@ -81,7 +81,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
             // ── Namespace ────────────────────────────────────────────────────
             string ns = !string.IsNullOrEmpty(directives.Namespace)
                 ? directives.Namespace!
-                : "ReactiveUITK.Generated";
+                : "Ruitk.Generated";
 
             sb.AppendLine($"namespace {ns}");
             sb.AppendLine("{");
@@ -157,7 +157,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                                 new DiagnosticDescriptor(
                                     "UITKX2107", "Deprecated companion merge",
                                     $"companion partial-class merging is deprecated — '{displayName}' merges into '{mergeSource}' via legacy folder namespaces; migrate the companion set to plain declarations and file imports",
-                                    "ReactiveUITK.Imports", DiagnosticSeverity.Warning, true),
+                                    "Ruitk.Imports", DiagnosticSeverity.Warning, true),
                                 Location.None));
                             break;
                         }
@@ -172,7 +172,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                         new DiagnosticDescriptor(
                             "UITKX2311", "Export accessibility mismatch",
                             $"Export mismatch merging into '{module.Name}': the component's accessibility is used; align the module's export.",
-                            "ReactiveUITK.Imports", DiagnosticSeverity.Warning, true),
+                            "Ruitk.Imports", DiagnosticSeverity.Warning, true),
                         Location.None));
                 }
 
@@ -180,7 +180,7 @@ namespace ReactiveUITK.SourceGenerator.Emitter
                 // `public ` always; flag ON → no-modifier when merging with a same-named component
                 // partial (that part is the authority), else export → public, else internal.
                 string moduleAccess =
-                    !ReactiveUITK.Language.UitkxFeatureFlags.StrictImports
+                    !Ruitk.Language.UitkxFeatureFlags.StrictImports
                         ? "public "
                         : mergesWithComponent
                             ? string.Empty

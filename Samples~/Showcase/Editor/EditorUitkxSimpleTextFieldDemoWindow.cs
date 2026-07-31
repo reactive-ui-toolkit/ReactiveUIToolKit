@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.SimpleTextFieldFunc;
-using ReactiveUITK.Samples.Components.SimpleTextFieldFunc.SimpleTextFieldFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.SimpleTextFieldFunc;
+using Ruitk.Samples.Components.SimpleTextFieldFunc.SimpleTextFieldFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxSimpleTextFieldDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Simple TextField")]
+        [MenuItem("Reactive UI Toolkit/Demos/Simple TextField")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxSimpleTextFieldDemoWindow>("Simple TextField Demo");

@@ -4,10 +4,10 @@ using System.Collections.Immutable;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
-using ReactiveUITK.Language.Nodes;
-using ReactiveUITK.Language.Parser;
+using Ruitk.Language.Nodes;
+using Ruitk.Language.Parser;
 
-namespace ReactiveUITK.Language.Diagnostics
+namespace Ruitk.Language.Diagnostics
 {
     /// <summary>
     /// Performs Tier-2 (structural) diagnostics on a parsed UITKX file.
@@ -447,7 +447,7 @@ namespace ReactiveUITK.Language.Diagnostics
         // -----------------------------------------------------------------------
 
         // Patterns that indicate a hook call.  Sourced from
-        // ReactiveUITK.Core.HookRegistry so this analyzer cannot drift from
+        // Ruitk.Core.HookRegistry so this analyzer cannot drift from
         // the SourceGenerator's HooksValidator.s_hookPatterns.  Pre-0.5.23
         // both tables were missing useLayoutEffect entries; the registry
         // includes them, expanding UITKX0013-0016 to also catch
@@ -457,7 +457,7 @@ namespace ReactiveUITK.Language.Diagnostics
         // This is a per-keystroke hot path; the registry guarantees a single
         // cached array reference and never reallocates per call.
         private static readonly string[] s_hookPatterns =
-            global::ReactiveUITK.Core.HookRegistry.GetValidationPatterns();
+            global::Ruitk.Core.HookRegistry.GetValidationPatterns();
 
         /// <summary>
         /// Returns the end offset within <paramref name="bodyCode"/> marking the
@@ -1389,14 +1389,14 @@ namespace ReactiveUITK.Language.Diagnostics
         // CSharpEmitter (SourceGenerator~) and mirrored in Editor/HMR (which
         // cannot reference language-lib directly - see AssetPathUtil's doc comment).
         private static string ResolveAssetPath(string uitkxDir, string rawPath)
-            => ReactiveUITK.Language.AssetPathUtil.ResolveAssetPath(uitkxDir, rawPath);
+            => Ruitk.Language.AssetPathUtil.ResolveAssetPath(uitkxDir, rawPath);
 
         /// <summary>
         /// Extracts the Unity project-relative directory from an absolute file path.
         /// Returns null if the path doesn't contain an <c>Assets/</c> segment.
         /// </summary>
         private static string? GetAssetDir(string filePath)
-            => ReactiveUITK.Language.AssetPathUtil.GetAssetDir(filePath);
+            => Ruitk.Language.AssetPathUtil.GetAssetDir(filePath);
 
         /// <summary>
         /// Extracts the Unity project root (the folder containing <c>Assets/</c>)

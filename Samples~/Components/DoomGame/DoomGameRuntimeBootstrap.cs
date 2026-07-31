@@ -1,10 +1,10 @@
-using ReactiveUITK;
-using ReactiveUITK.Core;
-using ReactiveUITK.Props.Typed;
-using ReactiveUITK.Samples.Components.DoomGame;
+using Ruitk;
+using Ruitk.Core;
+using Ruitk.Props.Typed;
+using Ruitk.Samples.Components.DoomGame;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.Samples.Components.DoomGame.DoomGame;
+using Ruitk.Samples.Components.DoomGame.DoomGame;
 
 namespace Samples.DoomGame
 {
@@ -35,7 +35,7 @@ namespace Samples.DoomGame
 
             rootRenderer.Initialize(uiDocument.rootVisualElement);
             var hostProps = new VisualElementProps { PickingMode = PickingMode.Ignore };
-            rootRenderer.Render(V.Host(hostProps, null, V.Func(global::ReactiveUITK.Samples.Components.DoomGame.DoomGame.DoomGame.Render)));
+            rootRenderer.Render(V.Host(hostProps, null, V.Func(global::Ruitk.Samples.Components.DoomGame.DoomGame.DoomGame.Render)));
         }
     }
 }

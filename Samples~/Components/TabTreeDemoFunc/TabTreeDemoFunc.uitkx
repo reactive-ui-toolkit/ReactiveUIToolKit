@@ -1,7 +1,7 @@
 import { MultiColumnTreeViewStatefulDemoFunc } from "../../Shared/MultiColumnTreeViewStatefulDemoFunc"
 import { TreeViewStatefulDemoFunc } from "../../Shared/TreeViewStatefulDemoFunc"
 import "@UnityEngine.UIElements"
-import "@ReactiveUITK.Samples.UITKXShared"
+import "@Ruitk.Samples.UITKXShared"
 
 export VirtualNode TabTreeDemoFunc() {
   var (tabIndex, setTabIndex) = useState(0);

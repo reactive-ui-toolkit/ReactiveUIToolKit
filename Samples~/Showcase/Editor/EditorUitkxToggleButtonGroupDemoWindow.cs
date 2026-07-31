@@ -2,15 +2,15 @@
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
-using ReactiveUITK.EditorSupport;
-using ReactiveUITK.Samples.Components.ToggleButtonGroupDemoFunc;
-using ReactiveUITK.Samples.Components.ToggleButtonGroupDemoFunc.ToggleButtonGroupDemoFunc;
+using Ruitk.EditorSupport;
+using Ruitk.Samples.Components.ToggleButtonGroupDemoFunc;
+using Ruitk.Samples.Components.ToggleButtonGroupDemoFunc.ToggleButtonGroupDemoFunc;
 
-namespace ReactiveUITK.Samples.UITKX.Editor
+namespace Ruitk.Samples.UITKX.Editor
 {
     public sealed class EditorUitkxToggleButtonGroupDemoWindow : EditorWindow
     {
-        [MenuItem("ReactiveUITK/Demos/Toggle Button Group")]
+        [MenuItem("Reactive UI Toolkit/Demos/Toggle Button Group")]
         public static void ShowWindow()
         {
             var window = GetWindow<EditorUitkxToggleButtonGroupDemoWindow>("Toggle Button Group Demo");

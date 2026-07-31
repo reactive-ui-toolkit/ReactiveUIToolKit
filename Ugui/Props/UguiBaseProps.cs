@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
-using ReactiveUITK.Props.Typed;
+using Ruitk.Props.Typed;
 using UnityEngine;
 
-namespace ReactiveUITK.Ugui
+namespace Ruitk.Ugui
 {
     /// <summary>
     /// Base class for all uGUI host-element props. Prop names mirror the

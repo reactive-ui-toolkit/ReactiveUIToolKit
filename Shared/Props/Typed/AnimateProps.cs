@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using ReactiveUITK.Core.Animation;
+using Ruitk.Core.Animation;
 
-namespace ReactiveUITK.Props.Typed
+namespace Ruitk.Props.Typed
 {
     public sealed class AnimateProps : BaseProps
     {

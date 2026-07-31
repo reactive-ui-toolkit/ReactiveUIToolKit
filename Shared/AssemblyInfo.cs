@@ -1,8 +1,9 @@
 using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("ReactiveUITK.Runtime")]
-[assembly: InternalsVisibleTo("ReactiveUITK.Ugui")]
+[assembly: InternalsVisibleTo("Ruitk.Runtime")]
+[assembly: InternalsVisibleTo("Ruitk.Ugui")]
 
 #if UNITY_EDITOR
-[assembly: InternalsVisibleTo("ReactiveUITK.Editor")]
+[assembly: InternalsVisibleTo("Ruitk.Editor")]
+[assembly: InternalsVisibleTo("Ruitk.Ugui.Tests")]
 #endif
