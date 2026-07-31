@@ -927,3 +927,51 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
   re-synced csprojs (Editor prune 2 again — host set still stale from 2026-07-30, regenerates on
   editor refocus; Ugui.Tests add 3: both M2/M3 test files + StrictModeTests.cs); player proof
   Shared/Runtime/Ugui `.Player` 0 errors (re-synthesized). No Analyzers churn (build only).
+
+### M5 — Trace ladder restoration + diff_tracing independence (U-08/§6) — DONE 2026-07-31 (round 3 continued; same locked-editor mode)
+- **§6 table executed row by row**, every gate spelled inline exactly as §6 dictates
+  (`using Ruitk.Core.Diagnostics;` added to `FiberReconciler` — the file's namespace can't see
+  the child namespace unqualified):
+  - InsertBefore / AppendChild / no-host-parent (`FiberReconciler`) → **structural**
+    (`CurrentTraceLevel != None`) — Basic RESTORED to structural events.
+  - ADDED the two missing structural logs: `[Fiber] Delete {ElementType}` in `CommitDeletions`'
+    loop (top-level per removed subtree, NOT per recursive child — legacy `[ReplaceNode]`
+    granularity; `ElementType ?? Tag` for non-host subtree roots) and the commit-end summary
+    `[Fiber] Commit #{_commitCount} effects={_effectsCommitted}` in `CommitRoot` (placed before
+    `EmitMetrics()`, after the passive-effect flush).
+  - Apply-typed-props / apply-props(+keys) / NO-props warning / CommitUpdate Label dump →
+    **diff** (`EnableDiffTracing || == Verbose`, the exact legacy OR); the Label filter KEPT
+    (re-gating, not widening).
+  - The three AND-bugged adapters (`RadioButtonElementAdapter:78`,
+    `RadioButtonGroupElementAdapter:130`, `ToggleElementAdapter:80`): `&& != None` → the legacy
+    OR (`|| == Verbose`) — independence restored, Verbose-alone still lights them.
+  - `Hooks.cs:1241` UseEffect capture log: inline `== Verbose` → `InternalLogOptions.
+    EnableInternalLogs` (the file's majority style per the §6 row; meaning unchanged — the
+    bridge is set from `== Verbose` at the seams). Strict-mode double-log at Verbose noted
+    in-code (truthful; §6 accepted it).
+  - `BaseElementAdapter:112`, Hooks detail sites, EditorRenderScheduler sites: untouched per §6.
+  - **`FiberConfig.EnableFiberLogging` DELETED** (`ShowReconcilerInfo` stays — §9 owner item).
+    **Acceptance: `git grep EnableFiberLogging -- "*.cs"` = ZERO hits**; remaining mentions only
+    in `Plans~/` (this plan + two archived docs — allowed by the criterion).
+- **Placement-log granularity verified before asserting:** every new host fiber carries
+  `EffectFlags.Placement` (`FiberFactory.cs:30`, host-creation `:648`) ⇒ CommitPlacement (and
+  its structural log) fires per host node on mount — the behavioral test's per-node counts are
+  grounded, not assumed.
+- **Tests — new `Ugui/Tests/TraceGateTests.cs` (+meta, fresh GUID):** the §6 gate-matrix truth
+  table in executable form (all 6 `(trace_level × diff_tracing)` rows, structural/detail/diff
+  asserted per row — pins Basic's restoration and diff independence), PLUS behavioral pins
+  capturing real reconciler output via `Application.logMessageReceived`: (None,off) fully
+  silent; **Basic ⇒ placements + commit summary + exactly-2 `[Fiber] Delete` on a 3→1 churn and
+  ZERO diff detail**; **diff alone (trace none) ⇒ `[Fiber] Applying` present and ZERO
+  structural** (the M8 smoke's independence proof, automated); **Verbose ⇒ both** (the legacy
+  OR). Bughunt fix: missing `using Ruitk.Core.Fiber;` in the new test file (CS0246, caught by
+  the harness).
+- **Byte-equivalence at defaults (None/false):** every rewritten gate evaluates false exactly
+  where `EnableFiberLogging`(=false, set by nothing) did; the two ADDED logs are
+  structural-gated ⇒ silent; the adapter OR at defaults = `false || false` ≡ old
+  `false && …`. Turning Verbose now lights the former EnableFiberLogging sites — previously
+  unreachable dead code, which IS the restoration the contract orders.
+- **Gates:** machine-paths ✓, corpus-hash ✓ (`917dd8cd…`); VERIFY-UNITY — Shared/Runtime/Ugui
+  direct 0 errors, Editor/Samples/Diagnostics 0 errors (synced), Ugui.Tests 0 errors (re-synced,
+  add 4: all campaign test files incl. TraceGateTests.cs); player proof Shared/Runtime/Ugui
+  `.Player` 0 errors. No Analyzers churn.

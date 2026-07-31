@@ -37,11 +37,6 @@ namespace Ruitk.Core.Fiber
         public static bool StrictModeEnabled { get; set; } = false;
 
         /// <summary>
-        /// Enable verbose fiber logging
-        /// </summary>
-        public static bool EnableFiberLogging { get; set; } = false;
-
-        /// <summary>
         /// Enable to see which reconciler is being used
         /// </summary>
         public static bool ShowReconcilerInfo { get; set; } = false;

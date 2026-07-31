@@ -1238,7 +1238,11 @@ namespace Ruitk.Core
                 entry.deps = dependencies;
                 state.FunctionEffects[index] = entry;
             }
-            if (DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose)
+            // detail gate (§6): routed through InternalLogOptions (the file's majority
+            // style) — EnableInternalLogs is set from == Verbose at the mount seams, so the
+            // meaning is unchanged. Under strict_mode this logs per invoke (twice) at
+            // Verbose — truthful: two captures happened.
+            if (InternalLogOptions.EnableInternalLogs)
             {
                 try
                 {

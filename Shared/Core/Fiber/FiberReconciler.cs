@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
 using UnityEngine;
 using UnityEngine.Profiling;
 
@@ -874,6 +875,14 @@ namespace Ruitk.Core.Fiber
                 _root.FirstEffect = null;
                 _root.LastEffect = null;
 
+                // structural gate (§6): one-line commit summary at commit end.
+                if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
+                {
+                    UnityEngine.Debug.Log(
+                        $"[Fiber] Commit #{_commitCount} effects={_effectsCommitted}"
+                    );
+                }
+
                 EmitMetrics();
             }
             finally
@@ -927,6 +936,14 @@ namespace Ruitk.Core.Fiber
             {
                 foreach (var deletion in fiber.Deletions)
                 {
+                    // structural gate (§6): one line per removed subtree (top-level only,
+                    // not per recursive child) — the legacy [ReplaceNode] granularity.
+                    if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
+                    {
+                        UnityEngine.Debug.Log(
+                            $"[Fiber] Delete {deletion.ElementType ?? deletion.Tag.ToString()}"
+                        );
+                    }
                     CommitDeletion(deletion);
                 }
                 fiber.Deletions = null;
@@ -1137,7 +1154,12 @@ namespace Ruitk.Core.Fiber
                     // Apply initial properties before inserting
                     if (fiber.PendingHostProps != null)
                     {
-                        if (FiberConfig.EnableFiberLogging)
+                        // diff gate (§6): EnableDiffTracing OR Verbose — the exact legacy OR.
+                        if (
+                            DiagnosticsConfig.EnableDiffTracing
+                            || DiagnosticsConfig.CurrentTraceLevel
+                                == DiagnosticsConfig.TraceLevel.Verbose
+                        )
                         {
                             UnityEngine.Debug.Log(
                                 $"[Fiber] Applying typed props to {fiber.ElementType}"
@@ -1155,7 +1177,12 @@ namespace Ruitk.Core.Fiber
                     }
                     else if (fiber.PendingProps != null)
                     {
-                        if (FiberConfig.EnableFiberLogging)
+                        // diff gate (§6)
+                        if (
+                            DiagnosticsConfig.EnableDiffTracing
+                            || DiagnosticsConfig.CurrentTraceLevel
+                                == DiagnosticsConfig.TraceLevel.Verbose
+                        )
                         {
                             var propsStr = string.Join(", ", fiber.PendingProps.Keys);
                             UnityEngine.Debug.Log(
@@ -1173,7 +1200,12 @@ namespace Ruitk.Core.Fiber
                     }
                     else
                     {
-                        if (FiberConfig.EnableFiberLogging)
+                        // diff gate (§6)
+                        if (
+                            DiagnosticsConfig.EnableDiffTracing
+                            || DiagnosticsConfig.CurrentTraceLevel
+                                == DiagnosticsConfig.TraceLevel.Verbose
+                        )
                         {
                             UnityEngine.Debug.LogWarning(
                                 $"[Fiber] NO props for {fiber.ElementType}"
@@ -1188,7 +1220,8 @@ namespace Ruitk.Core.Fiber
                     var before = GetHostSibling(fiber);
                     if (before != null)
                     {
-                        if (FiberConfig.EnableFiberLogging)
+                        // structural gate (§6): Basic restores structural events.
+                        if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
                             UnityEngine.Debug.Log(
                                 $"[Fiber] InsertBefore {fiber.ElementType} before {_hostConfig.GetDebugName(before)}"
                             );
@@ -1200,7 +1233,8 @@ namespace Ruitk.Core.Fiber
                     }
                     else
                     {
-                        if (FiberConfig.EnableFiberLogging)
+                        // structural gate (§6)
+                        if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
                             UnityEngine.Debug.Log(
                                 $"[Fiber] AppendChild {fiber.ElementType} to {parentFiber.ElementType}"
                             );
@@ -1210,7 +1244,8 @@ namespace Ruitk.Core.Fiber
             }
             else
             {
-                if (FiberConfig.EnableFiberLogging)
+                // structural gate (§6): the no-host-parent anomaly is a structural event.
+                if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
                 {
                     UnityEngine.Debug.LogWarning(
                         $"[Fiber] Could not find host parent for {fiber.ElementType}"
@@ -1292,7 +1327,14 @@ namespace Ruitk.Core.Fiber
             if (fiber.HostElement == null)
                 return;
 
-            if (FiberConfig.EnableFiberLogging && fiber.ElementType == "Label")
+            // diff gate (§6) — the Label filter is kept deliberately: re-gating, not widening.
+            if (
+                (
+                    DiagnosticsConfig.EnableDiffTracing
+                    || DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose
+                )
+                && fiber.ElementType == "Label"
+            )
             {
                 string oldText = null;
                 string newText = null;
