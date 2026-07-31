@@ -1104,3 +1104,12 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
 - **Changelog:** new `### Fixed — UseTransition crashed any component that called
   another hook after it` folded into the staged `[0.13.0]` (FOLD ruling; no version
   bump).
+- **Deferred cleanups closed (separate commit):** (a) the M6-recorded owner item —
+  mojibake inside old SHIPPED changelog bodies — repaired mechanically (447
+  UTF-8-read-as-cp1252 sequences across 379 lines; reverse transform only where the
+  depicted cp1252 bytes form valid UTF-8, so correct text is untouchable by
+  construction; 379 insertions == 379 deletions). (b) The two M7-recorded
+  pre-existing docs lint errors: `VersionContext.tsx` now exports only the provider
+  (context + `useSelectedVersion` moved to `contexts/useSelectedVersion.ts`, 6
+  importers repointed) and `SearchModal.tsx`'s selection-reset effect replaced with
+  the render-time adjust-state pattern. `npm run lint` clean; `npm run build` green.
