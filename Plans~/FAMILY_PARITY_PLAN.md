@@ -1,8 +1,15 @@
 # Family Settings Parity — UNITY EXECUTION PLAN
 
-**Status: READY TO EXECUTE** (written 2026-07-31; every anchor below verified against the working
+**Status: EXECUTING** (campaign started 2026-07-31 on `feat/family-parity`; execution log at the
+bottom of this file). Originally written 2026-07-31; every anchor below verified against the working
 tree on `master` HEAD `758b1588` **plus the uncommitted unified-settings pile** — see §1.1, that
-pile is the baseline, not noise).
+pile is the baseline, not noise. **BASELINE DRIFT (M0 finding):** the §1.1 pile has since been
+COMMITTED (`ab46dc53`) and release-staged as `0.13.0` (`f2728b43`, merged to dev+master via
+PRs #224–#226) but **NOT published** (latest GitHub release: v0.11.0; no package tag; no Publish
+run since 2026-07-25). Consequences: §1.1's "uncommitted" framing is history; §5 row 15's
+`[Unreleased]` section is now the committed-but-unshipped `[0.13.0]` body; U-01's "never shipped
+or committed" is now "committed, never shipped"; M6 must resolve with the owner whether the
+campaign reshapes the staged 0.13.0 in place or targets 0.14.0.
 **Family contract:** §0 below is the normative embed of the family parity contract (owner rulings
 2026-07-31). Sibling legs carry the same section; substance is family-frozen. This plan MAY add
 Unity detail; it MAY NOT contradict §0. Any conflict = STOP AND ASK the owner.
@@ -684,3 +691,28 @@ touching, cite line-exactly in commits:
 *End of plan. Companion documents: `Plans~/ES_MODULES_EXECUTION_PLAN.md` (house plan-style
 precedent), `CHANGELOG.md` `[Unreleased]` (the uncommitted settings-campaign record this plan
 absorbs), the family parity contract as embedded in §0 (sibling legs carry the same section).*
+
+---
+
+## EXECUTION LOG (running; newest milestone last)
+
+### M0 — Baseline audit — DONE 2026-07-31
+- **Tree state:** clean; the §1.1 pile is committed (`ab46dc53` settings, `f2728b43` 0.13.0
+  release staging, `ca31886e` this plan) — see the BASELINE DRIFT note in the header. Branch
+  `feat/family-parity` checked out at `392154d4` (== origin/dev; origin/master identical).
+- **Host project:** located via `Packages/manifest.json` naming this checkout (`file:` dependency
+  + `testables`). The **Unity editor IS OPEN on it** (editor process + `Temp/UnityLockfile`
+  verified) → locked-editor mode for the whole round: dotnet harness only, no Unity launches.
+- **Csproj sets:** current `Ruitk.*` set present (regenerated 2026-07-30 by the running editor);
+  `Ruitk.*.Player.csproj` **absent** (only the stale pre-rename `ReactiveUITK.*.Player` set,
+  from a months-old generation — never used, per plan). **Workaround executed:** the three
+  Player csprojs are SYNTHESIZED outside the repo (scratchpad) from the current `Ruitk.*` set by
+  the exact generator delta (drop `UNITY_EDITOR*` defines, drop `UnityEditor*` reference blocks,
+  Player output dir, `.Player` project-reference chain, paths absolutized so nothing is written
+  into the host project). Baseline proof: Shared/Runtime/Ugui Player builds **0 errors**.
+  OWNER TOUCHPOINT (deferred): enable player-csproj generation (Edit ▸ Preferences ▸ External
+  Tools) and regenerate, so later milestones can run the real artifact.
+- **Green floor:** machine-paths gate ✓; corpus-hash ✓ (`917dd8cd…`); VERIFY-UNITY 6/6 csprojs
+  0 errors (warnings pre-existing: Shared 5, Editor 1, Samples 11); SG suite **1828/1828**; LSP
+  suite **152/152**. `dotnet test` churned `Analyzers/*.dll` — reverted via targeted checkout
+  (watch this before every commit).
