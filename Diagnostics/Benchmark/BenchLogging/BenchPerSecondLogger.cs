@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using Ruitk.Core.Config;
 using UnityEngine;
 #if UNITY_EDITOR
 using UnityEditor;
@@ -359,12 +360,15 @@ namespace Ruitk.Bench
                     break;
             }
 
+            // Results used to be written into the package itself
+            // (Assets/ReactiveUIToolkit/Diagnostics/Benchmark/Results) — unwritable in a UPM
+            // PackageCache install and dirtying the package in every other layout. They now land
+            // under RuitkDiagnosticsPaths.GetOutputRoot() (project Logs/ in the editor,
+            // persistentDataPath in players, or the RuitkSettings override), outside the asset
+            // database — hence no AssetDatabase.Refresh here anymore.
             string root = Path.Combine(
-                Application.dataPath,
-                "ReactiveUIToolkit",
-                "Diagnostics",
+                RuitkDiagnosticsPaths.GetOutputRoot(),
                 "Benchmark",
-                "Results",
                 folderName,
                 _runId
             );
@@ -378,9 +382,6 @@ namespace Ruitk.Bench
 
             var json = JsonUtility.ToJson(scenarioFile, prettyPrint: true);
             File.WriteAllText(path, json);
-#if UNITY_EDITOR
-            AssetDatabase.Refresh();
-#endif
             Debug.Log(
                 $"[Bench] Wrote scenario JSON: {path}  (bins={_bins.Count}, samples={_samplesTotal})"
             );

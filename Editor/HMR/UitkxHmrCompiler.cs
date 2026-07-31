@@ -3311,53 +3311,68 @@ namespace Ruitk.EditorSupport.HMR
 
         // ── Utility ───────────────────────────────────────────────────────────
 
+        /// <summary>
+        /// Absolute path of the package's <c>Analyzers/</c> directory (which holds
+        /// <c>Ruitk.Language.dll</c>) — in EVERY install layout.
+        ///
+        /// <para>This used to probe only under <c>Application.dataPath</c>: it walked up a
+        /// FIXED three levels from an AssetDatabase hit and then re-rooted the result at the project
+        /// folder, plus two <c>Assets/</c>-only fallbacks. A UPM git-URL install (the primary channel,
+        /// where the package physically lives in <c>Library/PackageCache/com.reactiveuitoolkit@&lt;hash&gt;</c>)
+        /// exhausted all three probes and threw <see cref="DirectoryNotFoundException"/>, so Hot Module
+        /// Reload could not work at all. It now goes through the one layout-agnostic resolver,
+        /// <see cref="RuitkPackagePaths"/>.</para>
+        ///
+        /// <para>READ-ONLY use, deliberately: nothing in HMR writes under the package root — every
+        /// emitted <c>.cs</c>/<c>.rsp</c>/<c>.dll</c> goes to <c>%TEMP%/UitkxHmr</c> (see
+        /// <c>_tempDir</c>). That is what makes a read-only PackageCache install legal here.</para>
+        /// </summary>
         private static string FindAnalyzersDirectory()
         {
-            // Primary: use the package root via ScriptableObject asset path lookup
-            // The Editor/HMR/ folder is inside the package — find the package root
-            // by locating this script via AssetDatabase
-            string[] guids = UnityEditor.AssetDatabase.FindAssets("UitkxHmrCompiler t:MonoScript");
-            if (guids.Length > 0)
+            // Layout-agnostic: PackageInfo (UPM / embedded / file:) → asset-database sentinel
+            // walk-up (Assets/, folder-name-agnostic) → legacy Assets/ReactiveUIToolkit.
+            bool rootResolved = RuitkPackagePaths.TryGetRoot(out string packageRoot);
+            if (rootResolved)
             {
-                string scriptPath = UnityEditor.AssetDatabase.GUIDToAssetPath(guids[0]);
-                // scriptPath is like "Assets/ReactiveUIToolkit/Editor/HMR/UitkxHmrCompiler.cs"
-                // Walk up to package root then into Analyzers/
-                string dir = Path.GetDirectoryName(scriptPath); // Editor/HMR
-                dir = Path.GetDirectoryName(dir); // Editor
-                dir = Path.GetDirectoryName(dir); // package root
-                string analyzersDir = Path.Combine(
-                    Path.GetFullPath(Path.Combine(Application.dataPath, "..")),
-                    dir,
-                    "Analyzers"
-                );
+                string analyzersDir = Path.Combine(packageRoot, "Analyzers");
                 if (Directory.Exists(analyzersDir))
                     return analyzersDir;
             }
 
-            // Fallback: try the well-known path
-            string packageRoot = Path.GetFullPath(
-                Path.Combine(Application.dataPath, "ReactiveUIToolkit")
-            );
-            string fallback = Path.Combine(packageRoot, "Analyzers");
-            if (Directory.Exists(fallback))
-                return fallback;
-
-            // Fallback 2: search all Assets subfolders for ReactiveUIToolkit/Analyzers
-            string assetsDir = Application.dataPath;
-            foreach (
-                var candidate in Directory.GetDirectories(
-                    assetsDir,
-                    "Analyzers",
-                    SearchOption.AllDirectories
-                )
-            )
+            // Rescue for an oddly-shaped tree (package root unresolvable, or present but missing its
+            // Analyzers/): the pre-existing Assets-wide scan. Only ever reached on the path that would
+            // otherwise throw, so it costs nothing in the happy path.
+            try
             {
-                if (File.Exists(Path.Combine(candidate, "Ruitk.Language.dll")))
-                    return candidate;
+                foreach (
+                    var candidate in Directory.GetDirectories(
+                        Application.dataPath,
+                        "Analyzers",
+                        SearchOption.AllDirectories
+                    )
+                )
+                {
+                    if (File.Exists(Path.Combine(candidate, "Ruitk.Language.dll")))
+                        return candidate;
+                }
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning(
+                    "[HMR] Assets-wide Analyzers/ scan failed: " + ex.Message
+                );
             }
 
             throw new DirectoryNotFoundException(
-                "Cannot find Analyzers/ directory containing Ruitk.Language.dll"
+                "Cannot find the Analyzers/ directory containing Ruitk.Language.dll — Hot Module "
+                + "Reload cannot run without it.\n"
+                + (rootResolved
+                    ? "The package root resolved to '" + packageRoot + "', but '"
+                      + Path.Combine(packageRoot, "Analyzers")
+                      + "' does not exist and no Analyzers/ holding Ruitk.Language.dll was found under "
+                      + Application.dataPath
+                      + ". Analyzers/ is a must-ship folder, so the install looks incomplete."
+                    : RuitkPackagePaths.FailureMessage)
             );
         }
 

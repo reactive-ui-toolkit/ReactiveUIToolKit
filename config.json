@@ -1,10 +1,4 @@
 {
-  "envVariables": {
-    "env": "development",
-    "traceLevel": "Basic",
-    "diffTracing": false,
-    "exceptionControlFlow": true
-  },
   "pathsToOmitFromStore": [
     "Ugui/Tests/**",
     "Samples/Components/UitkxTestFileDoNotTouch/**",
@@ -17,6 +11,7 @@
     "RELEASE_OPS.md",
     "VERSIONING.md",
     "publisher-secrets.example.json",
+    ".ruitk-local.example.json",
     "ReactiveUIToolkit.code-workspace",
     ".csharpierignore"
   ],
@@ -30,7 +25,7 @@
     "Analyzers/Ruitk.Language.pdb",
     "Analyzers/Ruitk.SourceGenerator.pdb",
     "publisher-secrets.json",
-    "publisher-secrets.json.meta"
-  ],
-  "npmPath": "C:\\nvm4w\\nodejs\\npm.cmd"
+    "publisher-secrets.json.meta",
+    ".ruitk-local.json"
+  ]
 }

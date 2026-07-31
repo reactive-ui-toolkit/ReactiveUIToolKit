@@ -97,7 +97,7 @@ dotted segment per folder, casing verbatim, file name excluded.
 
 ### Step 0 — Baseline
 ```bash
-cd c:/Yanivs/GameDev/UnityComponents/Assets/ReactiveUIToolkit
+# run from the repo root (the checkout you are in — the folder holding config.json)
 git status --short   # expect clean apart from Errors (user scratch — NEVER commit it)
 dotnet test SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj -v q --nologo | tail -2   # expect 1542 green
 dotnet test ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj -v q --nologo | tail -2  # expect 118 green
@@ -177,7 +177,8 @@ git checkout -- "Samples/Components/UitkxTestFileDoNotTouch/"   # protect the fi
 dotnet test SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj -v q --nologo | tail -2
 # 2. LSP suite
 dotnet test ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj -v q --nologo | tail -2
-# 3. Unity assemblies (run from c:/Yanivs/GameDev/UnityComponents — csprojs verified to exist):
+# 3. Unity assemblies (run from the Unity project root, ../.. from the repo root — the folder
+#    containing Assets/; these csproj names verified to exist there):
 dotnet build Ruitk.Examples.csproj -v q --nologo                     # 0 errors
 dotnet build Ruitk.Editor.csproj -v q --nologo                       # 0 errors
 dotnet build Ruitk.Diagnostics.Benchmark.Editor.csproj -v q --nologo # 0 errors (BenchEditorHost/BenchmarkSetup)

@@ -239,8 +239,8 @@ regex silently regresses a tool that rewrites customers' source.
 `.gitignore:15-18` covers only `SourceGenerator~/{bin,obj}` and `Tests/`, not `Tools/*/`. The
 sibling tool carries its own `SourceGenerator~/Tools/UitkxMigrateImports/.gitignore`; this one
 (whose csproj claims to be "modeled 1:1" on it) does not. The artifacts embed the maintainer's
-absolute path `C:\Yanivs\GameDev\UnityComponents\wave-unity\…` and a SourceLink map pinned to an
-intermediate rebrand commit. `SourceGenerator~` is not in `pathsToOmitFromDist`, so these are
+absolute build path (the `wave-unity` worktree this wave was built in) and a SourceLink map pinned
+to an intermediate rebrand commit. `SourceGenerator~` is not in `pathsToOmitFromDist`, so these are
 published on the `dist` branch.
 
 ### M11 — the `dist` branch ships build intermediates **[pre-existing]**

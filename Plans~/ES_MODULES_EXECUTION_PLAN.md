@@ -385,13 +385,14 @@ ASK); no push.
 
 The canonical verify block (referenced below as **VERIFY-CORE**):
 ```bash
-cd c:/Yanivs/GameDev/UnityComponents/Assets/ReactiveUIToolkit
+# run from the repo root (the checkout you are in — the folder holding config.json)
 dotnet test SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj -v q --nologo | tail -2
 dotnet test ide-extensions~/lsp-server/Tests/UitkxLanguageServer.Tests.csproj -v q --nologo | tail -2
 node scripts/corpus-hash.mjs --check
 ```
-Unity compile gates (run from `c:/Yanivs/GameDev/UnityComponents`; these six names verified to
-exist on this machine — there is NO `Ruitk.csproj`) — referenced as **VERIFY-UNITY**:
+Unity compile gates (run from the **Unity project root** — `../..` from the repo root, the folder
+that contains `Assets/`; these six names verified to exist there — there is NO `Ruitk.csproj`) —
+referenced as **VERIFY-UNITY**:
 ```bash
 dotnet build Ruitk.Shared.csproj -v q --nologo          # engine core (Shared/) — 0 errors
 dotnet build Ruitk.Runtime.csproj -v q --nologo         # MonoBehaviour adapter — 0 errors
@@ -402,7 +403,7 @@ dotnet build Ruitk.Diagnostics.csproj -v q --nologo     # 0 errors
 ```
 (BOTH `Ruitk.Examples.csproj` and `Ruitk.Samples.csproj` compile `Samples/` code —
 two asmdefs. If a csproj name differs on the machine, list
-`c:/Yanivs/GameDev/UnityComponents/*.csproj` and use the obvious match; if none matches, STOP AND ASK.)
+`*.csproj` in the Unity project root and use the obvious match; if none matches, STOP AND ASK.)
 
 ### M0 — Baseline, family sync, corpus cases (no product code)
 1. `git status --short`. Expected working-tree state (verified 2026-07-17): the two §1.6 baseline
@@ -615,7 +616,7 @@ git checkout -- "Samples/Components/UitkxTestFileDoNotTouch/"
 5. Family corpus: if (M0 step 5) the family ES-modules cases are pinned, ensure the mirrored
    corpus matches byte-identically, then `node scripts/corpus-hash.mjs --write` + update
    `FrozenFamilyHash` + verify the SAME hash is what Unreal/Godot pin (read their repos'
-   `plans/family-corpus.hash` if checked out locally at `C:\Yanivs\GameDev\ReactiveUI*`; else
+   `plans/family-corpus.hash` if those sibling checkouts are available locally; else
    record "hash re-pin pending family sync" in the commit and DO NOT write a hash the other repos
    don't have — STOP AND ASK instead).
 6. Rebuild committed DLLs (`scripts/build-generator.ps1`), VERIFY-UNITY.

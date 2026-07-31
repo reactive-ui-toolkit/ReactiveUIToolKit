@@ -4,28 +4,26 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using Ruitk.EditorSupport;
 using UnityEditor;
 using UnityEngine;
 using Debug = UnityEngine.Debug;
 
 namespace Ruitk.CICD
 {
+    /// <summary>
+    /// Publishing is CI-driven via <c>.github/workflows/publish.yml</c>; the editor menu entries
+    /// these methods used to carry were removed deliberately (unified-settings cleanup) so a
+    /// store install does not ship publish buttons. The methods stay callable programmatically —
+    /// they are CI-independent — and <c>AssetStoreExport.Run</c> remains the only CI-invoked
+    /// entry point and must not be renamed.
+    /// </summary>
     internal static class PublishUtility
     {
         [Serializable]
-        private sealed class EnvVars
-        {
-            public string env;
-            public string traceLevel;
-            public bool diffTracing;
-        }
-
-        [Serializable]
         private sealed class ConfigModel
         {
-            public EnvVars envVariables;
             public List<string> pathsToOmitFromDist;
-            public string npmPath;
         }
 
         /// <summary>
@@ -39,19 +37,43 @@ namespace Ruitk.CICD
             public string vscePatToken;
         }
 
-        [MenuItem("Reactive UI Toolkit/Publish/Build Dist", priority = 1000)]
+        /// <summary>
+        /// Loaded from .ruitk-local.json at the package root (gitignored; copy
+        /// .ruitk-local.example.json). Holds THIS machine's irreducible tool paths — the values that
+        /// cannot be derived from the checkout and must never be committed. See the "Machine-local
+        /// paths" section of CLAUDE.md.
+        /// </summary>
+        [Serializable]
+        private sealed class LocalConfig
+        {
+            /// <summary>Absolute path to npm (e.g. a version-manager shim). Optional — PATH is used when absent.</summary>
+            public string npmPath;
+
+            /// <summary>Absolute path to the Unity editor executable. Optional override; normally auto-probed.</summary>
+            public string unityEditor;
+        }
+
+        /// <summary>Environment variable that overrides every other npm source.</summary>
+        private const string NpmEnvVar = "RUITK_NPM";
+
+        /// <summary>The npm resolution chain, quoted verbatim in the fall-back-to-PATH diagnostics.</summary>
+        private const string NpmSourcesHelp =
+            "  • environment variable "
+            + NpmEnvVar
+            + "\n"
+            + "  • .ruitk-local.json  { \"npmPath\": \"<abs path to npm>\" }\n"
+            + "  • npm on PATH";
+
         public static void BuildDist()
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
-                string distRoot = Path.Combine(packageRoot, "dist~");
-
-                if (!Directory.Exists(packageRoot))
+                if (!RuitkPackagePaths.TryGetRoot(out string packageRoot))
                 {
-                    Debug.LogError("Publish: package root not found: " + packageRoot);
+                    Debug.LogError("Publish: " + RuitkPackagePaths.FailureMessage);
                     return;
                 }
+                string distRoot = Path.Combine(packageRoot, "dist~");
 
                 if (Directory.Exists(distRoot))
                 {
@@ -160,12 +182,15 @@ namespace Ruitk.CICD
             }
         }
 
-        [MenuItem("Reactive UI Toolkit/Publish/Build Dist and Push", priority = 1001)]
         public static void BuildDistAndPush()
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
+                if (!RuitkPackagePaths.TryGetRoot(out string packageRoot))
+                {
+                    Debug.LogError("Publish: " + RuitkPackagePaths.FailureMessage);
+                    return;
+                }
 
                 string rootPkg = Path.Combine(packageRoot, "package.json");
                 string bumpedVersion = BumpPatchVersion(rootPkg);
@@ -330,12 +355,15 @@ namespace Ruitk.CICD
         /// If neither is present the user is asked for a changelog entry and
         /// whether to proceed without marketplace upload.
         /// </summary>
-        [MenuItem("Reactive UI Toolkit/Publish/Build VS Extension and Publish", priority = 1002)]
         public static void BuildExtensionAndPublish()
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
+                if (!RuitkPackagePaths.TryGetRoot(out string packageRoot))
+                {
+                    Debug.LogError("Publish: " + RuitkPackagePaths.FailureMessage);
+                    return;
+                }
                 string extensionDir = Path.Combine(packageRoot, "ide-extensions~", "vscode");
 
                 if (!Directory.Exists(extensionDir))
@@ -383,21 +411,8 @@ namespace Ruitk.CICD
                 if (changelogEntry == null)
                     return;
 
-                // ── read config for npm path ─────────────────────────────────
-                string cfgPath = Path.Combine(packageRoot, "config.json");
-                ConfigModel cfg = null;
-                if (File.Exists(cfgPath))
-                {
-                    try
-                    {
-                        cfg = JsonUtility.FromJson<ConfigModel>(File.ReadAllText(cfgPath));
-                    }
-                    catch (Exception ex)
-                    {
-                        Debug.LogWarning("Publish: config.json: " + ex.Message);
-                    }
-                }
-                string npmPath = cfg?.npmPath;
+                // ── resolve npm: RUITK_NPM → .ruitk-local.json → PATH ────────
+                string npmPath = ResolveNpmPath(packageRoot);
 
                 // ── bump extension version ───────────────────────────────────
                 string extPkgJson = Path.Combine(extensionDir, "package.json");
@@ -496,12 +511,15 @@ namespace Ruitk.CICD
             }
         }
 
-        [MenuItem("Reactive UI Toolkit/Publish/Build Docs and Push", priority = 1100)]
         public static void BuildDocsAndPush()
         {
             try
             {
-                string packageRoot = Path.Combine(Application.dataPath, "ReactiveUIToolkit");
+                if (!RuitkPackagePaths.TryGetRoot(out string packageRoot))
+                {
+                    Debug.LogError("Publish: " + RuitkPackagePaths.FailureMessage);
+                    return;
+                }
                 string docsRoot = Path.Combine(packageRoot, "ReactiveUIToolkitDocs~");
                 if (!Directory.Exists(docsRoot))
                 {
@@ -945,7 +963,13 @@ namespace Ruitk.CICD
 
                 if (string.IsNullOrEmpty(npmDir))
                 {
-                    Debug.LogError("[npm] Invalid npmPath in config.json; falling back to PATH.");
+                    Debug.LogError(
+                        "[npm] Could not derive a directory from the resolved npm path \""
+                            + npmPath
+                            + "\"; falling back to npm on PATH.\n"
+                            + "npm is resolved from, in order:\n"
+                            + NpmSourcesHelp
+                    );
                     npmPath = null;
                 }
                 else
@@ -1075,7 +1099,13 @@ namespace Ruitk.CICD
 
                 if (string.IsNullOrEmpty(npmDir))
                 {
-                    Debug.LogError("[npm] Invalid npmPath in config.json; falling back to PATH.");
+                    Debug.LogError(
+                        "[npm] Could not derive a directory from the resolved npm path \""
+                            + npmPath
+                            + "\"; falling back to npm on PATH.\n"
+                            + "npm is resolved from, in order:\n"
+                            + NpmSourcesHelp
+                    );
                     npmPath = null;
                 }
                 else
@@ -1417,6 +1447,75 @@ namespace Ruitk.CICD
                 Debug.LogWarning("[Publish] Could not parse publisher-secrets.json: " + ex.Message);
                 return null;
             }
+        }
+
+        /// <summary>Reads .ruitk-local.json from the package root.  Returns null on any failure.</summary>
+        private static LocalConfig ReadLocalConfig(string packageRoot)
+        {
+            string path = Path.Combine(packageRoot, ".ruitk-local.json");
+            if (!File.Exists(path))
+                return null;
+            try
+            {
+                return JsonUtility.FromJson<LocalConfig>(File.ReadAllText(path, Encoding.UTF8));
+            }
+            catch (Exception ex)
+            {
+                Debug.LogWarning("[Publish] Could not parse .ruitk-local.json: " + ex.Message);
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Resolves npm for this machine: RUITK_NPM → .ruitk-local.json npmPath → null, meaning the
+        /// runners invoke plain "npm" off PATH. Null is the normal outcome on a stock install, not an
+        /// error. npm's location is a fact about one machine (a version manager puts it somewhere
+        /// different on every box), so it is never written into a tracked file — see the
+        /// "Machine-local paths" section of CLAUDE.md.
+        /// </summary>
+        private static string ResolveNpmPath(string packageRoot)
+        {
+            string fromEnv = Environment.GetEnvironmentVariable(NpmEnvVar);
+            if (!string.IsNullOrWhiteSpace(fromEnv))
+                return AcceptNpmPath(fromEnv.Trim(), NpmEnvVar);
+
+            string fromLocal = ReadLocalConfig(packageRoot)?.npmPath;
+            if (!string.IsNullOrWhiteSpace(fromLocal))
+                return AcceptNpmPath(fromLocal.Trim(), ".ruitk-local.json npmPath");
+
+            return null; // PATH
+        }
+
+        /// <summary>
+        /// Returns <paramref name="candidate"/> if it points at a file that exists, otherwise null
+        /// (i.e. fall back to PATH) with an error naming the source that supplied the bad value.
+        /// </summary>
+        private static string AcceptNpmPath(string candidate, string source)
+        {
+            bool exists;
+            try
+            {
+                exists = File.Exists(candidate);
+            }
+            catch
+            {
+                exists = false;
+            }
+
+            if (exists)
+                return candidate;
+
+            Debug.LogError(
+                "[npm] "
+                    + source
+                    + " points at \""
+                    + candidate
+                    + "\", which does not exist; "
+                    + "falling back to npm on PATH.\n"
+                    + "npm is resolved from, in order:\n"
+                    + NpmSourcesHelp
+            );
+            return null;
         }
 
         /// <summary>Returns the version string from a package.json without bumping it.</summary>

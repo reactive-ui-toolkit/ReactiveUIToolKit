@@ -2,6 +2,12 @@ dist~/*
 
 /Diagnostics/Benchmark/Results/*
 /Diagnostics/Logs/Results/*
+# The legacy in-package results folders above are ignored, so fresh clones and
+# store installs never have them -- their folder .metas were deleted as orphans
+# (post-rename audit). On machines still holding pre-0.13.0 runs Unity keeps
+# regenerating the folder .meta; ignore it so it cannot sneak back in.
+/Diagnostics/Benchmark/Results.meta
+/Diagnostics/Logs/Results.meta
 
 /.vscode/*
 
@@ -84,9 +90,14 @@ automation~/AstDump/
 *.csx
 !SourceGenerator~/Tests/FormatTest.csx
 
-# ── Credentials — never commit real tokens ─────────────────────
+# ── Credentials / machine-local — never commit ─────────────────
 publisher-secrets.json
 publisher-secrets.json.meta
+# This machine's irreducible tool paths (npm, optionally the Unity editor).
+# Copy .ruitk-local.example.json to create it. No tracked file may name a path
+# that exists only on one machine -- see CLAUDE.md "Machine-local paths",
+# enforced by scripts/check-machine-paths.mjs.
+.ruitk-local.json
 
 # ── Stale/orphan entries ───────────────────────────────────────
 # NOTE: Resources/__uitkx_registry.asset is intentionally NOT ignored.

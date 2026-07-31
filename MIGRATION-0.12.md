@@ -111,7 +111,7 @@ What stays: the UPM package id `com.reactiveuitoolkit`, the `.uitkx` language an
    dotnet run --project SourceGenerator~/Tools/RuitkMigrateBrand -- /path/to/YourProject/Assets --check
    ```
 
-   On Windows the path looks like `C:\Users\you\YourProject\Assets`. You can also
+   On Windows the path looks like `C:\Users\you\YourProject\Assets`. You can also <!-- path-gate-allow: generic placeholder ("you"/"YourProject"), teaching the reader the shape of a Windows path -->
    download the repo as a ZIP from the GitHub "Code" button instead of cloning.
    `--help` prints the full rule list.
 

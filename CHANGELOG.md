@@ -6,6 +6,75 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 For IDE extension changelogs (VS Code, Visual Studio 2022), see
 `ide-extensions~/changelog.json` â€” the single source of truth for extension releases.
 
+## [0.13.0] - 2026-07-31
+
+### Added — unified settings
+
+- **`RuitkSettings` ScriptableObject + a unified settings window** (*Reactive UI
+  Toolkit ▸ Settings*): one scrollable window holding every setting, in labeled
+  sections. **Configuration** (per-project, the settings asset): environment
+  (`Auto`/`Development`/`Production` — `Auto` resolves to `development` in the
+  editor and development builds, `production` otherwise), trace level, diff
+  tracing, exception control flow, and a diagnostics output folder. The section
+  is read-only until you click **Create settings asset**
+  (`Assets/ReactiveUIToolkitSettings.asset`) — nothing is written until you do.
+  During player builds the asset is injected into Preloaded Assets (and removed
+  again afterwards, null entries swept), so the same values apply in players.
+- **Per-developer sections in the same window** (EditorPrefs): **Hot Reload
+  (HMR)** — the four HMR toggles (same pref keys as before) plus the two keybind
+  recorders, both moved out of the HMR window, which keeps Start/Stop, status,
+  and stats and now links to the settings window instead — and **Console
+  navigation**, the `.uitkx` verbose toggle, now live-reading, so it takes
+  effect without a domain reload.
+- **`RuitkDiagnosticsPaths.GetOutputRoot()`** — benchmark results and log captures
+  now write to `<project>/Logs/ReactiveUIToolkit` in the editor and
+  `<persistentDataPath>/ReactiveUIToolkit` in players (or the settings-asset
+  override; absolute used as-is, relative resolved per context), never into the
+  package folder — which a UPM PackageCache install cannot write anyway. The Bench
+  Results Viewer seeds its picker at the new location and falls back to the old
+  in-package `Results/` for pre-existing runs.
+
+### Changed — config.json demoted to legacy fallback
+
+- Resolution order for every setting is now: active `RuitkSettings` asset → legacy
+  `Assets/ReactiveUIToolkit/config.json` (`envVariables`) → compiled defaults. A
+  user-edited `config.json` keeps working when no asset exists.
+- **The shipped `config.json` no longer contains an `envVariables` block** (the
+  publish omit-lists stay). BEHAVIOR CHANGE for store installs: the shipped block
+  used to force `development` + `Basic` tracing + exception control flow onto every
+  customer; everyone now starts from compiled defaults (`Auto` → environment by
+  build type, `TraceLevel.None`, both flags off) unless they create the settings
+  asset or carry their own edited `config.json`.
+- The four *Reactive UI Toolkit ▸ Publish* menu items were removed — publishing is
+  CI-driven (`.github/workflows/publish.yml`); the methods remain callable
+  programmatically and `AssetStoreExport.Run` is unchanged.
+
+### Fixed — source generator finds package-resident `.uitkx` (UPM `file:`/git install)
+
+- The generator's fallback disk scan (the path Unity's in-editor compile always
+  takes — no `.uitkx` AdditionalTexts exist there) was `{projectRoot}/Assets`-rooted,
+  so consuming this repo as a UPM `file:` package left every Samples component
+  ungenerated ("Found 0 .uitkx file(s) via disk scan" → 294× CS0234 in the Samples
+  assembly). The scan now adds a second root derived from the compilation's own
+  syntax trees: the directory of the `.asmdef` whose `name` matches the compiling
+  assembly (`UitkxPipeline.FindCompilationAsmdefRoot`). For Assets-resident layouts
+  that root is a subset of the Assets scan (case-insensitively deduped), so
+  discovery — and every generated namespace — stays byte-identical for existing
+  customer projects; namespace derivation itself was already location-independent
+  (asmdef-anchored, `uitkx.config.json` prefix). Store/`Samples~` install channels
+  were never affected. Pinned by `SourceGenerator~/Tests/PackageLayoutDiscoveryTests.cs`.
+
+### Fixed — Hot Module Reload works under UPM git/`file:` installs
+
+- Locating the bundled `Analyzers/` directory used to probe only under `Assets/`,
+  so a PackageCache install (the UPM git-URL channel) exhausted every probe and
+  threw `DirectoryNotFoundException` — HMR could not start at all. Package-root
+  discovery is now layout-agnostic (`RuitkPackagePaths`: `PackageInfo` →
+  asset-database sentinel walk-up → legacy `Assets/ReactiveUIToolkit`), shared by
+  HMR, the `.uitkx` test-runner window (which now reports a missing
+  `SourceGenerator~` instead of failing — it is dev-repo content, absent from
+  store installs), and the Bench Results Viewer's legacy fallback.
+
 ## [0.12.0] - 2026-07-28
 
 ### Changed — BREAKING: the "Reactive UI Toolkit" family rebrand

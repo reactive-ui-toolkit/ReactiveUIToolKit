@@ -225,6 +225,22 @@ in a UI Toolkit tree, `U.UitkHost` embeds a UI Toolkit panel in a uGUI tree.
 
 ---
 
+## Settings
+
+Every setting lives in one window — **Reactive UI Toolkit ▸ Settings** — in
+labeled sections. The **Configuration** section is project-scoped: environment
+label (`Auto`/`Development`/`Production`), reconciler trace level, diff tracing,
+exception control flow, and the diagnostics output folder. That section is
+read-only until you click **Create settings asset** (nothing is written until
+you do); the created `RuitkSettings` asset is preloaded into player builds so the
+same values apply at runtime. Per-developer knobs (the HMR toggles and keybind
+recorders, verbose console navigation) are EditorPrefs-backed sections of the
+same window — per machine, not per project. Projects still
+carrying an edited legacy `config.json` keep working — it is honoured whenever no
+settings asset exists.
+
+---
+
 ## Development Setup
 
 ### Prerequisites
