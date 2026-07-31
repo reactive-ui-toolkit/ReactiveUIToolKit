@@ -150,6 +150,21 @@ For IDE extension changelogs (VS Code, Visual Studio 2022), see
   `SourceGenerator~` instead of failing — it is dev-repo content, absent from
   store installs), and the Bench Results Viewer's legacy fallback.
 
+### Fixed — `UseTransition` crashed any component that called another hook after it
+
+- `Hooks.UseTransition` advanced the hook cursor without materializing its slot
+  in the hook-state list, leaving the cursor one past the list's end. The next
+  slot-backed hook in the same component (`UseState`, `UseMemo`,
+  `UseImperativeHandle`, …) then appended one element and indexed one past it —
+  `ArgumentOutOfRangeException` on the component's very first render, strict
+  mode on or off. Latent since the hook shipped in 0.5.22 (nothing on the fiber
+  path ever called `UseTransition` followed by another slot hook); exposed by
+  this release's strict-mode kitchen-sink tests, the first real execution of
+  that hook order. `UseTransition` now seeds a placeholder slot exactly like
+  every other slot-backed hook, keeping the cursor and the slot list in
+  lockstep — components where it was the last (or only) hook are unaffected.
+  The Godot and Unreal legs already materialize the slot; this was Unity-only.
+
 ## [0.12.0] - 2026-07-28
 
 ### Changed — BREAKING: the "Reactive UI Toolkit" family rebrand

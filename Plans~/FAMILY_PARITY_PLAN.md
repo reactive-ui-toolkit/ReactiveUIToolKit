@@ -1062,3 +1062,45 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
   react-hooks/set-state-in-effect); recorded, not caused; CI's docs context runs
   build only (verified in `test.yml`), so this was never a gate — owner item.
   machine-paths ✓; corpus-hash ✓ (`917dd8cd…`).
+
+### M8 pre-work — in-editor suite fix round (owner's first real run: 47/50) — DONE 2026-07-31
+- **The owner ran `Ruitk.Ugui.Tests` in-editor** (the campaign's first real execution —
+  every prior gate was compile-only): 47/50 green, 3 red, all in `StrictModeTests`:
+  `StrictOff_Mount_RendersOnce_Baseline`, `StrictMode_Mount_RenderTwice_EffectsOnce_
+  SlotsOverwritten`, `StrictMode_Update_RendersTwicePerPass_CommittedUiMatchesStrictOff`.
+  The two passing strict tests (`CompiledDefault`, `StateUpdateDuringRender` — which
+  pins renderCount==4 ABSOLUTE and passed) isolate the failure to the kitchen-sink
+  component's hook set, not the double-invoke machinery.
+- **Root cause (PRODUCT BUG, pre-existing since 0.5.22, Unity-only):**
+  `Hooks.UseTransition` (`Shared/Core/Hooks.cs:1057`) did `state.HookIndex++` WITHOUT
+  materializing a slot in `HookStates` — the M4 audit's "pure cursor bump, trivially
+  safe" verdict was wrong: it is safe only when no slot-backed hook follows. Kitchen-sink
+  slot walk: state(0) reducer(1) memo(2) callback(3) ref(4) context(slotless)
+  deferred(5) → transition bumps 6→7 with Count 6 → `UseImperativeHandle`'s
+  Add-if-fresh appends ONE element (Count 7) then reads `HookStates[7]` →
+  `ArgumentOutOfRangeException` on the FIRST render, strict on or off. All three red
+  tests mount the kitchen-sink → identical crash; NUnit captures the exception into
+  the result (nothing in Editor.log — verified: the log holds both suite runs and the
+  StrictModeTests block emitted only the expected `[Hooks][Strict]` warning). Latent
+  because no fiber-path caller ever put another slot hook after `UseTransition` —
+  the M4 kitchen-sink is the first. The in-editor gate caught a real product bug.
+- **Fix:** `UseTransition` now seeds a null placeholder via the same Add-if-fresh
+  pattern as every other slot hook (cursor and `HookStates.Count` stay in lockstep;
+  strict double-invoke reuses the slot). Re-simulated all five `StrictModeTests`
+  against the fixed slot walk: every assertion (render counts, effect/memo/imperative
+  factory counts, captured-render, ref identity, committed text, cleanups) checks out.
+- **Bughunt (siblings of the mistake):** every `HookIndex++` site in the repo audited —
+  all others materialize their slot first (`UseSfx`/`UseTweenFloat`/`UseAnimate` seed
+  null placeholders; the rest Add-or-write). `FiberFunctionComponent.cs:140` is the
+  only other cursor write (the per-pass reset). Sibling legs verified clean read-only:
+  Godot `hooks.gd useTransition` appends `{ "kind": "transition" }`; Unreal
+  `RuitkContext.h:372` emplaces `FRuitkTransitionCell`. Unity was the odd one out.
+- **Verification (editor LOCKED throughout — lockfile + 3 processes, no Unity
+  launches):** VERIFY-UNITY — Shared 0 errors (4 pre-existing CS0649 warnings,
+  unchanged floor), Runtime/Ugui/Editor/Samples/Diagnostics/Ugui.Tests all 0 errors;
+  player proof re-synthesized (`Ruitk.Shared` sans `UNITY_EDITOR` defines/refs) 0
+  errors; machine-paths ✓; corpus-hash ✓ (`917dd8cd…`). Headless 50/50 rerun still
+  owed — blocked on the editor; the owner's in-editor rerun is the M8 confirmation.
+- **Changelog:** new `### Fixed — UseTransition crashed any component that called
+  another hook after it` folded into the staged `[0.13.0]` (FOLD ruling; no version
+  bump).

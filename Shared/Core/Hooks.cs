@@ -1063,6 +1063,17 @@ namespace Ruitk.Core
                 return (false, s_noOpStartTransition);
             }
             RecordHook(metadata, state, HookIdTransition);
+            // Materialize the slot before bumping the cursor. HookIndex and
+            // HookStates.Count must stay in lockstep: a bare cursor bump leaves the
+            // list one short, so the NEXT Add-if-fresh hook (UseState, UseMemo,
+            // UseImperativeHandle, ...) appends one element and then indexes one past
+            // the end — ArgumentOutOfRangeException on the first render of any
+            // component that calls another slot hook after UseTransition.
+            state.HookStates ??= new List<object>();
+            if (state.HookIndex >= state.HookStates.Count)
+            {
+                state.HookStates.Add(null);
+            }
             state.HookIndex++;
             SyncState(metadata, state);
             return (false, s_noOpStartTransition);
