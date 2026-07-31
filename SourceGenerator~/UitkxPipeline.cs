@@ -614,6 +614,89 @@ namespace Ruitk.SourceGenerator
             return null;
         }
 
+        /// <summary>
+        /// The directory of the <c>.asmdef</c> that OWNS <paramref name="compilation"/> — the
+        /// nearest ancestor asmdef (walking up from the compilation's own syntax-tree paths)
+        /// whose <c>"name"</c> field equals the compilation's assembly name. <c>null</c> for
+        /// asmdef-less assemblies (<c>Assembly-CSharp*</c>) or when no tree path resolves one.
+        ///
+        /// <para>This exists for the UPM package layout (dev repo consumed via
+        /// <c>"file:"</c>/git): the generator's fallback disk scan is <c>{projectRoot}/Assets</c>-rooted,
+        /// which finds NOTHING when the assembly's sources physically live outside the host
+        /// project (e.g. <c>Ruitk.Samples</c> under the package root). The syntax trees carry the
+        /// real physical paths, so their owning-asmdef directory is exactly the root the
+        /// assembly's <c>.uitkx</c> files live under — and <see cref="IsOwnedByCompilation"/>
+        /// (nearest-asmdef name match) holds for every file found there. For an Assets-resident
+        /// asmdef this root is a subset of the Assets scan, so adding it (deduped) changes
+        /// nothing for classic layouts.</para>
+        ///
+        /// <para>Probing is bounded: only the first few distinct tree directories are walked
+        /// (generated/in-memory trees have no directory and are skipped). The walk stops at the
+        /// <c>Assets</c> boundary (same rule as <see cref="FindOwningAsmdefAssemblyName"/>) and at
+        /// the first asmdef seen — a nearest-asmdef whose name differs cannot vouch for this
+        /// compilation's root.</para>
+        /// </summary>
+        internal static string? FindCompilationAsmdefRoot(Compilation compilation)
+        {
+            string? asmName = compilation.AssemblyName;
+            if (string.IsNullOrEmpty(asmName))
+                return null;
+
+            const int MaxProbes = 8;
+            var probedDirs = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+            try
+            {
+                foreach (var tree in compilation.SyntaxTrees)
+                {
+                    string path = tree.FilePath;
+                    if (string.IsNullOrEmpty(path))
+                        continue;
+                    if (!Path.IsPathRooted(path))
+                    {
+                        try { path = Path.GetFullPath(path); }
+                        catch { continue; }
+                    }
+
+                    string? startDir = Path.GetDirectoryName(path);
+                    if (string.IsNullOrEmpty(startDir) || !probedDirs.Add(startDir))
+                        continue;
+
+                    string? dir = startDir;
+                    while (!string.IsNullOrEmpty(dir))
+                    {
+                        bool sawAsmdef = false;
+                        if (Directory.Exists(dir))
+                        {
+                            foreach (string asmdef in Directory.GetFiles(dir, "*.asmdef"))
+                            {
+                                sawAsmdef = true;
+                                var m = s_asmdefNameRegex.Match(File.ReadAllText(asmdef));
+                                if (m.Success
+                                    && string.Equals(m.Groups[1].Value.Trim(), asmName, StringComparison.Ordinal))
+                                    return dir;
+                            }
+                        }
+                        if (sawAsmdef)
+                            break; // nearest asmdef is a different assembly — try the next tree
+
+                        string dirName = Path.GetFileName(dir);
+                        if (string.Equals(dirName, "Assets", StringComparison.OrdinalIgnoreCase))
+                            break; // above Assets is the Unity project root, not part of any assembly
+
+                        dir = Path.GetDirectoryName(dir);
+                    }
+
+                    if (probedDirs.Count >= MaxProbes)
+                        break;
+                }
+            }
+            catch
+            {
+                // Never crash the generator on filesystem errors.
+            }
+            return null;
+        }
+
 
         /// <summary>
         /// The effective C# namespace for a parsed <c>.uitkx</c> file (import/export grammar, leg 3, §4).

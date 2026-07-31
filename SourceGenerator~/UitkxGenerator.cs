@@ -221,13 +221,40 @@ namespace Ruitk.SourceGenerator
                     // ── Fallback path: disk scan ───────────────────────────────────
                     // Used when UitkxCsprojPostprocessor has not yet run (first install
                     // or fresh project) and no .uitkx AdditionalTexts are available.
-                    if (results.Count == 0 && !string.IsNullOrEmpty(root))
+                    // Scan roots, in order:
+                    //   1. {projectRoot}/Assets — the classic in-project layout (unchanged).
+                    //   2. The compilation's OWN asmdef directory — required for the UPM
+                    //      package layout ("file:"/git dev-repo install), whose sources
+                    //      (and .uitkx) physically live OUTSIDE the host project's Assets;
+                    //      the Assets-only scan finds zero files there and every generated
+                    //      type silently vanishes (CS0234 in the assembly's consumers).
+                    //      For Assets-resident asmdefs this root is a subset of (1), so
+                    //      the case-insensitive dedup keeps the discovered set — and the
+                    //      generated output — byte-identical for classic layouts.
+                    if (results.Count == 0)
                     {
-                        string assetsDir = Path.Combine(root, "Assets");
-                        if (Directory.Exists(assetsDir))
+                        var scanRoots = new List<string>(2);
+                        if (!string.IsNullOrEmpty(root))
                         {
-                            var diskFiles = Directory.GetFiles(
-                                assetsDir, "*.uitkx", SearchOption.AllDirectories);
+                            string assetsDir = Path.Combine(root, "Assets");
+                            if (Directory.Exists(assetsDir))
+                                scanRoots.Add(assetsDir);
+                        }
+                        string? asmdefRoot = UitkxPipeline.FindCompilationAsmdefRoot(compilation);
+                        if (asmdefRoot != null && Directory.Exists(asmdefRoot))
+                            scanRoots.Add(asmdefRoot);
+
+                        if (scanRoots.Count > 0)
+                        {
+                            var seenDiskPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
+                            var diskFiles = new List<string>();
+                            foreach (string scanRoot in scanRoots)
+                                foreach (string fp in Directory.GetFiles(
+                                    scanRoot, "*.uitkx", SearchOption.AllDirectories))
+                                {
+                                    if (seenDiskPaths.Add(fp.Replace('\\', '/')))
+                                        diskFiles.Add(fp);
+                                }
 
                             // Pre-scan for peer component names (same as the AdditionalTexts path)
                             var diskPeerBuilder = ImmutableArray.CreateBuilder<PeerComponentInfo>();
