@@ -105,9 +105,10 @@ export const UitkxConceptsPage: FC = () => (
         loads synchronously on every platform. A missing file or key falls back to the
         compiled default; unknown keys are ignored; enum values are lowercase strings,
         parsed case-insensitively. No scripting define symbols are involved. The knob set
-        is family-canonical — the same names, semantics, and defaults on every Reactive UI
-        Toolkit leg, keys marked <em>(Unity-only)</em> excepted — and every default
-        reproduces the untouched behavior:
+        is family-canonical — the same semantics and defaults on every Reactive UI
+        Toolkit leg (each leg spells the key names engine-natively), keys marked{' '}
+        <em>(Unity-only)</em> excepted — and every default reproduces the untouched
+        behavior:
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>
