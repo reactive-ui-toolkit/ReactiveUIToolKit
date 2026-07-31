@@ -1,7 +1,7 @@
 import type { FC } from 'react'
 import { Box, Link, Typography } from '@mui/material'
 import { UNITY_DOC_LINKS, buildUnityDocUrl, type UnityComponentName } from './unityDocLinks'
-import { useSelectedVersion } from '../../contexts/VersionContext'
+import { useSelectedVersion } from '../../contexts/useSelectedVersion'
 
 interface UnityDocsSectionProps {
   componentName: UnityComponentName
