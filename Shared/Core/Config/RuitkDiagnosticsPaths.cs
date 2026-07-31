@@ -12,9 +12,9 @@ namespace Ruitk.Core.Config
     /// OUTSIDE the package:
     ///
     /// <list type="bullet">
-    /// <item>override — <see cref="RuitkSettings.diagnosticsOutputFolder"/> when set: absolute
-    ///   paths as-is; relative paths resolve against the project root (editor) or
-    ///   <c>Application.persistentDataPath</c> (player);</item>
+    /// <item>override — <see cref="RuitkSettings.diagnosticsOutputFolder"/> (from the JSON settings
+    ///   store) when set: absolute paths as-is; relative paths resolve against the project root
+    ///   (editor) or <c>Application.persistentDataPath</c> (player);</item>
     /// <item>editor default — <c>&lt;project&gt;/Logs/ReactiveUIToolkit</c> (Unity's own Logs/
     ///   folder, already gitignored in typical projects);</item>
     /// <item>player default — <c>&lt;persistentDataPath&gt;/ReactiveUIToolkit</c>.</item>

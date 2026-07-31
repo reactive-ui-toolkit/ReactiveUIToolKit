@@ -735,3 +735,46 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
 - **Gates:** machine-paths ✓, corpus-hash ✓; VERIFY-UNITY 6/6 csprojs 0 errors; player proof
   Shared/Runtime/Ugui `.Player` 0 errors (synthesized-csproj harness, M0); docs `npm run build`
   0 errors (pre-existing chunk-size warning only).
+
+### M2 — Storage rework (U-01/U-02/U-03 existing keys) — DONE 2026-07-31
+- **U-01:** `RuitkSettings.cs` rewritten in place — SO → plain model + static loader
+  (`Resources.Load<TextAsset>("ReactiveUIToolkit/config")`, cached, `Invalidate()`), string-in
+  `Parse` core, case-insensitive lowercase enum/tri-state strings (unknown value ⇒ default + one
+  editor-only warning), `ToCanonicalJson()` (full §3 body: canonical order, 2-space indent, LF,
+  trailing newline). `SetActive` kept as the explicit override/test seam; `Instance` dropped
+  (zero consumers, verified). **Schema-scope interpretation:** the MODEL speaks the full §3
+  schema from M2 (DTO initializers = §3 defaults; the writer always emits all keys — U-01's
+  writer contract); the WINDOW rows and RESOLVERS for the new knobs join in M3/M4 with their
+  plumbing, exactly as the milestone text orders them. `RuitkTriState` added;
+  `BuildDefinesConfig.MapTriState` (the U-03 auto-mapping) added now so the M2 tri-state tests
+  pin it.
+- **Deletions:** `Editor/RuitkSettingsBootstrap.cs`, `Editor/RuitkSettingsBuildInjection.cs`
+  (+metas) — discovery and Preloaded-Assets injection have no JSON-store equivalent (D-3).
+- **U-02:** window Configuration section retyped over the file (fixed path
+  `Assets/Resources/ReactiveUIToolkit/config.json`, mtime-cached parse, change-check → full
+  canonical rewrite → `ImportAsset` → `Invalidate`), "Create settings file" button (dir created
+  on demand), File row + Select (pings the TextAsset), diagnostics folder labeled
+  "(Unity-only)", Browse keeps project-relative normalization. HMR + Console sections untouched.
+- **U-03 (existing keys):** `BuildDefinesConfig` unchanged mechanically (the ActiveOrNull
+  surface survived by design, D-2) — doc headers re-worded to the JSON story; `RuitkConfig`
+  gained the `Parse(string)` core + `SetCurrentForTests` seams; `InternalsVisibleTo
+  ("Ruitk.Ugui.Tests")` added (editor-only block).
+- **Tests:** `Ugui/Tests/RuitkSettingsJsonTests.cs` (+meta, fresh GUID) in `Ruitk.Ugui.Tests` —
+  empty/null ⇒ defaults; canonical default body ⇒ defaults; **writer-emits-§3-byte-for-byte
+  pin**; non-default round-trip; unknown key ignored; missing keys keep defaults; bad enum ⇒
+  default; case-insensitivity; tri-state mapping table (auto = on in editor); three-hop
+  resolution-order proof (JSON injected → legacy fixture string → compiled defaults) + legacy
+  parse never throws.
+- **Bughunt findings:** (1) missing `using Ruitk.Core.Diagnostics;` in the retyped window —
+  caught by the harness, fixed; (2) the generated host csprojs cannot compile mid-milestone
+  file adds/deletes — added a `sync-csproj` harness step (scratchpad copies: paths absolutized,
+  deleted Compile entries pruned, new files added, `ProjectReference` re-mapped to synced
+  copies; `Ruitk.Diagnostics` needed BOTH `Ruitk.Editor` and transitive `Ruitk.Samples`
+  remapped). Real-generation csprojs regenerate when the owner's editor refocuses.
+- **Owner-visible migration note (M8):** the host project's stale
+  `Assets/ReactiveUIToolkitSettings.asset` now loses its script (SO class gone) — already
+  flagged for deletion in the M8 smoke.
+- **Gates:** machine-paths ✓, corpus-hash ✓; VERIFY-UNITY — Shared/Runtime/Ugui direct 0
+  errors, Editor/Samples/Diagnostics 0 errors via synced csprojs, `Ruitk.Ugui.Tests` (with the
+  new file) 0 errors — the compile IS this session's test gate (locked editor; owner runs the
+  suite in-editor at M8); player proof Shared/Runtime/Ugui `.Player` 0 errors.

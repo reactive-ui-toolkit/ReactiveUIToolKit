@@ -1,17 +1,37 @@
 using Ruitk.Core.Config;
 using Ruitk.Core.Diagnostics;
+using UnityEngine;
 
 namespace Ruitk.Core
 {
     /// <summary>
     /// The bootstrap-facing resolvers the root renderers call once at mount. Resolution order for
-    /// every value: the active <see cref="RuitkSettings"/> asset (the settings window, <i>Reactive
-    /// UI Toolkit ▸ Settings</i>; preloaded into player builds) → the legacy <c>config.json</c>
-    /// (<see cref="RuitkConfig"/>, kept for store customers with an edited file) → compiled
-    /// defaults (which <see cref="RuitkConfig"/> returns when no file exists).
+    /// every value: the JSON settings store (<see cref="RuitkSettings"/> —
+    /// <c>Assets/Resources/ReactiveUIToolkit/config.json</c>, edited via the settings window,
+    /// <i>Reactive UI Toolkit ▸ Settings</i>; ships into player builds via <c>Resources</c>) → the
+    /// legacy <c>config.json</c> (<see cref="RuitkConfig"/>, kept for store customers with an
+    /// edited file) → compiled defaults (which <see cref="RuitkConfig"/> returns when no file
+    /// exists).
     /// </summary>
     public static class BuildDefinesConfig
     {
+        /// <summary>
+        /// The canonical tri-state mapping: <c>On</c>/<c>Off</c> are literal; <c>Auto</c> means ON
+        /// in the editor and in development player builds, OFF in release players.
+        /// </summary>
+        public static bool MapTriState(RuitkTriState value)
+        {
+            switch (value)
+            {
+                case RuitkTriState.On:
+                    return true;
+                case RuitkTriState.Off:
+                    return false;
+                default:
+                    return Application.isEditor || Debug.isDebugBuild;
+            }
+        }
+
         public static string ResolveEnvironment()
         {
             var settings = RuitkSettings.ActiveOrNull;
