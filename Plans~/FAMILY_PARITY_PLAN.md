@@ -340,7 +340,7 @@ reconciled. Rules, all load-bearing:
 `[Unreleased]` changelog section is REWRITTEN, not appended to (it describes unshipped work this
 campaign reshapes). House changelog style per `CHANGELOG.md` top entry + `scripts/changelog.mjs
 verify` if touched-lanes require; Discord entry per the `discord-changelog` skill (ASCII, ≤2000
-chars) staged in `Plans~/DISCORD_CHANGELOG.md` at M7, shipped by the owner at release.
+chars) staged in `plans/DISCORD_CHANGELOG.md` at M7, shipped by the owner at release.
 
 ---
 
@@ -479,7 +479,7 @@ Gate: VERIFY-GATES + VERIFY-UNITY + player proof. Acceptance grep:
    keep). One sentence: the interim ScriptableObject store existed only unreleased and was
    replaced before shipping.
 2. `package.json:4` → `0.13.0`.
-3. `Plans~/DISCORD_CHANGELOG.md` entry per the `discord-changelog` skill (ASCII, ≤2000 chars).
+3. `plans/DISCORD_CHANGELOG.md` entry per the `discord-changelog` skill (ASCII, ≤2000 chars).
 
 Gate: VERIFY-GATES; `node scripts/changelog.mjs verify` if the tooling lane was touched (it was
 not — extensions unchanged; run it anyway, it must stay green).
@@ -577,7 +577,7 @@ log twice at Verbose — accepted, it is truthful (two captures happened), note 
 - [ ] `ReactiveUIToolkitDocs~/src/pages/Migration/MigrationPage.tsx:106` — §5 row 13 annotation.
 - [ ] `CHANGELOG.md` — M6 rewrite (see milestone).
 - [ ] `package.json:4` — `0.13.0`.
-- [ ] `Plans~/DISCORD_CHANGELOG.md` — M6 entry.
+- [ ] `plans/DISCORD_CHANGELOG.md` — M6 entry.
 - [ ] `CLAUDE.md` — if it gains/keeps any sentence about settings storage, it must say JSON store,
       not ScriptableObject (currently it says neither — only add if something there becomes wrong).
 - [ ] Extension lanes (`ide-extensions~/changelog.json`, marketplace pages): UNTOUCHED — no
@@ -1008,7 +1008,7 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
   - Housekeeping: the file-header mojibake (`â€”`, preamble line 7 — non-frozen) fixed;
     the same pre-existing mojibake inside old SHIPPED bodies left frozen (owner item).
 - **Version:** NO numbers changed — `package.json` re-verified `0.13.0`, untouched.
-- **Discord:** `[0.13.0]` entry PREPENDED to `Plans~/DISCORD_CHANGELOG.md` — 1962 chars
+- **Discord:** `[0.13.0]` entry PREPENDED to `plans/DISCORD_CHANGELOG.md` — 1962 chars
   (cap 2000, counted by script), zero non-ASCII (verified), shape matched to the 0.12.0
   entry (no trailing `---`, which the file does not actually use between entries).
 - **Gates:** machine-paths ✓, corpus-hash ✓ (`917dd8cd…`); `changelog.mjs verify` —

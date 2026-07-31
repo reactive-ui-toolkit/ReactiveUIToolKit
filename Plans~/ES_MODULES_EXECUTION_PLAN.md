@@ -715,7 +715,7 @@ deprecation timeline (0.9.0 warns via 2320/2107, removal in a later minor); esca
 - [ ] `CHANGELOG.md` — new `## [0.9.0] - <date>` above `## [0.8.3]` (line 9): ES-modules redesign,
       plain declarations, full import surface, file-keyed namespaces, companion deprecation, codemod,
       one-time hot-reload state reset note, final test totals line.
-- [ ] `Plans~/DISCORD_CHANGELOG.md` — prepend 0.9.0 entry, **ASCII only, ≤2000 chars**, house
+- [ ] `plans/DISCORD_CHANGELOG.md` — prepend 0.9.0 entry, **ASCII only, ≤2000 chars**, house
       format (`### Minor - …`, bold lead-in, footer `Unity package **0.9.0** + IDE extensions **1.5.0**`).
 - [ ] `package.json` line 4: `0.8.3` → `0.9.0`.
 - [ ] `ide-extensions~/vscode/package.json` line 6: `1.4.4` → `1.5.0`.

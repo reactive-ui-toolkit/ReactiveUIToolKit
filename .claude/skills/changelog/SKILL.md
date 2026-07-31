@@ -91,7 +91,7 @@ node scripts/changelog.mjs verify
 
 - `CHANGELOG.md` (repo root) — the Unity PACKAGE changelog (source of truth for
   package versions; hand-written, Keep-a-Changelog format)
-- `Plans~/DISCORD_CHANGELOG.md` — Discord release posts (see the `discord-changelog`
+- `plans/DISCORD_CHANGELOG.md` — Discord release posts (see the `discord-changelog`
   skill; hard 2000-char-per-entry cap)
 - The mental model: feature → version bumps → all changelogs → docs, in one commit
   wave — never let them drift.

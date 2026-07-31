@@ -92,7 +92,7 @@ Project skills live in `.claude/skills/` (this repo dropped the Copilot `.github
 
 - **`rebuild-ide-extensions`** — THE local dev loop: rebuild LSP server + extension for the owner to F5-test. Never publish to a marketplace to test anything; releases are `.github/workflows/publish.yml`, owner-triggered.
 - **`changelog`** — the centralized `changelog.json` system: add/extract/extract-overview/`verify`; generated marketplace pages (README.md, overview.md) are never hand-edited — edit templates and regenerate.
-- **`discord-changelog`** — style + hard 2000-char cap for `Plans~/DISCORD_CHANGELOG.md` entries.
+- **`discord-changelog`** — style + hard 2000-char cap for `plans/DISCORD_CHANGELOG.md` entries.
 - **`add-unity-version`** — full runbook for supporting a new Unity release (API diff → classify → implement → schema/LSP → docs → record-keeping).
 
 ## Coding standards (repo policy — applies to all code edits in this package, not to consumer projects or Markdown/commit prose)

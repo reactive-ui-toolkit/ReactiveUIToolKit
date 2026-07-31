@@ -4,7 +4,7 @@
 
 **Every setting now lives in Reactive UI Toolkit > Settings**, backed by a plain JSON file at `Assets/Resources/ReactiveUIToolkit/config.json` - created only when you click "Create settings file", and under Resources it ships into every player build by itself. The knob set is family-canonical (same semantics and defaults across the Reactive UI Toolkit legs; each leg spells the key names engine-natively): `environment`, `time_slicing`, `time_slice_ms`, `frame_budget_ms`, `host_node_pool`, `hook_validation`, `strict_diagnostics`, `strict_mode`, `trace_level`, `diff_tracing`, plus the Unity-only `diagnostics_output_folder`. Every default reproduces current behavior exactly - an untouched project behaves as before.
 
-**Strict mode lands.** `strict_mode: true` double-invokes render functions (first result discarded, effects still run once, committed UI identical) so impure render bodies surface in dev. Forced off in release builds - a shipped player can never activate it.
+**Strict mode lands.** `strict_mode: true` double-invokes render functions (first result discarded, effects still run once, committed UI identical) so impure render bodies surface in dev. Forced off in release builds.
 
 **The trace ladder is back.** `trace_level: basic` logs structural reconciler events again (placements, deletions, replacements, a commit summary) - lost in the fiber rewrite; `verbose` adds per-element/per-hook detail; `diff_tracing` is independent of both again (an AND-bug in three adapters silenced it without a trace level).
 
@@ -309,10 +309,6 @@ VS Code **1.2.13 -> 1.2.14** | VS 2022 **1.2.13 -> 1.2.14** ship separately.
 **Tests.** SG `1245/1245` (+1 alias parity); +2 LSP `RoslynHostTests`.
 
 VS Code **1.2.12 -> 1.2.13** | VS 2022 **1.2.12 -> 1.2.13**.
-
----
-
-## [0.5.21] - 2026-05-19
 
 ---
 
