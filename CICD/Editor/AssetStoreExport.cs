@@ -26,6 +26,25 @@ namespace Ruitk.CICD
     /// </summary>
     internal static class AssetStoreExport
     {
+        /// <summary>
+        /// DELIBERATELY A LITERAL — do not route this through <c>RuitkPackagePaths</c>.
+        ///
+        /// Three reasons, in order of weight:
+        /// <list type="number">
+        /// <item>It is an ASSET-DATABASE path, not a filesystem path. It is consumed by
+        ///   <c>AssetDatabase.FindAssets(searchInFolders:)</c> and by <c>StartsWith</c> prefix tests on
+        ///   other asset paths. <c>RuitkPackagePaths</c> returns an absolute filesystem path, which is
+        ///   the wrong currency here.</item>
+        /// <item>It is a CONTRACT with <c>publish.yml</c>, which hand-builds the shell project at
+        ///   <c>STORE_DIR="shell/Assets/ReactiveUIToolkit"</c>. Both sides must name the same location;
+        ///   deriving one side would let them drift apart silently.</item>
+        /// <item>Asserting the layout IS the job. The <c>RequirePrefix</c> guard rails below exist to
+        ///   turn a packaging surprise into a red CI run. A resolver that adapts to whatever layout it
+        ///   finds would defeat exactly that check — and since the shell project always has the package
+        ///   under <c>Assets/</c> (layout a), rung 1 would return null anyway and rungs 2-3 would be a
+        ///   more elaborate way to arrive back at this same string.</item>
+        /// </list>
+        /// </summary>
         private const string PackageRoot = "Assets/ReactiveUIToolkit";
 
         public static void Run()
