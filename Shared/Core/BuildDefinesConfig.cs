@@ -109,5 +109,58 @@ namespace Ruitk.Core
             var settings = RuitkSettings.ActiveOrNull;
             return settings != null ? settings.hostNodePool : true;
         }
+
+        // ── Strict knobs (0.13 additions; same no-legacy-hop chain) ───────────
+
+        /// <summary>
+        /// <c>hook_validation</c> — hook order/count validation on every render
+        /// (<see cref="Hooks.EnableHookValidation"/>). Tri-state: <c>auto</c> (the default)
+        /// maps to ON in the editor and development builds, OFF in release players.
+        /// </summary>
+        public static bool ResolveHookValidation()
+        {
+            var settings = RuitkSettings.ActiveOrNull;
+            return MapTriState(settings != null ? settings.hookValidation : RuitkTriState.Auto);
+        }
+
+        /// <summary>
+        /// <c>strict_diagnostics</c> — development-time warnings for suspect hook usage
+        /// (<see cref="Hooks.EnableStrictDiagnostics"/>): state updates during render, hooks
+        /// invoked without a dependency array. Same tri-state mapping as
+        /// <c>hook_validation</c>.
+        /// </summary>
+        public static bool ResolveStrictDiagnostics()
+        {
+            var settings = RuitkSettings.ActiveOrNull;
+            return MapTriState(settings != null ? settings.strictDiagnostics : RuitkTriState.Auto);
+        }
+
+        /// <summary>
+        /// <c>strict_mode</c> — double-invoke function-component renders
+        /// (<see cref="Ruitk.Core.Fiber.FiberConfig.StrictModeEnabled"/>). Default
+        /// <c>false</c>, opt-in, and FORCE-OFF in release players: the stored value cannot
+        /// activate it outside the editor / development builds. The denial is resolver-level,
+        /// not <c>#if</c> — the code ships into builds, the activation is denied.
+        /// </summary>
+        public static bool ResolveStrictMode()
+        {
+            return ResolveStrictMode(Application.isEditor || Debug.isDebugBuild);
+        }
+
+        /// <summary>
+        /// Testable core of <see cref="ResolveStrictMode()"/>.
+        /// <paramref name="developmentContext"/> is
+        /// <c>Application.isEditor || Debug.isDebugBuild</c> in production callers; a release
+        /// player (<c>false</c>) resolves to <c>false</c> regardless of the stored value.
+        /// </summary>
+        internal static bool ResolveStrictMode(bool developmentContext)
+        {
+            if (!developmentContext)
+            {
+                return false;
+            }
+            var settings = RuitkSettings.ActiveOrNull;
+            return settings != null && settings.strictMode;
+        }
     }
 }

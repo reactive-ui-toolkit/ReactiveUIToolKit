@@ -32,6 +32,14 @@ namespace Ruitk.EditorSupport
     /// </summary>
     internal sealed class RuitkSettingsWindow : EditorWindow
     {
+        /// <summary>Popup options for the tri-state knobs — indices match <see cref="RuitkTriState"/>.</summary>
+        private static readonly GUIContent[] TriStateOptions =
+        {
+            new GUIContent("Auto"),
+            new GUIContent("On"),
+            new GUIContent("Off"),
+        };
+
         private Vector2 _scroll;
         private RuitkSettings _model;
         private System.DateTime _modelStamp;
@@ -117,6 +125,15 @@ namespace Ruitk.EditorSupport
                     "Host Node Pool",
                     BuildDefinesConfig.ResolveHostNodePool()
                 );
+                EditorGUILayout.Toggle(
+                    "Hook Validation",
+                    BuildDefinesConfig.ResolveHookValidation()
+                );
+                EditorGUILayout.Toggle(
+                    "Strict Diagnostics",
+                    BuildDefinesConfig.ResolveStrictDiagnostics()
+                );
+                EditorGUILayout.Toggle("Strict Mode", BuildDefinesConfig.ResolveStrictMode());
                 EditorGUILayout.EnumPopup("Trace Level", BuildDefinesConfig.ResolveTraceLevel());
                 EditorGUILayout.Toggle("Diff Tracing", BuildDefinesConfig.ResolveEnableDiffTracing());
                 EditorGUILayout.TextField(
@@ -192,6 +209,39 @@ namespace Ruitk.EditorSupport
                 ),
                 _model.hostNodePool
             );
+            var hookValidation = (RuitkTriState)
+                EditorGUILayout.Popup(
+                    new GUIContent(
+                        "Hook Validation",
+                        "hook_validation — validates hook order and count on every render "
+                            + "(catches conditional hook calls). auto = on in the editor and "
+                            + "development builds, off in release players. Default: auto."
+                    ),
+                    (int)_model.hookValidation,
+                    TriStateOptions
+                );
+            var strictDiagnostics = (RuitkTriState)
+                EditorGUILayout.Popup(
+                    new GUIContent(
+                        "Strict Diagnostics",
+                        "strict_diagnostics — development warnings for suspect hook usage "
+                            + "(state updates during render, hooks invoked without a "
+                            + "dependency array), deduplicated per component. auto = on in "
+                            + "the editor and development builds, off in release players. "
+                            + "Default: auto."
+                    ),
+                    (int)_model.strictDiagnostics,
+                    TriStateOptions
+                );
+            bool strictMode = EditorGUILayout.Toggle(
+                new GUIContent(
+                    "Strict Mode",
+                    "strict_mode — double-invokes renders in dev so impure render bodies "
+                        + "surface (first result discarded, effects still run once); forced "
+                        + "off in release builds. Default: off."
+                ),
+                _model.strictMode
+            );
             var traceLevel = (DiagnosticsConfig.TraceLevel)
                 EditorGUILayout.EnumPopup(
                     new GUIContent(
@@ -257,6 +307,9 @@ namespace Ruitk.EditorSupport
                 _model.timeSliceMs = timeSliceMs;
                 _model.frameBudgetMs = frameBudgetMs;
                 _model.hostNodePool = hostNodePool;
+                _model.hookValidation = hookValidation;
+                _model.strictDiagnostics = strictDiagnostics;
+                _model.strictMode = strictMode;
                 _model.traceLevel = traceLevel;
                 _model.diffTracing = diffTracing;
                 _model.diagnosticsOutputFolder = outputFolder;

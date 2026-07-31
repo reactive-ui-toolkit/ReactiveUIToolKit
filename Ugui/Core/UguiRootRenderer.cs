@@ -66,6 +66,13 @@ namespace Ruitk.Ugui
             FiberConfig.TimeSlicingEnabled = BuildDefinesConfig.ResolveTimeSlicing();
             FiberConfig.TimeSliceMs = BuildDefinesConfig.ResolveTimeSliceMs();
 
+            // Strict knobs — the two tri-states resolve auto = on in the editor and
+            // development builds, off in release players; strict_mode additionally
+            // force-resolves off in release players regardless of the stored value.
+            Hooks.EnableHookValidation = BuildDefinesConfig.ResolveHookValidation();
+            Hooks.EnableStrictDiagnostics = BuildDefinesConfig.ResolveStrictDiagnostics();
+            FiberConfig.StrictModeEnabled = BuildDefinesConfig.ResolveStrictMode();
+
             InternalLogOptions.EnableInternalLogs =
                 DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose;
         }

@@ -62,6 +62,13 @@ namespace Ruitk.EditorSupport
                 FiberConfig.TimeSlicingEnabled = BuildDefinesConfig.ResolveTimeSlicing();
                 FiberConfig.TimeSliceMs = BuildDefinesConfig.ResolveTimeSliceMs();
 
+                // Strict knobs — in the editor the two tri-states resolve auto = on, and a
+                // stored strict_mode=true is honored (the release force-off only bites in
+                // release players).
+                Hooks.EnableHookValidation = BuildDefinesConfig.ResolveHookValidation();
+                Hooks.EnableStrictDiagnostics = BuildDefinesConfig.ResolveStrictDiagnostics();
+                FiberConfig.StrictModeEnabled = BuildDefinesConfig.ResolveStrictMode();
+
                 InternalLogOptions.EnableInternalLogs =
                     DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose;
 

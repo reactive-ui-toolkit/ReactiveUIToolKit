@@ -831,3 +831,99 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
   2, Ugui.Tests add 2); player proof Shared/Runtime/Ugui `.Player` 0 errors (synthesized
   harness, M0). No `Analyzers/*.dll` churn this round (only `dotnet build`, no `dotnet
   test`).
+
+### M4 — hook_validation flip + strict_diagnostics + strict_mode (U-06/U-07) — DONE 2026-07-31 (round 3; editor OPEN again — locked-editor mode re-verified: host `Temp/UnityLockfile` + 3 Unity processes; compile IS this session's test gate, owner runs the suites at M8)
+- **U-06 wiring:** `BuildDefinesConfig` gained `ResolveHookValidation` / `ResolveStrictDiagnostics`
+  (both `MapTriState(store-or-Auto)`, chain JSON → compiled default, no legacy hop) and
+  `ResolveStrictMode()` delegating to an **internal `ResolveStrictMode(bool developmentContext)`
+  core** (the D-9 resolver-level force-off, made testable: `false` context ⇒ `false` regardless of
+  the stored value). Seam application at all three §1.2 seams:
+  `Hooks.EnableHookValidation` / `Hooks.EnableStrictDiagnostics` / `FiberConfig.StrictModeEnabled`
+  set bootstrap-style after the M3 knobs. Compiled initializers (`Hooks.cs:21-22`) untouched per
+  U-06; `EnableHookAutoRealign` untouched, not in the schema.
+- **Prefix fix:** the three `[Hooks][StrictMode]` sites (`:160, :573, :607`) → `[Hooks][Strict]`
+  via one replace-all. **Acceptance grep: `grep -rn "StrictMode" Shared/Core/Hooks.cs` = ZERO
+  hits** (`[Hooks][Strict]` = 3).
+- **U-07 double-invoke:** `FiberConfig.StrictModeEnabled` (default false) + the insertion at the
+  render call. The per-pass prep (hook cursor resets, formerly `:44-46` pre-bailout + the
+  context-dep clear, formerly `:132-136`) is EXTRACTED into a `RunRenderPass()` local function
+  (direct-called ⇒ struct closure, no allocation) called once normally, twice under strict —
+  `childVNode = RunRenderPass(); if (StrictModeEnabled) childVNode = RunRenderPass();`, the
+  sibling legs' `RunOnce(); if strict Result = RunOnce()` shape. Moving the cursor resets
+  post-bailout is safe: grep-verified the only cursor writes/reads outside `Hooks.cs` were the
+  `:44-46` resets themselves, and the context-dep clear must NOT move earlier (the bailout's
+  `HasContextChanged` reads the deps). Depth guard counts one logical render (both invokes inside
+  one `s_renderDepth` increment); `FlushQueuedStateUpdates` stays pre-bailout (once); hook-order
+  priming stays after the second invoke per plan. `_workUnitCount` is per-fiber
+  (`PerformUnitOfWork`), so metrics count the render once by construction.
+- **Discarded-tree verdict (U-07 rule 4, investigated):** NO safe explicit release exists —
+  documented as strict-mode-only per-render garbage. Two independent reasons:
+  (1) `VirtualNode.__ScheduleReturn`/`__FlushReturns` have **zero callers anywhere** (the vnode
+  pool rents but never returns — dormant recycle path, pre-existing); (2) memoized subtrees
+  (UseMemo-cached vnodes whose deps are unchanged between the invokes) are SHARED between the
+  first and second results, so force-releasing the first tree (vnodes or their rented host props)
+  would corrupt the reconciled second tree. The discarded tree's `__Rent`ed family props are
+  never scheduled for return (they never enter a fiber) — bounded GC garbage, pool unaffected.
+- **Per-hook-family index-keyed-overwrite audit (every family in `Hooks.cs`, line-verified):**
+  | Family | Slot mechanism | Second-invoke behavior | Verdict |
+  |---|---|---|---|
+  | UseState | `HookStates[i]` Add-if-fresh, read-only after | reads same slot; setter delegates cached per `(index, kind)` | overwrite-safe |
+  | UseReducer | `ReducerHookState` object reused via `is` check; `Dispatch` allocated once | same object, reducer ref refreshed | overwrite-safe |
+  | UseMemo | `(value, deps)` tuple; recompute only on `DepsChanged` | invoke-2 deps value-equal invoke-1's ⇒ NO recompute (factory once per logical change) | overwrite-safe |
+  | UseCallback | same tuple shape | same — cached callback returned | overwrite-safe |
+  | UseImperativeHandle | same tuple shape | factory once | overwrite-safe |
+  | UseDeferredValue | `(val, deps)` tuple; slot write direct or via `EnqueueBatchedEffect` | schedulerless: invoke 1 already wrote ⇒ invoke 2 sees equal ⇒ no-op. WITH scheduler: both invokes can enqueue the slot-write batched effect — the two writes are IDENTICAL (same value, same slot), idempotent; accepted + noted | safe (idempotent double-enqueue) |
+  | UseTransition | pure cursor bump, constants returned | trivially safe | safe |
+  | UseEffect | `FunctionEffects[EffectIndex]` Add-or-overwrite factory+deps, preserving lastDeps+cleanup (`:1230-1239` — the plan's canonical pattern) | second registration replaces first's captures; runs once at commit | overwrite-safe (pinned: committed effect observes invoke-2's capture) |
+  | UseLayoutEffect | identical pattern on `FunctionLayoutEffects[LayoutEffectIndex]` | same | overwrite-safe |
+  | UseRef&lt;T&gt; | Add-if-fresh, instance returned | same `Ref<T>` instance both invokes | overwrite-safe (pinned) |
+  | UseContext | NO slot — appends to `ContextDependencies` | list CLEARED by the per-pass prep before EACH invoke ⇒ rebuilt, never doubled (this is exactly why the prep must re-run) | safe via prep |
+  | UseSignal | `SignalSubscriptionState` object reused; subscribe only on signal-instance change | invoke 2: same signal ⇒ no re-subscribe; selector overload re-evaluates `lastValue` (idempotent). Per-render new-signal anti-pattern: dispose-then-resubscribe per invoke, no leak, no double-subscription | overwrite-safe |
+  | UseSfx | `(mixer, action)` tuple, rebuilt only on mixer change | same delegate returned | overwrite-safe |
+  | UseAnimate / UseTweenFloat | one passive slot (written by the EFFECT, not render) + delegation to UseEffect | render pass touches nothing side-effectful; effect overwrite rules apply | overwrite-safe |
+  | UseSafeArea / UseStableFunc / UseStableAction / UseStableCallback / element `UseRef()` | metadata-gated: on the pure fiber path (`FunctionComponentState.Owner` is ctor-null, get-only) they early-return WITHOUT consuming a slot | slot-neutral, invoke-symmetric | inert on fiber path (pre-existing) |
+  | ProvideContext | writes `fiber.ProvidedContext[key]`; `PropagateContextChange` compares vs the COMMITTED alternate | invoke 2 recomputes the same verdict and re-marks the same flags (bool sets, idempotent); double tree-walk cost only | safe (idempotent) |
+  | RecordHook (order validation) | signature list uses overwrite-or-append (`Count > index`) while unprimed | invoke 2 overwrites the same signature slots; priming fires once, post-invoke-2. NOTE: metadata-gated ⇒ inert on the pure fiber path (Owner null, pre-existing — validation lives on the legacy/metadata path) | safe |
+  | WarnStrict (diagnostics) | `StrictDiagnosticsKeys` HashSet dedup | key added on invoke 1 blocks invoke 2 AND the replay pass ⇒ one warning per logical render (pinned) | safe |
+- **U-02 (new rows):** window store editor gained the three typed rows in §3 order (two
+  tri-state `Popup`s over a shared `TriStateOptions` — indices match `RuitkTriState` — and the
+  strict_mode Toggle with the "double-invokes renders in dev; forced off in release builds"
+  tooltip); the no-store "Effective values" view gained the same three via the resolvers.
+- **Tests:** `RuitkSettingsJsonTests` +4 (strict-knob key spellings; JSON-store-wins incl.
+  editor-context strict_mode opt-in; no-legacy-hop for the three; **force-off-in-release proof at
+  resolver level** — stored `true` + `developmentContext:false` ⇒ `false`, both contexts pinned,
+  no-store ⇒ `false` everywhere). New `Ugui/Tests/StrictModeTests.cs` (+meta, fresh GUID):
+  strict-off baseline (render 1×); strict mount pin (**render body 2×, effect 1×, layout effect
+  1×, cleanup 1× on unmount, memo/imperative factories 1×, one Ref instance, committed effect
+  holds the SECOND invoke's capture**); strict update pin (**4 invokes for mount+setState vs 2
+  strict-off, committed UI byte-identical to strict-off, effect/cleanup/memo counts equal**);
+  state-update-during-render warning **once** under the `[Hooks][Strict]` prefix
+  (LogAssert.Expect + NoUnexpectedReceived; 4 invokes = mount 2 + deferred-replay 2 — the replay
+  machinery is the M3-pinned `:901` path); compiled-default-off pin. The kitchen-sink component
+  exercises every fiber-path-live family (state/reducer/memo/callback/ref/context/deferred/
+  transition/imperative/signal/animate/layout-effect/2×effect). `UguiStressChurnTests` +1:
+  **strict ON** function-component churn over the full box field (typed `CycleProps`, structural
+  equality) — structure + status text coherent every cycle AND the pooled host-reuse bound
+  (≤ BoxCount+50) holds with the double-invoke discarding a full rented tree per pass; TearDown
+  now restores `StrictModeEnabled`.
+- **Behavior notes (contract-mandated, recorded honestly):** (1) `strict_diagnostics` default
+  `auto` = editor/dev-build ON where the compiled initializer was `false` — §0.1 row 6 orders
+  this ("becomes auto, same mapping as #5"); release stays OFF (no release change). (2) At
+  Verbose trace, `Hooks.cs:1241`'s UseEffect capture log fires per invoke under strict (twice) —
+  §6 already documents this as accepted/truthful. (3) Under strict + scheduler,
+  UseDeferredValue's deferred slot-write may be enqueued twice (identical idempotent writes) —
+  audit table above.
+- **Byte-equivalence re-read (strict OFF default):** single `RunRenderPass()` call ≡ the old
+  inline sequence exactly (same statements, same order, post-bailout as before for the dep clear;
+  the cursor resets moved from pre-bailout to pre-render — no reader in between, grep-proven);
+  `StrictModeEnabled` compiled false + no-store resolver false ⇒ the second invoke is unreachable
+  in an untouched project. Hooks initializers unchanged; seam writes at defaults reproduce
+  today's editor values (`true`/editor-ON) — the only default-flip is release-player
+  hook_validation OFF + editor strict_diagnostics ON, both §0-sanctioned.
+- **Gates:** machine-paths ✓ (`add -N` for the two new files), corpus-hash ✓ (`917dd8cd…`);
+  VERIFY-UNITY — Shared/Runtime/Ugui direct 0 errors (Shared warnings now 4, was 5 at M0: the
+  delta is M1's deleted `exceptionControlFlow` field's CS0649, remaining 4 are the pre-existing
+  `RuitkConfig.EnvVariables` CS0649s), Editor/Samples/Diagnostics/Ugui.Tests 0 errors via
+  re-synced csprojs (Editor prune 2 again — host set still stale from 2026-07-30, regenerates on
+  editor refocus; Ugui.Tests add 3: both M2/M3 test files + StrictModeTests.cs); player proof
+  Shared/Runtime/Ugui `.Player` 0 errors (re-synthesized). No Analyzers churn (build only).

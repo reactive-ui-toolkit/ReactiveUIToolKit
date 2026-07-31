@@ -327,5 +327,82 @@ namespace Ruitk.Ugui.Tests
             Assert.AreEqual(4.0f, BuildDefinesConfig.ResolveFrameBudgetMs());
             Assert.IsTrue(BuildDefinesConfig.ResolveHostNodePool());
         }
+
+        // ── Strict knobs (M4): resolution order, defaults, the release force-off ──
+
+        [Test]
+        public void Parse_StrictKnobKeys_PartialDocument()
+        {
+            var parsed = RuitkSettings.Parse(
+                "{ \"hook_validation\": \"on\", \"strict_diagnostics\": \"off\", "
+                    + "\"strict_mode\": true }"
+            );
+            Assert.AreEqual(RuitkTriState.On, parsed.hookValidation);
+            Assert.AreEqual(RuitkTriState.Off, parsed.strictDiagnostics);
+            Assert.IsTrue(parsed.strictMode);
+            // Untouched keys keep their defaults:
+            Assert.AreEqual(RuitkEnvironment.Auto, parsed.environment);
+            Assert.IsTrue(parsed.timeSlicing);
+        }
+
+        [Test]
+        public void ResolutionOrder_StrictKnobs_JsonStoreWins()
+        {
+            RuitkSettings.SuppressResourceLoadForTests = true;
+            RuitkSettings.Invalidate();
+            RuitkSettings.SetActive(
+                RuitkSettings.Parse(
+                    "{ \"hook_validation\": \"off\", \"strict_diagnostics\": \"on\", "
+                        + "\"strict_mode\": true }"
+                )
+            );
+
+            Assert.IsFalse(BuildDefinesConfig.ResolveHookValidation());
+            Assert.IsTrue(BuildDefinesConfig.ResolveStrictDiagnostics());
+            // These tests run in the editor = development context, so the stored opt-in wins.
+            Assert.IsTrue(BuildDefinesConfig.ResolveStrictMode());
+        }
+
+        [Test]
+        public void ResolutionOrder_StrictKnobs_HaveNoLegacyHop()
+        {
+            // The legacy config.json never carried these keys: even with a legacy document
+            // present, the chain is JSON store → compiled default. The tri-states default to
+            // auto (= ON in this editor context — the hook-validation release FLIP lives in
+            // the auto mapping); strict_mode defaults to off.
+            RuitkSettings.SetActive(null);
+            RuitkSettings.SuppressResourceLoadForTests = true;
+            RuitkSettings.Invalidate();
+            RuitkConfig.SetCurrentForTests(
+                RuitkConfig.Parse(
+                    "{ \"envVariables\": { \"env\": \"development\", \"traceLevel\": \"Verbose\", "
+                        + "\"diffTracing\": true } }"
+                )
+            );
+
+            Assert.IsTrue(BuildDefinesConfig.ResolveHookValidation());
+            Assert.IsTrue(BuildDefinesConfig.ResolveStrictDiagnostics());
+            Assert.IsFalse(BuildDefinesConfig.ResolveStrictMode());
+        }
+
+        [Test]
+        public void ResolveStrictMode_IsForceOffOutsideDevelopmentContext()
+        {
+            // The release force-off is resolver-level (D-9): with strict_mode stored TRUE,
+            // a release-player context (not editor, not debug build) still resolves FALSE —
+            // release players cannot opt in. The same stored value activates in a
+            // development context.
+            RuitkSettings.SuppressResourceLoadForTests = true;
+            RuitkSettings.Invalidate();
+            RuitkSettings.SetActive(RuitkSettings.Parse("{ \"strict_mode\": true }"));
+
+            Assert.IsFalse(BuildDefinesConfig.ResolveStrictMode(developmentContext: false));
+            Assert.IsTrue(BuildDefinesConfig.ResolveStrictMode(developmentContext: true));
+
+            // Without a store the default is off in EVERY context.
+            RuitkSettings.SetActive(null);
+            Assert.IsFalse(BuildDefinesConfig.ResolveStrictMode(developmentContext: false));
+            Assert.IsFalse(BuildDefinesConfig.ResolveStrictMode(developmentContext: true));
+        }
     }
 }

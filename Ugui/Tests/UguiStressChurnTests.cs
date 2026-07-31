@@ -57,6 +57,7 @@ namespace Ruitk.Ugui.Tests
         [TearDown]
         public void TearDown()
         {
+            FiberConfig.StrictModeEnabled = false;
             _renderer?.Clear();
             Ruitk.Core.Config.RuitkSettings.SetActive(null);
             Ruitk.Core.Config.RuitkSettings.Invalidate();
@@ -180,6 +181,69 @@ namespace Ruitk.Ugui.Tests
                 seenBoxes.Count,
                 BoxCount + 900,
                 "with the pool disabled, every re-added box must be a fresh instance"
+            );
+        }
+
+        // ── strict_mode interaction (M4/U-07) ────────────────────────────────
+
+        /// <summary>Typed props for the strict-mode churn component (structural equality).</summary>
+        private sealed class CycleProps : Ruitk.Core.IProps
+        {
+            public int Count;
+            public float T;
+
+            public override bool Equals(object obj) =>
+                obj is CycleProps other && other.Count == Count && other.T == T;
+
+            public override int GetHashCode() => Count ^ T.GetHashCode();
+        }
+
+        private static VirtualNode BoxFieldComponent(
+            Ruitk.Core.IProps props,
+            IReadOnlyList<VirtualNode> children
+        )
+        {
+            var p = (CycleProps)props;
+            return BoxField(p.Count, p.T);
+        }
+
+        [Test]
+        public void StressLoop_StrictMode_FunctionComponentChurn_PoolStaysCoherent()
+        {
+            // U-07 discarded-tree rule under sustained load: with strict_mode on, every
+            // pass renders the whole box field TWICE — the first tree (and its rented
+            // props) is discarded garbage, the second is reconciled. Structure must stay
+            // coherent every cycle and the HOST pool reuse bound must hold exactly as in
+            // the strict-off pooled test (the discarded tree owns no host elements).
+            CreateRenderer(hostNodePool: true);
+            FiberConfig.StrictModeEnabled = true; // restored in TearDown
+            var seenBoxes = new HashSet<int>();
+
+            for (int cycle = 0; cycle < Cycles; cycle++)
+            {
+                int count = cycle % 2 == 0 ? BoxCount : BoxCount - 100;
+                float t = cycle * 0.25f;
+                _renderer.Render(
+                    V.Func(BoxFieldComponent, new CycleProps { Count = count, T = t })
+                );
+
+                var area = _mountRect.GetChild(0);
+                Assert.AreEqual(count + 1, area.childCount, $"cycle {cycle}");
+                Assert.AreEqual(
+                    $"boxes: {count} t: {t:F2}",
+                    area.GetChild(0).GetComponent<TextMeshProUGUI>().text,
+                    $"cycle {cycle}"
+                );
+                for (int i = 1; i < area.childCount; i++)
+                {
+                    seenBoxes.Add(area.GetChild(i).gameObject.GetInstanceID());
+                }
+            }
+
+            Assert.LessOrEqual(
+                seenBoxes.Count,
+                BoxCount + 50,
+                "strict-mode double-invoke must not disturb pooled host reuse"
             );
         }
     }

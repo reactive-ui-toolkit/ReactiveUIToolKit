@@ -26,6 +26,17 @@ namespace Ruitk.Core.Fiber
         public static float TimeSliceMs { get; set; } = 2.0f;
 
         /// <summary>
+        /// Whether function-component render functions are double-invoked (the
+        /// <c>strict_mode</c> setting; default <c>false</c>). The FIRST result is discarded
+        /// and the SECOND reconciled, so impure render bodies surface in development. Hook
+        /// slots are index-keyed and overwritten in place by the second pass; effects still
+        /// run once (commit-phase); release players can never activate it —
+        /// <c>BuildDefinesConfig.ResolveStrictMode()</c> force-resolves <c>false</c> there.
+        /// Set once per mount from that resolver.
+        /// </summary>
+        public static bool StrictModeEnabled { get; set; } = false;
+
+        /// <summary>
         /// Enable verbose fiber logging
         /// </summary>
         public static bool EnableFiberLogging { get; set; } = false;

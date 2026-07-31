@@ -157,7 +157,7 @@ namespace Ruitk.Core
                         state,
                         metadata,
                         "state-update-during-render",
-                        $"[Hooks][StrictMode] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
+                        $"[Hooks][Strict] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
                     );
                 }
                 var previous = GetProjectedState();
@@ -570,7 +570,7 @@ namespace Ruitk.Core
                 state,
                 metadata,
                 key,
-                $"[Hooks][StrictMode] {hookName} in component '{component}' was invoked without a dependency array; it will re-run every render. Provide explicit dependencies or refactor the logic."
+                $"[Hooks][Strict] {hookName} in component '{component}' was invoked without a dependency array; it will re-run every render. Provide explicit dependencies or refactor the logic."
             );
         }
 
@@ -604,7 +604,7 @@ namespace Ruitk.Core
                         state,
                         metadata,
                         "state-update-during-render",
-                        $"[Hooks][StrictMode] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
+                        $"[Hooks][Strict] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
                     );
                     metadata?.SyncComponentState(state);
                 }
