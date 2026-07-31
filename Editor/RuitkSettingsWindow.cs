@@ -102,10 +102,6 @@ namespace Ruitk.EditorSupport
                 EditorGUILayout.TextField("Environment", BuildDefinesConfig.ResolveEnvironment());
                 EditorGUILayout.EnumPopup("Trace Level", BuildDefinesConfig.ResolveTraceLevel());
                 EditorGUILayout.Toggle("Diff Tracing", BuildDefinesConfig.ResolveEnableDiffTracing());
-                EditorGUILayout.Toggle(
-                    "Exception Control Flow",
-                    BuildDefinesConfig.ResolveExceptionBoundaryFlow()
-                );
                 EditorGUILayout.TextField(
                     "Diagnostics Output",
                     RuitkDiagnosticsPaths.GetOutputRoot()
@@ -143,13 +139,6 @@ namespace Ruitk.EditorSupport
             EditorGUILayout.PropertyField(
                 _serialized.FindProperty(nameof(RuitkSettings.diffTracing)),
                 new GUIContent("Diff Tracing", "Detailed Fiber diff/reconciliation tracing.")
-            );
-            EditorGUILayout.PropertyField(
-                _serialized.FindProperty(nameof(RuitkSettings.exceptionControlFlow)),
-                new GUIContent(
-                    "Exception Control Flow",
-                    "Route render exceptions through the exception-boundary control flow."
-                )
             );
             var outputFolder = _serialized.FindProperty(
                 nameof(RuitkSettings.diagnosticsOutputFolder)

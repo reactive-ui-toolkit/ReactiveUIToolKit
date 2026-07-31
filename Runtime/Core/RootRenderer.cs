@@ -65,8 +65,6 @@ namespace Ruitk.Core
                 // Initialize global diagnostics configuration from build defines.
                 DiagnosticsConfig.CurrentTraceLevel = BuildDefinesConfig.ResolveTraceLevel();
                 DiagnosticsConfig.EnableDiffTracing = BuildDefinesConfig.ResolveEnableDiffTracing();
-                DiagnosticsConfig.UseExceptionBoundaryFlow =
-                    BuildDefinesConfig.ResolveExceptionBoundaryFlow();
 
                 // For now, drive internal logs off the verbose trace level.
                 InternalLogOptions.EnableInternalLogs =

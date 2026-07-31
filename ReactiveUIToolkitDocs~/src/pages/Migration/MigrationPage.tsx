@@ -106,7 +106,8 @@ export const MigrationPage: FC = () => (
       <code>traceLevel</code>, <code>diffTracing</code>, <code>exceptionControlFlow</code>)
       lives <em>inside</em> the package folder, so deleting the old folder deletes it and
       your settings silently reset to defaults. Copy it somewhere safe and merge your
-      values back afterwards. The codemod also rewrites files in place and makes no
+      values back afterwards. (<code>exceptionControlFlow</code> was removed in 0.13.0;
+      the legacy key is ignored.) The codemod also rewrites files in place and makes no
       backups — commit or back up your project before running it.
     </Alert>
 

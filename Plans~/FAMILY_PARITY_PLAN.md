@@ -716,3 +716,22 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
   0 errors (warnings pre-existing: Shared 5, Editor 1, Samples 11); SG suite **1828/1828**; LSP
   suite **152/152**. `dotnet test` churned `Analyzers/*.dll` — reverted via targeted checkout
   (watch this before every commit).
+
+### M1 — exceptionControlFlow removal — DONE 2026-07-31
+- §5 table executed top to bottom; every anchor re-verified against the tree before editing
+  (all line anchors held). Rows 1–11 deleted as specified; row 12 (Concepts bullet) done NOW
+  rather than M7 (plan allows either); row 13 annotated verbatim; row 14 left frozen.
+- **Row 15 deviation (drift-adjusted):** the changelog section is no longer an uncommitted
+  `[Unreleased]` but the committed, release-staged `[0.13.0]` body (see header drift note) — so
+  no `TODO(M6)` marker was injected into `CHANGELOG.md` itself. The two live mentions (the Added
+  window row at `:18`, the Changed shipped-block note at `:44`) are recorded HERE instead:
+  **TODO(M6): rewrite both when the owner resolves reshape-0.13.0 vs 0.14.0.** Row 13's
+  "removed in 0.13.0" annotation must be re-versioned then too if 0.14.0 wins.
+- **DoD grep:** `exceptionControlFlow|UseExceptionBoundaryFlow|ResolveExceptionBoundaryFlow`
+  over `Shared/ Runtime/ Ugui/ Editor/ Diagnostics/ Samples/ CICD/` `*.cs` = **ZERO hits**.
+  Repo-wide sweep: remaining hits only in frozen history (`MIGRATION-0.12.md`,
+  `Plans~/BUGS_FOUND_AFTER_RENAME.md`), the stale-by-design `Plans~/codebase-index.json`
+  snapshot, this plan, and untracked build output — all correct to leave.
+- **Gates:** machine-paths ✓, corpus-hash ✓; VERIFY-UNITY 6/6 csprojs 0 errors; player proof
+  Shared/Runtime/Ugui `.Player` 0 errors (synthesized-csproj harness, M0); docs `npm run build`
+  0 errors (pre-existing chunk-size warning only).

@@ -22,7 +22,6 @@ namespace Ruitk.Core.Config
             public string env;
             public string traceLevel;
             public bool diffTracing;
-            public bool exceptionControlFlow;
         }
 
         [Serializable]
@@ -35,7 +34,6 @@ namespace Ruitk.Core.Config
         public DiagnosticsConfig.TraceLevel TraceLevel { get; private set; } =
             DiagnosticsConfig.TraceLevel.None;
         public bool EnableDiffTracing { get; private set; } = false;
-        public bool UseExceptionBoundaryFlow { get; private set; } = false;
 
         private static RuitkConfig instance;
         public static RuitkConfig Current
@@ -71,7 +69,6 @@ namespace Ruitk.Core.Config
                             cfg.TraceLevel = ParseTraceLevel(parsed.envVariables.traceLevel);
                         }
                         cfg.EnableDiffTracing = parsed.envVariables.diffTracing;
-                        cfg.UseExceptionBoundaryFlow = parsed.envVariables.exceptionControlFlow;
                     }
                 }
             }

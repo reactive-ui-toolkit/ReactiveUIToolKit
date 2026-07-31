@@ -41,15 +41,5 @@ namespace Ruitk.Core
             }
             return RuitkConfig.Current.EnableDiffTracing;
         }
-
-        public static bool ResolveExceptionBoundaryFlow()
-        {
-            var settings = RuitkSettings.ActiveOrNull;
-            if (settings != null)
-            {
-                return settings.exceptionControlFlow;
-            }
-            return RuitkConfig.Current.UseExceptionBoundaryFlow;
-        }
     }
 }

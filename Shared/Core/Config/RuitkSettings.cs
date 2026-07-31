@@ -43,9 +43,6 @@ namespace Ruitk.Core.Config
         [Tooltip("Detailed Fiber diff/reconciliation tracing (DiagnosticsConfig.EnableDiffTracing).")]
         public bool diffTracing = false;
 
-        [Tooltip("Route render exceptions through the exception-boundary control flow.")]
-        public bool exceptionControlFlow = false;
-
         [Tooltip(
             "Where diagnostics output (benchmark results, log captures) is written. "
             + "Empty = the per-context default: <project>/Logs/ReactiveUIToolkit in the editor, "

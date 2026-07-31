@@ -24,12 +24,6 @@ namespace Ruitk.Core.Diagnostics
         /// When true, additional diff / reconciliation tracing is enabled.
         /// </summary>
         public static bool EnableDiffTracing { get; set; } = false;
-
-        /// <summary>
-        /// When true, error boundaries may use exception-based control flow.
-        /// This mirrors the existing configuration value but is reconciler-agnostic.
-        /// </summary>
-        public static bool UseExceptionBoundaryFlow { get; set; } = false;
     }
 }
 

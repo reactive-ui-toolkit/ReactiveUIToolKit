@@ -54,8 +54,6 @@ namespace Ruitk.EditorSupport
 
                 DiagnosticsConfig.CurrentTraceLevel = BuildDefinesConfig.ResolveTraceLevel();
                 DiagnosticsConfig.EnableDiffTracing = BuildDefinesConfig.ResolveEnableDiffTracing();
-                DiagnosticsConfig.UseExceptionBoundaryFlow =
-                    BuildDefinesConfig.ResolveExceptionBoundaryFlow();
 
                 InternalLogOptions.EnableInternalLogs =
                     DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose;

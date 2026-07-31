@@ -114,9 +114,6 @@ export const UitkxConceptsPage: FC = () => (
           <ListItemText primary={<><code>Diff Tracing</code> — sets <code>DiagnosticsConfig.EnableDiffTracing</code> for detailed Fiber diff diagnostics.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>Exception Control Flow</code> — routes render exceptions through the exception-boundary flow.</>} />
-        </ListItem>
-        <ListItem disablePadding>
           <ListItemText primary={<><code>Diagnostics Output Folder</code> — where benchmark results and log captures are written. Empty = <code>&lt;project&gt;/Logs/ReactiveUIToolkit</code> in the editor and <code>&lt;persistentDataPath&gt;/ReactiveUIToolkit</code> in players; absolute paths are used as-is, relative paths resolve against the project root (editor) or <code>persistentDataPath</code> (player). Diagnostics never write into the package folder.</>} />
         </ListItem>
       </List>
