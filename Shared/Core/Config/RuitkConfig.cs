@@ -22,7 +22,6 @@ namespace Ruitk.Core.Config
             public string env;
             public string traceLevel;
             public bool diffTracing;
-            public bool exceptionControlFlow;
         }
 
         [Serializable]
@@ -35,7 +34,6 @@ namespace Ruitk.Core.Config
         public DiagnosticsConfig.TraceLevel TraceLevel { get; private set; } =
             DiagnosticsConfig.TraceLevel.None;
         public bool EnableDiffTracing { get; private set; } = false;
-        public bool UseExceptionBoundaryFlow { get; private set; } = false;
 
         private static RuitkConfig instance;
         public static RuitkConfig Current
@@ -52,31 +50,49 @@ namespace Ruitk.Core.Config
 
         private static RuitkConfig Load()
         {
-            var cfg = new RuitkConfig();
             try
             {
                 string candidate = GetDefaultProjectConfigPath();
                 if (File.Exists(candidate))
                 {
-                    string json = File.ReadAllText(candidate);
-                    var parsed = JsonUtility.FromJson<Root>(json);
-                    if (parsed != null && parsed.envVariables != null)
+                    return Parse(File.ReadAllText(candidate));
+                }
+            }
+            catch { }
+            return new RuitkConfig();
+        }
+
+        /// <summary>
+        /// The string-in parse core (also the test seam for seeding the legacy hop). Never throws;
+        /// unparseable input yields compiled defaults, matching <see cref="Load"/>'s behavior.
+        /// </summary>
+        internal static RuitkConfig Parse(string json)
+        {
+            var cfg = new RuitkConfig();
+            try
+            {
+                var parsed = JsonUtility.FromJson<Root>(json);
+                if (parsed != null && parsed.envVariables != null)
+                {
+                    if (!string.IsNullOrEmpty(parsed.envVariables.env))
                     {
-                        if (!string.IsNullOrEmpty(parsed.envVariables.env))
-                        {
-                            cfg.EnvironmentLabel = parsed.envVariables.env;
-                        }
-                        if (!string.IsNullOrEmpty(parsed.envVariables.traceLevel))
-                        {
-                            cfg.TraceLevel = ParseTraceLevel(parsed.envVariables.traceLevel);
-                        }
-                        cfg.EnableDiffTracing = parsed.envVariables.diffTracing;
-                        cfg.UseExceptionBoundaryFlow = parsed.envVariables.exceptionControlFlow;
+                        cfg.EnvironmentLabel = parsed.envVariables.env;
                     }
+                    if (!string.IsNullOrEmpty(parsed.envVariables.traceLevel))
+                    {
+                        cfg.TraceLevel = ParseTraceLevel(parsed.envVariables.traceLevel);
+                    }
+                    cfg.EnableDiffTracing = parsed.envVariables.diffTracing;
                 }
             }
             catch { }
             return cfg;
+        }
+
+        /// <summary>Test seam: installs a fixture as the current legacy config (null to re-load lazily).</summary>
+        internal static void SetCurrentForTests(RuitkConfig config)
+        {
+            instance = config;
         }
 
         /// <summary>
@@ -93,11 +109,11 @@ namespace Ruitk.Core.Config
         /// from inside the package was only ever coherent in the <c>Assets/</c> layout — a UPM
         /// PackageCache install is read-only AND re-created under a new hash on every upgrade, so
         /// for such users this path simply does not exist, <c>File.Exists</c> is false, and every
-        /// setting keeps its compiled-in default. The fix chosen is not the ProjectSettings-JSON
-        /// variant once suggested here but a project-owned <see cref="RuitkSettings"/>
-        /// ScriptableObject asset (created from the settings window, <i>Reactive UI Toolkit ▸
-        /// Settings</i>, preloaded into player builds), which is writable and upgrade-stable in
-        /// all four layouts. This
+        /// setting keeps its compiled-in default. The fix chosen is a project-owned
+        /// <see cref="RuitkSettings"/> JSON store at
+        /// <c>Assets/Resources/ReactiveUIToolkit/config.json</c> (created from the settings window,
+        /// <i>Reactive UI Toolkit ▸ Settings</i>; ships into player builds via <c>Resources</c>),
+        /// which is writable and upgrade-stable in all install layouts. This
         /// in-package path stays honoured as the legacy fallback only.</para>
         /// </summary>
         private static string GetDefaultProjectConfigPath()

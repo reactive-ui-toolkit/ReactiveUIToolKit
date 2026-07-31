@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Ruitk.Core;
 using Ruitk.Core.Fiber;
 using Ruitk.Props.Typed;
 using UnityEngine;
@@ -21,8 +22,11 @@ namespace Ruitk.Ugui
         // Per-element-type pool for stateless visuals. An element joins only
         // when its adapter's TryResetForPool restores the pristine Create()
         // state, so reuse can never leak state between mounts. Stateful
-        // controls are destroyed as before.
+        // controls are destroyed as before. The host_node_pool setting gates
+        // the whole pool (read once at construction — bootstrap-read
+        // discipline); the capacity stays a per-leg constant by family ruling.
         private const int PoolCapacityPerType = 128;
+        private readonly bool _poolEnabled;
         private readonly Dictionary<UguiElementAdapter, Stack<GameObject>> _pool =
             new Dictionary<UguiElementAdapter, Stack<GameObject>>();
 
@@ -30,6 +34,7 @@ namespace Ruitk.Ugui
         public UguiHostConfig(UguiElementRegistry registry)
         {
             _registry = registry;
+            _poolEnabled = BuildDefinesConfig.ResolveHostNodePool();
         }
 
         private Transform StagingRoot
@@ -52,7 +57,7 @@ namespace Ruitk.Ugui
         {
             var adapter = _registry.Resolve(elementType);
             GameObject go = null;
-            if (adapter != null && _pool.TryGetValue(adapter, out var stack))
+            if (_poolEnabled && adapter != null && _pool.TryGetValue(adapter, out var stack))
             {
                 while (stack.Count > 0 && go == null)
                 {
@@ -218,7 +223,12 @@ namespace Ruitk.Ugui
             }
 
             var adapter = tag != null ? tag.Adapter : null;
-            if (adapter != null && go.transform.childCount == 0 && adapter.TryResetForPool(go))
+            if (
+                _poolEnabled
+                && adapter != null
+                && go.transform.childCount == 0
+                && adapter.TryResetForPool(go)
+            )
             {
                 if (!_pool.TryGetValue(adapter, out var stack))
                 {

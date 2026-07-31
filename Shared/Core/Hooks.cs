@@ -157,7 +157,7 @@ namespace Ruitk.Core
                         state,
                         metadata,
                         "state-update-during-render",
-                        $"[Hooks][StrictMode] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
+                        $"[Hooks][Strict] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
                     );
                 }
                 var previous = GetProjectedState();
@@ -570,7 +570,7 @@ namespace Ruitk.Core
                 state,
                 metadata,
                 key,
-                $"[Hooks][StrictMode] {hookName} in component '{component}' was invoked without a dependency array; it will re-run every render. Provide explicit dependencies or refactor the logic."
+                $"[Hooks][Strict] {hookName} in component '{component}' was invoked without a dependency array; it will re-run every render. Provide explicit dependencies or refactor the logic."
             );
         }
 
@@ -604,7 +604,7 @@ namespace Ruitk.Core
                         state,
                         metadata,
                         "state-update-during-render",
-                        $"[Hooks][StrictMode] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
+                        $"[Hooks][Strict] State update scheduled during render of '{DescribeComponent(metadata)}'. Move this set call to an effect or event handler."
                     );
                     metadata?.SyncComponentState(state);
                 }
@@ -1063,6 +1063,17 @@ namespace Ruitk.Core
                 return (false, s_noOpStartTransition);
             }
             RecordHook(metadata, state, HookIdTransition);
+            // Materialize the slot before bumping the cursor. HookIndex and
+            // HookStates.Count must stay in lockstep: a bare cursor bump leaves the
+            // list one short, so the NEXT Add-if-fresh hook (UseState, UseMemo,
+            // UseImperativeHandle, ...) appends one element and then indexes one past
+            // the end — ArgumentOutOfRangeException on the first render of any
+            // component that calls another slot hook after UseTransition.
+            state.HookStates ??= new List<object>();
+            if (state.HookIndex >= state.HookStates.Count)
+            {
+                state.HookStates.Add(null);
+            }
             state.HookIndex++;
             SyncState(metadata, state);
             return (false, s_noOpStartTransition);
@@ -1238,7 +1249,11 @@ namespace Ruitk.Core
                 entry.deps = dependencies;
                 state.FunctionEffects[index] = entry;
             }
-            if (DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose)
+            // detail gate (§6): routed through InternalLogOptions (the file's majority
+            // style) — EnableInternalLogs is set from == Verbose at the mount seams, so the
+            // meaning is unchanged. Under strict_mode this logs per invoke (twice) at
+            // Verbose — truthful: two captures happened.
+            if (InternalLogOptions.EnableInternalLogs)
             {
                 try
                 {

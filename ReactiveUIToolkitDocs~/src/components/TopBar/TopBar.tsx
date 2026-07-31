@@ -6,7 +6,7 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import Styles from './TopBar.style'
 import { PACKAGE_VERSION } from '../../version'
 import { SUPPORTED_VERSIONS } from '../../versionManifest'
-import { useSelectedVersion } from '../../contexts/VersionContext'
+import { useSelectedVersion } from '../../contexts/useSelectedVersion'
 
 export type TopBarProps = { onOpenSearch: () => void }
 

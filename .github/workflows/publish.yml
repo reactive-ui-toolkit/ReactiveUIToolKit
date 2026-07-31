@@ -16,6 +16,11 @@ jobs:
   # ════════════════════════════════════════════════════════════════════════════
   deploy-dist:
     runs-on: ubuntu-latest
+    # Consumed by the discord job below: it must fire with the same new-tag gating this job's
+    # own version check uses (skip=false == "a new v<version> tag ships this dispatch").
+    outputs:
+      version: ${{ steps.check.outputs.version }}
+      skip: ${{ steps.check.outputs.skip }}
     steps:
       - uses: actions/checkout@v4
         with:
@@ -172,6 +177,38 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git tag "v${{ steps.check.outputs.version }}"
           git push origin "v${{ steps.check.outputs.version }}"
+
+  # ════════════════════════════════════════════════════════════════════════════
+  # Discord release note — posts the [<version>] entry from plans/DISCORD_CHANGELOG.md to the
+  # family Discord's Unity channel, gated exactly like the package release itself (runs only
+  # when deploy-dist ships a NEW v<version> tag this dispatch). Deliberately downstream-only:
+  # no release job depends on it, so a red discord job can never block artifact publication —
+  # and it is idempotent by design (the channel history is the ledger; the `[<version>]` header
+  # is the dedup key), so re-running just this job after a failure is always safe.
+  # INERT until armed: set the DISCORD_BOT_TOKEN repo secret (a bot with View Channel +
+  # Read Message History + Send Messages on the channel).
+  # ════════════════════════════════════════════════════════════════════════════
+  discord:
+    needs: deploy-dist
+    if: needs.deploy-dist.outputs.skip == 'false'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Post the release entry (skips if already posted; inert until the secret is set)
+        env:
+          DISCORD_BOT_TOKEN: ${{ secrets.DISCORD_BOT_TOKEN }}
+        run: |
+          if [ -z "$DISCORD_BOT_TOKEN" ]; then
+            echo "::notice title=Discord::DISCORD_BOT_TOKEN not set — Discord release note skipped (add the repo secret to arm this job)."
+            exit 0
+          fi
+          node scripts/discord-changelog.mjs post "${{ needs.deploy-dist.outputs.version }}"
 
   # ════════════════════════════════════════════════════════════════════════════
   # Documentation site

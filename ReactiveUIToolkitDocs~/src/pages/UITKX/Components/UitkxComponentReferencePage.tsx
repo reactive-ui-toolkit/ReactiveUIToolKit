@@ -20,7 +20,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { CodeBlock } from '../../../components/CodeBlock/CodeBlock'
 import { getPropsTable, type PropEntry } from '../../../propsDocs'
 import { UNITY_DOC_LINKS, buildUnityDocUrl } from '../../../components/UnityDocsSection/unityDocLinks'
-import { useSelectedVersion } from '../../../contexts/VersionContext'
+import { useSelectedVersion } from '../../../contexts/useSelectedVersion'
 import Styles from '../../Components/Button/ButtonPage.style'
 
 export type UitkxComponentReferencePageProps = {

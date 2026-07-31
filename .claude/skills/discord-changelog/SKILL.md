@@ -1,13 +1,16 @@
 ---
 name: discord-changelog
-description: Style and hard constraints for Plans~/DISCORD_CHANGELOG.md entries (the Discord release-notes posts). Use whenever adding or editing an entry there — hard 2000-char-per-entry cap, ASCII-only, prepend-only.
+description: Style and hard constraints for plans/DISCORD_CHANGELOG.md entries (the Discord release-notes posts). Use whenever adding or editing an entry there — hard 2000-char-per-entry cap, ASCII-only, prepend-only.
 ---
 
 # Discord changelog
 
-Rules for editing [Plans~/DISCORD_CHANGELOG.md](../../../Plans~/DISCORD_CHANGELOG.md).
-The file is the source for what gets pasted into the project's Discord
-release-notes channel.
+Rules for editing [plans/DISCORD_CHANGELOG.md](../../../plans/DISCORD_CHANGELOG.md).
+The file is the source of truth for the project's Discord release-notes
+channel: CI's `gates` job runs `node scripts/discord-changelog.mjs verify`
+(2000-char cap, no masked links, unique version headers), and publish.yml's
+`discord` job posts a release's `[<version>]` entry to the channel —
+idempotent, deduped on the header itself.
 
 ## Hard constraints
 

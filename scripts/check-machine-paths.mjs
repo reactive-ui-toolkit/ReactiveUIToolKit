@@ -75,7 +75,7 @@ const ALLOWED_ROOT_LITERALS = [
 const EXEMPT = [
 	// FROZEN TIERS — the historical record documents what was true then; editing it is a lie.
 	{ re: /^Plans~\/archive\//, why: 'frozen: archived plans' },
-	{ re: /^Plans~\/DISCORD_CHANGELOG\.md$/, why: 'frozen: shipped Discord announcements' },
+	{ re: /^plans\/DISCORD_CHANGELOG\.md$/, why: 'frozen: shipped Discord announcements' },
 	{ re: /^CHANGELOG\.md$/, why: 'frozen: shipped changelog bodies' },
 	{ re: /^ide-extensions~\/changelog\.json$/, why: 'frozen: shipped extension changelog bodies' },
 	// GENERATED FROM A FROZEN SOURCE — scripts/changelog.mjs renders these marketplace pages out of

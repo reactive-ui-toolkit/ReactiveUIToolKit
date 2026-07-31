@@ -5,7 +5,7 @@ import { Dialog, DialogContent, Paper, InputBase, List, ListItemButton, ListItem
 import SearchIcon from '@mui/icons-material/Search'
 import CloseIcon from '@mui/icons-material/Close'
 import { getFilteredFlat } from '../../docs'
-import { useSelectedVersion } from '../../contexts/VersionContext'
+import { useSelectedVersion } from '../../contexts/useSelectedVersion'
 import { getStyleSearchTerms } from '../../versionManifest'
 import { getRenderedText } from '../../searchIndex'
 import Styles from './SearchModal.style'
@@ -41,7 +41,14 @@ export const SearchModal: FC<SearchModalProps> = ({ open, onClose }) => {
       return words.every((w) => haystack.includes(w))
     })
   }, [flat, q, styleTerms])
-  useEffect(() => setSel(0), [results])
+  // Reset the keyboard selection whenever the result set changes — done during
+  // render (React's "adjusting state when a prop changes" pattern) instead of
+  // in an effect, so no extra commit/cascading render is issued.
+  const [prevResults, setPrevResults] = useState(results)
+  if (prevResults !== results) {
+    setPrevResults(results)
+    setSel(0)
+  }
   return (
     <Dialog open={open} onClose={handleClose} fullWidth maxWidth="md">
       <DialogContent sx={Styles.content}>

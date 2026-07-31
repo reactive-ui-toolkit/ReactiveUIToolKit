@@ -328,7 +328,7 @@ uGUI column — `add-unity-version` skill must grow a step).
   backend choice. Redeploy = the owner's republish flow.
 - `CHANGELOG.md` (source of truth): minor-version entry via `scripts/changelog.mjs`
   assist, per VERSIONING.md (additive = minor).
-- `Plans~/DISCORD_CHANGELOG.md`: release post under the hard 2000-char-per-entry cap
+- `plans/DISCORD_CHANGELOG.md`: release post under the hard 2000-char-per-entry cap
   (discord-changelog skill rules: ASCII-only, prepend-only).
 - IDE extensions: entries added to `ide-extensions~/changelog.json` (`@backend`
   directive, ugui schema completions/hover/diagnostics) and marketplace pages

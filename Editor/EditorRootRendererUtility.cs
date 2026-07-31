@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Ruitk.Core;
 using Ruitk.Core.Diagnostics;
+using Ruitk.Core.Fiber;
 using Ruitk.Elements;
 using Ruitk.Signals;
 using UnityEditor;
@@ -54,8 +55,19 @@ namespace Ruitk.EditorSupport
 
                 DiagnosticsConfig.CurrentTraceLevel = BuildDefinesConfig.ResolveTraceLevel();
                 DiagnosticsConfig.EnableDiffTracing = BuildDefinesConfig.ResolveEnableDiffTracing();
-                DiagnosticsConfig.UseExceptionBoundaryFlow =
-                    BuildDefinesConfig.ResolveExceptionBoundaryFlow();
+
+                // Reconciler knobs — time slicing applies wherever a scheduler slices, the
+                // editor scheduler included; frame_budget_ms does NOT apply here (the editor
+                // scheduler is unbudgeted by design — it drains fully every editor update).
+                FiberConfig.TimeSlicingEnabled = BuildDefinesConfig.ResolveTimeSlicing();
+                FiberConfig.TimeSliceMs = BuildDefinesConfig.ResolveTimeSliceMs();
+
+                // Strict knobs — in the editor the two tri-states resolve auto = on, and a
+                // stored strict_mode=true is honored (the release force-off only bites in
+                // release players).
+                Hooks.EnableHookValidation = BuildDefinesConfig.ResolveHookValidation();
+                Hooks.EnableStrictDiagnostics = BuildDefinesConfig.ResolveStrictDiagnostics();
+                FiberConfig.StrictModeEnabled = BuildDefinesConfig.ResolveStrictMode();
 
                 InternalLogOptions.EnableInternalLogs =
                     DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose;

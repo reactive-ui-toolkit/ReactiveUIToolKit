@@ -1,8 +1,15 @@
 # Family Settings Parity — UNITY EXECUTION PLAN
 
-**Status: READY TO EXECUTE** (written 2026-07-31; every anchor below verified against the working
+**Status: EXECUTING** (campaign started 2026-07-31 on `feat/family-parity`; execution log at the
+bottom of this file). Originally written 2026-07-31; every anchor below verified against the working
 tree on `master` HEAD `758b1588` **plus the uncommitted unified-settings pile** — see §1.1, that
-pile is the baseline, not noise).
+pile is the baseline, not noise. **BASELINE DRIFT (M0 finding):** the §1.1 pile has since been
+COMMITTED (`ab46dc53`) and release-staged as `0.13.0` (`f2728b43`, merged to dev+master via
+PRs #224–#226) but **NOT published** (latest GitHub release: v0.11.0; no package tag; no Publish
+run since 2026-07-25). Consequences: §1.1's "uncommitted" framing is history; §5 row 15's
+`[Unreleased]` section is now the committed-but-unshipped `[0.13.0]` body; U-01's "never shipped
+or committed" is now "committed, never shipped"; M6 must resolve with the owner whether the
+campaign reshapes the staged 0.13.0 in place or targets 0.14.0.
 **Family contract:** §0 below is the normative embed of the family parity contract (owner rulings
 2026-07-31). Sibling legs carry the same section; substance is family-frozen. This plan MAY add
 Unity detail; it MAY NOT contradict §0. Any conflict = STOP AND ASK the owner.
@@ -333,7 +340,7 @@ reconciled. Rules, all load-bearing:
 `[Unreleased]` changelog section is REWRITTEN, not appended to (it describes unshipped work this
 campaign reshapes). House changelog style per `CHANGELOG.md` top entry + `scripts/changelog.mjs
 verify` if touched-lanes require; Discord entry per the `discord-changelog` skill (ASCII, ≤2000
-chars) staged in `Plans~/DISCORD_CHANGELOG.md` at M7, shipped by the owner at release.
+chars) staged in `plans/DISCORD_CHANGELOG.md` at M7, shipped by the owner at release.
 
 ---
 
@@ -472,7 +479,7 @@ Gate: VERIFY-GATES + VERIFY-UNITY + player proof. Acceptance grep:
    keep). One sentence: the interim ScriptableObject store existed only unreleased and was
    replaced before shipping.
 2. `package.json:4` → `0.13.0`.
-3. `Plans~/DISCORD_CHANGELOG.md` entry per the `discord-changelog` skill (ASCII, ≤2000 chars).
+3. `plans/DISCORD_CHANGELOG.md` entry per the `discord-changelog` skill (ASCII, ≤2000 chars).
 
 Gate: VERIFY-GATES; `node scripts/changelog.mjs verify` if the tooling lane was touched (it was
 not — extensions unchanged; run it anyway, it must stay green).
@@ -570,7 +577,7 @@ log twice at Verbose — accepted, it is truthful (two captures happened), note 
 - [ ] `ReactiveUIToolkitDocs~/src/pages/Migration/MigrationPage.tsx:106` — §5 row 13 annotation.
 - [ ] `CHANGELOG.md` — M6 rewrite (see milestone).
 - [ ] `package.json:4` — `0.13.0`.
-- [ ] `Plans~/DISCORD_CHANGELOG.md` — M6 entry.
+- [ ] `plans/DISCORD_CHANGELOG.md` — M6 entry.
 - [ ] `CLAUDE.md` — if it gains/keeps any sentence about settings storage, it must say JSON store,
       not ScriptableObject (currently it says neither — only add if something there becomes wrong).
 - [ ] Extension lanes (`ide-extensions~/changelog.json`, marketplace pages): UNTOUCHED — no
@@ -684,3 +691,467 @@ touching, cite line-exactly in commits:
 *End of plan. Companion documents: `Plans~/ES_MODULES_EXECUTION_PLAN.md` (house plan-style
 precedent), `CHANGELOG.md` `[Unreleased]` (the uncommitted settings-campaign record this plan
 absorbs), the family parity contract as embedded in §0 (sibling legs carry the same section).*
+
+---
+
+## EXECUTION LOG (running; newest milestone last)
+
+### M0 — Baseline audit — DONE 2026-07-31
+- **Tree state:** clean; the §1.1 pile is committed (`ab46dc53` settings, `f2728b43` 0.13.0
+  release staging, `ca31886e` this plan) — see the BASELINE DRIFT note in the header. Branch
+  `feat/family-parity` checked out at `392154d4` (== origin/dev; origin/master identical).
+- **Host project:** located via `Packages/manifest.json` naming this checkout (`file:` dependency
+  + `testables`). The **Unity editor IS OPEN on it** (editor process + `Temp/UnityLockfile`
+  verified) → locked-editor mode for the whole round: dotnet harness only, no Unity launches.
+- **Csproj sets:** current `Ruitk.*` set present (regenerated 2026-07-30 by the running editor);
+  `Ruitk.*.Player.csproj` **absent** (only the stale pre-rename `ReactiveUITK.*.Player` set,
+  from a months-old generation — never used, per plan). **Workaround executed:** the three
+  Player csprojs are SYNTHESIZED outside the repo (scratchpad) from the current `Ruitk.*` set by
+  the exact generator delta (drop `UNITY_EDITOR*` defines, drop `UnityEditor*` reference blocks,
+  Player output dir, `.Player` project-reference chain, paths absolutized so nothing is written
+  into the host project). Baseline proof: Shared/Runtime/Ugui Player builds **0 errors**.
+  OWNER TOUCHPOINT (deferred): enable player-csproj generation (Edit ▸ Preferences ▸ External
+  Tools) and regenerate, so later milestones can run the real artifact.
+- **Green floor:** machine-paths gate ✓; corpus-hash ✓ (`917dd8cd…`); VERIFY-UNITY 6/6 csprojs
+  0 errors (warnings pre-existing: Shared 5, Editor 1, Samples 11); SG suite **1828/1828**; LSP
+  suite **152/152**. `dotnet test` churned `Analyzers/*.dll` — reverted via targeted checkout
+  (watch this before every commit).
+
+### M1 — exceptionControlFlow removal — DONE 2026-07-31
+- §5 table executed top to bottom; every anchor re-verified against the tree before editing
+  (all line anchors held). Rows 1–11 deleted as specified; row 12 (Concepts bullet) done NOW
+  rather than M7 (plan allows either); row 13 annotated verbatim; row 14 left frozen.
+- **Row 15 deviation (drift-adjusted):** the changelog section is no longer an uncommitted
+  `[Unreleased]` but the committed, release-staged `[0.13.0]` body (see header drift note) — so
+  no `TODO(M6)` marker was injected into `CHANGELOG.md` itself. The two live mentions (the Added
+  window row at `:18`, the Changed shipped-block note at `:44`) are recorded HERE instead:
+  **TODO(M6): rewrite both when the owner resolves reshape-0.13.0 vs 0.14.0.** Row 13's
+  "removed in 0.13.0" annotation must be re-versioned then too if 0.14.0 wins.
+- **DoD grep:** `exceptionControlFlow|UseExceptionBoundaryFlow|ResolveExceptionBoundaryFlow`
+  over `Shared/ Runtime/ Ugui/ Editor/ Diagnostics/ Samples/ CICD/` `*.cs` = **ZERO hits**.
+  Repo-wide sweep: remaining hits only in frozen history (`MIGRATION-0.12.md`,
+  `Plans~/BUGS_FOUND_AFTER_RENAME.md`), the stale-by-design `Plans~/codebase-index.json`
+  snapshot, this plan, and untracked build output — all correct to leave.
+- **Gates:** machine-paths ✓, corpus-hash ✓; VERIFY-UNITY 6/6 csprojs 0 errors; player proof
+  Shared/Runtime/Ugui `.Player` 0 errors (synthesized-csproj harness, M0); docs `npm run build`
+  0 errors (pre-existing chunk-size warning only).
+
+### M2 — Storage rework (U-01/U-02/U-03 existing keys) — DONE 2026-07-31
+- **U-01:** `RuitkSettings.cs` rewritten in place — SO → plain model + static loader
+  (`Resources.Load<TextAsset>("ReactiveUIToolkit/config")`, cached, `Invalidate()`), string-in
+  `Parse` core, case-insensitive lowercase enum/tri-state strings (unknown value ⇒ default + one
+  editor-only warning), `ToCanonicalJson()` (full §3 body: canonical order, 2-space indent, LF,
+  trailing newline). `SetActive` kept as the explicit override/test seam; `Instance` dropped
+  (zero consumers, verified). **Schema-scope interpretation:** the MODEL speaks the full §3
+  schema from M2 (DTO initializers = §3 defaults; the writer always emits all keys — U-01's
+  writer contract); the WINDOW rows and RESOLVERS for the new knobs join in M3/M4 with their
+  plumbing, exactly as the milestone text orders them. `RuitkTriState` added;
+  `BuildDefinesConfig.MapTriState` (the U-03 auto-mapping) added now so the M2 tri-state tests
+  pin it.
+- **Deletions:** `Editor/RuitkSettingsBootstrap.cs`, `Editor/RuitkSettingsBuildInjection.cs`
+  (+metas) — discovery and Preloaded-Assets injection have no JSON-store equivalent (D-3).
+- **U-02:** window Configuration section retyped over the file (fixed path
+  `Assets/Resources/ReactiveUIToolkit/config.json`, mtime-cached parse, change-check → full
+  canonical rewrite → `ImportAsset` → `Invalidate`), "Create settings file" button (dir created
+  on demand), File row + Select (pings the TextAsset), diagnostics folder labeled
+  "(Unity-only)", Browse keeps project-relative normalization. HMR + Console sections untouched.
+- **U-03 (existing keys):** `BuildDefinesConfig` unchanged mechanically (the ActiveOrNull
+  surface survived by design, D-2) — doc headers re-worded to the JSON story; `RuitkConfig`
+  gained the `Parse(string)` core + `SetCurrentForTests` seams; `InternalsVisibleTo
+  ("Ruitk.Ugui.Tests")` added (editor-only block).
+- **Tests:** `Ugui/Tests/RuitkSettingsJsonTests.cs` (+meta, fresh GUID) in `Ruitk.Ugui.Tests` —
+  empty/null ⇒ defaults; canonical default body ⇒ defaults; **writer-emits-§3-byte-for-byte
+  pin**; non-default round-trip; unknown key ignored; missing keys keep defaults; bad enum ⇒
+  default; case-insensitivity; tri-state mapping table (auto = on in editor); three-hop
+  resolution-order proof (JSON injected → legacy fixture string → compiled defaults) + legacy
+  parse never throws.
+- **Bughunt findings:** (1) missing `using Ruitk.Core.Diagnostics;` in the retyped window —
+  caught by the harness, fixed; (2) the generated host csprojs cannot compile mid-milestone
+  file adds/deletes — added a `sync-csproj` harness step (scratchpad copies: paths absolutized,
+  deleted Compile entries pruned, new files added, `ProjectReference` re-mapped to synced
+  copies; `Ruitk.Diagnostics` needed BOTH `Ruitk.Editor` and transitive `Ruitk.Samples`
+  remapped). Real-generation csprojs regenerate when the owner's editor refocuses.
+- **Owner-visible migration note (M8):** the host project's stale
+  `Assets/ReactiveUIToolkitSettings.asset` now loses its script (SO class gone) — already
+  flagged for deletion in the M8 smoke.
+- **Gates:** machine-paths ✓, corpus-hash ✓; VERIFY-UNITY — Shared/Runtime/Ugui direct 0
+  errors, Editor/Samples/Diagnostics 0 errors via synced csprojs, `Ruitk.Ugui.Tests` (with the
+  new file) 0 errors — the compile IS this session's test gate (locked editor; owner runs the
+  suite in-editor at M8); player proof Shared/Runtime/Ugui `.Player` 0 errors.
+
+### M3 — Reconciler knobs (U-04/U-05) — DONE 2026-07-31 (round 2; editor still open — locked-editor mode re-verified: lockfile + 3 Unity processes)
+- **U-04:** `FiberConfig` gained `TimeSlicingEnabled` (true) + `TimeSliceMs` (2.0f) as auto-
+  properties (file's existing style; the plan's field snippet is shape, not letter).
+  `FiberReconciler`: the `:31` const deleted; `:450` re-pointed to `FiberConfig.TimeSliceMs`;
+  the `:363-373` dispatch is now `scheduler != null && TimeSlicingEnabled → ScheduleRootWork,
+  else WorkLoop()`. **Bughunt find (deviation, load-bearing):** the deferred-update replay in
+  `CommitRoot`'s finally (`:901`) also had to learn the bypass — its condition is now
+  `_scheduler == null || !TimeSlicingEnabled`, because under the bypass a commit is reached
+  from `WorkLoop`, so NO Slice callback exists to pick replayed work up: without this, a
+  setState during a bypassed commit (e.g. from a layout effect) stalls forever. Default-true
+  reduces to the old `_scheduler == null` exactly. Pinned by
+  `ReconcilerKnobTests.TimeSlicingBypass_StateUpdateDuringCommit_ReplaysSynchronously`.
+- **frame_budget_ms:** read in `RenderScheduler.Awake` (singleton-winning branch) from
+  `ResolveFrameBudgetMs()`; `[SerializeField]` kept. Editor scheduler untouched (D-5).
+- **U-05:** `UguiHostConfig` reads `ResolveHostNodePool()` ONCE in the constructor into
+  `readonly bool _poolEnabled`; gates the acquire pool-lookup and the release
+  `TryResetForPool` branch. `PoolCapacityPerType` untouched. UITK path untouched.
+- **U-03 (new keys):** four resolvers added to `BuildDefinesConfig`
+  (`ResolveTimeSlicing/ResolveTimeSliceMs/ResolveFrameBudgetMs/ResolveHostNodePool`), chain
+  JSON → compiled default (no legacy hop — documented in-code). Seam application at all three
+  §1.2 seams: `FiberConfig.TimeSlicingEnabled/TimeSliceMs` set bootstrap-style (the editor
+  seam comments that frame_budget_ms deliberately does NOT apply there).
+- **U-02 (new rows):** window store editor gained the four typed rows in §3 order with §0.1
+  tooltips (frame_budget_ms row carries the U-04 editor-unbudgeted Unity note); the no-store
+  "Effective values" view gained the same four via the resolvers.
+- **Tests:** `RuitkSettingsJsonTests` +3 (partial-doc key spellings; JSON-store-wins for the
+  four knobs; no-legacy-hop proof — legacy doc seeded, new knobs still compiled defaults).
+  `UguiStressChurnTests` parameterized per the plan: `CreateRenderer(bool hostNodePool)`
+  seeds the store BEFORE `UguiHostConfig` construction (ctor-read discipline); the reuse test
+  now explicitly runs pool-ON (assertion untouched), new pool-OFF companion asserts per-cycle
+  structure coherence AND ≥ BoxCount+900 distinct instances (reuse provably off). New
+  `Ugui/Tests/ReconcilerKnobTests.cs` (+meta, fresh GUID): defaults pin (2.0/true), sliced
+  default routes updates through a recording scheduler (stale until slice, commit after
+  drain; mount enqueues nothing), bypass commits synchronously with ZERO scheduler enqueues,
+  `TimeSliceMs=0` forces multi-slice vs `100000` single-slice (yield plumbing at `:450`), and
+  the deferred-replay pin above. Assumption audit: the only render-work `Enqueue` in
+  `FiberReconciler` is the Slice (`:424`) and layout effects run inside commit
+  (`CommitWork :979 → CommitLayoutEffects`) — both verified by grep before the assertions
+  were written.
+- **M3 acceptance re-read (no JSON file ⇒ byte-equivalence):** dispatch `true &&` ⇒ old
+  `_scheduler != null`; `:450` reads 2.0f (the old const's value); `:901` `|| !true` ⇒ old
+  `_scheduler == null`; `Awake` resolver returns 4.0f (the serialized default); pool gates
+  `true &&` ⇒ old conditions. All five short-circuit to the old code paths.
+- **Bughunt fixes:** (1) the `:901` replay condition (above); (2) CS0104 `Object` ambiguity
+  in the new test file (`using System;` vs `UnityEngine.Object`) — qualified the two
+  `DestroyImmediate` calls; caught by the harness.
+- **Gates:** machine-paths ✓ (with `add -N` for the two new files), corpus-hash ✓
+  (`917dd8cd…`); VERIFY-UNITY — Shared/Runtime/Ugui direct 0 errors,
+  Editor/Samples/Diagnostics/Ugui.Tests 0 errors via freshly re-synced csprojs (Editor prune
+  2, Ugui.Tests add 2); player proof Shared/Runtime/Ugui `.Player` 0 errors (synthesized
+  harness, M0). No `Analyzers/*.dll` churn this round (only `dotnet build`, no `dotnet
+  test`).
+
+### M4 — hook_validation flip + strict_diagnostics + strict_mode (U-06/U-07) — DONE 2026-07-31 (round 3; editor OPEN again — locked-editor mode re-verified: host `Temp/UnityLockfile` + 3 Unity processes; compile IS this session's test gate, owner runs the suites at M8)
+- **U-06 wiring:** `BuildDefinesConfig` gained `ResolveHookValidation` / `ResolveStrictDiagnostics`
+  (both `MapTriState(store-or-Auto)`, chain JSON → compiled default, no legacy hop) and
+  `ResolveStrictMode()` delegating to an **internal `ResolveStrictMode(bool developmentContext)`
+  core** (the D-9 resolver-level force-off, made testable: `false` context ⇒ `false` regardless of
+  the stored value). Seam application at all three §1.2 seams:
+  `Hooks.EnableHookValidation` / `Hooks.EnableStrictDiagnostics` / `FiberConfig.StrictModeEnabled`
+  set bootstrap-style after the M3 knobs. Compiled initializers (`Hooks.cs:21-22`) untouched per
+  U-06; `EnableHookAutoRealign` untouched, not in the schema.
+- **Prefix fix:** the three `[Hooks][StrictMode]` sites (`:160, :573, :607`) → `[Hooks][Strict]`
+  via one replace-all. **Acceptance grep: `grep -rn "StrictMode" Shared/Core/Hooks.cs` = ZERO
+  hits** (`[Hooks][Strict]` = 3).
+- **U-07 double-invoke:** `FiberConfig.StrictModeEnabled` (default false) + the insertion at the
+  render call. The per-pass prep (hook cursor resets, formerly `:44-46` pre-bailout + the
+  context-dep clear, formerly `:132-136`) is EXTRACTED into a `RunRenderPass()` local function
+  (direct-called ⇒ struct closure, no allocation) called once normally, twice under strict —
+  `childVNode = RunRenderPass(); if (StrictModeEnabled) childVNode = RunRenderPass();`, the
+  sibling legs' `RunOnce(); if strict Result = RunOnce()` shape. Moving the cursor resets
+  post-bailout is safe: grep-verified the only cursor writes/reads outside `Hooks.cs` were the
+  `:44-46` resets themselves, and the context-dep clear must NOT move earlier (the bailout's
+  `HasContextChanged` reads the deps). Depth guard counts one logical render (both invokes inside
+  one `s_renderDepth` increment); `FlushQueuedStateUpdates` stays pre-bailout (once); hook-order
+  priming stays after the second invoke per plan. `_workUnitCount` is per-fiber
+  (`PerformUnitOfWork`), so metrics count the render once by construction.
+- **Discarded-tree verdict (U-07 rule 4, investigated):** NO safe explicit release exists —
+  documented as strict-mode-only per-render garbage. Two independent reasons:
+  (1) `VirtualNode.__ScheduleReturn`/`__FlushReturns` have **zero callers anywhere** (the vnode
+  pool rents but never returns — dormant recycle path, pre-existing); (2) memoized subtrees
+  (UseMemo-cached vnodes whose deps are unchanged between the invokes) are SHARED between the
+  first and second results, so force-releasing the first tree (vnodes or their rented host props)
+  would corrupt the reconciled second tree. The discarded tree's `__Rent`ed family props are
+  never scheduled for return (they never enter a fiber) — bounded GC garbage, pool unaffected.
+- **Per-hook-family index-keyed-overwrite audit (every family in `Hooks.cs`, line-verified):**
+  | Family | Slot mechanism | Second-invoke behavior | Verdict |
+  |---|---|---|---|
+  | UseState | `HookStates[i]` Add-if-fresh, read-only after | reads same slot; setter delegates cached per `(index, kind)` | overwrite-safe |
+  | UseReducer | `ReducerHookState` object reused via `is` check; `Dispatch` allocated once | same object, reducer ref refreshed | overwrite-safe |
+  | UseMemo | `(value, deps)` tuple; recompute only on `DepsChanged` | invoke-2 deps value-equal invoke-1's ⇒ NO recompute (factory once per logical change) | overwrite-safe |
+  | UseCallback | same tuple shape | same — cached callback returned | overwrite-safe |
+  | UseImperativeHandle | same tuple shape | factory once | overwrite-safe |
+  | UseDeferredValue | `(val, deps)` tuple; slot write direct or via `EnqueueBatchedEffect` | schedulerless: invoke 1 already wrote ⇒ invoke 2 sees equal ⇒ no-op. WITH scheduler: both invokes can enqueue the slot-write batched effect — the two writes are IDENTICAL (same value, same slot), idempotent; accepted + noted | safe (idempotent double-enqueue) |
+  | UseTransition | pure cursor bump, constants returned | trivially safe | safe |
+  | UseEffect | `FunctionEffects[EffectIndex]` Add-or-overwrite factory+deps, preserving lastDeps+cleanup (`:1230-1239` — the plan's canonical pattern) | second registration replaces first's captures; runs once at commit | overwrite-safe (pinned: committed effect observes invoke-2's capture) |
+  | UseLayoutEffect | identical pattern on `FunctionLayoutEffects[LayoutEffectIndex]` | same | overwrite-safe |
+  | UseRef&lt;T&gt; | Add-if-fresh, instance returned | same `Ref<T>` instance both invokes | overwrite-safe (pinned) |
+  | UseContext | NO slot — appends to `ContextDependencies` | list CLEARED by the per-pass prep before EACH invoke ⇒ rebuilt, never doubled (this is exactly why the prep must re-run) | safe via prep |
+  | UseSignal | `SignalSubscriptionState` object reused; subscribe only on signal-instance change | invoke 2: same signal ⇒ no re-subscribe; selector overload re-evaluates `lastValue` (idempotent). Per-render new-signal anti-pattern: dispose-then-resubscribe per invoke, no leak, no double-subscription | overwrite-safe |
+  | UseSfx | `(mixer, action)` tuple, rebuilt only on mixer change | same delegate returned | overwrite-safe |
+  | UseAnimate / UseTweenFloat | one passive slot (written by the EFFECT, not render) + delegation to UseEffect | render pass touches nothing side-effectful; effect overwrite rules apply | overwrite-safe |
+  | UseSafeArea / UseStableFunc / UseStableAction / UseStableCallback / element `UseRef()` | metadata-gated: on the pure fiber path (`FunctionComponentState.Owner` is ctor-null, get-only) they early-return WITHOUT consuming a slot | slot-neutral, invoke-symmetric | inert on fiber path (pre-existing) |
+  | ProvideContext | writes `fiber.ProvidedContext[key]`; `PropagateContextChange` compares vs the COMMITTED alternate | invoke 2 recomputes the same verdict and re-marks the same flags (bool sets, idempotent); double tree-walk cost only | safe (idempotent) |
+  | RecordHook (order validation) | signature list uses overwrite-or-append (`Count > index`) while unprimed | invoke 2 overwrites the same signature slots; priming fires once, post-invoke-2. NOTE: metadata-gated ⇒ inert on the pure fiber path (Owner null, pre-existing — validation lives on the legacy/metadata path) | safe |
+  | WarnStrict (diagnostics) | `StrictDiagnosticsKeys` HashSet dedup | key added on invoke 1 blocks invoke 2 AND the replay pass ⇒ one warning per logical render (pinned) | safe |
+- **U-02 (new rows):** window store editor gained the three typed rows in §3 order (two
+  tri-state `Popup`s over a shared `TriStateOptions` — indices match `RuitkTriState` — and the
+  strict_mode Toggle with the "double-invokes renders in dev; forced off in release builds"
+  tooltip); the no-store "Effective values" view gained the same three via the resolvers.
+- **Tests:** `RuitkSettingsJsonTests` +4 (strict-knob key spellings; JSON-store-wins incl.
+  editor-context strict_mode opt-in; no-legacy-hop for the three; **force-off-in-release proof at
+  resolver level** — stored `true` + `developmentContext:false` ⇒ `false`, both contexts pinned,
+  no-store ⇒ `false` everywhere). New `Ugui/Tests/StrictModeTests.cs` (+meta, fresh GUID):
+  strict-off baseline (render 1×); strict mount pin (**render body 2×, effect 1×, layout effect
+  1×, cleanup 1× on unmount, memo/imperative factories 1×, one Ref instance, committed effect
+  holds the SECOND invoke's capture**); strict update pin (**4 invokes for mount+setState vs 2
+  strict-off, committed UI byte-identical to strict-off, effect/cleanup/memo counts equal**);
+  state-update-during-render warning **once** under the `[Hooks][Strict]` prefix
+  (LogAssert.Expect + NoUnexpectedReceived; 4 invokes = mount 2 + deferred-replay 2 — the replay
+  machinery is the M3-pinned `:901` path); compiled-default-off pin. The kitchen-sink component
+  exercises every fiber-path-live family (state/reducer/memo/callback/ref/context/deferred/
+  transition/imperative/signal/animate/layout-effect/2×effect). `UguiStressChurnTests` +1:
+  **strict ON** function-component churn over the full box field (typed `CycleProps`, structural
+  equality) — structure + status text coherent every cycle AND the pooled host-reuse bound
+  (≤ BoxCount+50) holds with the double-invoke discarding a full rented tree per pass; TearDown
+  now restores `StrictModeEnabled`.
+- **Behavior notes (contract-mandated, recorded honestly):** (1) `strict_diagnostics` default
+  `auto` = editor/dev-build ON where the compiled initializer was `false` — §0.1 row 6 orders
+  this ("becomes auto, same mapping as #5"); release stays OFF (no release change). (2) At
+  Verbose trace, `Hooks.cs:1241`'s UseEffect capture log fires per invoke under strict (twice) —
+  §6 already documents this as accepted/truthful. (3) Under strict + scheduler,
+  UseDeferredValue's deferred slot-write may be enqueued twice (identical idempotent writes) —
+  audit table above.
+- **Byte-equivalence re-read (strict OFF default):** single `RunRenderPass()` call ≡ the old
+  inline sequence exactly (same statements, same order, post-bailout as before for the dep clear;
+  the cursor resets moved from pre-bailout to pre-render — no reader in between, grep-proven);
+  `StrictModeEnabled` compiled false + no-store resolver false ⇒ the second invoke is unreachable
+  in an untouched project. Hooks initializers unchanged; seam writes at defaults reproduce
+  today's editor values (`true`/editor-ON) — the only default-flip is release-player
+  hook_validation OFF + editor strict_diagnostics ON, both §0-sanctioned.
+- **Gates:** machine-paths ✓ (`add -N` for the two new files), corpus-hash ✓ (`917dd8cd…`);
+  VERIFY-UNITY — Shared/Runtime/Ugui direct 0 errors (Shared warnings now 4, was 5 at M0: the
+  delta is M1's deleted `exceptionControlFlow` field's CS0649, remaining 4 are the pre-existing
+  `RuitkConfig.EnvVariables` CS0649s), Editor/Samples/Diagnostics/Ugui.Tests 0 errors via
+  re-synced csprojs (Editor prune 2 again — host set still stale from 2026-07-30, regenerates on
+  editor refocus; Ugui.Tests add 3: both M2/M3 test files + StrictModeTests.cs); player proof
+  Shared/Runtime/Ugui `.Player` 0 errors (re-synthesized). No Analyzers churn (build only).
+
+### M5 — Trace ladder restoration + diff_tracing independence (U-08/§6) — DONE 2026-07-31 (round 3 continued; same locked-editor mode)
+- **§6 table executed row by row**, every gate spelled inline exactly as §6 dictates
+  (`using Ruitk.Core.Diagnostics;` added to `FiberReconciler` — the file's namespace can't see
+  the child namespace unqualified):
+  - InsertBefore / AppendChild / no-host-parent (`FiberReconciler`) → **structural**
+    (`CurrentTraceLevel != None`) — Basic RESTORED to structural events.
+  - ADDED the two missing structural logs: `[Fiber] Delete {ElementType}` in `CommitDeletions`'
+    loop (top-level per removed subtree, NOT per recursive child — legacy `[ReplaceNode]`
+    granularity; `ElementType ?? Tag` for non-host subtree roots) and the commit-end summary
+    `[Fiber] Commit #{_commitCount} effects={_effectsCommitted}` in `CommitRoot` (placed before
+    `EmitMetrics()`, after the passive-effect flush).
+  - Apply-typed-props / apply-props(+keys) / NO-props warning / CommitUpdate Label dump →
+    **diff** (`EnableDiffTracing || == Verbose`, the exact legacy OR); the Label filter KEPT
+    (re-gating, not widening).
+  - The three AND-bugged adapters (`RadioButtonElementAdapter:78`,
+    `RadioButtonGroupElementAdapter:130`, `ToggleElementAdapter:80`): `&& != None` → the legacy
+    OR (`|| == Verbose`) — independence restored, Verbose-alone still lights them.
+  - `Hooks.cs:1241` UseEffect capture log: inline `== Verbose` → `InternalLogOptions.
+    EnableInternalLogs` (the file's majority style per the §6 row; meaning unchanged — the
+    bridge is set from `== Verbose` at the seams). Strict-mode double-log at Verbose noted
+    in-code (truthful; §6 accepted it).
+  - `BaseElementAdapter:112`, Hooks detail sites, EditorRenderScheduler sites: untouched per §6.
+  - **`FiberConfig.EnableFiberLogging` DELETED** (`ShowReconcilerInfo` stays — §9 owner item).
+    **Acceptance: `git grep EnableFiberLogging -- "*.cs"` = ZERO hits**; remaining mentions only
+    in `Plans~/` (this plan + two archived docs — allowed by the criterion).
+- **Placement-log granularity verified before asserting:** every new host fiber carries
+  `EffectFlags.Placement` (`FiberFactory.cs:30`, host-creation `:648`) ⇒ CommitPlacement (and
+  its structural log) fires per host node on mount — the behavioral test's per-node counts are
+  grounded, not assumed.
+- **Tests — new `Ugui/Tests/TraceGateTests.cs` (+meta, fresh GUID):** the §6 gate-matrix truth
+  table in executable form (all 6 `(trace_level × diff_tracing)` rows, structural/detail/diff
+  asserted per row — pins Basic's restoration and diff independence), PLUS behavioral pins
+  capturing real reconciler output via `Application.logMessageReceived`: (None,off) fully
+  silent; **Basic ⇒ placements + commit summary + exactly-2 `[Fiber] Delete` on a 3→1 churn and
+  ZERO diff detail**; **diff alone (trace none) ⇒ `[Fiber] Applying` present and ZERO
+  structural** (the M8 smoke's independence proof, automated); **Verbose ⇒ both** (the legacy
+  OR). Bughunt fix: missing `using Ruitk.Core.Fiber;` in the new test file (CS0246, caught by
+  the harness).
+- **Byte-equivalence at defaults (None/false):** every rewritten gate evaluates false exactly
+  where `EnableFiberLogging`(=false, set by nothing) did; the two ADDED logs are
+  structural-gated ⇒ silent; the adapter OR at defaults = `false || false` ≡ old
+  `false && …`. Turning Verbose now lights the former EnableFiberLogging sites — previously
+  unreachable dead code, which IS the restoration the contract orders.
+- **Gates:** machine-paths ✓, corpus-hash ✓ (`917dd8cd…`); VERIFY-UNITY — Shared/Runtime/Ugui
+  direct 0 errors, Editor/Samples/Diagnostics 0 errors (synced), Ugui.Tests 0 errors (re-synced,
+  add 4: all campaign test files incl. TraceGateTests.cs); player proof Shared/Runtime/Ugui
+  `.Player` 0 errors. No Analyzers churn.
+
+### M6 — Changelog + version, under the FOLD ruling — DONE 2026-07-31 (round 4)
+- **Owner ruling recorded: FOLD.** The campaign reshapes the staged-unpublished `[0.13.0]`
+  in place (committed this morning, never published, no tags) — NO 0.14.0. This resolves the
+  header drift question and the M1 row-15 TODO(M6); §5 row 13's "removed in 0.13.0"
+  annotation is CORRECT as written (re-verified at `MigrationPage.tsx:109`).
+- **`CHANGELOG.md` `[0.13.0]` reshaped in place** (header + date kept `2026-07-31`):
+  - Added section evolved SO → JSON: the window + `Assets/Resources/ReactiveUIToolkit/
+    config.json` create-on-demand story (no build hooks / no Preloaded Assets), parse
+    semantics (missing key → default, unknown ignored, case-insensitive), the one-sentence
+    interim-ScriptableObject note the milestone orders; the §0.1 canonical knob defaults
+    TABLE (all 10 + Unity-only folder key, marked); a strict_mode bullet (double-invoke,
+    effects once, resolver-level release force-off); a reconciler-knob API bullet
+    (`FiberConfig.TimeSlicingEnabled/TimeSliceMs/StrictModeEnabled`, incl. the M3
+    bypassed-commit replay); per-developer sections + diagnostics-paths bullets kept, the
+    latter re-worded (settings-asset → `diagnostics_output_folder` override).
+  - NEW `### Changed — the trace ladder is restored; dev diagnostics default on`: Basic =
+    structural events (with the exact log names), diff_tracing independence (legacy OR, the
+    three AND-bugged adapters named), and the two BEHAVIOR CHANGE callouts in the house
+    loud style — hook_validation release flip; strict_diagnostics editor/dev ON + the
+    `[Hooks][Strict]` prefix change.
+  - config.json-demotion section evolved: resolution order now names the JSON file first;
+    no-legacy-hop note for the new knobs; the loud store-defaults BEHAVIOR CHANGE note KEPT
+    with its `:44`-era exception-control-flow mention reworded to "(and the now-removed
+    exception-control-flow flag)"; Publish-menu bullet kept verbatim.
+  - NEW `### Removed — exceptionControlFlow (the knob selected nothing)` carrying the §5
+    rationale lock + the silently-ignored-legacy-key migration sentence, plus
+    `FiberConfig.EnableFiberLogging` (M5 deletion, was public API).
+  - Both Fixed sections (generator disk-scan, HMR PackageCache) kept verbatim. Both
+    TODO(M6) mentions (`:18` window row, `:44` shipped-block note) resolved.
+  - Housekeeping: the file-header mojibake (`â€”`, preamble line 7 — non-frozen) fixed;
+    the same pre-existing mojibake inside old SHIPPED bodies left frozen (owner item).
+- **Version:** NO numbers changed — `package.json` re-verified `0.13.0`, untouched.
+- **Discord:** `[0.13.0]` entry PREPENDED to `plans/DISCORD_CHANGELOG.md` — 1962 chars
+  (cap 2000, counted by script), zero non-ASCII (verified), shape matched to the 0.12.0
+  entry (no trailing `---`, which the file does not actually use between entries).
+- **Gates:** machine-paths ✓, corpus-hash ✓ (`917dd8cd…`); `changelog.mjs verify` —
+  **green on the committed bytes, red only in this checkout**: the two generated
+  marketplace pages are LF in the index but CRLF in the worktree (`core.autocrlf=true`)
+  and verify byte-compares the worktree. Proven environmental, pre-existing, and
+  campaign-independent via a detached `core.autocrlf=false` worktree at HEAD → `OK -- 2
+  generated marketplace page(s) match their templates` (exit 0); extensions lane untouched
+  by this campaign; CI's extensions context re-proves it on every push. (Noted while
+  verifying: `changelog.mjs verify` is not in `test.yml` at all — extract-only in
+  `publish.yml` — so the LF-worktree proof is the gate's green evidence.)
+
+### M7 — Docs sweep — DONE 2026-07-31 (round 4)
+- **§7 checklist closed:**
+  - `UitkxConceptsPage.tsx` — the settings section rewritten wholesale (retitled
+    "Environment & tracing configuration" → "Settings"): the JSON path +
+    create-on-demand flow replaces the asset story (the Player-builds/Preloaded-Assets
+    paragraph deleted as obsolete — Resources ships itself); parse semantics
+    (missing/unknown/case-insensitive); ALL 11 §3 keys as bullets with the §0.1
+    defaults + semantics (folder key marked *(Unity-only)*); the `auto` tri-state
+    mapping; the trace ladder (`basic` structural / `verbose` +detail) +
+    `diff_tracing` independence; `strict_mode` incl. the release force-off; the U-04
+    editor-unbudgeted note on `frame_budget_ms`; and the §6 strict×verbose double-log
+    note (§6 said "note it in docs" — done here). Legacy-fallback paragraph now
+    spells the three-hop order + the no-legacy-hop rule for the new knobs. §5 row 12
+    re-verified gone (M1 deleted it).
+  - `MigrationPage.tsx:109` — row-13 "removed in 0.13.0" annotation re-verified
+    correct under the FOLD ruling; untouched.
+  - README "Settings" section rewritten to the JSON store + full knob list +
+    create-on-demand + release-player resolution note. This also killed a stale
+    "exception control flow" mention M1's DoD grep could not see (its scope was
+    `*.cs`) — caught by this round's tracked-file sweep.
+  - Grep-sweep finds beyond the checklist: `docs.tsx` Concepts `searchContent`
+    refreshed (dead define-symbol keywords `env_dev`/`ruitk_trace_*` → the canonical
+    knob keys); `HooksGuidePage.tsx` hook-configuration section + `HooksAPIPage.tsx`
+    configuration block now state that `EnableHookValidation`/`EnableStrictDiagnostics`
+    are overwritten at every mount from the settings file (`auto` mapping spelled;
+    `EnableHookAutoRealign` marked internal/not settings-backed) — the M4 flip made
+    the old "true by default in Editor" framing stale.
+  - `CLAUDE.md`: zero settings-storage sentences (grep) — §7 says add only if wrong;
+    nothing added. Extension lanes untouched. Window tooltips VERIFIED only (all 11
+    rows present with §0.1 semantics from M3–M5; this round's scope).
+- Residual sweep hits all verified legitimate: the CHANGELOG interim-SO sentence +
+  Removed header (deliberate), frozen shipped changelog bodies, the asset-registry
+  ScriptableObject docs (unrelated subsystem), MigrationPage's annotated historical
+  key list.
+- **Gates:** docs `npm run build` ✓ 0 errors — and the script runs `tsc -b` first, so
+  the TSX edits are typechecked (pre-existing chunk-size warning only). Bughunt extra:
+  `npm run lint` — red on 2 PRE-EXISTING errors in files this campaign never touched
+  (`contexts/VersionContext.tsx` react-refresh/only-export-components, a dialog
+  react-hooks/set-state-in-effect); recorded, not caused; CI's docs context runs
+  build only (verified in `test.yml`), so this was never a gate — owner item.
+  machine-paths ✓; corpus-hash ✓ (`917dd8cd…`).
+
+### M8 pre-work — in-editor suite fix round (owner's first real run: 47/50) — DONE 2026-07-31
+- **The owner ran `Ruitk.Ugui.Tests` in-editor** (the campaign's first real execution —
+  every prior gate was compile-only): 47/50 green, 3 red, all in `StrictModeTests`:
+  `StrictOff_Mount_RendersOnce_Baseline`, `StrictMode_Mount_RenderTwice_EffectsOnce_
+  SlotsOverwritten`, `StrictMode_Update_RendersTwicePerPass_CommittedUiMatchesStrictOff`.
+  The two passing strict tests (`CompiledDefault`, `StateUpdateDuringRender` — which
+  pins renderCount==4 ABSOLUTE and passed) isolate the failure to the kitchen-sink
+  component's hook set, not the double-invoke machinery.
+- **Root cause (PRODUCT BUG, pre-existing since 0.5.22, Unity-only):**
+  `Hooks.UseTransition` (`Shared/Core/Hooks.cs:1057`) did `state.HookIndex++` WITHOUT
+  materializing a slot in `HookStates` — the M4 audit's "pure cursor bump, trivially
+  safe" verdict was wrong: it is safe only when no slot-backed hook follows. Kitchen-sink
+  slot walk: state(0) reducer(1) memo(2) callback(3) ref(4) context(slotless)
+  deferred(5) → transition bumps 6→7 with Count 6 → `UseImperativeHandle`'s
+  Add-if-fresh appends ONE element (Count 7) then reads `HookStates[7]` →
+  `ArgumentOutOfRangeException` on the FIRST render, strict on or off. All three red
+  tests mount the kitchen-sink → identical crash; NUnit captures the exception into
+  the result (nothing in Editor.log — verified: the log holds both suite runs and the
+  StrictModeTests block emitted only the expected `[Hooks][Strict]` warning). Latent
+  because no fiber-path caller ever put another slot hook after `UseTransition` —
+  the M4 kitchen-sink is the first. The in-editor gate caught a real product bug.
+- **Fix:** `UseTransition` now seeds a null placeholder via the same Add-if-fresh
+  pattern as every other slot hook (cursor and `HookStates.Count` stay in lockstep;
+  strict double-invoke reuses the slot). Re-simulated all five `StrictModeTests`
+  against the fixed slot walk: every assertion (render counts, effect/memo/imperative
+  factory counts, captured-render, ref identity, committed text, cleanups) checks out.
+- **Bughunt (siblings of the mistake):** every `HookIndex++` site in the repo audited —
+  all others materialize their slot first (`UseSfx`/`UseTweenFloat`/`UseAnimate` seed
+  null placeholders; the rest Add-or-write). `FiberFunctionComponent.cs:140` is the
+  only other cursor write (the per-pass reset). Sibling legs verified clean read-only:
+  Godot `hooks.gd useTransition` appends `{ "kind": "transition" }`; Unreal
+  `RuitkContext.h:372` emplaces `FRuitkTransitionCell`. Unity was the odd one out.
+- **Verification (editor LOCKED throughout — lockfile + 3 processes, no Unity
+  launches):** VERIFY-UNITY — Shared 0 errors (4 pre-existing CS0649 warnings,
+  unchanged floor), Runtime/Ugui/Editor/Samples/Diagnostics/Ugui.Tests all 0 errors;
+  player proof re-synthesized (`Ruitk.Shared` sans `UNITY_EDITOR` defines/refs) 0
+  errors; machine-paths ✓; corpus-hash ✓ (`917dd8cd…`). Headless 50/50 rerun still
+  owed — blocked on the editor; the owner's in-editor rerun is the M8 confirmation.
+- **Changelog:** new `### Fixed — UseTransition crashed any component that called
+  another hook after it` folded into the staged `[0.13.0]` (FOLD ruling; no version
+  bump).
+- **Deferred cleanups closed (separate commit):** (a) the M6-recorded owner item —
+  mojibake inside old SHIPPED changelog bodies — repaired mechanically (447
+  UTF-8-read-as-cp1252 sequences across 379 lines; reverse transform only where the
+  depicted cp1252 bytes form valid UTF-8, so correct text is untouchable by
+  construction; 379 insertions == 379 deletions). (b) The two M7-recorded
+  pre-existing docs lint errors: `VersionContext.tsx` now exports only the provider
+  (context + `useSelectedVersion` moved to `contexts/useSelectedVersion.ts`, 6
+  importers repointed) and `SearchModal.tsx`'s selection-reset effect replaced with
+  the render-time adjust-state pattern. `npm run lint` clean; `npm run build` green.
+
+### Cross-leg conformance (2026-07-31) — fix round (editor still LOCKED: host lockfile present; compile harness only)
+- **Defaults verified identical ×10×3:** all ten family-canonical knobs carry the
+  same default on all three legs (Unity JSON store, Godot Project Settings bridge,
+  Unreal engine-native settings) — the conformance pass's table check, no deltas.
+- **Blessed items touching this leg (supervisor rulings — reference/engine-native,
+  NOT divergences):** JSON snake_case key naming (each leg spells the key names
+  engine-natively — contract §1); the `auto`/`on`/`off` tri-state vocabulary;
+  B8 editor-scheduler-unbudgeted (D-5 re-affirmed); the budgeted
+  PumpNow-with-stale-comment path is reference behavior; the live-list
+  batched-effects `foreach` is reference behavior. Strict-prefix blessing:
+  `[Hooks][Strict]` here vs `[Ruitk][strict]` on Unreal — engine-native spelling
+  per contract §1.
+- **C2 (ruled: fix) — Basic trace set gains the missing Replace event.** The fiber
+  reconciler had folded node replacement into the `[Fiber] Delete` line (the
+  "legacy [ReplaceNode] granularity" comment in `CommitDeletions`). A distinct
+  structural `[Fiber] Replace {old} -> {new}` now fires at the replacement
+  DECISION sites, gated `!= TraceLevel.None` (§6 structural), matching the family
+  Basic set (placements/deletions/replacements/commit summary; sibling shapes:
+  Godot `reconciler.gd` `[Fiber] Replace`, Unreal `RuitkReconciler.cpp`
+  `[Ruitk][trace] Replace`): `FiberChildReconciliation.TraceReplace` (new
+  internal helper) called from the keyed same-key type change, the by-index
+  occupied-slot type change, and `FiberFunctionComponent.ReconcileSingleChild`'s
+  component-root type change. The torn-down subtree still logs its own Delete at
+  commit — same additive shape as the siblings. Reconciler ALGORITHM untouched
+  (DO-NOT #3): trace emission only. TraceGateTests extended: keyed + unkeyed
+  Basic pins (exactly one Replace + the Delete), None stays silent across a
+  replacement render, diff_tracing-alone shows NO Replace (structural, not
+  diff), Verbose includes it; gate matrix untouched (it enumerates gates, not
+  events). Staged-0.13.0 texts updated where they enumerate the basic set:
+  CHANGELOG knob row + trace-ladder bullet, `DISCORD_CHANGELOG.md`, docs
+  Concepts page `trace_level` bullet.
+- **C8 (ruled: fix) — changelog wording.** The knob-table intro no longer claims
+  "same names": now "same semantics and defaults on every Reactive UI Toolkit
+  leg (each spells the key names engine-natively)"; the Discord entry's
+  equivalent sentence softened the same way.
+- **Gates (locked-editor):** VERIFY-UNITY — Shared/Runtime/Ugui direct 0 errors
+  (Shared's pre-existing 4-warning floor unchanged), Editor/Samples/Diagnostics/
+  Ugui.Tests 0 errors via the synced csprojs (file set unchanged — no re-sync
+  needed); player proof Shared/Runtime/Ugui `.Player` 0 errors; machine-paths ✓;
+  corpus-hash ✓ (`917dd8cd…`); docs `npm run build` ✓ (pre-existing chunk-size
+  warning only). The owner's in-editor rerun expectation is unchanged: 50/50.

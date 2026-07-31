@@ -1,5 +1,6 @@
-import { createContext, useContext, useState, useCallback, type FC, type ReactNode } from 'react'
+import { useState, useCallback, type FC, type ReactNode } from 'react'
 import { LATEST_VERSION, SUPPORTED_VERSIONS } from '../versionManifest'
+import { VersionContext } from './useSelectedVersion'
 
 const STORAGE_KEY = 'ruitk-selected-unity-version'
 
@@ -10,16 +11,6 @@ function loadPersistedVersion(): string {
   } catch { /* SSR / private browsing */ }
   return LATEST_VERSION.version
 }
-
-interface VersionContextValue {
-  selectedVersion: string
-  setSelectedVersion: (version: string) => void
-}
-
-const VersionContext = createContext<VersionContextValue>({
-  selectedVersion: LATEST_VERSION.version,
-  setSelectedVersion: () => {},
-})
 
 export const VersionProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const [selectedVersion, setRaw] = useState(loadPersistedVersion)
@@ -35,5 +26,3 @@ export const VersionProvider: FC<{ children: ReactNode }> = ({ children }) => {
     </VersionContext.Provider>
   )
 }
-
-export const useSelectedVersion = () => useContext(VersionContext)

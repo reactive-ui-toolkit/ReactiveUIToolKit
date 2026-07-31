@@ -1,4 +1,4 @@
-$path = "Plans~\DISCORD_CHANGELOG.md"
+$path = "plans\DISCORD_CHANGELOG.md"
 $t = [System.IO.File]::ReadAllText($path)
 
 $emDash = [string][char]0x2014

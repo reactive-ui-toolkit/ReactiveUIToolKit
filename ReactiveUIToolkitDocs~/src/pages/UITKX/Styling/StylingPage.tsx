@@ -21,7 +21,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import { CodeBlock } from '../../../components/CodeBlock/CodeBlock'
 import { SUPPORTED_VERSIONS, FLOOR_VERSION } from '../../../versionManifest'
-import { useSelectedVersion } from '../../../contexts/VersionContext'
+import { useSelectedVersion } from '../../../contexts/useSelectedVersion'
 import { isAvailableIn } from '../../../versionManifest'
 import Styles from '../../GettingStarted/GettingStartedPage.style'
 import { STYLE_PROPERTY_CATALOG } from './stylePropertyCatalog'

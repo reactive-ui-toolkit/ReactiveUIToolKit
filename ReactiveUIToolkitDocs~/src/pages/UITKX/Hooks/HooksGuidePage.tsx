@@ -253,22 +253,26 @@ Action useStableCallback(Action callback)`} />
       </Typography>
       <Typography variant="body1" paragraph>
         The <code>Hooks</code> class exposes static properties that control
-        runtime validation:
+        runtime validation. The first two are overwritten at every mount from the
+        settings file (<code>hook_validation</code> / <code>strict_diagnostics</code> in{' '}
+        <code>Assets/Resources/ReactiveUIToolkit/config.json</code>; their{' '}
+        <code>auto</code> default = on in the editor and development builds, off in
+        release players), so prefer the settings window over setting them in code:
       </Typography>
       <List sx={styles.list}>
         <ListItem disablePadding>
           <ListItemText
-            primary={<><code>Hooks.EnableHookValidation</code> — validates that hooks are called in the same order every render (<code>true</code> by default in Editor).</>}
+            primary={<><code>Hooks.EnableHookValidation</code> — validates that hooks are called in the same order every render.</>}
           />
         </ListItem>
         <ListItem disablePadding>
           <ListItemText
-            primary={<><code>Hooks.EnableStrictDiagnostics</code> — enables additional runtime checks and warnings.</>}
+            primary={<><code>Hooks.EnableStrictDiagnostics</code> — enables additional runtime checks and warnings (the <code>[Hooks][Strict]</code>-prefixed messages).</>}
           />
         </ListItem>
         <ListItem disablePadding>
           <ListItemText
-            primary={<><code>Hooks.EnableHookAutoRealign</code> — attempts to auto-correct misaligned hook indices (useful during HMR).</>}
+            primary={<><code>Hooks.EnableHookAutoRealign</code> — attempts to auto-correct misaligned hook indices (useful during HMR). Internal; not settings-backed.</>}
           />
         </ListItem>
       </List>

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using Ruitk.Core;
+using Ruitk.Core.Diagnostics;
 using UnityEngine;
 using UnityEngine.Profiling;
 
@@ -28,7 +29,6 @@ namespace Ruitk.Core.Fiber
         // Stores target fiber and the vnode (if any)
         private readonly Queue<(FiberNode Fiber, VirtualNode VNode)> _deferredUpdates =
             new Queue<(FiberNode, VirtualNode)>();
-        private const float TimeSliceMs = 2.0f;
 
         // Metrics
         private int _workUnitCount;
@@ -359,10 +359,12 @@ namespace Ruitk.Core.Fiber
 
             _nextUnitOfWork = _workInProgressRoot;
 
-            // Start work loop (scheduler-based when available)
+            // Start work loop (scheduler-based when available). time_slicing=false is the
+            // explicit scheduler bypass: route through the existing synchronous WorkLoop even
+            // when a scheduler is installed (the default, true, keeps today's dispatch).
             if (scheduleWork)
             {
-                if (_scheduler != null)
+                if (_scheduler != null && FiberConfig.TimeSlicingEnabled)
                 {
                     ScheduleRootWork(IScheduler.Priority.Normal);
                 }
@@ -447,7 +449,7 @@ namespace Ruitk.Core.Fiber
                     unitsThisSlice++;
 
                     float nowMs = Time.realtimeSinceStartup * 1000f;
-                    if (nowMs - startMs >= TimeSliceMs)
+                    if (nowMs - startMs >= FiberConfig.TimeSliceMs)
                     {
                         yielded = true;
                         break;
@@ -873,6 +875,14 @@ namespace Ruitk.Core.Fiber
                 _root.FirstEffect = null;
                 _root.LastEffect = null;
 
+                // structural gate (§6): one-line commit summary at commit end.
+                if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
+                {
+                    UnityEngine.Debug.Log(
+                        $"[Fiber] Commit #{_commitCount} effects={_effectsCommitted}"
+                    );
+                }
+
                 EmitMetrics();
             }
             finally
@@ -898,9 +908,12 @@ namespace Ruitk.Core.Fiber
                 // schedule the work loop ONCE.
                 if (pendingUpdates)
                 {
-                    if (_scheduler == null)
+                    if (_scheduler == null || !FiberConfig.TimeSlicingEnabled)
                     {
-                        // Sync mode: We must restart the loop manually because the previous WorkLoop exited
+                        // Sync mode (no scheduler, or the time_slicing bypass): we must restart
+                        // the loop manually because the previous WorkLoop exited — with the
+                        // bypass active this commit was reached from WorkLoop, so no Slice
+                        // callback exists to pick the deferred work up.
                         WorkLoop();
                     }
                     // Async mode: Do NOTHING.
@@ -923,6 +936,16 @@ namespace Ruitk.Core.Fiber
             {
                 foreach (var deletion in fiber.Deletions)
                 {
+                    // structural gate (§6): one line per removed subtree (top-level only,
+                    // not per recursive child). Replacements additionally log their own
+                    // "[Fiber] Replace old -> new" at the reconcile decision site
+                    // (FiberChildReconciliation.TraceReplace) — the family Basic set.
+                    if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
+                    {
+                        UnityEngine.Debug.Log(
+                            $"[Fiber] Delete {deletion.ElementType ?? deletion.Tag.ToString()}"
+                        );
+                    }
                     CommitDeletion(deletion);
                 }
                 fiber.Deletions = null;
@@ -1133,7 +1156,12 @@ namespace Ruitk.Core.Fiber
                     // Apply initial properties before inserting
                     if (fiber.PendingHostProps != null)
                     {
-                        if (FiberConfig.EnableFiberLogging)
+                        // diff gate (§6): EnableDiffTracing OR Verbose — the exact legacy OR.
+                        if (
+                            DiagnosticsConfig.EnableDiffTracing
+                            || DiagnosticsConfig.CurrentTraceLevel
+                                == DiagnosticsConfig.TraceLevel.Verbose
+                        )
                         {
                             UnityEngine.Debug.Log(
                                 $"[Fiber] Applying typed props to {fiber.ElementType}"
@@ -1151,7 +1179,12 @@ namespace Ruitk.Core.Fiber
                     }
                     else if (fiber.PendingProps != null)
                     {
-                        if (FiberConfig.EnableFiberLogging)
+                        // diff gate (§6)
+                        if (
+                            DiagnosticsConfig.EnableDiffTracing
+                            || DiagnosticsConfig.CurrentTraceLevel
+                                == DiagnosticsConfig.TraceLevel.Verbose
+                        )
                         {
                             var propsStr = string.Join(", ", fiber.PendingProps.Keys);
                             UnityEngine.Debug.Log(
@@ -1169,7 +1202,12 @@ namespace Ruitk.Core.Fiber
                     }
                     else
                     {
-                        if (FiberConfig.EnableFiberLogging)
+                        // diff gate (§6)
+                        if (
+                            DiagnosticsConfig.EnableDiffTracing
+                            || DiagnosticsConfig.CurrentTraceLevel
+                                == DiagnosticsConfig.TraceLevel.Verbose
+                        )
                         {
                             UnityEngine.Debug.LogWarning(
                                 $"[Fiber] NO props for {fiber.ElementType}"
@@ -1184,7 +1222,8 @@ namespace Ruitk.Core.Fiber
                     var before = GetHostSibling(fiber);
                     if (before != null)
                     {
-                        if (FiberConfig.EnableFiberLogging)
+                        // structural gate (§6): Basic restores structural events.
+                        if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
                             UnityEngine.Debug.Log(
                                 $"[Fiber] InsertBefore {fiber.ElementType} before {_hostConfig.GetDebugName(before)}"
                             );
@@ -1196,7 +1235,8 @@ namespace Ruitk.Core.Fiber
                     }
                     else
                     {
-                        if (FiberConfig.EnableFiberLogging)
+                        // structural gate (§6)
+                        if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
                             UnityEngine.Debug.Log(
                                 $"[Fiber] AppendChild {fiber.ElementType} to {parentFiber.ElementType}"
                             );
@@ -1206,7 +1246,8 @@ namespace Ruitk.Core.Fiber
             }
             else
             {
-                if (FiberConfig.EnableFiberLogging)
+                // structural gate (§6): the no-host-parent anomaly is a structural event.
+                if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
                 {
                     UnityEngine.Debug.LogWarning(
                         $"[Fiber] Could not find host parent for {fiber.ElementType}"
@@ -1288,7 +1329,14 @@ namespace Ruitk.Core.Fiber
             if (fiber.HostElement == null)
                 return;
 
-            if (FiberConfig.EnableFiberLogging && fiber.ElementType == "Label")
+            // diff gate (§6) — the Label filter is kept deliberately: re-gating, not widening.
+            if (
+                (
+                    DiagnosticsConfig.EnableDiffTracing
+                    || DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose
+                )
+                && fiber.ElementType == "Label"
+            )
             {
                 string oldText = null;
                 string newText = null;

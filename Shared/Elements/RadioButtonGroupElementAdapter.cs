@@ -126,10 +126,12 @@ namespace Ruitk.Elements
                         groupElement.value = clamped;
                     }
                 );
+                // diff gate (§6): diff_tracing is INDEPENDENT of the trace level (the
+                // legacy OR — Verbose alone also lights this).
                 if (
                     Ruitk.Core.Diagnostics.DiagnosticsConfig.EnableDiffTracing
-                    && Ruitk.Core.Diagnostics.DiagnosticsConfig.CurrentTraceLevel
-                        != Ruitk.Core.Diagnostics.DiagnosticsConfig.TraceLevel.None
+                    || Ruitk.Core.Diagnostics.DiagnosticsConfig.CurrentTraceLevel
+                        == Ruitk.Core.Diagnostics.DiagnosticsConfig.TraceLevel.Verbose
                 )
                 {
                     UnityEngine.Debug.Log(

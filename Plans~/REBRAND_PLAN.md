@@ -35,7 +35,7 @@ Written for a **lesser-model executor**. The contract in §1 is binding.
 5. **Case-only renames** (`ReactiveUIToolKitDocs~` → `ReactiveUIToolkitDocs~`) on Windows'
    case-insensitive filesystem MUST be two-step: `git mv X X__tmp && git mv X__tmp Y`.
 6. **Tier 3 frozen:** `Plans~/archive/**`, `CHANGELOG.md` bodies below the new wave section,
-   `Plans~/DISCORD_CHANGELOG.md` old post bodies, git history. Live URLs inside them still
+   `plans/DISCORD_CHANGELOG.md` old post bodies, git history. Live URLs inside them still
    update (§7.A). Everything else in `Plans~/` is live planning doc — it converts.
 7. **Identity-frozen fields** (family ruling — these keep the literal string `ReactiveUITK`
    forever; every sweep must EXCLUDE the exact locations enumerated in §7.E1).
@@ -119,7 +119,7 @@ git grep -nIi "yanivkalfa" | wc -l             #    8   (lines; 10 occ / 5 files
   `ReactiveUIToolKit 0.11.0`, tag `v0.11.0` @ `899c938`, `.unitypackage` attached,
   2026-07-26). The wave ships as a clean "0.12.0 = the rename, nothing else".
   **Stale-heading bug found while verifying:** `CHANGELOG.md` and
-  `Plans~/DISCORD_CHANGELOG.md` on `dev` still head their top sections
+  `plans/DISCORD_CHANGELOG.md` on `dev` still head their top sections
   `## [0.11.0] - Unreleased` — date both to the actual release date as a §9 housekeeping
   step (or a separate hotfix before the wave).
 - **U-Q4 — RESOLVED: sweep `Plans~/codebase-index.json`** with everything else (it indexes
@@ -311,7 +311,7 @@ produces `ReactiveUIToolkit-0.12.0.unitypackage`.
 Per U-N15: `package.json` → `0.12.0`; vscode `package.json` → `1.8.0`; vsix `Identity Version`
 → `1.8.0`; rider `gradle.properties` → `1.5.0`; new `ide-extensions~/changelog.json` entry
 `{vscode:1.8.0, vs2022:1.8.0, rider:1.5.0}` → run the extract scripts (also fixes the stale
-vs2022 CHANGELOG); CHANGELOG `0.12.0` section; `Plans~/DISCORD_CHANGELOG.md` new post.
+vs2022 CHANGELOG); CHANGELOG `0.12.0` section; `plans/DISCORD_CHANGELOG.md` new post.
 Owner: PR → dev → checks → merge → tags `v0.12.0` / `vscode-v1.8.0` / `vs2022-v1.8.0`
 (+ `store-v0.12.0` when the store job is armed).
 
