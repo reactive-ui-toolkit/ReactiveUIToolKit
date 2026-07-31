@@ -975,3 +975,46 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
   direct 0 errors, Editor/Samples/Diagnostics 0 errors (synced), Ugui.Tests 0 errors (re-synced,
   add 4: all campaign test files incl. TraceGateTests.cs); player proof Shared/Runtime/Ugui
   `.Player` 0 errors. No Analyzers churn.
+
+### M6 — Changelog + version, under the FOLD ruling — DONE 2026-07-31 (round 4)
+- **Owner ruling recorded: FOLD.** The campaign reshapes the staged-unpublished `[0.13.0]`
+  in place (committed this morning, never published, no tags) — NO 0.14.0. This resolves the
+  header drift question and the M1 row-15 TODO(M6); §5 row 13's "removed in 0.13.0"
+  annotation is CORRECT as written (re-verified at `MigrationPage.tsx:109`).
+- **`CHANGELOG.md` `[0.13.0]` reshaped in place** (header + date kept `2026-07-31`):
+  - Added section evolved SO → JSON: the window + `Assets/Resources/ReactiveUIToolkit/
+    config.json` create-on-demand story (no build hooks / no Preloaded Assets), parse
+    semantics (missing key → default, unknown ignored, case-insensitive), the one-sentence
+    interim-ScriptableObject note the milestone orders; the §0.1 canonical knob defaults
+    TABLE (all 10 + Unity-only folder key, marked); a strict_mode bullet (double-invoke,
+    effects once, resolver-level release force-off); a reconciler-knob API bullet
+    (`FiberConfig.TimeSlicingEnabled/TimeSliceMs/StrictModeEnabled`, incl. the M3
+    bypassed-commit replay); per-developer sections + diagnostics-paths bullets kept, the
+    latter re-worded (settings-asset → `diagnostics_output_folder` override).
+  - NEW `### Changed — the trace ladder is restored; dev diagnostics default on`: Basic =
+    structural events (with the exact log names), diff_tracing independence (legacy OR, the
+    three AND-bugged adapters named), and the two BEHAVIOR CHANGE callouts in the house
+    loud style — hook_validation release flip; strict_diagnostics editor/dev ON + the
+    `[Hooks][Strict]` prefix change.
+  - config.json-demotion section evolved: resolution order now names the JSON file first;
+    no-legacy-hop note for the new knobs; the loud store-defaults BEHAVIOR CHANGE note KEPT
+    with its `:44`-era exception-control-flow mention reworded to "(and the now-removed
+    exception-control-flow flag)"; Publish-menu bullet kept verbatim.
+  - NEW `### Removed — exceptionControlFlow (the knob selected nothing)` carrying the §5
+    rationale lock + the silently-ignored-legacy-key migration sentence, plus
+    `FiberConfig.EnableFiberLogging` (M5 deletion, was public API).
+  - Both Fixed sections (generator disk-scan, HMR PackageCache) kept verbatim. Both
+    TODO(M6) mentions (`:18` window row, `:44` shipped-block note) resolved.
+  - Housekeeping: the file-header mojibake (`â€”`, preamble line 7 — non-frozen) fixed;
+    the same pre-existing mojibake inside old SHIPPED bodies left frozen (owner item).
+- **Version:** NO numbers changed — `package.json` re-verified `0.13.0`, untouched.
+- **Discord:** `[0.13.0]` entry PREPENDED to `Plans~/DISCORD_CHANGELOG.md` — 1962 chars
+  (cap 2000, counted by script), zero non-ASCII (verified), shape matched to the 0.12.0
+  entry (no trailing `---`, which the file does not actually use between entries).
+- **Gates:** machine-paths ✓, corpus-hash ✓ (`917dd8cd…`); `changelog.mjs verify` —
+  **green on the committed bytes, red only in this checkout**: the two generated
+  marketplace pages are LF in the index but CRLF in the worktree (`core.autocrlf=true`)
+  and verify byte-compares the worktree. Proven environmental, pre-existing, and
+  campaign-independent via a detached `core.autocrlf=false` worktree at HEAD → `OK -- 2
+  generated marketplace page(s) match their templates` (exit 0); extensions lane untouched
+  by this campaign; CI's extensions context re-proves it on every push.

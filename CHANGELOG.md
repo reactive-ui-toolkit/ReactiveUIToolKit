@@ -4,22 +4,54 @@ All notable changes to the Reactive UI Toolkit — Unity package are documented 
 Format follows [Keep a Changelog](https://keepachangelog.com/).
 
 For IDE extension changelogs (VS Code, Visual Studio 2022), see
-`ide-extensions~/changelog.json` â€” the single source of truth for extension releases.
+`ide-extensions~/changelog.json` — the single source of truth for extension releases.
 
 ## [0.13.0] - 2026-07-31
 
-### Added — unified settings
+### Added — unified settings: one window, one JSON file, the family knob set
 
-- **`RuitkSettings` ScriptableObject + a unified settings window** (*Reactive UI
-  Toolkit ▸ Settings*): one scrollable window holding every setting, in labeled
-  sections. **Configuration** (per-project, the settings asset): environment
-  (`Auto`/`Development`/`Production` — `Auto` resolves to `development` in the
-  editor and development builds, `production` otherwise), trace level, diff
-  tracing, exception control flow, and a diagnostics output folder. The section
-  is read-only until you click **Create settings asset**
-  (`Assets/ReactiveUIToolkitSettings.asset`) — nothing is written until you do.
-  During player builds the asset is injected into Preloaded Assets (and removed
-  again afterwards, null entries swept), so the same values apply in players.
+- **A unified settings window** (*Reactive UI Toolkit ▸ Settings*): one scrollable
+  window holding every setting, in labeled sections. **Configuration** is
+  project-scoped and lives in a plain JSON file,
+  `Assets/Resources/ReactiveUIToolkit/config.json` — the section is read-only
+  (showing the values in effect) until you click **Create settings file**;
+  nothing is written to your project until you do. Under `Resources/` the file
+  ships into every player build by itself — no build hooks, no Preloaded
+  Assets — and loads synchronously on every platform. Missing file or key →
+  compiled default; unknown keys are ignored; enum values are lowercase
+  strings, parsed case-insensitively. (An interim `RuitkSettings`
+  ScriptableObject store existed only in unpublished staging of this release
+  and was replaced by the JSON file before shipping — nothing to migrate.)
+- **The family-canonical knob set** — same names, semantics, and defaults on
+  every Reactive UI Toolkit leg; every default reproduces the previous
+  behavior exactly, so an untouched project behaves as before:
+
+  | Key | Default | Meaning |
+  |---|---|---|
+  | `environment` | `auto` | `auto` → `development` in the editor and development builds, `production` otherwise; exposed as `HostContext.Environment["env"]` |
+  | `time_slicing` | `true` | `false` is an explicit scheduler bypass — every render runs the synchronous work loop even when a scheduler is installed |
+  | `time_slice_ms` | `2.0` | render-phase budget per slice (previously a compiled-in constant); applies wherever a scheduler slices, the editor included |
+  | `frame_budget_ms` | `4.0` | per-frame budget of the play-mode/player `RenderScheduler`; editor mounts use the editor scheduler, which is unbudgeted by design |
+  | `host_node_pool` | `true` | gates the uGUI host-element pool (only adapters that provably reset, via `TryResetForPool`, ever pool); off destroys instead. The UI Toolkit path is never pooled |
+  | `hook_validation` | `auto` | hook order/count validation; `auto` = on in the editor and development builds, off in release players |
+  | `strict_diagnostics` | `auto` | development warnings for suspect hook usage (state updates during render, missing dependency arrays), deduplicated; `auto` = on in the editor and development builds, off in release |
+  | `strict_mode` | `false` | double-invokes render functions so impure render bodies surface; **forced off in release builds** |
+  | `trace_level` | `none` | `basic` = structural reconciler events (placements, deletions, a commit summary); `verbose` = structural + per-element/per-hook detail |
+  | `diff_tracing` | `false` | detailed Fiber diff logs, **independent** of `trace_level` |
+  | `diagnostics_output_folder` | `""` | **(Unity-only)** where benchmark results and log captures are written |
+
+- **`strict_mode`** — the React StrictMode idea: render functions run twice, the
+  first result is discarded, the second is reconciled. Effects, layout effects,
+  memo/callback factories, and cleanups still run once, and the committed UI is
+  identical to strict-off — the double-invoke exists to make impure render
+  bodies visible. Costs one extra render (plus its discarded tree) per pass;
+  the release force-off happens in the resolver, so a shipped player can never
+  activate it.
+- **Reconciler knobs are real API now**: `FiberConfig.TimeSlicingEnabled`,
+  `FiberConfig.TimeSliceMs`, and `FiberConfig.StrictModeEnabled` — public
+  statics set from the resolved settings at every mount. The `time_slicing`
+  bypass also covers state updates raised during a bypassed commit (replayed
+  synchronously rather than stranded on a scheduler that never gets a slice).
 - **Per-developer sections in the same window** (EditorPrefs): **Hot Reload
   (HMR)** — the four HMR toggles (same pref keys as before) plus the two keybind
   recorders, both moved out of the HMR window, which keeps Start/Stop, status,
@@ -28,26 +60,69 @@ For IDE extension changelogs (VS Code, Visual Studio 2022), see
   effect without a domain reload.
 - **`RuitkDiagnosticsPaths.GetOutputRoot()`** — benchmark results and log captures
   now write to `<project>/Logs/ReactiveUIToolkit` in the editor and
-  `<persistentDataPath>/ReactiveUIToolkit` in players (or the settings-asset
-  override; absolute used as-is, relative resolved per context), never into the
-  package folder — which a UPM PackageCache install cannot write anyway. The Bench
-  Results Viewer seeds its picker at the new location and falls back to the old
-  in-package `Results/` for pre-existing runs.
+  `<persistentDataPath>/ReactiveUIToolkit` in players (or the
+  `diagnostics_output_folder` override; absolute used as-is, relative resolved
+  per context), never into the package folder — which a UPM PackageCache
+  install cannot write anyway. The Bench Results Viewer seeds its picker at the
+  new location and falls back to the old in-package `Results/` for
+  pre-existing runs.
+
+### Changed — the trace ladder is restored; dev diagnostics default on
+
+- **`TraceLevel.Basic` means something again — structural events.** Its legacy
+  meaning was lost in the fiber rewrite: the value still parsed, but every gate
+  in the codebase checked `Verbose` or `None`, so `Basic` behaved like `None`.
+  `basic` now logs placements (`[Fiber] InsertBefore` / `[Fiber] AppendChild`),
+  one `[Fiber] Delete` per removed subtree, and a per-commit summary
+  (`[Fiber] Commit #n effects=…`); `verbose` adds the per-element/per-hook
+  detail it always had.
+- **`diff_tracing` is independent of the trace level again.** Every diff-detail
+  site (props application, the `CommitUpdate` dump, and the RadioButton /
+  RadioButtonGroup / Toggle adapters) now uses the legacy OR gate —
+  `diff_tracing` on **or** `trace_level` = `verbose` — so diff tracing alone
+  lights them. The three adapters had AND-ed the two flags, so `diff_tracing`
+  without a trace level logged nothing there.
+- **BEHAVIOR CHANGE — hook validation now follows the environment.** It was
+  compiled on in every build, release players included; with
+  `hook_validation: auto` release players skip it (the per-render validation
+  cost leaves shipped games) while the editor and development builds keep it.
+- **BEHAVIOR CHANGE — strict diagnostics default on in the editor and
+  development builds** (`strict_diagnostics: auto`; the compiled default was
+  off, so these warnings were effectively unreachable). Their prefix is now
+  `[Hooks][Strict]` — the old `[Hooks][StrictMode]` collided with the new
+  `strict_mode` knob, which owns that name family-wide. Release players are
+  unchanged (off).
 
 ### Changed — config.json demoted to legacy fallback
 
-- Resolution order for every setting is now: active `RuitkSettings` asset → legacy
+- Resolution order for every setting is now: the JSON settings file → legacy
   `Assets/ReactiveUIToolkit/config.json` (`envVariables`) → compiled defaults. A
-  user-edited `config.json` keeps working when no asset exists.
+  user-edited legacy `config.json` keeps working when no settings file exists
+  (it only ever spoke `env`/`traceLevel`/`diffTracing` — the knobs new in
+  0.13.0 have no legacy spelling and resolve settings file → compiled default).
 - **The shipped `config.json` no longer contains an `envVariables` block** (the
   publish omit-lists stay). BEHAVIOR CHANGE for store installs: the shipped block
-  used to force `development` + `Basic` tracing + exception control flow onto every
-  customer; everyone now starts from compiled defaults (`Auto` → environment by
-  build type, `TraceLevel.None`, both flags off) unless they create the settings
-  asset or carry their own edited `config.json`.
+  used to force `development` + `Basic` tracing (and the now-removed
+  exception-control-flow flag) onto every customer; everyone now starts from
+  compiled defaults (`environment` `auto` → by build type, `trace_level`
+  `none`, `diff_tracing` off) unless they create the settings file or carry
+  their own edited `config.json`.
 - The four *Reactive UI Toolkit ▸ Publish* menu items were removed — publishing is
   CI-driven (`.github/workflows/publish.yml`); the methods remain callable
   programmatically and `AssetStoreExport.Run` is unchanged.
+
+### Removed — `exceptionControlFlow` (the knob selected nothing)
+
+- The key selected between error-boundary strategies in the **legacy**
+  reconciler; that selector died with the legacy reconciler's removal, and the
+  surviving boundary behavior runs unconditionally — by 0.12.0 the flag was
+  written at every mount and read by nothing. Gone from the entire config
+  surface (`RuitkConfig`, the resolver, the mount seams, the settings window);
+  a legacy `config.json` still carrying the key is silently ignored, which is
+  the whole migration.
+- `FiberConfig.EnableFiberLogging` (public static, assigned by nothing since
+  the fiber rewrite) is gone too — its log sites are re-gated under
+  `trace_level` and `diff_tracing` per the ladder above.
 
 ### Fixed — source generator finds package-resident `.uitkx` (UPM `file:`/git install)
 

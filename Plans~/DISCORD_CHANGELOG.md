@@ -1,3 +1,17 @@
+## [0.13.0] - 2026-07-31
+
+### Unified settings - one window, one JSON file, the family knob set
+
+**Every setting now lives in Reactive UI Toolkit > Settings**, backed by a plain JSON file at `Assets/Resources/ReactiveUIToolkit/config.json` - created only when you click "Create settings file", and under Resources it ships into every player build by itself. The knob set is family-canonical (same names, semantics, and defaults across the Reactive UI Toolkit legs): `environment`, `time_slicing`, `time_slice_ms`, `frame_budget_ms`, `host_node_pool`, `hook_validation`, `strict_diagnostics`, `strict_mode`, `trace_level`, `diff_tracing`, plus the Unity-only `diagnostics_output_folder`. Every default reproduces current behavior exactly - an untouched project behaves as before.
+
+**Strict mode lands.** `strict_mode: true` double-invokes render functions (first result discarded, effects still run once, committed UI identical) so impure render bodies surface in dev. Forced off in release builds - a shipped player can never activate it.
+
+**The trace ladder is back.** `trace_level: basic` logs structural reconciler events again (placements, deletions, a commit summary) - lost in the fiber rewrite; `verbose` adds per-element/per-hook detail; `diff_tracing` is independent of both again (an AND-bug in three adapters silenced it without a trace level).
+
+**Behavior changes:** hook validation now follows the environment (`auto` = off in release players - the per-render cost leaves shipped games; editor/dev keep it); strict diagnostics default on in the editor and dev builds, under the `[Hooks][Strict]` prefix; `exceptionControlFlow` is removed - it selected a legacy error-boundary strategy that no longer exists; a config.json still carrying the key is ignored.
+
+**Fixes for UPM `file:`/git installs:** the source generator now finds package-resident `.uitkx` files, and HMR starts under PackageCache (Analyzers discovery is layout-agnostic).
+
 ## [0.12.0] - 2026-07-28
 
 ### Rebrand - the library is now Reactive UI Toolkit (Unity)
