@@ -271,6 +271,9 @@ namespace Ruitk.Core.Fiber
             // Delete all old children
             if (currentChild != null)
             {
+                // structural gate (§6): the component's root changed type — the old
+                // subtree is torn down and a fresh one takes its slot.
+                FiberChildReconciliation.TraceReplace(currentChild, newVNode);
                 var child = currentChild;
                 while (child != null)
                 {

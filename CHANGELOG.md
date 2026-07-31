@@ -22,9 +22,10 @@ For IDE extension changelogs (VS Code, Visual Studio 2022), see
   strings, parsed case-insensitively. (An interim `RuitkSettings`
   ScriptableObject store existed only in unpublished staging of this release
   and was replaced by the JSON file before shipping — nothing to migrate.)
-- **The family-canonical knob set** — same names, semantics, and defaults on
-  every Reactive UI Toolkit leg; every default reproduces the previous
-  behavior exactly, so an untouched project behaves as before:
+- **The family-canonical knob set** — same semantics and defaults on every
+  Reactive UI Toolkit leg (each spells the key names engine-natively); every
+  default reproduces the previous behavior exactly, so an untouched project
+  behaves as before:
 
   | Key | Default | Meaning |
   |---|---|---|
@@ -36,7 +37,7 @@ For IDE extension changelogs (VS Code, Visual Studio 2022), see
   | `hook_validation` | `auto` | hook order/count validation; `auto` = on in the editor and development builds, off in release players |
   | `strict_diagnostics` | `auto` | development warnings for suspect hook usage (state updates during render, missing dependency arrays), deduplicated; `auto` = on in the editor and development builds, off in release |
   | `strict_mode` | `false` | double-invokes render functions so impure render bodies surface; **forced off in release builds** |
-  | `trace_level` | `none` | `basic` = structural reconciler events (placements, deletions, a commit summary); `verbose` = structural + per-element/per-hook detail |
+  | `trace_level` | `none` | `basic` = structural reconciler events (placements, deletions, replacements, a commit summary); `verbose` = structural + per-element/per-hook detail |
   | `diff_tracing` | `false` | detailed Fiber diff logs, **independent** of `trace_level` |
   | `diagnostics_output_folder` | `""` | **(Unity-only)** where benchmark results and log captures are written |
 
@@ -73,7 +74,8 @@ For IDE extension changelogs (VS Code, Visual Studio 2022), see
   meaning was lost in the fiber rewrite: the value still parsed, but every gate
   in the codebase checked `Verbose` or `None`, so `Basic` behaved like `None`.
   `basic` now logs placements (`[Fiber] InsertBefore` / `[Fiber] AppendChild`),
-  one `[Fiber] Delete` per removed subtree, and a per-commit summary
+  one `[Fiber] Delete` per removed subtree, one `[Fiber] Replace old -> new`
+  per node-replacement decision, and a per-commit summary
   (`[Fiber] Commit #n effects=…`); `verbose` adds the per-element/per-hook
   detail it always had.
 - **`diff_tracing` is independent of the trace level again.** Every diff-detail

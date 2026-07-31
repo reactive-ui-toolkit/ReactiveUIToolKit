@@ -1113,3 +1113,45 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
   (context + `useSelectedVersion` moved to `contexts/useSelectedVersion.ts`, 6
   importers repointed) and `SearchModal.tsx`'s selection-reset effect replaced with
   the render-time adjust-state pattern. `npm run lint` clean; `npm run build` green.
+
+### Cross-leg conformance (2026-07-31) — fix round (editor still LOCKED: host lockfile present; compile harness only)
+- **Defaults verified identical ×10×3:** all ten family-canonical knobs carry the
+  same default on all three legs (Unity JSON store, Godot Project Settings bridge,
+  Unreal engine-native settings) — the conformance pass's table check, no deltas.
+- **Blessed items touching this leg (supervisor rulings — reference/engine-native,
+  NOT divergences):** JSON snake_case key naming (each leg spells the key names
+  engine-natively — contract §1); the `auto`/`on`/`off` tri-state vocabulary;
+  B8 editor-scheduler-unbudgeted (D-5 re-affirmed); the budgeted
+  PumpNow-with-stale-comment path is reference behavior; the live-list
+  batched-effects `foreach` is reference behavior. Strict-prefix blessing:
+  `[Hooks][Strict]` here vs `[Ruitk][strict]` on Unreal — engine-native spelling
+  per contract §1.
+- **C2 (ruled: fix) — Basic trace set gains the missing Replace event.** The fiber
+  reconciler had folded node replacement into the `[Fiber] Delete` line (the
+  "legacy [ReplaceNode] granularity" comment in `CommitDeletions`). A distinct
+  structural `[Fiber] Replace {old} -> {new}` now fires at the replacement
+  DECISION sites, gated `!= TraceLevel.None` (§6 structural), matching the family
+  Basic set (placements/deletions/replacements/commit summary; sibling shapes:
+  Godot `reconciler.gd` `[Fiber] Replace`, Unreal `RuitkReconciler.cpp`
+  `[Ruitk][trace] Replace`): `FiberChildReconciliation.TraceReplace` (new
+  internal helper) called from the keyed same-key type change, the by-index
+  occupied-slot type change, and `FiberFunctionComponent.ReconcileSingleChild`'s
+  component-root type change. The torn-down subtree still logs its own Delete at
+  commit — same additive shape as the siblings. Reconciler ALGORITHM untouched
+  (DO-NOT #3): trace emission only. TraceGateTests extended: keyed + unkeyed
+  Basic pins (exactly one Replace + the Delete), None stays silent across a
+  replacement render, diff_tracing-alone shows NO Replace (structural, not
+  diff), Verbose includes it; gate matrix untouched (it enumerates gates, not
+  events). Staged-0.13.0 texts updated where they enumerate the basic set:
+  CHANGELOG knob row + trace-ladder bullet, `DISCORD_CHANGELOG.md`, docs
+  Concepts page `trace_level` bullet.
+- **C8 (ruled: fix) — changelog wording.** The knob-table intro no longer claims
+  "same names": now "same semantics and defaults on every Reactive UI Toolkit
+  leg (each spells the key names engine-natively)"; the Discord entry's
+  equivalent sentence softened the same way.
+- **Gates (locked-editor):** VERIFY-UNITY — Shared/Runtime/Ugui direct 0 errors
+  (Shared's pre-existing 4-warning floor unchanged), Editor/Samples/Diagnostics/
+  Ugui.Tests 0 errors via the synced csprojs (file set unchanged — no re-sync
+  needed); player proof Shared/Runtime/Ugui `.Player` 0 errors; machine-paths ✓;
+  corpus-hash ✓ (`917dd8cd…`); docs `npm run build` ✓ (pre-existing chunk-size
+  warning only). The owner's in-editor rerun expectation is unchanged: 50/50.

@@ -937,7 +937,9 @@ namespace Ruitk.Core.Fiber
                 foreach (var deletion in fiber.Deletions)
                 {
                     // structural gate (§6): one line per removed subtree (top-level only,
-                    // not per recursive child) — the legacy [ReplaceNode] granularity.
+                    // not per recursive child). Replacements additionally log their own
+                    // "[Fiber] Replace old -> new" at the reconcile decision site
+                    // (FiberChildReconciliation.TraceReplace) — the family Basic set.
                     if (DiagnosticsConfig.CurrentTraceLevel != DiagnosticsConfig.TraceLevel.None)
                     {
                         UnityEngine.Debug.Log(
