@@ -28,7 +28,6 @@ namespace Ruitk.Core.Fiber
         // Stores target fiber and the vnode (if any)
         private readonly Queue<(FiberNode Fiber, VirtualNode VNode)> _deferredUpdates =
             new Queue<(FiberNode, VirtualNode)>();
-        private const float TimeSliceMs = 2.0f;
 
         // Metrics
         private int _workUnitCount;
@@ -359,10 +358,12 @@ namespace Ruitk.Core.Fiber
 
             _nextUnitOfWork = _workInProgressRoot;
 
-            // Start work loop (scheduler-based when available)
+            // Start work loop (scheduler-based when available). time_slicing=false is the
+            // explicit scheduler bypass: route through the existing synchronous WorkLoop even
+            // when a scheduler is installed (the default, true, keeps today's dispatch).
             if (scheduleWork)
             {
-                if (_scheduler != null)
+                if (_scheduler != null && FiberConfig.TimeSlicingEnabled)
                 {
                     ScheduleRootWork(IScheduler.Priority.Normal);
                 }
@@ -447,7 +448,7 @@ namespace Ruitk.Core.Fiber
                     unitsThisSlice++;
 
                     float nowMs = Time.realtimeSinceStartup * 1000f;
-                    if (nowMs - startMs >= TimeSliceMs)
+                    if (nowMs - startMs >= FiberConfig.TimeSliceMs)
                     {
                         yielded = true;
                         break;
@@ -898,9 +899,12 @@ namespace Ruitk.Core.Fiber
                 // schedule the work loop ONCE.
                 if (pendingUpdates)
                 {
-                    if (_scheduler == null)
+                    if (_scheduler == null || !FiberConfig.TimeSlicingEnabled)
                     {
-                        // Sync mode: We must restart the loop manually because the previous WorkLoop exited
+                        // Sync mode (no scheduler, or the time_slicing bypass): we must restart
+                        // the loop manually because the previous WorkLoop exited — with the
+                        // bypass active this commit was reached from WorkLoop, so no Slice
+                        // callback exists to pick the deferred work up.
                         WorkLoop();
                     }
                     // Async mode: Do NOTHING.

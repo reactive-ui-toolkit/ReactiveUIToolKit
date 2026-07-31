@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Ruitk.Core;
 using Ruitk.Core.Diagnostics;
+using Ruitk.Core.Fiber;
 using Ruitk.Elements;
 using Ruitk.Signals;
 using UnityEngine;
@@ -65,6 +66,10 @@ namespace Ruitk.Core
                 // Initialize global diagnostics configuration from build defines.
                 DiagnosticsConfig.CurrentTraceLevel = BuildDefinesConfig.ResolveTraceLevel();
                 DiagnosticsConfig.EnableDiffTracing = BuildDefinesConfig.ResolveEnableDiffTracing();
+
+                // Reconciler knobs — defaults reproduce the former constants exactly.
+                FiberConfig.TimeSlicingEnabled = BuildDefinesConfig.ResolveTimeSlicing();
+                FiberConfig.TimeSliceMs = BuildDefinesConfig.ResolveTimeSliceMs();
 
                 // For now, drive internal logs off the verbose trace level.
                 InternalLogOptions.EnableInternalLogs =

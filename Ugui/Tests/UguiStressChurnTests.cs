@@ -32,7 +32,21 @@ namespace Ruitk.Ugui.Tests
             var mount = new GameObject("Mount", typeof(RectTransform));
             _mountRect = (RectTransform)mount.transform;
             _mountRect.SetParent(_canvasGo.transform, false);
+        }
 
+        /// <summary>
+        /// Builds the renderer under an explicit <c>host_node_pool</c> setting (the knob is
+        /// read once in the UguiHostConfig constructor, so it must be seeded BEFORE
+        /// construction). Explicit seeding keeps these tests deterministic regardless of any
+        /// settings store the host project carries.
+        /// </summary>
+        private void CreateRenderer(bool hostNodePool)
+        {
+            Ruitk.Core.Config.RuitkSettings.SetActive(
+                Ruitk.Core.Config.RuitkSettings.Parse(
+                    "{ \"host_node_pool\": " + (hostNodePool ? "true" : "false") + " }"
+                )
+            );
             var context = new HostContext(
                 ElementRegistryProvider.GetDefaultRegistry(),
                 new UguiHostConfig(UguiElementRegistryProvider.GetDefaultRegistry())
@@ -44,6 +58,8 @@ namespace Ruitk.Ugui.Tests
         public void TearDown()
         {
             _renderer?.Clear();
+            Ruitk.Core.Config.RuitkSettings.SetActive(null);
+            Ruitk.Core.Config.RuitkSettings.Invalidate();
             if (_canvasGo != null)
                 Object.DestroyImmediate(_canvasGo);
             var staging = GameObject.Find("Ruitk.Ugui.Staging");
@@ -78,6 +94,7 @@ namespace Ruitk.Ugui.Tests
         [Test]
         public void StressLoop_MovingBoxes_StructureStaysCoherent()
         {
+            CreateRenderer(hostNodePool: true);
             for (int cycle = 0; cycle < Cycles; cycle++)
             {
                 float t = cycle * 0.16f;
@@ -100,6 +117,9 @@ namespace Ruitk.Ugui.Tests
         [Test]
         public void StressLoop_ChurningMembership_ReusesPooledVisuals()
         {
+            // This test ASSUMES pooling — it is the host_node_pool=true half of the pair
+            // (see StressLoop_ChurningMembership_PoolDisabled_CreatesFreshVisuals).
+            CreateRenderer(hostNodePool: true);
             var seenBoxes = new HashSet<int>();
 
             for (int cycle = 0; cycle < Cycles; cycle++)
@@ -129,6 +149,37 @@ namespace Ruitk.Ugui.Tests
                 seenBoxes.Count,
                 BoxCount + 50,
                 "membership churn must reuse pooled instances instead of leaking new ones"
+            );
+        }
+
+        [Test]
+        public void StressLoop_ChurningMembership_PoolDisabled_CreatesFreshVisuals()
+        {
+            // host_node_pool=false: unmounted elements are destroyed, never pooled, so every
+            // re-add cycle creates fresh instances — the distinct-instance count must EXCEED
+            // the pooled bound, proving the knob actually disables reuse. Structure must stay
+            // coherent on every cycle regardless.
+            CreateRenderer(hostNodePool: false);
+            var seenBoxes = new HashSet<int>();
+
+            for (int cycle = 0; cycle < Cycles; cycle++)
+            {
+                int count = cycle % 2 == 0 ? BoxCount : BoxCount - 100;
+                _renderer.Render(BoxField(count, cycle * 0.25f));
+
+                var area = _mountRect.GetChild(0);
+                Assert.AreEqual(count + 1, area.childCount, $"cycle {cycle}");
+                for (int i = 1; i < area.childCount; i++)
+                {
+                    seenBoxes.Add(area.GetChild(i).gameObject.GetInstanceID());
+                }
+            }
+
+            // 9 grow cycles (2,4,…,18) each re-create their 100 boxes from scratch.
+            Assert.GreaterOrEqual(
+                seenBoxes.Count,
+                BoxCount + 900,
+                "with the pool disabled, every re-added box must be a fresh instance"
             );
         }
     }

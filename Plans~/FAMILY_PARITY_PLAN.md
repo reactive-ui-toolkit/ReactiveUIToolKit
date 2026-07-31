@@ -778,3 +778,56 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
   errors, Editor/Samples/Diagnostics 0 errors via synced csprojs, `Ruitk.Ugui.Tests` (with the
   new file) 0 errors — the compile IS this session's test gate (locked editor; owner runs the
   suite in-editor at M8); player proof Shared/Runtime/Ugui `.Player` 0 errors.
+
+### M3 — Reconciler knobs (U-04/U-05) — DONE 2026-07-31 (round 2; editor still open — locked-editor mode re-verified: lockfile + 3 Unity processes)
+- **U-04:** `FiberConfig` gained `TimeSlicingEnabled` (true) + `TimeSliceMs` (2.0f) as auto-
+  properties (file's existing style; the plan's field snippet is shape, not letter).
+  `FiberReconciler`: the `:31` const deleted; `:450` re-pointed to `FiberConfig.TimeSliceMs`;
+  the `:363-373` dispatch is now `scheduler != null && TimeSlicingEnabled → ScheduleRootWork,
+  else WorkLoop()`. **Bughunt find (deviation, load-bearing):** the deferred-update replay in
+  `CommitRoot`'s finally (`:901`) also had to learn the bypass — its condition is now
+  `_scheduler == null || !TimeSlicingEnabled`, because under the bypass a commit is reached
+  from `WorkLoop`, so NO Slice callback exists to pick replayed work up: without this, a
+  setState during a bypassed commit (e.g. from a layout effect) stalls forever. Default-true
+  reduces to the old `_scheduler == null` exactly. Pinned by
+  `ReconcilerKnobTests.TimeSlicingBypass_StateUpdateDuringCommit_ReplaysSynchronously`.
+- **frame_budget_ms:** read in `RenderScheduler.Awake` (singleton-winning branch) from
+  `ResolveFrameBudgetMs()`; `[SerializeField]` kept. Editor scheduler untouched (D-5).
+- **U-05:** `UguiHostConfig` reads `ResolveHostNodePool()` ONCE in the constructor into
+  `readonly bool _poolEnabled`; gates the acquire pool-lookup and the release
+  `TryResetForPool` branch. `PoolCapacityPerType` untouched. UITK path untouched.
+- **U-03 (new keys):** four resolvers added to `BuildDefinesConfig`
+  (`ResolveTimeSlicing/ResolveTimeSliceMs/ResolveFrameBudgetMs/ResolveHostNodePool`), chain
+  JSON → compiled default (no legacy hop — documented in-code). Seam application at all three
+  §1.2 seams: `FiberConfig.TimeSlicingEnabled/TimeSliceMs` set bootstrap-style (the editor
+  seam comments that frame_budget_ms deliberately does NOT apply there).
+- **U-02 (new rows):** window store editor gained the four typed rows in §3 order with §0.1
+  tooltips (frame_budget_ms row carries the U-04 editor-unbudgeted Unity note); the no-store
+  "Effective values" view gained the same four via the resolvers.
+- **Tests:** `RuitkSettingsJsonTests` +3 (partial-doc key spellings; JSON-store-wins for the
+  four knobs; no-legacy-hop proof — legacy doc seeded, new knobs still compiled defaults).
+  `UguiStressChurnTests` parameterized per the plan: `CreateRenderer(bool hostNodePool)`
+  seeds the store BEFORE `UguiHostConfig` construction (ctor-read discipline); the reuse test
+  now explicitly runs pool-ON (assertion untouched), new pool-OFF companion asserts per-cycle
+  structure coherence AND ≥ BoxCount+900 distinct instances (reuse provably off). New
+  `Ugui/Tests/ReconcilerKnobTests.cs` (+meta, fresh GUID): defaults pin (2.0/true), sliced
+  default routes updates through a recording scheduler (stale until slice, commit after
+  drain; mount enqueues nothing), bypass commits synchronously with ZERO scheduler enqueues,
+  `TimeSliceMs=0` forces multi-slice vs `100000` single-slice (yield plumbing at `:450`), and
+  the deferred-replay pin above. Assumption audit: the only render-work `Enqueue` in
+  `FiberReconciler` is the Slice (`:424`) and layout effects run inside commit
+  (`CommitWork :979 → CommitLayoutEffects`) — both verified by grep before the assertions
+  were written.
+- **M3 acceptance re-read (no JSON file ⇒ byte-equivalence):** dispatch `true &&` ⇒ old
+  `_scheduler != null`; `:450` reads 2.0f (the old const's value); `:901` `|| !true` ⇒ old
+  `_scheduler == null`; `Awake` resolver returns 4.0f (the serialized default); pool gates
+  `true &&` ⇒ old conditions. All five short-circuit to the old code paths.
+- **Bughunt fixes:** (1) the `:901` replay condition (above); (2) CS0104 `Object` ambiguity
+  in the new test file (`using System;` vs `UnityEngine.Object`) — qualified the two
+  `DestroyImmediate` calls; caught by the harness.
+- **Gates:** machine-paths ✓ (with `add -N` for the two new files), corpus-hash ✓
+  (`917dd8cd…`); VERIFY-UNITY — Shared/Runtime/Ugui direct 0 errors,
+  Editor/Samples/Diagnostics/Ugui.Tests 0 errors via freshly re-synced csprojs (Editor prune
+  2, Ugui.Tests add 2); player proof Shared/Runtime/Ugui `.Player` 0 errors (synthesized
+  harness, M0). No `Analyzers/*.dll` churn this round (only `dotnet build`, no `dotnet
+  test`).

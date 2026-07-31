@@ -62,6 +62,10 @@ namespace Ruitk.Ugui
             DiagnosticsConfig.CurrentTraceLevel = BuildDefinesConfig.ResolveTraceLevel();
             DiagnosticsConfig.EnableDiffTracing = BuildDefinesConfig.ResolveEnableDiffTracing();
 
+            // Reconciler knobs — defaults reproduce the former constants exactly.
+            FiberConfig.TimeSlicingEnabled = BuildDefinesConfig.ResolveTimeSlicing();
+            FiberConfig.TimeSliceMs = BuildDefinesConfig.ResolveTimeSliceMs();
+
             InternalLogOptions.EnableInternalLogs =
                 DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose;
         }

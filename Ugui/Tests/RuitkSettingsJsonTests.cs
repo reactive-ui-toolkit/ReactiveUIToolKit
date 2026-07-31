@@ -269,5 +269,63 @@ namespace Ruitk.Ugui.Tests
             Assert.AreEqual(DiagnosticsConfig.TraceLevel.None, cfg.TraceLevel);
             Assert.IsFalse(cfg.EnableDiffTracing);
         }
+
+        // ── Reconciler knobs (M3): resolution order, defaults, key spellings ──
+
+        [Test]
+        public void Parse_ReconcilerKnobKeys_PartialDocument()
+        {
+            var parsed = RuitkSettings.Parse(
+                "{ \"time_slicing\": false, \"time_slice_ms\": 0.5, "
+                    + "\"frame_budget_ms\": 12.5, \"host_node_pool\": false }"
+            );
+            Assert.IsFalse(parsed.timeSlicing);
+            Assert.AreEqual(0.5f, parsed.timeSliceMs);
+            Assert.AreEqual(12.5f, parsed.frameBudgetMs);
+            Assert.IsFalse(parsed.hostNodePool);
+            // Untouched keys keep their defaults:
+            Assert.AreEqual(RuitkEnvironment.Auto, parsed.environment);
+            Assert.AreEqual(DiagnosticsConfig.TraceLevel.None, parsed.traceLevel);
+        }
+
+        [Test]
+        public void ResolutionOrder_ReconcilerKnobs_JsonStoreWins()
+        {
+            RuitkSettings.SuppressResourceLoadForTests = true;
+            RuitkSettings.Invalidate();
+            RuitkSettings.SetActive(
+                RuitkSettings.Parse(
+                    "{ \"time_slicing\": false, \"time_slice_ms\": 1.25, "
+                        + "\"frame_budget_ms\": 8.0, \"host_node_pool\": false }"
+                )
+            );
+
+            Assert.IsFalse(BuildDefinesConfig.ResolveTimeSlicing());
+            Assert.AreEqual(1.25f, BuildDefinesConfig.ResolveTimeSliceMs());
+            Assert.AreEqual(8.0f, BuildDefinesConfig.ResolveFrameBudgetMs());
+            Assert.IsFalse(BuildDefinesConfig.ResolveHostNodePool());
+        }
+
+        [Test]
+        public void ResolutionOrder_ReconcilerKnobs_HaveNoLegacyHop()
+        {
+            // The legacy config.json never carried these keys: even with a legacy document
+            // present, the chain is JSON store → compiled default. The compiled defaults
+            // reproduce the pre-knob constants (2.0 / 4.0 / pooling on / slicing on).
+            RuitkSettings.SetActive(null);
+            RuitkSettings.SuppressResourceLoadForTests = true;
+            RuitkSettings.Invalidate();
+            RuitkConfig.SetCurrentForTests(
+                RuitkConfig.Parse(
+                    "{ \"envVariables\": { \"env\": \"development\", \"traceLevel\": \"Verbose\", "
+                        + "\"diffTracing\": true } }"
+                )
+            );
+
+            Assert.IsTrue(BuildDefinesConfig.ResolveTimeSlicing());
+            Assert.AreEqual(2.0f, BuildDefinesConfig.ResolveTimeSliceMs());
+            Assert.AreEqual(4.0f, BuildDefinesConfig.ResolveFrameBudgetMs());
+            Assert.IsTrue(BuildDefinesConfig.ResolveHostNodePool());
+        }
     }
 }

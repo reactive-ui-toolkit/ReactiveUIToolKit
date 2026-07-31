@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Ruitk.Core;
 using Ruitk.Core.Diagnostics;
+using Ruitk.Core.Fiber;
 using Ruitk.Elements;
 using Ruitk.Signals;
 using UnityEditor;
@@ -54,6 +55,12 @@ namespace Ruitk.EditorSupport
 
                 DiagnosticsConfig.CurrentTraceLevel = BuildDefinesConfig.ResolveTraceLevel();
                 DiagnosticsConfig.EnableDiffTracing = BuildDefinesConfig.ResolveEnableDiffTracing();
+
+                // Reconciler knobs — time slicing applies wherever a scheduler slices, the
+                // editor scheduler included; frame_budget_ms does NOT apply here (the editor
+                // scheduler is unbudgeted by design — it drains fully every editor update).
+                FiberConfig.TimeSlicingEnabled = BuildDefinesConfig.ResolveTimeSlicing();
+                FiberConfig.TimeSliceMs = BuildDefinesConfig.ResolveTimeSliceMs();
 
                 InternalLogOptions.EnableInternalLogs =
                     DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose;

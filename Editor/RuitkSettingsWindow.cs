@@ -104,6 +104,19 @@ namespace Ruitk.EditorSupport
             {
                 EditorGUILayout.LabelField("Effective values", EditorStyles.boldLabel);
                 EditorGUILayout.TextField("Environment", BuildDefinesConfig.ResolveEnvironment());
+                EditorGUILayout.Toggle("Time Slicing", BuildDefinesConfig.ResolveTimeSlicing());
+                EditorGUILayout.FloatField(
+                    "Time Slice (ms)",
+                    BuildDefinesConfig.ResolveTimeSliceMs()
+                );
+                EditorGUILayout.FloatField(
+                    "Frame Budget (ms)",
+                    BuildDefinesConfig.ResolveFrameBudgetMs()
+                );
+                EditorGUILayout.Toggle(
+                    "Host Node Pool",
+                    BuildDefinesConfig.ResolveHostNodePool()
+                );
                 EditorGUILayout.EnumPopup("Trace Level", BuildDefinesConfig.ResolveTraceLevel());
                 EditorGUILayout.Toggle("Diff Tracing", BuildDefinesConfig.ResolveEnableDiffTracing());
                 EditorGUILayout.TextField(
@@ -142,6 +155,43 @@ namespace Ruitk.EditorSupport
                     ),
                     _model.environment
                 );
+            bool timeSlicing = EditorGUILayout.Toggle(
+                new GUIContent(
+                    "Time Slicing",
+                    "time_slicing — when a scheduler is installed, renders are split into "
+                        + "time slices across frames. Off forces every render through the "
+                        + "synchronous work loop (explicit scheduler bypass). Default: on."
+                ),
+                _model.timeSlicing
+            );
+            float timeSliceMs = EditorGUILayout.FloatField(
+                new GUIContent(
+                    "Time Slice (ms)",
+                    "time_slice_ms — max milliseconds the render phase runs per slice before "
+                        + "yielding back to the scheduler. Applies wherever a scheduler "
+                        + "slices, the editor included. Default: 2.0."
+                ),
+                _model.timeSliceMs
+            );
+            float frameBudgetMs = EditorGUILayout.FloatField(
+                new GUIContent(
+                    "Frame Budget (ms)",
+                    "frame_budget_ms — per-frame budget for the play-mode/player "
+                        + "RenderScheduler queues. Unity note: editor mounts use the editor "
+                        + "scheduler, which is unbudgeted by design (it drains fully every "
+                        + "editor update), so this value does not apply there. Default: 4.0."
+                ),
+                _model.frameBudgetMs
+            );
+            bool hostNodePool = EditorGUILayout.Toggle(
+                new GUIContent(
+                    "Host Node Pool",
+                    "host_node_pool — pools unmounted uGUI host elements whose adapters "
+                        + "provably reset them (TryResetForPool); off destroys them instead. "
+                        + "The UI Toolkit path is never pooled. Default: on."
+                ),
+                _model.hostNodePool
+            );
             var traceLevel = (DiagnosticsConfig.TraceLevel)
                 EditorGUILayout.EnumPopup(
                     new GUIContent(
@@ -203,6 +253,10 @@ namespace Ruitk.EditorSupport
             if (EditorGUI.EndChangeCheck())
             {
                 _model.environment = environment;
+                _model.timeSlicing = timeSlicing;
+                _model.timeSliceMs = timeSliceMs;
+                _model.frameBudgetMs = frameBudgetMs;
+                _model.hostNodePool = hostNodePool;
                 _model.traceLevel = traceLevel;
                 _model.diffTracing = diffTracing;
                 _model.diagnosticsOutputFolder = outputFolder;

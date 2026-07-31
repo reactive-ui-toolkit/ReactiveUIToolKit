@@ -35,6 +35,9 @@ namespace Ruitk
             if (Instance == null)
             {
                 Instance = this;
+                // frame_budget_ms: bootstrap-read like every other knob. The serialized field
+                // stays (harmless); the resolver wins for the runtime-created instance.
+                frameBudgetMs = BuildDefinesConfig.ResolveFrameBudgetMs();
             }
             else
             {
