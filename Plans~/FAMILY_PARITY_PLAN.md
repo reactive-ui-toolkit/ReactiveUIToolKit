@@ -1017,4 +1017,48 @@ absorbs), the family parity contract as embedded in §0 (sibling legs carry the 
   and verify byte-compares the worktree. Proven environmental, pre-existing, and
   campaign-independent via a detached `core.autocrlf=false` worktree at HEAD → `OK -- 2
   generated marketplace page(s) match their templates` (exit 0); extensions lane untouched
-  by this campaign; CI's extensions context re-proves it on every push.
+  by this campaign; CI's extensions context re-proves it on every push. (Noted while
+  verifying: `changelog.mjs verify` is not in `test.yml` at all — extract-only in
+  `publish.yml` — so the LF-worktree proof is the gate's green evidence.)
+
+### M7 — Docs sweep — DONE 2026-07-31 (round 4)
+- **§7 checklist closed:**
+  - `UitkxConceptsPage.tsx` — the settings section rewritten wholesale (retitled
+    "Environment & tracing configuration" → "Settings"): the JSON path +
+    create-on-demand flow replaces the asset story (the Player-builds/Preloaded-Assets
+    paragraph deleted as obsolete — Resources ships itself); parse semantics
+    (missing/unknown/case-insensitive); ALL 11 §3 keys as bullets with the §0.1
+    defaults + semantics (folder key marked *(Unity-only)*); the `auto` tri-state
+    mapping; the trace ladder (`basic` structural / `verbose` +detail) +
+    `diff_tracing` independence; `strict_mode` incl. the release force-off; the U-04
+    editor-unbudgeted note on `frame_budget_ms`; and the §6 strict×verbose double-log
+    note (§6 said "note it in docs" — done here). Legacy-fallback paragraph now
+    spells the three-hop order + the no-legacy-hop rule for the new knobs. §5 row 12
+    re-verified gone (M1 deleted it).
+  - `MigrationPage.tsx:109` — row-13 "removed in 0.13.0" annotation re-verified
+    correct under the FOLD ruling; untouched.
+  - README "Settings" section rewritten to the JSON store + full knob list +
+    create-on-demand + release-player resolution note. This also killed a stale
+    "exception control flow" mention M1's DoD grep could not see (its scope was
+    `*.cs`) — caught by this round's tracked-file sweep.
+  - Grep-sweep finds beyond the checklist: `docs.tsx` Concepts `searchContent`
+    refreshed (dead define-symbol keywords `env_dev`/`ruitk_trace_*` → the canonical
+    knob keys); `HooksGuidePage.tsx` hook-configuration section + `HooksAPIPage.tsx`
+    configuration block now state that `EnableHookValidation`/`EnableStrictDiagnostics`
+    are overwritten at every mount from the settings file (`auto` mapping spelled;
+    `EnableHookAutoRealign` marked internal/not settings-backed) — the M4 flip made
+    the old "true by default in Editor" framing stale.
+  - `CLAUDE.md`: zero settings-storage sentences (grep) — §7 says add only if wrong;
+    nothing added. Extension lanes untouched. Window tooltips VERIFIED only (all 11
+    rows present with §0.1 semantics from M3–M5; this round's scope).
+- Residual sweep hits all verified legitimate: the CHANGELOG interim-SO sentence +
+  Removed header (deliberate), frozen shipped changelog bodies, the asset-registry
+  ScriptableObject docs (unrelated subsystem), MigrationPage's annotated historical
+  key list.
+- **Gates:** docs `npm run build` ✓ 0 errors — and the script runs `tsc -b` first, so
+  the TSX edits are typechecked (pre-existing chunk-size warning only). Bughunt extra:
+  `npm run lint` — red on 2 PRE-EXISTING errors in files this campaign never touched
+  (`contexts/VersionContext.tsx` react-refresh/only-export-components, a dialog
+  react-hooks/set-state-in-effect); recorded, not caused; CI's docs context runs
+  build only (verified in `test.yml`), so this was never a gate — owner item.
+  machine-paths ✓; corpus-hash ✓ (`917dd8cd…`).

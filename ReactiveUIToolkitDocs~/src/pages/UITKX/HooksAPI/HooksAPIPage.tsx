@@ -343,6 +343,13 @@ public static Action<T> ToValueAction<T>(this StateSetter<T> setter);
 public static bool Hooks.EnableStrictDiagnostics { get; set; }
 public static bool Hooks.EnableHookAutoRealign { get; set; }`}
       />
+      <Typography variant="body2" paragraph>
+        <code>EnableHookValidation</code> and <code>EnableStrictDiagnostics</code> are
+        overwritten at every mount from the settings file (<code>hook_validation</code> /{' '}
+        <code>strict_diagnostics</code>; <code>auto</code> = on in the editor and development
+        builds, off in release players). <code>EnableHookAutoRealign</code> is internal and
+        not settings-backed.
+      </Typography>
     </Box>
   </Box>
 )

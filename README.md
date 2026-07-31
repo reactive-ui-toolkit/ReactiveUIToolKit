@@ -228,16 +228,20 @@ in a UI Toolkit tree, `U.UitkHost` embeds a UI Toolkit panel in a uGUI tree.
 ## Settings
 
 Every setting lives in one window — **Reactive UI Toolkit ▸ Settings** — in
-labeled sections. The **Configuration** section is project-scoped: environment
-label (`Auto`/`Development`/`Production`), reconciler trace level, diff tracing,
-exception control flow, and the diagnostics output folder. That section is
-read-only until you click **Create settings asset** (nothing is written until
-you do); the created `RuitkSettings` asset is preloaded into player builds so the
-same values apply at runtime. Per-developer knobs (the HMR toggles and keybind
+labeled sections. The **Configuration** section is project-scoped and stored in
+a plain JSON file, `Assets/Resources/ReactiveUIToolkit/config.json`, holding the
+family-canonical knob set: `environment`, `time_slicing`, `time_slice_ms`,
+`frame_budget_ms`, `host_node_pool`, `hook_validation`, `strict_diagnostics`,
+`strict_mode`, `trace_level`, `diff_tracing`, and the Unity-only
+`diagnostics_output_folder`. The section is read-only until you click **Create
+settings file** (nothing is written until you do); under `Resources/` the file
+ships into every player build by itself, so the same values apply at runtime —
+except that release players resolve the `auto` tri-states to off and force
+`strict_mode` off. Per-developer knobs (the HMR toggles and keybind
 recorders, verbose console navigation) are EditorPrefs-backed sections of the
 same window — per machine, not per project. Projects still
 carrying an edited legacy `config.json` keep working — it is honoured whenever no
-settings asset exists.
+settings file exists.
 
 ---
 

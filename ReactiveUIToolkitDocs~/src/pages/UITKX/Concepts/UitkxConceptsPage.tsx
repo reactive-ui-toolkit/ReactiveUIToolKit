@@ -91,37 +91,59 @@ export const UitkxConceptsPage: FC = () => (
 
     <Box sx={Styles.section}>
       <Typography variant="h5" component="h2" gutterBottom>
-        Environment &amp; tracing configuration
+        Settings
       </Typography>
       <Typography variant="body2" paragraph>
         Settings live in one window: <strong>Reactive UI Toolkit ▸ Settings</strong>,
-        divided into labeled sections. The <strong>Configuration</strong> section holds the
-        project-scoped values below. Until you create a settings asset the section is
-        read-only and shows the values in effect (compiled defaults); click{' '}
-        <strong>Create settings asset</strong> to create{' '}
-        <code>Assets/ReactiveUIToolkitSettings.asset</code> (a <code>RuitkSettings</code>{' '}
-        ScriptableObject) and edit them — nothing is ever written to your project until you
-        click. No scripting define symbols are involved:
+        divided into labeled sections. The <strong>Configuration</strong> section is
+        project-scoped and stored in a plain JSON file,{' '}
+        <code>Assets/Resources/ReactiveUIToolkit/config.json</code>. Until the file exists
+        the section is read-only and shows the values in effect; click{' '}
+        <strong>Create settings file</strong> to write it — nothing is ever written to your
+        project until you click. Because it lives under <code>Resources/</code>, the file
+        ships into every player build by itself — no build hooks, no Preloaded Assets — and
+        loads synchronously on every platform. A missing file or key falls back to the
+        compiled default; unknown keys are ignored; enum values are lowercase strings,
+        parsed case-insensitively. No scripting define symbols are involved. The knob set
+        is family-canonical — the same names, semantics, and defaults on every Reactive UI
+        Toolkit leg, keys marked <em>(Unity-only)</em> excepted — and every default
+        reproduces the untouched behavior:
       </Typography>
       <List sx={Styles.list}>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>Environment</code> — <code>Auto</code> (default: <code>development</code> in the editor and development builds, <code>production</code> in release builds), <code>Development</code>, or <code>Production</code>. Exposed at runtime as <code>HostContext.Environment["env"]</code>.</>} />
+          <ListItemText primary={<><code>environment</code> — <code>auto</code> (default: <code>development</code> in the editor and development builds, <code>production</code> in release builds), <code>development</code>, or <code>production</code>. Exposed at runtime as <code>HostContext.Environment["env"]</code>.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>Trace Level</code> — reconciler trace level: <code>None</code>, <code>Basic</code>, or <code>Verbose</code>.</>} />
+          <ListItemText primary={<><code>time_slicing</code> — default <code>true</code>. <code>false</code> is an explicit scheduler bypass: every render runs the synchronous work loop even when a scheduler is installed.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>Diff Tracing</code> — sets <code>DiagnosticsConfig.EnableDiffTracing</code> for detailed Fiber diff diagnostics.</>} />
+          <ListItemText primary={<><code>time_slice_ms</code> — default <code>2.0</code>. Maximum milliseconds the render phase runs per slice before yielding back to the scheduler; applies wherever a scheduler slices, the editor included.</>} />
         </ListItem>
         <ListItem disablePadding>
-          <ListItemText primary={<><code>Diagnostics Output Folder</code> — where benchmark results and log captures are written. Empty = <code>&lt;project&gt;/Logs/ReactiveUIToolkit</code> in the editor and <code>&lt;persistentDataPath&gt;/ReactiveUIToolkit</code> in players; absolute paths are used as-is, relative paths resolve against the project root (editor) or <code>persistentDataPath</code> (player). Diagnostics never write into the package folder.</>} />
+          <ListItemText primary={<><code>frame_budget_ms</code> — default <code>4.0</code>. Per-frame budget of the play-mode/player <code>RenderScheduler</code> queues. Unity note: editor mounts use the editor scheduler, which is unbudgeted by design (it drains fully every editor update), so this value does not apply there.</>} />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText primary={<><code>host_node_pool</code> — default <code>true</code>. Gates the uGUI host-element pool (only adapters that provably reset an element ever pool it); off destroys instead of pooling. The UI Toolkit path is never pooled.</>} />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText primary={<><code>hook_validation</code> — <code>auto</code> (default), <code>on</code>, or <code>off</code>. Validates hook order and count on every render (catches conditional hook calls). <code>auto</code> = on in the editor and development builds, off in release players.</>} />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText primary={<><code>strict_diagnostics</code> — <code>auto</code> (default), <code>on</code>, or <code>off</code>. Development warnings for suspect hook usage (state updates during render, hooks invoked without a dependency array), deduplicated per component and prefixed <code>[Hooks][Strict]</code>. <code>auto</code> = on in the editor and development builds, off in release players.</>} />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText primary={<><code>strict_mode</code> — default <code>false</code>. Double-invokes render functions so impure render bodies surface: the first result is discarded, the second is reconciled; effects, layout effects, memo/callback factories, and cleanups still run once, and the committed UI is identical to strict-off. Forced off in release builds — a shipped player can never activate it.</>} />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText primary={<><code>trace_level</code> — <code>none</code> (default), <code>basic</code>, or <code>verbose</code>. <code>basic</code> logs structural reconciler events (placements, deletions, a per-commit summary); <code>verbose</code> adds per-element/per-hook detail. Note: under <code>strict_mode</code> the <code>verbose</code> per-hook capture logs fire on both render invokes — twice per render — which is truthful: two captures happened.</>} />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText primary={<><code>diff_tracing</code> — default <code>false</code>. Detailed Fiber diff logs (props application, update dumps), independent of <code>trace_level</code>: diff tracing alone lights them, and <code>verbose</code> alone does too.</>} />
+        </ListItem>
+        <ListItem disablePadding>
+          <ListItemText primary={<><code>diagnostics_output_folder</code> <em>(Unity-only)</em> — where benchmark results and log captures are written. Empty = <code>&lt;project&gt;/Logs/ReactiveUIToolkit</code> in the editor and <code>&lt;persistentDataPath&gt;/ReactiveUIToolkit</code> in players; absolute paths are used as-is, relative paths resolve against the project root (editor) or <code>persistentDataPath</code> (player). Diagnostics never write into the package folder.</>} />
         </ListItem>
       </List>
-      <Typography variant="body2" paragraph>
-        <strong>Player builds:</strong> the settings asset is added to Preloaded Assets during
-        a build (and removed again afterwards), so the same values apply in players — no
-        manual setup.
-      </Typography>
       <Typography variant="body2" paragraph>
         <strong>Per-developer preferences</strong> live in the same window: the{' '}
         <strong>Hot Reload (HMR)</strong> section (the HMR toggles and the two keybind
@@ -131,12 +153,14 @@ export const UitkxConceptsPage: FC = () => (
         settings window.
       </Typography>
       <Typography variant="body2" paragraph>
-        <strong>Legacy fallback:</strong> projects that edited the old{' '}
-        <code>Assets/ReactiveUIToolkit/config.json</code> (<code>envVariables</code> block,
-        read via <code>RuitkConfig.Current</code>) keep working — those values apply whenever
-        no settings asset exists. The shipped <code>config.json</code> no longer contains an{' '}
-        <code>envVariables</code> block; a missing file, key, or asset falls back to safe
-        compiled defaults.
+        <strong>Legacy fallback:</strong> resolution order for every setting is the JSON
+        settings file → legacy <code>Assets/ReactiveUIToolkit/config.json</code>{' '}
+        (<code>envVariables</code> block, read via <code>RuitkConfig.Current</code>) →
+        compiled defaults, so projects that edited the old file keep working whenever no
+        settings file exists. The legacy file only ever carried{' '}
+        <code>env</code>/<code>traceLevel</code>/<code>diffTracing</code> — the newer knobs
+        have no legacy spelling and resolve settings file → compiled default. The shipped{' '}
+        <code>config.json</code> no longer contains an <code>envVariables</code> block.
       </Typography>
     </Box>
 
