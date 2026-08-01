@@ -316,8 +316,11 @@ Status: `✅` = full support (Props + V.cs + Registry + Schema), `⬜` = not imp
 | Vector3IntField | 6000.0 | ✅ | |
 | Vector4Field | 6000.0 | ✅ | |
 | VisualElement | 6000.0 | ✅ | |
+| GUIDField | 6000.4 | ✅ | `#if UNITY_6000_4_OR_NEWER`. Runtime despite the name — value type is `UnityEngine.GUID`, not `UnityEditor.GUID` |
+| MaskField | 6000.5 | ✅ | `#if UNITY_6000_5_OR_NEWER`. Was editor-only in `UnityEditor.UIElements` before 6.5 |
+| Mask64Field | 6000.5 | ✅ | `#if UNITY_6000_5_OR_NEWER`. 64-bit sibling, `ulong` value + `List<ulong>` masks |
 
-**Count: 46 runtime elements**
+**Count: 49 runtime elements** (46 at floor + 3 version-gated)
 
 #### Editor-Only Elements (behind `UNITY_EDITOR`)
 
@@ -361,9 +364,9 @@ Status: `✅` = full support (Props + V.cs + Registry + Schema), `⬜` = not imp
 
 **Count: 13 framework virtuals**
 
-**Total: 61 Unity elements + 13 framework = 74 registered entries**
+**Total: 64 Unity elements + 13 framework = 77 registered entries**
 
-**Last audited:** 6000.4
+**Last audited:** 6000.5
 
 ### 3.3 Deprecation Tracker
 
@@ -381,7 +384,10 @@ Status: `✅` = full support (Props + V.cs + Registry + Schema), `⬜` = not imp
 | 6000.1 | 2026-03-23 | Assembly diff | No IStyle changes vs 6000.0 | No new elements | — |
 | 6000.2 | 2026-03-23 | Assembly diff | +1 IStyle (unityTextAutoSize); +6 enums (LibraryVisibility, PanelInputRedirection, Pivot, PivotReferenceSize, TextAutoSizeMode, WorldSpaceSizeMode); +5 structs | No new elements | Floor version — baseline |
 | 6000.3 | 2026-03-23 | Assembly diff | +3 IStyle (aspectRatio, filter, unityMaterial); +6 enums (AddressMode, DropdownMenuSizeMode, FilterFunctionType, FilterParameterType, GradientType, TextureSlotCount); +12 structs; UsageHints +2 members | No new elements | USS parser upgrade. Note: original docs-based audit claimed +6 IStyle — assembly shows only +3 new in 6.3. unityTextGenerator and unityEditorTextRenderingMode do not exist on IStyle. |
-| 6000.4 | 2026-03-23 | AI-assisted | No changes vs 6.3 | No new elements | No UI Toolkit breaking changes |
+| 6000.4 | 2026-03-23 | AI-assisted | No changes vs 6.3 | ~~No new elements~~ — **WRONG, superseded by the 2026-08-01 Cecil audit below: 6.4 added `GUIDField`.** This row was docs-based; Unity's release notes attribute backported items to the newest stream and are unreliable for versioning | No UI Toolkit breaking changes |
+| 6000.4 (re-audit) | 2026-08-01 | Cecil assembly diff | No IStyle changes vs 6.3 (89 properties, verified twice) | **+1 element: `GUIDField`** (`TextInputBaseField<UnityEngine.GUID>` — runtime, not editor-only) | None. `PanelRenderMode` and `TextureOptions` are **6.3** types, not 6.4 — an earlier report said otherwise because the diff tool was under-reporting |
+| 6000.5 | 2026-08-01 | Cecil assembly diff | No IStyle changes vs 6.4 (89 properties, all already wrapped) | **+2 elements: `MaskField`, `Mask64Field`** (relocated from `UnityEditor.UIElements` into the runtime module). Also +`PanelRenderer`/`IPanelComponent` (Phase 2), +`WorldSpaceSizeMode`, +`VisualElementClearOptions`, +`BaseMaskField<T>`/`BaseMask64Field` (bases only) | **Zero removals.** `UIDocument` is not `[Obsolete]`. Behaviour changes: ATG becomes the default text generator; `VisualElement.ReleaseResources()`/`Clear(options)` are new and can invalidate retained elements |
+| 6000.4/6000.5 (impl) | 2026-08-01 | AI-assisted | No IStyle work — the style pipeline was a no-op for this wave | Implemented `GUIDField` (6.4), `MaskField` + `Mask64Field` (6.5): props, adapters, `V.*`, registry ×3 sites, schema with the first element-level `sinceUnity` annotations, docs pages, `SUPPORTED_VERSIONS` + `ELEMENT_VERSIONS` | Floor unchanged at 6000.2; all behind auto-defined version gates |
 | 6000.3 (impl) | 2026-03-24 | AI-assisted | Implemented: aspectRatio (StyleRatio), filter (StyleList\<FilterFunction\>), unityMaterial (StyleMaterialDefinition). 8 CssHelper filter functions (Blur, Grayscale, Contrast, HueRotate, Invert, Opacity, Sepia, Tint). Schema + docs updated. | No new elements | — |
 
 ---

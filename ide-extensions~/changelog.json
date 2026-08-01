@@ -1,6 +1,17 @@
 {
   "entries": [
     {
+      "date": "2026-08-01",
+      "versions": {
+        "vscode": "1.9.0",
+        "vs2022": "1.9.0",
+        "rider": "1.6.0"
+      },
+      "shared": [
+        "Feature: Unity 6.5 and 6.4 controls in UITKX markup - MaskField, Mask64Field and GUIDField.\n\n<MaskField> and <Mask64Field> (Unity 6.5+) are multi-select bitmask dropdowns backed by int and ulong respectively, with choices plus an optional choicesMasks override for composite flags. <GUIDField> (Unity 6.4+) edits a UnityEngine.GUID; despite the name it is a runtime control and works in player builds, not only in the editor.\n\nThese are the first schema elements to carry a sinceUnity annotation, so completion and diagnostics are now version-aware for elements as well as style properties: on a project targeting an older Unity the new tags are reported instead of being silently offered.\n\nOne behaviour worth knowing when you diff or persist a mask: \"Everything\" is ~0 (that is -1) and \"Nothing\" is 0. \"Everything\" is NOT (1 << n) - 1, and the two must never be normalised into each other, or \"Everything\" quietly degrades into \"every bit that happened to be defined at the time\".\n\nSG suite 1828/1828, LSP suite 152/152."
+      ]
+    },
+    {
       "date": "2026-07-28",
       "versions": {
         "vscode": "1.8.0",

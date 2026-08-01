@@ -1,3 +1,25 @@
+## [0.14.0] - 2026-08-01
+
+### Unity 6.5 and 6.4 controls - MaskField, Mask64Field, GUIDField
+
+**Three controls Unity made runtime-available now work in UITKX.** `<MaskField>` and `<Mask64Field>` (Unity 6.5+) are multi-select bitmask dropdowns backed by `int` and `ulong`; `choices` gives the labels, and the optional `choicesMasks` overrides the default `1 << i` per entry so one choice can stand for a composite of bits. They existed before 6.5 but only in `UnityEditor.UIElements` as editor-only - 6.5 moved them into the runtime module.
+
+`<GUIDField>` (Unity 6.4+) edits a `UnityEngine.GUID`. Despite the name it is a runtime control - the value type is `UnityEngine.GUID`, not `UnityEditor.GUID` - so it works in player builds. Takes a GUID or a hex string; inherits `readOnly`, `isDelayed`, `maxLength`, `selectAllOnFocus`.
+
+**Masks: "Everything" is `~0`, not `(1 << n) - 1`.** The dropdown prefixes "Nothing" (`0`) and "Everything" (`~0`). Those differ from "every bit currently defined", so the props diff never normalises one into the other. Keep the distinction if you persist or compare masks yourself.
+
+**Version-aware editors.** These are the first schema elements carrying a `sinceUnity` annotation, so completion and diagnostics understand tag availability now, not just style properties - targeting an older Unity reports the new tags instead of offering them. The docs version dropdown gains 6.4 and 6.5.
+
+**Heads-up for 6.5.** The Advanced Text Generator is now the default. Unity claims feature parity but not measurement parity, so text sizes and wrap points can shift. The per-subtree opt-out `-unity-text-generator: standard` already works through the typed `Style` surface. See Known Issues.
+
+**Compatibility.** Floor stays 6000.2; everything sits behind `UNITY_6000_4_OR_NEWER` / `UNITY_6000_5_OR_NEWER` and compiles out below it.
+
+**Tests.** 1828/1828 SG, 152/152 LSP.
+
+VS Code **1.8.0 -> 1.9.0** | VS 2022 **1.8.0 -> 1.9.0** | Rider **1.5.0 -> 1.6.0**.
+
+---
+
 ## [0.13.0] - 2026-07-31
 
 ### Unified settings - one window, one JSON file, the family knob set

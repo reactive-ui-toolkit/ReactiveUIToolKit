@@ -50,6 +50,8 @@ const getIntro = (title: string) => {
     case 'DropdownField':
     case 'EnumField':
     case 'EnumFlagsField':
+    case 'MaskField':
+    case 'Mask64Field':
     case 'RadioButtonGroup':
     case 'ToggleButtonGroup':
       return `Use <${title}> in UITKX when the user is choosing from a predefined set of options.`
@@ -365,6 +367,47 @@ const getExample = (title: string) => {
     <EnumFlagsField
       value={value}
       onChange={evt => setValue(evt.newValue)}
+    />
+  );
+}`
+    case 'MaskField':
+      return `VirtualNode MaskFieldExample() {
+  // Unity 6.5+. "Everything" is ~0, not (1 << n) - 1.
+  var (mask, setMask) = useState(0);
+
+  return (
+    <MaskField
+      labelText="Layers"
+      choices={new List<string> { "Ground", "Player", "Enemy" }}
+      value={mask}
+      onChange={evt => setMask(evt.newValue)}
+    />
+  );
+}`
+    case 'Mask64Field':
+      return `VirtualNode Mask64FieldExample() {
+  // Unity 6.5+. The 64-bit sibling of MaskField.
+  var (mask, setMask) = useState(0UL);
+
+  return (
+    <Mask64Field
+      labelText="Capabilities"
+      choices={new List<string> { "Read", "Write", "Execute" }}
+      value={mask}
+      onChange={evt => setMask(evt.newValue)}
+    />
+  );
+}`
+    case 'GUIDField':
+      return `VirtualNode GUIDFieldExample() {
+  // Unity 6.4+. Runtime-usable: the value is a UnityEngine.GUID.
+  var (id, setId) = useState(UnityEngine.GUID.Generate());
+
+  return (
+    <GUIDField
+      labelText="Asset id"
+      value={id}
+      onChange={evt => setId(evt.newValue)}
     />
   );
 }`

@@ -9,6 +9,51 @@ export const KnownIssuesPage: FC = () => (
       Known Issues
     </Typography>
 
+    {/* ── Unity 6.5 text generation (ATG) ─────────────────────────────────── */}
+    <Typography variant="h5" component="h2" sx={Styles.section}>
+      Unity 6.5: Advanced Text Generator is now the default
+    </Typography>
+    <Typography variant="body1" paragraph>
+      Unity 6.5 makes the Advanced Text Generator (ATG) the default text system for UI Toolkit at
+      runtime. Unity states <em>feature</em> parity with the previous generator, but not{' '}
+      <em>measurement</em> parity: ATG shapes text through a different stack, so measured text sizes
+      and the exact points at which lines wrap can differ from Unity 6.4 and earlier.
+    </Typography>
+    <Typography variant="body1" paragraph>
+      If a layout of yours depends on precise text metrics or on specific wrap points, compare it
+      across 6.4 and 6.5 after upgrading. Community reports (English, Chinese and Hebrew) describe
+      ATG breaking lines at commas and periods where the previous generator did not.
+    </Typography>
+    <Typography variant="body1" paragraph>
+      The opt-out is a <strong>cascading USS property</strong>, not a project setting, so you can
+      switch generators for a single subtree rather than the whole application:
+    </Typography>
+    <CodeBlock
+      language="jsx"
+      code={`// Typed Style API - already supported, no library changes needed
+new Style {
+    UnityTextGenerator = new StyleEnum<TextGeneratorType>(TextGeneratorType.Standard),
+}
+
+/* or in USS, inherited by everything below the selector */
+:root {
+    -unity-text-generator: standard;
+}`}
+    />
+    <List>
+      <ListItem disablePadding>
+        <ListItemText primary="Static font assets are not supported by ATG - migrate them to dynamic font assets." />
+      </ListItem>
+      <ListItem disablePadding>
+        <ListItemText primary={'Rich text parsing is stricter: <style=blue> must become <style="blue">, and <align=flush> is unsupported.'} />
+      </ListItem>
+    </List>
+    <Alert severity="info" sx={{ mt: 1 }}>
+      Unity has said it intends to remove the opt-out in a future release, so treat{' '}
+      <code>-unity-text-generator: standard</code> as a migration runway rather than a permanent
+      setting.
+    </Alert>
+
     {/* ── Runtime ─────────────────────────────────────────────────────────── */}
     <Typography variant="h5" component="h2" sx={Styles.section}>
       Runtime
