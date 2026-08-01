@@ -6,6 +6,50 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 For IDE extension changelogs (VS Code, Visual Studio 2022), see
 `ide-extensions~/changelog.json` — the single source of truth for extension releases.
 
+## [0.14.1] - 2026-08-02
+
+### Fixed — `RouterPath.ParseQuery` dropped the leading `?`
+
+- **`RouterPath.ParseQuery("?a=1")` returned a dictionary keyed `"?a"`, not `"a"`.** Any
+  caller passing a conventional query string — the web idiom — got a dictionary in which
+  the first parameter was silently unreachable. The router's own `Parse()` strips the `?`
+  before calling in, which is why it went unnoticed, but `ParseQuery` is public API.
+  It now accepts both `"?a=1"` and `"a=1"`, and `"?"` alone yields an empty result.
+  Found by the first automated test ever run against this code (see below).
+
+### Added — CI coverage for `Shared/`, which previously had none
+
+- **`SharedTests~` — a `net10.0` suite that links the host-agnostic parts of `Shared/Core`
+  and runs them in CI.** `Shared/` is Unity C# and was otherwise only ever compiled by the
+  Editor, so the router and signals runtime had no automated coverage at all. 39 tests
+  covering path normalisation, `Combine`/`StripBasename`/`WithBasename` round-tripping,
+  query parse/build, and the `MemoryHistory` back/forward stack including forward-entry
+  truncation, blockers and listener lifetime.
+- It deliberately does not reference Unity's assemblies. Those bind to native ECalls that
+  exist only inside the Unity runtime — measured on 6000.5.6f1, `Debug.Log`,
+  `Time.realtimeSinceStartup`, `GUID.Generate` and `new VisualElement()` all throw
+  `SecurityException` outside the Editor. A small shim supplies what the linked sources
+  touch, and captures logs so tests can assert on them.
+
+### Added — a Unity compile check that does not need the Editor
+
+- **`node scripts/unity-compile-check.mjs`** compiles `Shared/` and `Runtime/` against the
+  **real** Unity assemblies — twice: once at the package floor with the version gates off,
+  and once with `UNITY_6000_4_OR_NEWER` + `UNITY_6000_5_OR_NEWER` on. That is the manual
+  "open it on the floor, then open it on 6.5" step from the release checklist, automated,
+  and it catches a wrong `UnityEngine` API in an element adapter — the one class of error
+  the shimmed suite above cannot see.
+- Compile only; it never executes, for the ECall reason above. Unity is **discovered**, never
+  hardcoded: `$RUITK_UNITY_EDITOR` → `.ruitk-local.json` `"unityEditor"` → the standard Hub
+  roots. Wired into CI with `--allow-missing`, where it skips loudly rather than pretending
+  to pass, since GitHub runners carry no licensed Editor.
+
+### Changed — `IRouterHistory.Listen` now documents its contract
+
+- Implementations must invoke the listener once with the current location before returning.
+  `MemoryHistory` always did; nothing said so, so an alternative implementation could
+  reasonably have omitted it and broken every subscriber that relies on being seeded.
+
 ## [0.14.0] - 2026-08-01
 
 ### Added — Unity 6.5 and 6.4 controls: `MaskField`, `Mask64Field`, `GUIDField`
