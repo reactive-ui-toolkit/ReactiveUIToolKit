@@ -211,49 +211,18 @@ jobs:
           node scripts/discord-changelog.mjs post "${{ needs.deploy-dist.outputs.version }}"
 
   # ════════════════════════════════════════════════════════════════════════════
-  # Documentation site
+  # Documentation site — delegated to docs-sync.yml, which publishes into the family
+  # documentation site (reactive-ui-toolkit/documentation) at /unity/ rather than to this
+  # repo's `documentations` branch.
+  #
+  # The old branch-deploy job is gone deliberately: since `base` is now '/unity/', a build
+  # deployed to this repo's own Pages root would 404 on every asset. One publish path, one
+  # base value — they cannot drift.
   # ════════════════════════════════════════════════════════════════════════════
   deploy-docs:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-
-      - name: Install dependencies
-        working-directory: ReactiveUIToolkitDocs~
-        run: npm ci
-
-      - name: Build
-        working-directory: ReactiveUIToolkitDocs~
-        run: npm run build
-
-      - name: Deploy to documentations branch
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-
-          git worktree add --force _docs_branch documentations 2>/dev/null || {
-            git branch documentations
-            git worktree add _docs_branch documentations
-          }
-
-          find _docs_branch -mindepth 1 -not -path '*/.git/*' -not -name '.git' -delete
-          cp -r ReactiveUIToolkitDocs~/dist/* _docs_branch/
-
-          cd _docs_branch
-          git add -A
-          git diff --cached --quiet && echo "No docs changes to deploy" && exit 0
-          git commit -m "docs update"
-          git push origin documentations
-
-          cd ..
-          git worktree remove _docs_branch
+    uses: ./.github/workflows/docs-sync.yml
+    secrets:
+      DOCUMENTATION_SYNC_PATS: ${{ secrets.DOCUMENTATION_SYNC_PATS }}
 
   # ════════════════════════════════════════════════════════════════════════════
   # VS Code extension — publishes only if version changed
