@@ -169,6 +169,25 @@ $nested = @($allTypes | ForEach-Object {
 })
 $allTypes = @($allTypes) + @($nested)
 
+# Collection key for a type. Top-level types keep their simple name so downstream
+# consumers keep working (apply-diff-to-schema.mjs matches schema element keys by
+# simple name). Nested types are qualified Outer.Nested, because keying both by
+# simple name lets a pre-existing nested type mask a NEW top-level type of the
+# same name: Unity 6.5 added top-level UnityEngine.UIElements.WorldSpaceSizeMode
+# while UIDocument/WorldSpaceSizeMode already existed in 6.4, and the addition
+# was silently dropped from the diff.
+function Get-TypeKey($typeDef) {
+    if (-not $typeDef.IsNested) { return $typeDef.Name }
+    $parts = @($typeDef.Name)
+    $cur = $typeDef.DeclaringType
+    while ($cur) {
+        $parts = @($cur.Name) + $parts
+        if (-not $cur.IsNested) { break }
+        $cur = $cur.DeclaringType
+    }
+    return ($parts -join ".")
+}
+
 # Helper: format a Cecil TypeReference as a friendly name
 function Format-TypeName($typeRef) {
     if ($null -eq $typeRef) { return "void" }
@@ -212,12 +231,12 @@ function Test-IsVE($typeDef) {
 }
 $elements = @($allTypes | Where-Object {
     $_.IsClass -and -not $_.IsAbstract -and (Test-IsVE $_)
-} | ForEach-Object { $_.Name } | Sort-Object)
+} | ForEach-Object { Get-TypeKey $_ } | Sort-Object)
 
 # Enums
 $enums = @{}
 $allTypes | Where-Object { $_.IsEnum } | ForEach-Object {
-    $eName = $_.Name
+    $eName = Get-TypeKey $_
     $members = @($_.Fields | Where-Object { $_.IsStatic -and $_.IsPublic } |
         ForEach-Object { $_.Name } | Sort-Object)
     $enums[$eName] = $members
@@ -228,7 +247,7 @@ $structs = [ordered]@{}
 $allTypes | Where-Object {
     $_.IsValueType -and -not $_.IsEnum -and -not $_.Name.StartsWith("<")
 } | Sort-Object Name | ForEach-Object {
-    $sName = $_.Name
+    $sName = Get-TypeKey $_
 
     $ctors = @($_.Methods | Where-Object {
         $_.IsConstructor -and $_.IsPublic -and $_.HasParameters

@@ -28,6 +28,8 @@ export interface VersionInfo {
 export const SUPPORTED_VERSIONS: VersionInfo[] = [
   { version: '6000.2', label: '6.2' },
   { version: '6000.3', label: '6.3' },
+  { version: '6000.4', label: '6.4' },
+  { version: '6000.5', label: '6.5' },
 ]
 
 export const FLOOR_VERSION = SUPPORTED_VERSIONS[0]
@@ -53,9 +55,13 @@ export interface FeatureVersion {
  * If an element is NOT listed here, it is assumed to be available since floor.
  */
 export const ELEMENT_VERSIONS: Record<string, FeatureVersion> = {
-  // Currently all 61 elements exist since floor (6000.2).
-  // When a new element is added in a future Unity version:
-  // CalendarPicker: { sinceUnity: '6000.5' },
+  // GUIDField became a runtime control in Unity 6.4. Its value type is UnityEngine.GUID
+  // (not UnityEditor.GUID), so it works in player builds.
+  GUIDField: { sinceUnity: '6000.4' },
+  // MaskField and Mask64Field existed before 6.5 in UnityEditor.UIElements as editor-only
+  // controls; 6.5 moved them into the runtime module, so this is when they became usable here.
+  MaskField: { sinceUnity: '6000.5' },
+  Mask64Field: { sinceUnity: '6000.5' },
 }
 
 /**
@@ -90,8 +96,9 @@ export const CSS_HELPER_VERSIONS: Record<string, FeatureVersion> = {
  * Keys are page canonicalId values from docs.tsx / pages.tsx.
  */
 export const PAGE_VERSIONS: Record<string, FeatureVersion> = {
-  // When a new component page is added for a 6.3+ element:
-  // 'calendar-picker': { sinceUnity: '6000.5' },
+  'guid-field': { sinceUnity: '6000.4' },
+  'mask-field': { sinceUnity: '6000.5' },
+  'mask64-field': { sinceUnity: '6000.5' },
 }
 
 // ---------------------------------------------------------------------------

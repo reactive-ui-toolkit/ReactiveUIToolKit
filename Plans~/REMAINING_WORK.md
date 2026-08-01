@@ -16,6 +16,22 @@
 
 ---
 
+## 0. Unity 6.5 support — carried over from Phase 1
+
+Phase 1 (the three new controls) shipped in **0.14.0**. These are the items it did
+**not** cover. Full detail: `Plans~/UNITY_6_5_SUPPORT_PLAN.md`.
+
+| Item | Why deferred | Trigger to revisit |
+|---|---|---|
+| **Phase 2 — `PanelRenderer` / `IPanelComponent` host** (A3 root-source abstraction, sub-root mount, deferred mount + replay, three-way rebuild branch, world-space parity) | Carries all the architectural risk; Phase 1 was deliberately shippable without it. Spikes are complete and the gate is green | Starts immediately after 0.14.0 publishes |
+| **Retention-site cleanup** (`PropsApplier` static element dictionary, the four row pools, `Animator`'s captured element, user `Ref`s) | Blocker **for Phase 2 only** — 6.5's `ReleaseResources()` is the first thing that makes a `VisualElement` throw on touch, so stale references stop being a silent leak | Phase 2 step 8 (first item, before the host) |
+| **Nested-`PanelRenderer` workarounds WA1–WA4** | Depend on the Phase 2 host existing | Phase 2; see plan §5.9 registry for gating and removal conditions |
+| **ATG measurement comparison** (§4.1) | Cannot be settled by reading — needs 6.4 and 6.5 side by side, rendering the text-heavy samples and diffing measured sizes and wrap points. The punctuation line-breaking divergence has **no UUM id at all** | Any report of layout shifting after a 6.5 upgrade, or before relying on precise text metrics. A clean repro would be new information for Unity |
+| **`add-unity-version` skill / `VERSIONING_PROCESS` runbook defects** (§9) | Six gaps found while running this wave: `TypedPropsApplier` missing from every checklist, `Style.cs` described as one edit when it is six, `IStyleCoverageTests` needing a new array per IStyle-adding release, the four-emitter alias-parity layer absent, the release surface omitted, and `-FromDll`/`-ToDll` pinning not documented as mandatory | Before the next version-add wave — none of them bit this one because it had no IStyle changes |
+| **Docs folder casing** — on disk `ReactiveUIToolKitDocs~` (capital K), tracked in git as `ReactiveUIToolkitDocs~` | Pre-existing; `core.ignorecase=true` hides it on Windows. New files were staged under the tracked casing so the tree did not split, but on a case-sensitive checkout the working dir and index disagree | Any CI docs-build oddity, or before someone adds files on Linux/macOS |
+
+---
+
 ## 1. Correctness / Bugs
 
 | ID | Item | Evidence / anchor | Source |
