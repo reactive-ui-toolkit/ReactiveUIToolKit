@@ -6,6 +6,69 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 For IDE extension changelogs (VS Code, Visual Studio 2022), see
 `ide-extensions~/changelog.json` — the single source of truth for extension releases.
 
+## [0.14.0] - 2026-08-01
+
+### Added — Unity 6.5 and 6.4 controls: `MaskField`, `Mask64Field`, `GUIDField`
+
+- **`V.MaskField` / `<MaskField>` (Unity 6.5+)** — a multi-select bitmask dropdown
+  backed by an `int`. `Choices` supplies the option labels; the optional
+  `ChoicesMasks` overrides the default `1 << i` per entry so a single choice can
+  stand for a composite of several bits. These controls existed before 6.5, but
+  only in `UnityEditor.UIElements` as editor-only; Unity 6.5 moved them into the
+  runtime module, which is what makes them usable here.
+- **`V.Mask64Field` / `<Mask64Field>` (Unity 6.5+)** — the 64-bit sibling, backed
+  by a `ulong` with `List<ulong>` masks, for when 32 flags are not enough. In
+  markup a mask literal may parse as `int` or `long`; those are widened rather
+  than rejected.
+- **`V.GUIDField` / `<GUIDField>` (Unity 6.4+)** — a text field for a
+  `UnityEngine.GUID`. Despite the name this is a **runtime** control — the value
+  type is `UnityEngine.GUID`, not `UnityEditor.GUID` — so it works in player
+  builds. Accepts a `GUID` or a dashed/undashed hex string, matching how UXML
+  round-trips it, and inherits `ReadOnly`, `IsDelayed`, `MaxLength` and
+  `SelectAllOnFocus` from the text-input base.
+
+> **Masks: `Everything` is `~0`, not `(1 << n) - 1`.** The dropdown always prefixes
+> two synthetic entries — `Nothing` (`0`) and `Everything` (`~0`, i.e. `-1`). Those
+> are *different values* from "every bit currently defined", so the props diff never
+> normalises one into the other. If your own code persists or compares a mask, keep
+> that distinction too, or `Everything` silently degrades into whatever bits happened
+> to exist at the time.
+
+### Added — version-aware editor support for elements
+
+- The UITKX schema entries for the three controls carry the first **`sinceUnity`**
+  annotations on *elements* (previously only style properties had them). Completion
+  and diagnostics are therefore version-aware for tags as well: on a project
+  targeting an older Unity the new tags are reported rather than silently offered.
+  No LSP change was needed — that path already existed and is now exercised.
+- The documentation site's version dropdown gains **6.4** and **6.5**, so there is
+  no longer a hole between the floor and the newest supported release.
+
+### Added — documentation
+
+- Component pages for all three controls, with the mask sentinel rule called out.
+- A **Known Issues** section for Unity 6.5 making the **Advanced Text Generator**
+  the default: Unity claims feature parity but not *measurement* parity, so text
+  sizes and wrap points can shift. Documents the per-subtree opt-out
+  (`-unity-text-generator: standard`, already supported in the typed `Style`
+  surface), plus the static-font-asset and rich-text breaks.
+
+### Fixed — internal tooling
+
+- `automation~/unity-api-diff.ps1` keyed its element/enum/struct collections by
+  simple type name, so a pre-existing **nested** type masked a **new top-level**
+  type of the same name and the addition was dropped from the diff entirely.
+  Unity 6.5's top-level `WorldSpaceSizeMode` went missing this way. Nested types
+  are now qualified `Outer.Nested`; top-level types keep their simple name, which
+  `apply-diff-to-schema.mjs` requires.
+
+### Compatibility
+
+- The package floor is unchanged at **6000.2**. Everything above is behind
+  `UNITY_6000_4_OR_NEWER` / `UNITY_6000_5_OR_NEWER`, which Unity defines
+  automatically — no asmdef `versionDefines` needed — and compiles out entirely
+  below the gate. Existing projects are unaffected.
+
 ## [0.13.0] - 2026-07-31
 
 ### Added — unified settings: one window, one JSON file, the family knob set
