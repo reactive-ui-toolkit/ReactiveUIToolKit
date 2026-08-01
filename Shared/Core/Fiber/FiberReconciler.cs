@@ -1342,8 +1342,8 @@ namespace Ruitk.Core.Fiber
                 string newText = null;
 
                 // Try typed path first
-                if (fiber.HostProps is Props.Typed.LabelProps oldLp)
-                    oldText = oldLp.Text;
+                if (fiber.HostProps is Props.Typed.IHostTextProps oldTp)
+                    oldText = oldTp.HostText;
                 else if (
                     fiber.Props != null
                     && fiber.Props.TryGetValue("text", out var ov)
@@ -1353,8 +1353,8 @@ namespace Ruitk.Core.Fiber
                     oldText = os;
                 }
 
-                if (fiber.PendingHostProps is Props.Typed.LabelProps newLp)
-                    newText = newLp.Text;
+                if (fiber.PendingHostProps is Props.Typed.IHostTextProps newTp)
+                    newText = newTp.HostText;
                 else if (
                     fiber.PendingProps != null
                     && fiber.PendingProps.TryGetValue("text", out var nv)
