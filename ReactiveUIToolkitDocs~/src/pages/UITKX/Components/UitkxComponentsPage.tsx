@@ -109,6 +109,9 @@ const pickers: CompEntry[] = [
   { name: 'DropdownField', desc: 'Dropdown / popup selector' },
   { name: 'EnumField', desc: 'Enum value picker' },
   { name: 'EnumFlagsField', desc: 'Flags enum multi-picker' },
+  { name: 'MaskField', desc: 'Bitmask multi-select dropdown (Unity 6.5+)' },
+  { name: 'Mask64Field', desc: '64-bit bitmask multi-select dropdown (Unity 6.5+)' },
+  { name: 'GUIDField', desc: 'UnityEngine.GUID text field (Unity 6.4+)' },
   { name: 'ColorField', desc: 'Color picker', editor: true },
   { name: 'ObjectField', desc: 'Unity Object reference picker', editor: true },
 ]

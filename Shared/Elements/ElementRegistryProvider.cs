@@ -66,6 +66,13 @@ namespace Ruitk.Elements
 #if UNITY_EDITOR
                 RegisterIfAllowed(registry, "EnumFlagsField");
 #endif
+#if UNITY_6000_4_OR_NEWER
+                RegisterIfAllowed(registry, "GUIDField");
+#endif
+#if UNITY_6000_5_OR_NEWER
+                RegisterIfAllowed(registry, "MaskField");
+                RegisterIfAllowed(registry, "Mask64Field");
+#endif
                 RegisterIfAllowed(registry, "ToggleButtonGroup");
                 RegisterIfAllowed(registry, "Hash128Field");
                 RegisterIfAllowed(registry, "FloatField");
@@ -137,6 +144,13 @@ namespace Ruitk.Elements
 
 #if UNITY_EDITOR
             RegisterIfAllowed(registry, "EnumFlagsField", allowedSet);
+#endif
+#if UNITY_6000_4_OR_NEWER
+            RegisterIfAllowed(registry, "GUIDField", allowedSet);
+#endif
+#if UNITY_6000_5_OR_NEWER
+            RegisterIfAllowed(registry, "MaskField", allowedSet);
+            RegisterIfAllowed(registry, "Mask64Field", allowedSet);
 #endif
             RegisterIfAllowed(registry, "ToggleButtonGroup", allowedSet);
             RegisterIfAllowed(registry, "Hash128Field", allowedSet);
@@ -306,6 +320,19 @@ namespace Ruitk.Elements
 #if UNITY_EDITOR
                     case "EnumFlagsField":
                         registry.Register("EnumFlagsField", new EnumFlagsFieldElementAdapter());
+                        break;
+#endif
+#if UNITY_6000_4_OR_NEWER
+                    case "GUIDField":
+                        registry.Register("GUIDField", new GUIDFieldElementAdapter());
+                        break;
+#endif
+#if UNITY_6000_5_OR_NEWER
+                    case "MaskField":
+                        registry.Register("MaskField", new MaskFieldElementAdapter());
+                        break;
+                    case "Mask64Field":
+                        registry.Register("Mask64Field", new Mask64FieldElementAdapter());
                         break;
 #endif
                     case "ToggleButtonGroup":

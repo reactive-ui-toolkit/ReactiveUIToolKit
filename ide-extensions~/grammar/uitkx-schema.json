@@ -2201,6 +2201,145 @@
         }
       ]
     },
+    "GUIDField": {
+      "propsType": "GUIDFieldProps",
+      "sinceUnity": "6000.4",
+      "description": "Text field for a UnityEngine.GUID value. Runtime-usable since Unity 6.4.",
+      "acceptsChildren": false,
+      "attributes": [
+        {
+          "name": "value",
+          "type": "GUID",
+          "description": "Current GUID. Accepts a GUID or a dashed/undashed hex string."
+        },
+        {
+          "name": "labelText",
+          "type": "string",
+          "description": "Field label text."
+        },
+        {
+          "name": "readOnly",
+          "type": "bool",
+          "description": "Makes the input read-only."
+        },
+        {
+          "name": "isDelayed",
+          "type": "bool",
+          "description": "Commit the value on Enter/blur instead of per keystroke."
+        },
+        {
+          "name": "maxLength",
+          "type": "int",
+          "description": "Maximum character count."
+        },
+        {
+          "name": "selectAllOnFocus",
+          "type": "bool",
+          "description": "Select the whole value when the field gains focus."
+        },
+        {
+          "name": "onChange",
+          "type": "Action",
+          "description": "Callback on value change."
+        },
+        {
+          "name": "label",
+          "type": "object",
+          "description": "Label sub-element props."
+        },
+        {
+          "name": "input",
+          "type": "object",
+          "description": "Input sub-element props."
+        }
+      ]
+    },
+    "MaskField": {
+      "propsType": "MaskFieldProps",
+      "sinceUnity": "6000.5",
+      "description": "Multi-select bitmask dropdown (32-bit). Runtime-usable since Unity 6.5.",
+      "acceptsChildren": false,
+      "attributes": [
+        {
+          "name": "choices",
+          "type": "List<string>",
+          "description": "Option labels. The dropdown prefixes 'Nothing' and 'Everything'."
+        },
+        {
+          "name": "choicesMasks",
+          "type": "List<int>",
+          "description": "Per-choice mask overriding the default 1 << i, for composite flags."
+        },
+        {
+          "name": "value",
+          "type": "int",
+          "description": "Current mask. 'Nothing' is 0 and 'Everything' is ~0 (-1), not (1 << n) - 1."
+        },
+        {
+          "name": "labelText",
+          "type": "string",
+          "description": "Field label text."
+        },
+        {
+          "name": "onChange",
+          "type": "Action",
+          "description": "Callback on value change."
+        },
+        {
+          "name": "label",
+          "type": "object",
+          "description": "Label sub-element props."
+        },
+        {
+          "name": "visualInput",
+          "type": "object",
+          "description": "Visual input sub-element props."
+        }
+      ]
+    },
+    "Mask64Field": {
+      "propsType": "Mask64FieldProps",
+      "sinceUnity": "6000.5",
+      "description": "Multi-select bitmask dropdown (64-bit). Runtime-usable since Unity 6.5.",
+      "acceptsChildren": false,
+      "attributes": [
+        {
+          "name": "choices",
+          "type": "List<string>",
+          "description": "Option labels. The dropdown prefixes 'Nothing' and 'Everything'."
+        },
+        {
+          "name": "choicesMasks",
+          "type": "List<ulong>",
+          "description": "Per-choice mask overriding the default 1UL << i, for composite flags."
+        },
+        {
+          "name": "value",
+          "type": "ulong",
+          "description": "Current mask. 'Nothing' is 0 and 'Everything' is ~0UL."
+        },
+        {
+          "name": "labelText",
+          "type": "string",
+          "description": "Field label text."
+        },
+        {
+          "name": "onChange",
+          "type": "Action",
+          "description": "Callback on value change."
+        },
+        {
+          "name": "label",
+          "type": "object",
+          "description": "Label sub-element props."
+        },
+        {
+          "name": "visualInput",
+          "type": "object",
+          "description": "Visual input sub-element props."
+        }
+      ]
+    },
     "IMGUIContainer": {
       "propsType": "IMGUIContainerProps",
       "description": "Hosts an IMGUI (OnGUI) callback inside UI Toolkit.",

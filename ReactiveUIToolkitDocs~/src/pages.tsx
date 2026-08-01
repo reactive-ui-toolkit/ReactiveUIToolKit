@@ -8,6 +8,9 @@ import { DoubleFieldPage } from './pages/Components/DoubleField/DoubleFieldPage'
 import { DropdownFieldPage } from './pages/Components/DropdownField/DropdownFieldPage'
 import { EnumFieldPage } from './pages/Components/EnumField/EnumFieldPage'
 import { EnumFlagsFieldPage } from './pages/Components/EnumFlagsField/EnumFlagsFieldPage'
+import { GUIDFieldPage } from './pages/Components/GUIDField/GUIDFieldPage'
+import { MaskFieldPage } from './pages/Components/MaskField/MaskFieldPage'
+import { Mask64FieldPage } from './pages/Components/Mask64Field/Mask64FieldPage'
 import { FloatFieldPage } from './pages/Components/FloatField/FloatFieldPage'
 import { FoldoutPage } from './pages/Components/Foldout/FoldoutPage'
 import { GroupBoxPage } from './pages/Components/GroupBox/GroupBoxPage'
@@ -151,6 +154,30 @@ export const pages: Section[] = [
         keywords: ['enum', 'flags', 'EnumFlagsField'],
         group: 'advanced',
         element: () => <EnumFlagsFieldPage />,
+      },
+      {
+        id: 'component-guid-field',
+        title: 'GUIDField',
+        path: '/components/guid-field',
+        keywords: ['guid', 'id', 'identifier', 'GUIDField'],
+        group: 'advanced',
+        element: () => <GUIDFieldPage />,
+      },
+      {
+        id: 'component-mask-field',
+        title: 'MaskField',
+        path: '/components/mask-field',
+        keywords: ['mask', 'bitmask', 'flags', 'layers', 'MaskField'],
+        group: 'advanced',
+        element: () => <MaskFieldPage />,
+      },
+      {
+        id: 'component-mask64-field',
+        title: 'Mask64Field',
+        path: '/components/mask64-field',
+        keywords: ['mask', 'bitmask', 'flags', '64-bit', 'ulong', 'Mask64Field'],
+        group: 'advanced',
+        element: () => <Mask64FieldPage />,
       },
       {
         id: 'component-float-field',
