@@ -1,3 +1,19 @@
+## [0.14.1] - 2026-08-02
+
+### Test coverage for Shared/ - and the first bug it found
+
+**`RouterPath.ParseQuery("?a=1")` returned a dictionary keyed `"?a"`, not `"a"`.** The leading `?` was never stripped, so any caller passing a conventional query string found the first parameter silently unreachable. The router's own `Parse()` strips it first, which is why nobody hit it - but `ParseQuery` is public API. Fixed at the root; `"?a=1"`, `"a=1"` and a bare `"?"` all behave now. It was found by the first automated test ever run against that code, which is the real story here.
+
+**`Shared/` had no CI coverage at all.** It is Unity C#, so only the Editor ever compiled it - CI runs the SourceGenerator and LSP suites, and the one Unity test assembly runs only inside the editor. `SharedTests~` is a net10.0 suite that links the host-agnostic parts of `Shared/Core` and runs them in CI: 39 tests over path normalisation, `Combine`/`StripBasename`/`WithBasename` round-tripping, query parse/build, and the `MemoryHistory` back/forward stack (forward-entry truncation, blockers, listener lifetime).
+
+It does not reference Unity's assemblies, deliberately: those bind to native ECalls that exist only inside the Unity runtime - measured on 6000.5.6f1, `Debug.Log` and `new VisualElement()` throw `SecurityException` outside the editor. A shim supplies what the sources touch, and captures logs so tests can assert on them.
+
+**A Unity compile check that needs no Editor.** `scripts/unity-compile-check.mjs` compiles `Shared/` and `Runtime/` against the real Unity assemblies twice: at the package floor with gates off, and with the 6.4/6.5 gates on. That is the manual "open it on the floor, then on 6.5" step, automated - and it catches a wrong `UnityEngine` API in an adapter, which the shimmed suite cannot see. Unity is discovered, never hardcoded.
+
+**Tests.** 39/39 new Shared suite, 1828/1828 SG, 152/152 LSP.
+
+---
+
 ## [0.14.0] - 2026-08-01
 
 ### Unity 6.5 and 6.4 controls - MaskField, Mask64Field, GUIDField

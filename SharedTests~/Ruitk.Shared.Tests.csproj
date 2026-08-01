@@ -1,0 +1,65 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    CI-runnable tests for the parts of Shared/Core that are genuinely host-agnostic.
+
+    Shared/ is Unity C# and is otherwise only ever compiled by the Unity Editor, so this
+    code has had no automated coverage at all: CI runs the SourceGenerator and LSP suites,
+    and the single Unity test assembly (Ugui/Tests) only runs inside the editor.
+
+    SCOPE, and why it is what it is. The original intent was to unit-test the fiber
+    reconciler through a mock FiberHostConfig - the design permits it, since host handles
+    are opaque `object`s. That is currently blocked: FiberReconciler.cs references
+    Ruitk.Props.Typed.BaseProps, which pulls in Style.cs (2887 lines) and 20+ UnityEngine
+    style types. Faking that surface would mean a large shim that silently drifts from
+    Unity's real API - worse than no test. Decoupling the reconciler from the UITK props
+    surface is Phase 2 / A3 work (it is the same "make the core actually host-agnostic"
+    goal), and the reconciler suite lands with it.
+
+    What IS covered here is the pure-logic core that links cleanly and had zero tests:
+    router path matching and location handling, and the signals runtime.
+
+    No Unity assemblies are referenced. Those DLLs bind to native ECalls that exist only
+    inside the Unity runtime - probed on 6000.5.6f1, Debug.Log/LogWarning/LogError,
+    Time.realtimeSinceStartup, GUID.Generate and `new VisualElement()` all throw
+    SecurityException outside the editor. Shim/UnityEngineShim.cs supplies the small
+    surface these sources touch, and captures logs so tests can assert on them.
+    Compile-checking against the REAL Unity assemblies is a separate, execution-free
+    harness: UnityCompileCheck~.
+  -->
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <IsPackable>false</IsPackable>
+    <AssemblyName>Ruitk.Shared.Tests</AssemblyName>
+    <RootNamespace>Ruitk.Shared.Tests</RootNamespace>
+    <NoWarn>$(NoWarn);CS0618;CS0612;CS0067;CS0414;CS0169</NoWarn>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.11.1" />
+    <PackageReference Include="xunit" Version="2.9.2" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.8.2" />
+  </ItemGroup>
+
+  <!-- Sources under test, linked from the Unity tree.
+       RouteRanker.cs is excluded: it references VirtualNode/BaseProps and is therefore
+       blocked by the same coupling described above. -->
+  <ItemGroup>
+    <Compile Include="../Shared/Core/Router/IRouterHistory.cs" Link="Linked/Router/IRouterHistory.cs" />
+    <Compile Include="../Shared/Core/Router/MemoryHistory.cs" Link="Linked/Router/MemoryHistory.cs" />
+    <Compile Include="../Shared/Core/Router/RouteMatch.cs" Link="Linked/Router/RouteMatch.cs" />
+    <Compile Include="../Shared/Core/Router/RouteMatcher.cs" Link="Linked/Router/RouteMatcher.cs" />
+    <Compile Include="../Shared/Core/Router/RouterLocation.cs" Link="Linked/Router/RouterLocation.cs" />
+    <Compile Include="../Shared/Core/Router/RouterPath.cs" Link="Linked/Router/RouterPath.cs" />
+    <Compile Include="../Shared/Core/Router/RouterState.cs" Link="Linked/Router/RouterState.cs" />
+    <Compile Include="../Shared/Core/Router/RouterTagAliases.cs" Link="Linked/Router/RouterTagAliases.cs" />
+    <Compile Include="../Shared/Core/Router/RouterContextKeys.cs" Link="Linked/Router/RouterContextKeys.cs" />
+    <Compile Include="../Shared/Core/Signals/Signal.cs" Link="Linked/Signals/Signal.cs" />
+    <Compile Include="../Shared/Core/Signals/SignalsRuntime.cs" Link="Linked/Signals/SignalsRuntime.cs" />
+    <Compile Include="../Shared/Core/Util/ShallowCompare.cs" Link="Linked/Util/ShallowCompare.cs" />
+  </ItemGroup>
+
+</Project>

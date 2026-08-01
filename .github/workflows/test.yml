@@ -63,6 +63,17 @@ jobs:
       # entry must fit Discord's 2000-char message cap, carry no masked [text](url) links (they
       # do not render in plain Discord messages), and keep its `## [<version>]` header unique —
       # that header is also publish.yml's discord-job dedup key against the channel history.
+      # Compiles Shared/ + Runtime/ against the REAL Unity assemblies, twice: once at the
+      # package floor (version gates off) and once with the 6.4/6.5 gates on. Catches a
+      # wrong UnityEngine API in an adapter or host config, which is otherwise invisible
+      # until someone opens the Editor.
+      #
+      # --allow-missing: GitHub runners have no licensed Unity, so this SKIPS here and
+      # says so loudly. It is a local pre-push gate today, and starts running for free if
+      # this lane ever moves to a Unity-enabled image.
+      - name: Unity compile check (skips without a local Unity)
+        run: node scripts/unity-compile-check.mjs --allow-missing
+
       - name: discord changelog (format + caps)
         run: node scripts/discord-changelog.mjs verify
 
@@ -87,6 +98,14 @@ jobs:
 
       - name: Test
         run: dotnet test SourceGenerator~/Tests/Ruitk.SourceGenerator.Tests.csproj -c Release --no-build --logger "trx;LogFileName=results.trx"
+
+      # Shared/ is otherwise only ever compiled by the Unity Editor, so the router,
+      # signals and (in time) the reconciler have no CI coverage at all. This suite
+      # links those sources and runs them against a small UnityEngine shim -- Unity's
+      # real assemblies bind to native ECalls and throw outside the editor, so they
+      # cannot be referenced by anything that executes.
+      - name: Test Shared/ core (host-agnostic suite)
+        run: dotnet test SharedTests~/Ruitk.Shared.Tests.csproj -c Release --logger "trx;LogFileName=shared-results.trx"
 
       # Soft check: rebuild the generator on its own and compare the resulting
       # IL against what's committed under Analyzers/.  A drift here is not fatal

@@ -1353,10 +1353,41 @@ The `add-unity-version` skill and `VERSIONING_PROCESS.md` understate the work. N
 6. Gates (§8) + manual verification on the 6000.2 floor and on 6000.5.6f1.
 7. Release surface (§8) — minor bump. **Push → owner PRs → CI → merge → fast-forward master.**
 
-### PHASE 2 — the `PanelRenderer` host → **ship + publish**
+### PHASE 0 — a testable core → **ship + publish (0.14.1, patch)**
 
-Begins immediately after Phase 1 publishes. **Everything below is Phase 2** — the retention cleanup
-is step one of this phase, not a Phase-1 prerequisite.
+**Inserted after Phase 1 shipped (owner decision, 2026-08-02).** Its own branch and PR, landed and
+verified *before* Phase 2 starts.
+
+**Why it exists.** CI runs the SourceGenerator suite and the LSP suite. Neither compiles `Shared/`.
+The only Unity test assembly is `Ugui/Tests`, which runs only inside the editor. So
+`FiberReconciler`, `RetargetContainer`, `PropsApplier`, the row pools and `Animator` — **the entire
+surface Phase 2 rewrites** — has no CI coverage at all. Phase 1 was safe because it was additive and
+`SchemaRegistryParityTests` caught the one cross-layer requirement; Phase 2 is the opposite.
+
+**Why it is possible.** The core is already host-agnostic: `FiberHostConfig` is 12 members over
+opaque `object` handles, and `Shared/Core/Fiber/` has no real `UnityEngine` dependency (residual
+references are comments, except the legacy `VisualElement`-typed ctor at `FiberRenderer.cs:4,24` —
+which A3 removes anyway when retarget widens to `object`).
+
+0.1 **A `net10.0` test project that links `Shared/Core/**`** and drives the reconciler through a
+    **mock `FiberHostConfig`** built on plain POCOs. First task is confirming exactly which files are
+    `UnityEngine`-free; the legacy ctor is the one known blocker.
+0.2 **Tests for the behaviour Phase 2 depends on**: reuse-in-place when the sub-root is still
+    attached; `RetargetContainer` preserving fiber/hook/ref/animation state; full remount dropping
+    every retained reference; keyed reorders; deletion cleanup.
+0.3 **Retention-site cleanup** (§5.4) with an **internal** liveness predicate — `PropsApplier`'s
+    static element dictionary, the four row pools, `Animator`'s captured element, user `Ref`s — each
+    with a test proving the reference is actually dropped.
+0.4 Gates + release surface. **Patch bump, 0.14.1**: no new public API.
+
+> **`IsAlive` on `FiberHostConfig` deliberately moves to Phase 2.** It is a new public virtual, i.e.
+> additive, i.e. minor-worthy — keeping it out is what lets Phase 0 stay a clean patch. Phase 0 uses
+> an internal predicate; A3 promotes it.
+
+### PHASE 2 — the `PanelRenderer` host → **ship + publish (0.15.0, minor)**
+
+Begins after Phase 0 publishes. **One branch, one PR** (owner decision) — Phase 0's separate PR is
+the proof that the test harness works; everything after it lands together.
 
 8. **🔴 Retention-site cleanup + `IsAlive`** (§5.4) — **first, deliberately.** Every site listed
    exists in today's code and has **zero dependency on the new host**: `PropsApplier`'s static
@@ -1396,6 +1427,21 @@ is step one of this phase, not a Phase-1 prerequisite.
     nested-renderer limitation and pointing at the known-issues page.
 14. Migrate the remaining four mount sites (EditorWindow, uGUI, both islands) onto `IRootSource`;
     HMR third leg in **both** duplicated host lists (§5.6).
+14b. **🔴 Five new samples on the new renderer** (owner request, 2026-08-02), simple → complex. These
+    are the acceptance test a user actually sees, and each is chosen to exercise a distinct risk
+    surface rather than to look pretty:
+
+    | # | Sample | Exercises |
+    |---|---|---|
+    | 1 | **Hello PanelRenderer** — one screen-space panel, a label and a button | the plain mount path: deferred mount + replay, sub-root, `V.Host` props landing on our sub-root (§5.5b) |
+    | 2 | **World-space panel in a 3D scene** — a diegetic UI on a surface | `worldSpaceSizeMode`, `worldSpaceSize`, `position`, `pivot`, `pivotReferenceSize`; the per-frame transform writes Unity owns |
+    | 3 | **Nested renderers** — a child `PanelRenderer` under a parent | WA1–WA4: the mount watchdog, N2 prevention, N6 repair, and the `parentUI` warning. Should survive a parent rebuild in front of the user |
+    | 4 | **Mixed hosts** — `UIDocument` and `PanelRenderer` in one scene, plus a portal and an island | §5.5c: both hosts coexisting, cross-panel portal behaviour, islands unaffected |
+    | 5 | **A real screen** — router + signals + a list, on `PanelRenderer`, in both screen and world space | hook state across reuse/retarget/remount, HMR through the new host, and that nothing about the app-level API changed |
+
+    Samples 3 and 4 double as living regression tests for the two Unity bugs we filed
+    (case IN-150082, UUM-148452) — if a future Unity fixes them, these are where it shows.
+
 15. Gates + manual verification, including the spike scenarios re-run against the real host — this
     is where step 8's cleanup gets its end-to-end proof.
 16. Release surface (§8) — minor bump. Same push/PR/merge flow.
