@@ -88,6 +88,11 @@ try {
 
 // https://vite.dev/config/
 export default defineConfig({
+  // Mounted under the family documentation site at <domain>/unity/ (the `documentation` repo
+  // aggregates every leg; this build is pushed into its /unity/ folder by docs-sync.yml).
+  // Asset URLs are base-prefixed and the router basename mirrors this (see src/main.tsx), so
+  // this value MUST equal the public path the site is served from.
+  base: '/unity/',
   plugins: [react()],
   define: {
     __PACKAGE_VERSION__: JSON.stringify(unityPackageJson.version),
