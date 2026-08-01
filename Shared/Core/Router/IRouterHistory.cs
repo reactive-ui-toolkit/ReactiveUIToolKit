@@ -18,6 +18,12 @@ namespace Ruitk.Router
 
         void Replace(string path, object state = null);
 
+        /// <summary>
+        /// Subscribes to location changes. Implementations must invoke <paramref name="listener"/>
+        /// once with the current location before returning, so a subscriber never has to seed
+        /// itself separately, and then on every subsequent navigation. Disposing the returned
+        /// handle stops further callbacks.
+        /// </summary>
         IDisposable Listen(Action<RouterLocation> listener);
 
         IDisposable RegisterBlocker(Func<RouterLocation, RouterLocation, bool> blocker);

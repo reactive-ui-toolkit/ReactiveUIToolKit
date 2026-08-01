@@ -87,6 +87,18 @@ namespace Ruitk.Router
                 return RouterContextKeys.EmptyParams;
             }
 
+            // The leading '?' is conventional and optional. Parse() strips it before
+            // calling in, but this is public API and a caller passing a raw search
+            // string ("?a=1") would otherwise get a key of "?a" and never find "a".
+            if (query[0] == '?')
+            {
+                query = query.Substring(1);
+                if (query.Length == 0)
+                {
+                    return RouterContextKeys.EmptyParams;
+                }
+            }
+
             var dict = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase);
             string[] parts = query.Split('&');
             foreach (var part in parts)
