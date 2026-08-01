@@ -1,5 +1,16 @@
 # Changelog
 
+## [1.9.0] - 2026-08-01
+- Feature: Unity 6.5 and 6.4 controls in UITKX markup - MaskField, Mask64Field and GUIDField.
+
+<MaskField> and <Mask64Field> (Unity 6.5+) are multi-select bitmask dropdowns backed by int and ulong respectively, with choices plus an optional choicesMasks override for composite flags. <GUIDField> (Unity 6.4+) edits a UnityEngine.GUID; despite the name it is a runtime control and works in player builds, not only in the editor.
+
+These are the first schema elements to carry a sinceUnity annotation, so completion and diagnostics are now version-aware for elements as well as style properties: on a project targeting an older Unity the new tags are reported instead of being silently offered.
+
+One behaviour worth knowing when you diff or persist a mask: "Everything" is ~0 (that is -1) and "Nothing" is 0. "Everything" is NOT (1 << n) - 1, and the two must never be normalised into each other, or "Everything" quietly degrades into "every bit that happened to be defined at the time".
+
+SG suite 1828/1828, LSP suite 152/152.
+
 ## [1.8.0] - 2026-07-28
 - Breaking: the Reactive UI Toolkit family rebrand (pairs with Unity package 0.12.0). The repository moved to https://github.com/reactive-ui-toolkit/ruitk-unity and the code identifier root renamed ReactiveUITK → Ruitk: embedded Roslyn analysis and IntelliSense virtual documents now mirror the Ruitk.* namespaces, generated code emits global::Ruitk.*, asmdef names are Ruitk.*, and diagnostic categories follow. The UITKX language, file format, and every extension marketplace identity and display name are unchanged — existing installs keep updating in place. Migrate your own code with the RuitkMigrateBrand codemod (see MIGRATION-0.12.md in the repo). The bundled LICENSE files now carry the Reactive UI Toolkit Community License 1.1 — renamed and version-bumped family-wide, terms otherwise unchanged; previously published extension versions keep the license they shipped with.
 

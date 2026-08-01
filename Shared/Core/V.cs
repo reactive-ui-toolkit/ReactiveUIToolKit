@@ -211,6 +211,19 @@ namespace Ruitk
         public static VirtualNode EnumFlagsField(EnumFlagsFieldProps props, string key = null) =>
             RentElement("EnumFlagsField", key, props);
 
+#if UNITY_6000_4_OR_NEWER
+        public static VirtualNode GUIDField(GUIDFieldProps props, string key = null) =>
+            RentElement("GUIDField", key, props);
+#endif
+
+#if UNITY_6000_5_OR_NEWER
+        public static VirtualNode MaskField(MaskFieldProps props, string key = null) =>
+            RentElement("MaskField", key, props);
+
+        public static VirtualNode Mask64Field(Mask64FieldProps props, string key = null) =>
+            RentElement("Mask64Field", key, props);
+#endif
+
         public static VirtualNode Hash128Field(Hash128FieldProps props, string key = null) =>
             RentElement("Hash128Field", key, props);
 
