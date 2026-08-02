@@ -78,8 +78,10 @@ namespace Ruitk.Core.Fiber
         public FiberReconciler(HostContext hostContext)
         {
             _hostContext = hostContext;
-            _hostConfig =
-                hostContext.HostConfig ?? new UitkHostConfig(hostContext.ElementRegistry);
+            // HostContext guarantees HostConfig is non-null (both constructors fall
+            // back to the UI Toolkit backend themselves), so the backend default
+            // lives there and the reconciler stays host-agnostic.
+            _hostConfig = hostContext.HostConfig;
 
             if (
                 hostContext?.Environment != null

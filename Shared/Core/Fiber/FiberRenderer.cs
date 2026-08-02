@@ -9,7 +9,7 @@ namespace Ruitk.Core.Fiber
     /// Simple renderer using Fiber reconciler
     /// Drop-in replacement for VNodeHostRenderer
     /// </summary>
-    public class FiberRenderer
+    public partial class FiberRenderer
     {
         private FiberRoot _root;
         private FiberReconciler _reconciler;
@@ -25,11 +25,7 @@ namespace Ruitk.Core.Fiber
         {
             _container = container;
 
-            if (context == null)
-            {
-                var registry = ElementRegistryProvider.GetDefaultRegistry();
-                context = new HostContext(registry);
-            }
+            context ??= CreateDefaultContext();
 
             _hostConfig = context.HostConfig;
             _reconciler = new FiberReconciler(context);
@@ -43,16 +39,18 @@ namespace Ruitk.Core.Fiber
         /// </summary>
         public FiberRenderer(object container, HostContext context)
         {
-            if (context == null)
-            {
-                var registry = ElementRegistryProvider.GetDefaultRegistry();
-                context = new HostContext(registry);
-            }
+            context ??= CreateDefaultContext();
 
             _container = container;
             _hostConfig = context.HostConfig;
             _reconciler = new FiberReconciler(context);
         }
+
+        // The null-context default is supplied per compilation flavour (the Unity
+        // build resolves the default UI Toolkit ElementRegistry; the host-agnostic
+        // test build has no default backend and its part throws). Must never
+        // return null.
+        private static partial HostContext CreateDefaultContext();
 
         /// <summary>
         /// Render a virtual node tree (initial mount)
