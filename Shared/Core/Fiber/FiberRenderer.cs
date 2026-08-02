@@ -100,6 +100,21 @@ namespace Ruitk.Core.Fiber
         }
 
         /// <summary>
+        /// Tear down the tree without touching the host container - the Unity
+        /// 6.5 remount path, where the container subtree is released and any
+        /// host access throws. Effect cleanups and signal disposals still run
+        /// via <see cref="FiberReconciler.AbandonRoot"/>.
+        /// </summary>
+        public void Abandon()
+        {
+            _reconciler?.AbandonRoot();
+            _root = null;
+#if UNITY_EDITOR
+            MountRegistry.Unregister(this);
+#endif
+        }
+
+        /// <summary>
         /// Repoint the renderer at a new container VisualElement without
         /// tearing down the fiber tree. Moves all currently-mounted
         /// children from the old container to the new one (preserving

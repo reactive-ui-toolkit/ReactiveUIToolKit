@@ -20,6 +20,12 @@ namespace Ruitk.Core
         // callers to sequence their first Render after Unity's panel build.
         private VirtualNode pendingRootNode;
 
+        // The last vnode actually rendered, for the 6.5 remount path: when the
+        // host releases the mounted subtree wholesale, the fresh sub-root
+        // replays this. Safe to retain - the reconciler itself keeps the root
+        // vnode alive for state-driven re-renders (FiberRoot.RootVNode).
+        private VirtualNode lastRootNode;
+
         private void EnsureSetup()
         {
             if (elementRegistry == null)
@@ -106,6 +112,38 @@ namespace Ruitk.Core
             AdoptRootSource(new UIDocumentRootSource(hostDoc), env);
         }
 
+#if UNITY_6000_5_OR_NEWER
+        /// <summary>
+        /// Unity 6.5 <see cref="UnityEngine.UIElements.PanelRenderer"/> host.
+        /// The renderer's root is internal, so the mount is callback-driven: a
+        /// <see cref="Render"/> call issued before the panel exists is held
+        /// and replayed automatically when it does. The fiber tree mounts into
+        /// a library-owned sub-root (<c>__ruitk_root</c>) rather than Unity's
+        /// root, which Unity rewrites every frame; <c>V.Host</c> props land on
+        /// the sub-root. World-space configuration (worldSpaceSizeMode,
+        /// worldSpaceSize, position, pivot, pivotReferenceSize) stays on the
+        /// <see cref="UnityEngine.UIElements.PanelRenderer"/> component
+        /// itself - Unity owns those, and the mounted UI follows.
+        ///
+        /// <para>Panel rebuilds are handled per the release state of the
+        /// mounted tree: reuse in place when nothing moved, retarget (state
+        /// preserved) when the tree was orphaned but not released, and a
+        /// fresh remount (state dropped) when Unity released the subtree -
+        /// e.g. saving a Source Asset .uxml, or reassigning
+        /// <c>panelSettings</c> at runtime. Known Unity 6000.5.x issues with
+        /// nested renderers are covered by symptom-gated workarounds
+        /// (config.json: <c>mount_watchdog</c>, <c>nested_prevention</c>,
+        /// <c>nested_repair</c>); see the Unity 6.5 known-issues docs page.</para>
+        /// </summary>
+        public void Initialize(
+            UnityEngine.UIElements.PanelRenderer hostRenderer,
+            Action<HostContext> env = null
+        )
+        {
+            AdoptRootSource(new PanelRendererRootSource(hostRenderer), env);
+        }
+#endif
+
         private void AdoptRootSource(IRootSource source, Action<HostContext> env)
         {
             EnsureSetup();
@@ -118,6 +156,7 @@ namespace Ruitk.Core
 
         private void OnRootSourceChanged()
         {
+            var previous = rootElement;
             var next = rootSource?.CurrentRoot as VisualElement;
             rootElement = next;
             if (next == null)
@@ -126,6 +165,23 @@ namespace Ruitk.Core
             }
             if (vnodeHostRenderer != null)
             {
+                if (previous != null && !sharedHostContext.HostConfig.IsAlive(previous))
+                {
+                    // REMOUNT (Unity 6.5): the old container was released -
+                    // touching it throws, so the tree is abandoned (cleanups
+                    // run, hosts untouched) and the last UI replays into the
+                    // fresh container. Hook state is lost by design; a
+                    // released tree has nothing salvageable.
+                    vnodeHostRenderer.Abandon();
+                    vnodeHostRenderer = null;
+                    var replay = pendingRootNode ?? lastRootNode;
+                    pendingRootNode = null;
+                    if (replay != null)
+                    {
+                        Render(replay);
+                    }
+                    return;
+                }
                 // Move the live tree onto the freshly-built root, preserving
                 // hook, ref and animation state.
                 vnodeHostRenderer.RetargetHost(next);
@@ -148,6 +204,7 @@ namespace Ruitk.Core
                 return;
             }
             pendingRootNode = null;
+            lastRootNode = rootNode;
             if (vnodeHostRenderer == null)
             {
                 vnodeHostRenderer = new VNodeHostRenderer(sharedHostContext, rootElement);
@@ -159,6 +216,7 @@ namespace Ruitk.Core
         {
             rootSource?.Stop();
             pendingRootNode = null;
+            lastRootNode = null;
             if (vnodeHostRenderer != null)
             {
                 vnodeHostRenderer.Unmount();

@@ -37,6 +37,17 @@ namespace Ruitk.Core
         }
 
         /// <summary>
+        /// Tear down without touching the host element or its subtree - the
+        /// Unity 6.5 remount path (the host is released; even a style write
+        /// throws). Cleanups still run; see <see cref="FiberRenderer.Abandon"/>.
+        /// </summary>
+        public void Abandon()
+        {
+            lastHostProps = null;
+            fiberRenderer?.Abandon();
+        }
+
+        /// <summary>
         /// Repoints this renderer at a new host element. Used by
         /// <see cref="RootRenderer"/> when Unity rebuilds the panel
         /// (UIDocument asset swap, undo, disable/enable, editor selection
