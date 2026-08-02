@@ -29,6 +29,9 @@ namespace Ruitk.Core.Fiber
 
             _hostConfig = context.HostConfig;
             _reconciler = new FiberReconciler(context);
+#if UNITY_EDITOR
+            MountRegistry.Register(this);
+#endif
         }
 
         /// <summary>
@@ -44,6 +47,9 @@ namespace Ruitk.Core.Fiber
             _container = container;
             _hostConfig = context.HostConfig;
             _reconciler = new FiberReconciler(context);
+#if UNITY_EDITOR
+            MountRegistry.Register(this);
+#endif
         }
 
         // The null-context default is supplied per compilation flavour (the Unity
@@ -88,6 +94,9 @@ namespace Ruitk.Core.Fiber
             _reconciler?.UnmountRoot();
             _hostConfig.ClearChildren(_container);
             _root = null;
+#if UNITY_EDITOR
+            MountRegistry.Unregister(this);
+#endif
         }
 
         /// <summary>

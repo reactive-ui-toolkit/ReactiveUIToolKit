@@ -1,10 +1,5 @@
 using System;
-using System.Collections.Generic;
-using Ruitk.Core;
-using Ruitk.Core.Diagnostics;
-using Ruitk.Core.Fiber;
 using Ruitk.Elements;
-using Ruitk.Signals;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -15,32 +10,15 @@ namespace Ruitk.Core
         public static RootRenderer Instance { get; private set; }
         private HostContext sharedHostContext;
         private ElementRegistry elementRegistry;
+        private IRootSource rootSource;
         private VisualElement rootElement;
         private VNodeHostRenderer vnodeHostRenderer;
 
-#if UNITY_EDITOR
-        // Editor-only UIDocument host-rebuild tracking. In the editor Unity
-        // silently replaces UIDocument.rootVisualElement on undo, asset swap,
-        // disable/enable, HMR, and the 6.3 InspectorWindow selection storm
-        // (UUM-127851) — hookless mutations with no callback to observe. When
-        // Initialize(UIDocument, ...) is used we poll once per frame via
-        // AnimationTicker and reparent the mounted fiber tree onto the new
-        // root via VNodeHostRenderer.RetargetHost when the reference changes.
-        //
-        // Built players have none of these hookless swaps — every runtime
-        // panel change is developer-initiated through their own code — so the
-        // poll is compiled out of player builds entirely. Editor cost is one
-        // ReferenceEquals per RootRenderer per frame.
-        private UIDocument hostDocument;
-        private System.Action hostDocumentTickUnsubscribe;
-
-        /// <summary>HMR: all active RootRenderer instances for multi-tree walking.</summary>
-        private static readonly HashSet<RootRenderer> s_allInstances = new();
-        internal static IEnumerable<RootRenderer> AllInstances => s_allInstances;
-
-        /// <summary>HMR: exposes the VNodeHostRenderer for tree walking.</summary>
-        internal VNodeHostRenderer VNodeHostRendererInternal => vnodeHostRenderer;
-#endif
+        // Deferred mount: a Render() that arrives before the host has built
+        // its panel is held here and replayed when the root source produces a
+        // root. Previously the vnode was silently discarded, which forced
+        // callers to sequence their first Render after Unity's panel build.
+        private VirtualNode pendingRootNode;
 
         private void EnsureSetup()
         {
@@ -56,31 +34,12 @@ namespace Ruitk.Core
                     go.hideFlags = HideFlags.DontSave;
                     go.AddComponent<RenderScheduler>();
                 }
-                SignalsRuntime.EnsureInitialized();
-                sharedHostContext = new HostContext(elementRegistry);
-                sharedHostContext.Environment["scheduler"] = RenderScheduler.Instance;
-                sharedHostContext.Environment["isEditor"] = false;
-
-                sharedHostContext.Environment["env"] = BuildDefinesConfig.ResolveEnvironment();
-
-                // Initialize global diagnostics configuration from build defines.
-                DiagnosticsConfig.CurrentTraceLevel = BuildDefinesConfig.ResolveTraceLevel();
-                DiagnosticsConfig.EnableDiffTracing = BuildDefinesConfig.ResolveEnableDiffTracing();
-
-                // Reconciler knobs — defaults reproduce the former constants exactly.
-                FiberConfig.TimeSlicingEnabled = BuildDefinesConfig.ResolveTimeSlicing();
-                FiberConfig.TimeSliceMs = BuildDefinesConfig.ResolveTimeSliceMs();
-
-                // Strict knobs — the two tri-states resolve auto = on in the editor and
-                // development builds, off in release players; strict_mode additionally
-                // force-resolves off in release players regardless of the stored value.
-                Hooks.EnableHookValidation = BuildDefinesConfig.ResolveHookValidation();
-                Hooks.EnableStrictDiagnostics = BuildDefinesConfig.ResolveStrictDiagnostics();
-                FiberConfig.StrictModeEnabled = BuildDefinesConfig.ResolveStrictMode();
-
-                // For now, drive internal logs off the verbose trace level.
-                InternalLogOptions.EnableInternalLogs =
-                    DiagnosticsConfig.CurrentTraceLevel == DiagnosticsConfig.TraceLevel.Verbose;
+                sharedHostContext = RuitkBootstrap.CreateHostContext(
+                    elementRegistry,
+                    hostConfig: null,
+                    scheduler: RenderScheduler.Instance,
+                    isEditor: false
+                );
             }
         }
 
@@ -92,18 +51,11 @@ namespace Ruitk.Core
                 return;
             }
             Instance = this;
-#if UNITY_EDITOR
-            s_allInstances.Add(this);
-#endif
             EnsureSetup();
         }
 
         private void OnDestroy()
         {
-#if UNITY_EDITOR
-            s_allInstances.Remove(this);
-            UnsubscribeFromHostDocument();
-#endif
             if (Instance == this)
             {
                 Instance = null;
@@ -127,9 +79,7 @@ namespace Ruitk.Core
         /// </param>
         public void Initialize(VisualElement uiRootElement, Action<HostContext> env = null)
         {
-            EnsureSetup();
-            rootElement = uiRootElement;
-            env?.Invoke(sharedHostContext);
+            AdoptRootSource(new StaticRootSource(uiRootElement), env);
         }
 
         /// <summary>
@@ -153,72 +103,51 @@ namespace Ruitk.Core
         /// </summary>
         public void Initialize(UIDocument hostDoc, Action<HostContext> env = null)
         {
+            AdoptRootSource(new UIDocumentRootSource(hostDoc), env);
+        }
+
+        private void AdoptRootSource(IRootSource source, Action<HostContext> env)
+        {
             EnsureSetup();
-            rootElement = hostDoc != null ? hostDoc.rootVisualElement : null;
+            rootSource?.Stop();
+            rootSource = source;
+            rootElement = source.CurrentRoot as VisualElement;
             env?.Invoke(sharedHostContext);
-#if UNITY_EDITOR
-            UnsubscribeFromHostDocument();
-            hostDocument = hostDoc;
-            SubscribeToHostDocument();
-#endif
+            source.Start(OnRootSourceChanged);
         }
 
-#if UNITY_EDITOR
-        private void SubscribeToHostDocument()
+        private void OnRootSourceChanged()
         {
-            if (hostDocument == null || hostDocumentTickUnsubscribe != null)
+            var next = rootSource?.CurrentRoot as VisualElement;
+            rootElement = next;
+            if (next == null)
             {
                 return;
             }
-            hostDocumentTickUnsubscribe = Ruitk.Core.Animation.AnimationTicker.Subscribe(
-                PollHostDocument
-            );
-        }
-
-        private void UnsubscribeFromHostDocument()
-        {
-            if (hostDocumentTickUnsubscribe == null)
-            {
-                return;
-            }
-            hostDocumentTickUnsubscribe.Invoke();
-            hostDocumentTickUnsubscribe = null;
-        }
-
-        private void PollHostDocument()
-        {
-            if (hostDocument == null)
-            {
-                UnsubscribeFromHostDocument();
-                return;
-            }
-            var nextRoot = hostDocument.rootVisualElement;
-            if (ReferenceEquals(nextRoot, rootElement))
-            {
-                return;
-            }
-            rootElement = nextRoot;
-            if (nextRoot == null)
-            {
-                return;
-            }
-            // Move the live tree onto the freshly-built root. If we have
-            // not yet rendered we just record the new root for the first
-            // Render() call.
             if (vnodeHostRenderer != null)
             {
-                vnodeHostRenderer.RetargetHost(nextRoot);
+                // Move the live tree onto the freshly-built root, preserving
+                // hook, ref and animation state.
+                vnodeHostRenderer.RetargetHost(next);
+                return;
+            }
+            if (pendingRootNode != null)
+            {
+                var deferred = pendingRootNode;
+                pendingRootNode = null;
+                Render(deferred);
             }
         }
-#endif
 
         public void Render(VirtualNode rootNode)
         {
             EnsureSetup();
             if (rootElement == null)
             {
+                pendingRootNode = rootNode;
                 return;
             }
+            pendingRootNode = null;
             if (vnodeHostRenderer == null)
             {
                 vnodeHostRenderer = new VNodeHostRenderer(sharedHostContext, rootElement);
@@ -228,9 +157,8 @@ namespace Ruitk.Core
 
         public void Unmount()
         {
-#if UNITY_EDITOR
-            UnsubscribeFromHostDocument();
-#endif
+            rootSource?.Stop();
+            pendingRootNode = null;
             if (vnodeHostRenderer != null)
             {
                 vnodeHostRenderer.Unmount();
