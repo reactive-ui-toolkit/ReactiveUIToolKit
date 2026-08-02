@@ -2,13 +2,13 @@
 
 ### Unity 6.5 PanelRenderer host - sub-root mount, rebuild dispatch, workarounds
 
-**`RootRenderer.Initialize(panelRenderer)` lands.** The component Unity's manual points new 6.5 projects at is now a first-class host; the `UIDocument` path is untouched. The mount is callback-driven (the renderer's root is internal), a `Render` issued before the panel exists is held and replayed, and the tree mounts into a library-owned sub-root so Unity's per-frame root rewrites never fight your UI. World-space config stays on the component. Five new samples: hello, world space, nested, mixed hosts, and a router+signals+ListView dashboard.
+**`RootRenderer.Initialize(panelRenderer)` lands.** The component Unity's manual points new 6.5 projects at is now a first-class host; the `UIDocument` path is untouched. The mount is callback-driven, a `Render` issued before the panel exists is held and replayed, and the tree mounts into a library-owned sub-root so Unity's per-frame root rewrites never fight your UI. World-space config stays on the component. Five new samples, from hello to a router+signals+ListView dashboard.
 
-**Rebuilds dispatch on the tree's own state.** Still parented -> reuse in place; orphaned but alive -> retarget, all hook/ref/animation state preserved; released -> remount: the old tree is dropped without touching it (effect cleanups and signal disposals still run via the new `AbandonRoot`) and the last UI replays fresh.
+**Rebuilds dispatch on the tree's own state.** Still parented -> reuse in place; orphaned but alive -> retarget, all hook/ref/animation state preserved; released -> remount: the old tree is dropped without touching it (cleanups still run via the new `AbandonRoot`) and the last UI replays fresh.
 
 **Workarounds for open Unity 6000.5.x issues**, all symptom-gated so a fixed editor makes them inert: the mount watchdog (case IN-150082 + UUM-147875) forces the attach path when the reload callback never arrives; nested prevention and nested self-repair cover UUM-148452's release cascade into child renderers. Opt-outs `mount_watchdog`, `nested_prevention`, `nested_repair` in config.json; details on the Known Issues docs page.
 
-**Fix - pre-existing leaks.** New `IsAlive` liveness on the host seam. User refs now detach on unmount, `Animator` stops ticking when its element leaves the tree, the four list/tree row pools finally unmount their pooled rows, and retarget no longer leaks style tracking. Also: a second `RootRenderer` used to DESTROY its own GameObject via a legacy singleton guard - multi-mount scenes work now.
+**Fix - pre-existing leaks.** New `IsAlive` liveness on the host seam. User refs now detach on unmount, `Animator` stops ticking when its element leaves the tree, the four list/tree row pools finally unmount their pooled rows, and retarget no longer leaks style tracking. Also: a second `RootRenderer` used to DESTROY its own GameObject via a legacy singleton guard - multi-mount scenes work now. And the uGUI leg now compiles on 6.5, where `GetInstanceID` became an error-level obsolete.
 
 **Tests.** The fiber core got its first CI suite: 76 tests over a mock backend (reconciler, retarget contract, hooks, signals). SG 1828 -> 1840 via the samples corpus.
 

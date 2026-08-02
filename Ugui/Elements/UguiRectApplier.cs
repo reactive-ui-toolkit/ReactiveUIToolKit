@@ -29,7 +29,14 @@ namespace Ruitk.Ugui
                 || props.AnchorMax.HasValue;
             if (!writesPositional)
                 return;
+            // 6.5 makes GetInstanceID an error-level obsolete (CS0619) in favour
+            // of GetEntityId; EntityId converts implicitly to int, so the dedup
+            // set stays int-keyed on every version.
+#if UNITY_6000_5_OR_NEWER
+            int id = rt.GetEntityId();
+#else
             int id = rt.GetInstanceID();
+#endif
             if (!s_drivenHintShown.Add(id))
                 return;
             Debug.LogWarning(

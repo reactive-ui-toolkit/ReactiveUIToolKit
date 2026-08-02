@@ -21,6 +21,15 @@ namespace Ruitk.Ugui.Tests
         private const int BoxCount = 300;
         private const int Cycles = 20;
 
+        private static int StableId(GameObject go)
+        {
+#if UNITY_6000_5_OR_NEWER
+            return go.GetEntityId();
+#else
+            return go.GetInstanceID();
+#endif
+        }
+
         private GameObject _canvasGo;
         private RectTransform _mountRect;
         private FiberRenderer _renderer;
@@ -137,7 +146,7 @@ namespace Ruitk.Ugui.Tests
                 Assert.AreEqual(count + 1, area.childCount, $"cycle {cycle}");
                 for (int i = 1; i < area.childCount; i++)
                 {
-                    seenBoxes.Add(area.GetChild(i).gameObject.GetInstanceID());
+                    seenBoxes.Add(StableId(area.GetChild(i).gameObject));
                 }
             }
 
@@ -172,7 +181,7 @@ namespace Ruitk.Ugui.Tests
                 Assert.AreEqual(count + 1, area.childCount, $"cycle {cycle}");
                 for (int i = 1; i < area.childCount; i++)
                 {
-                    seenBoxes.Add(area.GetChild(i).gameObject.GetInstanceID());
+                    seenBoxes.Add(StableId(area.GetChild(i).gameObject));
                 }
             }
 
@@ -236,7 +245,7 @@ namespace Ruitk.Ugui.Tests
                 );
                 for (int i = 1; i < area.childCount; i++)
                 {
-                    seenBoxes.Add(area.GetChild(i).gameObject.GetInstanceID());
+                    seenBoxes.Add(StableId(area.GetChild(i).gameObject));
                 }
             }
 

@@ -86,6 +86,19 @@ workaround regression), mixed `UIDocument` + `PanelRenderer` hosts sharing a sig
 dashboard (router + signals + `ListView`). The `.uitkx` components join the samples corpus gate —
 the SG suite grew 1828 → 1840.
 
+### Fixed — Unity 6.5 upgrade fallout (found opening a real 6.3 project on 6.5)
+
+- **uGUI backend failed to compile on 6.5**: `GetInstanceID()` became an error-level obsolete
+  (CS0619, `GetEntityId` replaces it). `UguiRectApplier` and the stress tests now call
+  `GetEntityId()` under `UNITY_6000_5_OR_NEWER` (`EntityId` converts implicitly to `int`, so the
+  dedup sets are unchanged); the floor keeps `GetInstanceID`. This lived outside
+  `unity-compile-check`'s reach — the uGUI package assemblies aren't in Unity's `Managed/` dir.
+- **Endless `DirectoryNotFoundException` spam from the Package Manager** in development/embedded
+  checkouts: `package.json` declares the samples at `Samples~` (the shipped layout — the release
+  pipeline renames `Samples/` on publish), and 6.5's Package Manager now computes sample sizes on
+  every package event, throwing forever when the path is missing. A placeholder `Samples~/README.md`
+  makes the path resolve in dev; both release paths delete it before moving the real demos in.
+
 ### Fixed — multi-mount scenes self-deleted
 
 A second `RootRenderer` in a scene had its **whole GameObject destroyed** by a legacy singleton
