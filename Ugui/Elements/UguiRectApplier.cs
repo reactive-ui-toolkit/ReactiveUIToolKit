@@ -12,8 +12,13 @@ namespace Ruitk.Ugui
     internal static class UguiRectApplier
     {
 #if UNITY_EDITOR
+#if UNITY_6000_5_OR_NEWER
+        private static readonly System.Collections.Generic.HashSet<EntityId> s_drivenHintShown =
+            new System.Collections.Generic.HashSet<EntityId>();
+#else
         private static readonly System.Collections.Generic.HashSet<int> s_drivenHintShown =
             new System.Collections.Generic.HashSet<int>();
+#endif
 
         private static void HintIfDriven(RectTransform rt, UguiBaseProps props)
         {
@@ -30,10 +35,10 @@ namespace Ruitk.Ugui
             if (!writesPositional)
                 return;
             // 6.5 makes GetInstanceID an error-level obsolete (CS0619) in favour
-            // of GetEntityId; EntityId converts implicitly to int, so the dedup
-            // set stays int-keyed on every version.
+            // of GetEntityId - and EntityId's int conversion is error-obsolete
+            // too, so the dedup set is keyed by the version's native id type.
 #if UNITY_6000_5_OR_NEWER
-            int id = rt.GetEntityId();
+            var id = rt.GetEntityId();
 #else
             int id = rt.GetInstanceID();
 #endif

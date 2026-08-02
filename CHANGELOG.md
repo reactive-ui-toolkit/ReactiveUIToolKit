@@ -89,10 +89,11 @@ the SG suite grew 1828 → 1840.
 ### Fixed — Unity 6.5 upgrade fallout (found opening a real 6.3 project on 6.5)
 
 - **uGUI backend failed to compile on 6.5**: `GetInstanceID()` became an error-level obsolete
-  (CS0619, `GetEntityId` replaces it). `UguiRectApplier` and the stress tests now call
-  `GetEntityId()` under `UNITY_6000_5_OR_NEWER` (`EntityId` converts implicitly to `int`, so the
-  dedup sets are unchanged); the floor keeps `GetInstanceID`. This lived outside
-  `unity-compile-check`'s reach — the uGUI package assemblies aren't in Unity's `Managed/` dir.
+  (CS0619, `GetEntityId` replaces it) — and `EntityId`'s implicit `int` conversion is error-level
+  obsolete too. `UguiRectApplier` and the stress tests now call `GetEntityId()` under
+  `UNITY_6000_5_OR_NEWER` and key their dedup sets by the version's native id type; the floor
+  keeps `GetInstanceID` and `int`. This lived outside `unity-compile-check`'s reach — the uGUI
+  package assemblies aren't in Unity's `Managed/` dir.
 - **Endless `DirectoryNotFoundException` spam from the Package Manager** in development/embedded
   checkouts: `package.json` declares the samples at `Samples~` (the shipped layout — the release
   pipeline renames `Samples/` on publish), and 6.5's Package Manager now computes sample sizes on
