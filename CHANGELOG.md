@@ -6,6 +6,100 @@ Format follows [Keep a Changelog](https://keepachangelog.com/).
 For IDE extension changelogs (VS Code, Visual Studio 2022), see
 `ide-extensions~/changelog.json` — the single source of truth for extension releases.
 
+## [0.15.0] - 2026-08-02
+
+### Added — Unity 6.5 `PanelRenderer` host
+
+`RootRenderer.Initialize(PanelRenderer)` (gated `UNITY_6000_5_OR_NEWER`) hosts the component
+Unity's manual points new 6.5 projects at; the `UIDocument` path is untouched and not deprecated.
+The mount is callback-driven (`PanelRenderer`'s root is internal), renders issued before the panel
+exists are held and replayed automatically, and the fiber tree mounts into a library-owned sub-root
+(`__ruitk_root`) so Unity's per-frame root rewrites and nested-renderer front-insertion never
+collide with the mounted UI. `V.Host` props land on the sub-root. World-space configuration
+(`worldSpaceSizeMode`, `worldSpaceSize`, `position`, `pivot`, `pivotReferenceSize`) stays on the
+`PanelRenderer` component, where Unity owns it.
+
+Panel rebuilds dispatch three ways on the sub-root's own state (never the version counter): still
+parented → **reuse in place** (also the double-fire guard); orphaned but alive → **retarget**, all
+hook/ref/animation state preserved; released (`resourcesReleased`) → **remount** — the old tree is
+dropped without touching it via the new `FiberReconciler.AbandonRoot` (effect cleanups and signal
+disposals still run; a released element is never mutated), and the last UI replays fresh.
+
+### Added — workarounds for open Unity 6000.5.x `PanelRenderer` issues (all symptom-gated)
+
+- **Mount watchdog** (case **IN-150082**, editor-only; **UUM-147875**, fixed upstream in
+  6000.5.7f1): an enabled, configured renderer that never delivers its UI reload callback gets the
+  attach path forced — a `panelSettings` round-trip escalating to `PerformUpdate` /
+  `PerformValidation(true)` / a component toggle, judged by outcome. Opt-out `mount_watchdog`.
+- **Nested-release prevention** (**UUM-148452**, open; active in editor AND players): nested child
+  renderers are disabled around rebuild levers the library itself pulls, so the parent's release
+  cascade cannot poison them. Opt-out `nested_prevention`.
+- **Nested repair** (**UUM-148452**): a nested renderer whose tree Unity released with no
+  follow-up callback destroys + re-adds its own `PanelRenderer` with every setting copied
+  (Undo-wrapped in edit mode). Opt-out `nested_repair`.
+
+Each site carries a greppable `WORKAROUND(...)` header, an entry in
+`Plans~/REMAINING_WORK.md`, and a section on the docs site's Known Issues page; all three
+opt-outs live in `config.json` and the settings window (default on; symptom gating makes them
+inert on fixed editors). One-time mount warnings fire for `visualTreeAsset != null` (saving that
+`.uxml` remounts and drops transient state) and `parentUI != null` (nested limitations).
+
+### Added — `FiberHostConfig.IsAlive` + retention-site cleanup
+
+`bool IsAlive(object)` is the new liveness primitive (UITK: `!resourcesReleased` under 6.5;
+uGUI: the destroyed-`GameObject` fake-null check). The retention sites that would have held
+poisoned references — several of them pre-existing leaks on the `UIDocument` path — are fixed
+outright: user refs now detach on unmount (parity with uGUI), `Animator` stops tick lambdas when
+their element leaves the tree (and self-terminates on released elements), the four virtualized
+list/tree row pools unmount their pooled row renderers on host removal (their effect cleanups
+never ran before), `VNodeHostRenderer.RetargetHost` no longer leaks one style-tracking entry per
+retarget, and `PropsApplier.EvictReleasedElements()` sweeps wholesale-released subtrees.
+
+### Added — the A3 root-source seam, one bootstrap, one HMR registry
+
+`IRootSource` (internal; public entry points per host) abstracts where a mount's root comes from:
+`StaticRootSource`, `UIDocumentRootSource` (the editor poll moved out of `RootRenderer`,
+behaviour-neutral) and `PanelRendererRootSource`. `RuitkBootstrap` replaces the three
+near-identical bootstrap copies in `RootRenderer` / `UguiRootRenderer` /
+`EditorRootRendererUtility`. `MountRegistry` (editor-only) replaces both hard-coded HMR host
+lists: every `FiberRenderer` self-registers, so ALL hosts — including pooled row renderers, which
+were previously invisible to HMR — are hot-reload-reachable with no per-host list.
+`VNodeHostRenderer.RetargetHost` widened to public + `object`-typed.
+
+### Added — CI test coverage for the fiber core
+
+`SharedTests~` now links and tests the reconciler and renderer through a mock host backend
+(76 tests): mount order, Text→Label contract, fragment flattening, reuse-in-place,
+different-type remount, keyed reorders without recreation, conditional children, `UseState`
+synchronous re-render + same-value bailout, `UseEffect` setup/cleanup + dependency gating,
+`UseRef` persistence, `UnmountRoot` cleanup, the retarget contract (children move, updates follow,
+hook state survives), signals (registry semantics, subscribe/dispose, throwing-subscriber
+isolation, `UseSignal` re-render + selector slicing + unmount unsubscription), and the `IsAlive`
+seam. Enabled by splitting the UITK-flavoured halves of `Hooks`, `V`, `HostContext`,
+`FiberRenderer` and `IElementAdapter` into `*.Uitk.cs` / `V.Core.cs` partials — public surface
+unchanged.
+
+### Added — five `PanelRenderer` samples (simple → complex)
+
+Hello PanelRenderer (deferred mount), a diegetic world-space panel, nested renderers (the live
+workaround regression), mixed `UIDocument` + `PanelRenderer` hosts sharing a signal, and a ship
+dashboard (router + signals + `ListView`). The `.uitkx` components join the samples corpus gate —
+the SG suite grew 1828 → 1840.
+
+### Fixed — multi-mount scenes self-deleted
+
+A second `RootRenderer` in a scene had its **whole GameObject destroyed** by a legacy singleton
+guard in `Awake()` (`.Instance` has zero consumers). The first renderer still claims the legacy
+`Instance` slot; additional renderers are now independent mounts.
+
+### Notes
+
+Verification: SharedTests~ 76/76, SG 1840/1840, `unity-compile-check` green at the floor AND with
+the 6.4+6.5 gates on (the whole callback/watchdog/repair surface compiles against the real
+6000.5.6f1 assemblies), docs build green. IDE extensions are unchanged (no `.uitkx` schema
+change). The workaround registry's single authority is `Plans~/UNITY_6_5_SUPPORT_PLAN.md` §5.9,
+including the removal procedure.
+
 ## [0.14.1] - 2026-08-02
 
 ### Fixed — `RouterPath.ParseQuery` dropped the leading `?`
