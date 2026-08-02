@@ -35,6 +35,13 @@ namespace Ruitk.Shared.Tests.Fiber
         public readonly List<MockElement> CreatedElements = new List<MockElement>();
         public readonly List<MockElement> RemovedElements = new List<MockElement>();
 
+        // Elements marked dead model a backend whose elements can die out from
+        // under the tree (Unity 6.5 ReleaseResources poisoning, uGUI destroy).
+        public readonly HashSet<MockElement> DeadElements = new HashSet<MockElement>();
+
+        public override bool IsAlive(object element) =>
+            element is MockElement e ? !DeadElements.Contains(e) : element != null;
+
         // Chronological log of every host mutation, for ordering assertions.
         public readonly List<string> Operations = new List<string>();
 

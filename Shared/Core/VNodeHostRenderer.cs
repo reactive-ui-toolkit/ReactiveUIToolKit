@@ -58,6 +58,15 @@ namespace Ruitk.Core
             {
                 return;
             }
+            // The old root is being abandoned: drop its style tracking and
+            // detach any host-level ref (previously this leaked one
+            // previousStyles entry per retarget), and stop animations that
+            // captured it. The children move to the new root and keep theirs.
+            if (hostElement != null)
+            {
+                PropsApplier.NotifyElementRemoved(hostElement);
+                Animation.Animator.StopAllFor(hostElement);
+            }
             hostElement = nextHost;
             if (lastHostProps != null)
             {
