@@ -94,6 +94,10 @@ the SG suite grew 1828 → 1840.
   `UNITY_6000_5_OR_NEWER` and key their dedup sets by the version's native id type; the floor
   keeps `GetInstanceID` and `int`. This lived outside `unity-compile-check`'s reach — the uGUI
   package assemblies aren't in Unity's `Managed/` dir.
+- **`UAC1001` serialization-analyzer warnings** (new in 6.5): `BenchEnvOverrides` carried a
+  leftover `[Serializable]` while being a purely in-memory overrides carrier whose nullable
+  fields Unity's serializer cannot represent (the resolved values land on `BenchEnv`, which is
+  what reaches disk). The false attribute is removed and the contract documented.
 - **Endless `DirectoryNotFoundException` spam from the Package Manager** in development/embedded
   checkouts: `package.json` declares the samples at `Samples~` (the shipped layout — the release
   pipeline renames `Samples/` on publish), and 6.5's Package Manager now computes sample sizes on
