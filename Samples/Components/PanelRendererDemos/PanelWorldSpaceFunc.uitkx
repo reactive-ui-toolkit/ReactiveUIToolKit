@@ -27,11 +27,16 @@ export VirtualNode PanelWorldSpaceFunc() {
     (StyleKeys.FlexDirection, "row"),
   };
 
+  var noteStyle = new Style {
+    (StyleKeys.WhiteSpace, "normal"),
+  };
+
   return (
     <VisualElement style={panelStyle}>
       <Text text="REACTOR TERMINAL" />
       <Text
         text="A diegetic world-space panel. Size and placement come from the PanelRenderer component (worldSpaceSizeMode, worldSpaceSize, position, pivot) - Unity owns the root transform; this UI just renders into it."
+        style={noteStyle}
       />
       <Text text={$"Output: {power}%"} />
       <VisualElement style={barTrackStyle}>

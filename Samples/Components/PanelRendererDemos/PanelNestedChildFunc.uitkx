@@ -8,11 +8,16 @@ export VirtualNode PanelNestedChildFunc() {
     (StyleKeys.BorderRadius, 8f),
   };
 
+  var noteStyle = new Style {
+    (StyleKeys.WhiteSpace, "normal"),
+  };
+
   return (
     <VisualElement style={cardStyle}>
       <Text text="NESTED child PanelRenderer" />
       <Text
         text="This counter is local hook state. It survives a retarget; after a repair-and-remount (the tree was released, nothing was salvageable) it restarts at 0 - that reset is how you can SEE the repair happened."
+        style={noteStyle}
       />
       <Text text={$"Child counter: {count}"} />
       <Button text="+1" onClick={_ => setCount(count + 1)} />

@@ -6,11 +6,16 @@ export VirtualNode PanelHelloFunc() {
     (StyleKeys.FlexDirection, "column"),
   };
 
+  var noteStyle = new Style {
+    (StyleKeys.WhiteSpace, "normal"),
+  };
+
   return (
     <VisualElement style={containerStyle}>
       <Text text="Hello PanelRenderer" />
       <Text
         text="This tree mounted through RootRenderer.Initialize(PanelRenderer): the panel is built by Unity a frame after enable, so the first Render was deferred and replayed automatically."
+        style={noteStyle}
       />
       <Text text={$"Clicks: {count}"} />
       <Button text="Click me" onClick={_ => setCount(count + 1)} />
