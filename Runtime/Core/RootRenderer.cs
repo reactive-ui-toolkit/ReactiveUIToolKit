@@ -7,6 +7,12 @@ namespace Ruitk.Core
 {
     public sealed class RootRenderer : MonoBehaviour
     {
+        /// <summary>
+        /// The first-created renderer, kept for backward compatibility. A
+        /// scene may host any number of RootRenderers - one per mount (e.g. a
+        /// UIDocument screen plus a world-space PanelRenderer); each owns its
+        /// own tree.
+        /// </summary>
         public static RootRenderer Instance { get; private set; }
         private HostContext sharedHostContext;
         private ElementRegistry elementRegistry;
@@ -51,12 +57,14 @@ namespace Ruitk.Core
 
         private void Awake()
         {
-            if (Instance != null && Instance != this)
+            // First one wins the legacy Instance slot; additional renderers
+            // are independent mounts. (This used to destroy the second
+            // instance's whole GameObject, which made every multi-mount scene
+            // - mixed hosts, nested renderers - silently self-delete.)
+            if (Instance == null)
             {
-                Destroy(gameObject);
-                return;
+                Instance = this;
             }
-            Instance = this;
             EnsureSetup();
         }
 
