@@ -50,7 +50,11 @@ namespace Ruitk.Core
         // WA4: how long a released sub-root may wait for Unity's own follow-up
         // callback (which the three-way remount would handle) before the
         // nested-renderer repair concludes the callback is never coming.
-        private const float RepairAfterSeconds = 1.0f;
+        // 3s, not 1s: a .uxml save goes through asset reimport before the
+        // callback fires, and an editor sweep showed that path can exceed a
+        // second - repairing early is worse than waiting, since the normal
+        // remount preserves the renderer component.
+        private const float RepairAfterSeconds = 3.0f;
 
         private PanelRenderer renderer;
         private VisualElement subRoot;
@@ -140,6 +144,12 @@ namespace Ruitk.Core
             }
             subRoot = new VisualElement { name = SubRootName };
             subRoot.style.flexGrow = 1f;
+            // The sub-root is structural, and Unity layers whole panels over
+            // each other (a PanelRenderer root above a UIDocument root, both
+            // full-surface): with default picking this element would swallow
+            // every click aimed at UI beneath it. Content inside still picks;
+            // V.Host props can override.
+            subRoot.pickingMode = PickingMode.Ignore;
             newRoot.Add(subRoot);
             // A fresh, healthy mount generation: the one-shot repair guard
             // re-arms for the next release, if any.
@@ -338,7 +348,25 @@ namespace Ruitk.Core
             if (!Application.isPlaying)
             {
                 UnityEditorInternal.ComponentUtility.CopyComponent(old);
-                UnityEditor.Undo.DestroyObjectImmediate(old);
+                try
+                {
+                    UnityEditor.Undo.DestroyObjectImmediate(old);
+                }
+                catch (InvalidOperationException)
+                {
+                    // Unity's own OnPanelRendererCleanup throws when the tree
+                    // is already released (measured, plan f18/f23) - the very
+                    // condition this repair exists for. Success is judged by
+                    // the outcome below, never by whether this call threw.
+                }
+                if (old != null)
+                {
+                    // The destroy did not complete - the component survived.
+                    // Adding a second renderer would nest two; keep observing
+                    // the original instead.
+                    AdoptRepairedRenderer(old);
+                    return;
+                }
                 var freshEditor = UnityEditor.Undo.AddComponent<PanelRenderer>(go);
                 UnityEditorInternal.ComponentUtility.PasteComponentValues(freshEditor);
                 AdoptRepairedRenderer(freshEditor);
@@ -353,7 +381,22 @@ namespace Ruitk.Core
             var worldSpaceSizeMode = old.worldSpaceSizeMode;
             var worldSpaceSize = old.worldSpaceSize;
 
-            UnityEngine.Object.DestroyImmediate(old);
+            try
+            {
+                UnityEngine.Object.DestroyImmediate(old);
+            }
+            catch (InvalidOperationException)
+            {
+                // Same as the edit-mode branch: Unity's cleanup throws on a
+                // released tree by the nature of the bug being repaired; the
+                // settings copy below must still run (aborting here is what
+                // used to leave the repaired child unconfigured).
+            }
+            if (old != null)
+            {
+                AdoptRepairedRenderer(old);
+                return;
+            }
             var fresh = go.AddComponent<PanelRenderer>();
             fresh.visualTreeAsset = visualTreeAsset;
             fresh.sortingOrder = sortingOrder;

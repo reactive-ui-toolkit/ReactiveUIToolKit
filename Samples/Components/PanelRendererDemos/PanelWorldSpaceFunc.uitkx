@@ -34,7 +34,7 @@ export VirtualNode PanelWorldSpaceFunc() {
   return (
     <VisualElement style={panelStyle}>
       <Text text="REACTOR TERMINAL" />
-      <Text
+      <Label
         text="A diegetic world-space panel. Size and placement come from the PanelRenderer component (worldSpaceSizeMode, worldSpaceSize, position, pivot) - Unity owns the root transform; this UI just renders into it."
         style={noteStyle}
       />

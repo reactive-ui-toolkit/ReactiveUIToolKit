@@ -37,6 +37,7 @@ Phase 1 (the three new controls) shipped in **0.14.0**. These are the items it d
 
 | ID | Item | Evidence / anchor | Source |
 |---|---|---|---|
+| TXT-1 | `<Text>` silently drops every attribute except `text` — it compiles to the bare `V.Text(string, key)` primitive, so `style=`/`onClick=`/etc. vanish with no diagnostic (cost a demo-fix cycle: wrap styles on `<Text>` were no-ops). Add a UITKX warning for unsupported attributes on BuiltinText — needs the full parity sweep (SG diagnostic + HMR emitter + LSP/virtual doc) plus a docs note steering styled text to `<Label>` | `SourceGenerator~/Emitter/CSharpEmitter.cs:1316-1320` reads only `text` | demo sweep 2026-08-03 |
 | U4 | Multi-root counting mismatch: `DiagnosticsAnalyzer` and `StructureValidator` count render roots with two separate implementations that can disagree — extract one shared root counter | two implementations remain (language-lib `DiagnosticsAnalyzer` vs SG `StructureValidator`) | PARITY U4 |
 | P-2 | Format-on-save silently no-ops in some VS Code sessions — needs a live repro before any change (investigation item) | no repro recorded | V1 P-2 |
 

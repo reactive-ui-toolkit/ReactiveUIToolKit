@@ -16,7 +16,7 @@ export VirtualNode PanelNestedParentFunc() {
   return (
     <VisualElement style={frameStyle}>
       <Text text="PARENT PanelRenderer" />
-      <Text
+      <Label
         text="The child panel is a SEPARATE PanelRenderer on a child GameObject (nesting is a hierarchy property, not markup). Unity 6000.5.x has open nested-renderer issues; this scene is the live regression for the shipped workarounds: the mount watchdog gets the child mounted (case IN-150082), and if a parent rebuild releases the child's tree (UUM-148452), the child repairs itself and remounts. In the editor, toggling the parent's Panel Settings re-attaches WITHOUT releasing - state survives via retarget; the measured release trigger is saving a .uxml assigned as the parent's Source Asset."
         style={noteStyle}
       />

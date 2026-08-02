@@ -19,7 +19,7 @@ export VirtualNode PanelMixedHostsFunc(string hostLabel = "host") {
   return (
     <VisualElement style={cardStyle}>
       <Text text={$"Mounted on: {hostLabel}"} />
-      <Text
+      <Label
         text="UIDocument and PanelRenderer coexist in one scene, one RootRenderer each. This counter is a shared signal - click in either panel and both update, across panel boundaries."
         style={noteStyle}
       />

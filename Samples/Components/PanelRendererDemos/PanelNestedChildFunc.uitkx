@@ -15,7 +15,7 @@ export VirtualNode PanelNestedChildFunc() {
   return (
     <VisualElement style={cardStyle}>
       <Text text="NESTED child PanelRenderer" />
-      <Text
+      <Label
         text="This counter is local hook state. It survives a retarget; after a repair-and-remount (the tree was released, nothing was salvageable) it restarts at 0 - that reset is how you can SEE the repair happened."
         style={noteStyle}
       />

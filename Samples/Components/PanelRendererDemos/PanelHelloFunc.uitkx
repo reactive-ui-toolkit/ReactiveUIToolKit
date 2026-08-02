@@ -13,7 +13,7 @@ export VirtualNode PanelHelloFunc() {
   return (
     <VisualElement style={containerStyle}>
       <Text text="Hello PanelRenderer" />
-      <Text
+      <Label
         text="This tree mounted through RootRenderer.Initialize(PanelRenderer): the panel is built by Unity a frame after enable, so the first Render was deferred and replayed automatically."
         style={noteStyle}
       />
