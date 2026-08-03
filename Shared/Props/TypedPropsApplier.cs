@@ -23,6 +23,16 @@ namespace Ruitk.Props
             if (props == null)
                 return;
 
+            // TEMP WRAP PROBE (remove after the 6.5 wrap diagnosis)
+            if (props is LabelProps __wp)
+            {
+                UnityEngine.Debug.Log(
+                    $"[WrapProbe] ApplyFull Label el={element.GetType().Name} textLen={__wp.Text?.Length ?? -1} "
+                        + $"styleNull={__wp.Style == null} wsBit={(__wp.Style != null ? (__wp.Style._setBits0 >> Style.BIT_WHITE_SPACE) & 1UL : 99UL)} "
+                        + $"wsVal={(__wp.Style != null ? __wp.Style._whiteSpace.ToString() : "n/a")}"
+                );
+            }
+
             // --- Identity / structure ---
             if (props.Name != null)
                 PropsApplier.ApplySingle(element, null, "name", props.Name);
@@ -611,6 +621,11 @@ namespace Ruitk.Props
                     break;
                 case Style.BIT_WHITE_SPACE:
                     el.style.whiteSpace = style._whiteSpace;
+                    // TEMP WRAP PROBE (remove after the 6.5 wrap diagnosis)
+                    UnityEngine.Debug.Log(
+                        $"[WrapProbe] WRITE whiteSpace={style._whiteSpace} el={el.GetType().Name} "
+                            + $"readBack={el.style.whiteSpace.value} keyword={el.style.whiteSpace.keyword}"
+                    );
                     break;
                 case Style.BIT_TEXT_ALIGN:
                     el.style.unityTextAlign = style._textAlign;
