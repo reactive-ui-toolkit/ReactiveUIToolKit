@@ -12,9 +12,7 @@ export VirtualNode PanelMixedHostsFunc(string hostLabel = "host") {
     (StyleKeys.BorderRadius, 6f),
   };
 
-  var noteStyle = new Style {
-    (StyleKeys.WhiteSpace, "normal"),
-  };
+  var noteStyle = new Style { WhiteSpace = WsNormal };
 
   return (
     <VisualElement style={cardStyle}>

@@ -6,9 +6,7 @@ export VirtualNode PanelHelloFunc() {
     (StyleKeys.FlexDirection, "column"),
   };
 
-  var noteStyle = new Style {
-    (StyleKeys.WhiteSpace, "normal"),
-  };
+  var noteStyle = new Style { WhiteSpace = WsNormal };
 
   return (
     <VisualElement style={containerStyle}>

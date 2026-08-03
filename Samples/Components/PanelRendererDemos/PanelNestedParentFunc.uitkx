@@ -9,9 +9,7 @@ export VirtualNode PanelNestedParentFunc() {
     (StyleKeys.BorderRadius, 8f),
   };
 
-  var noteStyle = new Style {
-    (StyleKeys.WhiteSpace, "normal"),
-  };
+  var noteStyle = new Style { WhiteSpace = WsNormal };
 
   return (
     <VisualElement style={frameStyle}>

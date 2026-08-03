@@ -27,9 +27,7 @@ export VirtualNode PanelWorldSpaceFunc() {
     (StyleKeys.FlexDirection, "row"),
   };
 
-  var noteStyle = new Style {
-    (StyleKeys.WhiteSpace, "normal"),
-  };
+  var noteStyle = new Style { WhiteSpace = WsNormal };
 
   return (
     <VisualElement style={panelStyle}>

@@ -49,7 +49,7 @@ export VirtualNode PanelDashboardFunc() {
       <VisualElement style={shellStyle}>
         <Label
           text="Ship dashboard - router + signals + list on a PanelRenderer host"
-          style={new Style { (StyleKeys.WhiteSpace, "normal") }}
+          style={new Style { WhiteSpace = WsNormal }}
         />
         <VisualElement style={navRowStyle}>
           <Link
