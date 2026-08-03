@@ -104,6 +104,13 @@ the SG suite grew 1828 → 1840.
   every package event, throwing forever when the path is missing. A placeholder `Samples~/README.md`
   makes the path resolve in dev; both release paths delete it before moving the real demos in.
 
+### Fixed — the sub-root swallowed clicks under layered panels
+
+The library-owned sub-root stretches over the whole panel and had default picking, so any UI
+beneath a `PanelRenderer` panel (a `UIDocument` overlay in the same scene, for instance) was
+unclickable. The sub-root is structural and now has `pickingMode: Ignore` — content inside it
+still picks, and `V.Host` props can override.
+
 ### Fixed — multi-mount scenes self-deleted
 
 A second `RootRenderer` in a scene had its **whole GameObject destroyed** by a legacy singleton
