@@ -9,17 +9,24 @@
 > plus doc-staleness items found during triage.
 >
 > Living references that stay in `Plans~/` (not plans, no items unless listed below):
-> `DISCORD_CHANGELOG.md` (operational log), `family-corpus.hash` (**load-bearing** — CI drift
+> `family-corpus.hash` (**load-bearing** — CI drift
 > gate + `ImportCorpusManifestTests` resolve the repo root via it), `LATENCY_TARGETS.md`,
 > `MIGRATION_GUIDE.md`, `UITKX_ARCHITECTURE_LANGUAGE_SERVER.md`, `VERSIONING_PROCESS.md`,
 > `codebase-index.json` / `repository-atlas.md` (generated references; stale, refresh-worthy).
+> The Discord changelog is NOT here: it lives at `plans/DISCORD_CHANGELOG.md` (lowercase,
+> family-canonical path — `scripts/discord-changelog.mjs` and `publish.yml`'s discord job read it).
+>
+> 2026-08-04 sweep: every executed campaign plan moved to `Plans~/archive/` (ES-modules trio,
+> rebrand + post-rename audit, family parity, extension listing, import unification, samples
+> modernization [never executed — see SAMPLES-NS], uGUI proposal, Unity 6.5 plan). This file is
+> the only live backlog.
 
 ---
 
 ## 0. Unity 6.5 support — carried over from Phase 1
 
 Phase 1 (the three new controls) shipped in **0.14.0**. These are the items it did
-**not** cover. Full detail: `Plans~/UNITY_6_5_SUPPORT_PLAN.md`.
+**not** cover. Full detail: `Plans~/archive/UNITY_6_5_SUPPORT_PLAN.md`.
 
 | Item | Why deferred | Trigger to revisit |
 |---|---|---|
@@ -110,8 +117,8 @@ Phase 1 (the three new controls) shipped in **0.14.0**. These are the items it d
 | TD14 | Design decision: synthetic event dispatcher for portals | open decision | V1 D-DESIGN-TD14 |
 | U7 | Decision: single-quote attribute strings | open decision | PARITY U7 |
 | RT-6 | (Optional) runtime-only package variant | not done | V1 RT-6 |
-| ~~NSIMP~~ | **DONE (v0.8.0)** — Namespace-import unification: `import "@Ns"`, UITKX2316 (editor error / build warning), UITKX2317 redundant-using Hint, quick-fixes, codemod `--tidy`, formatter round-trip. Deferred follow-ups: semantic unused-using 2317, per-segment namespace completion + hover, 2316 "did you mean" suggestion, bulk samples `--tidy` | `Plans~/IMPORT_NAMESPACE_UNIFICATION_PLAN.md` | user request 2026-07-15 |
-| SAMPLES-NS | **READY TO EXECUTE** (hand to any agent) — modernize Samples to zero `@namespace` via `namespacePrefix` config; fully-researched plan with verbatim per-file edit appendices (A: name→ns map, B: exact C# using edits, C: exact uitkx import DELETEs/ADDs) + hard verification gates | `Plans~/SAMPLES_NAMESPACE_MODERNIZATION_PLAN.md` | user request 2026-07-16 |
+| ~~NSIMP~~ | **DONE (v0.8.0)** — Namespace-import unification: `import "@Ns"`, UITKX2316 (editor error / build warning), UITKX2317 redundant-using Hint, quick-fixes, codemod `--tidy`, formatter round-trip. Deferred follow-ups: semantic unused-using 2317, per-segment namespace completion + hover, 2316 "did you mean" suggestion, bulk samples `--tidy` | `Plans~/archive/IMPORT_NAMESPACE_UNIFICATION_PLAN.md` | user request 2026-07-15 |
+| SAMPLES-NS | **OPEN — plan stale, re-inventory before executing** — modernize Samples to zero `@namespace` via `namespacePrefix` config. As of 0.15.0 (2026-08-04) the samples still carry 104 `import "@…"` lines across 65 files. The archived plan's verbatim per-file appendices predate the ES-modules redesign (0.9.0) and the rebrand (0.12.0), so redo the inventory; its method (A: name→ns map, B: exact C# using edits, C: exact uitkx import DELETEs/ADDs, hard verification gates) still applies | `Plans~/archive/SAMPLES_NAMESPACE_MODERNIZATION_PLAN.md` | user request 2026-07-16 |
 
 ## 8. Cleanup / Tech-debt
 

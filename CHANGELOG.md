@@ -122,7 +122,7 @@ guard in `Awake()` (`.Instance` has zero consumers). The first renderer still cl
 Verification: SharedTests~ 76/76, SG 1840/1840, `unity-compile-check` green at the floor AND with
 the 6.4+6.5 gates on (the whole callback/watchdog/repair surface compiles against the real
 6000.5.6f1 assemblies), docs build green. IDE extensions are unchanged (no `.uitkx` schema
-change). The workaround registry's single authority is `Plans~/UNITY_6_5_SUPPORT_PLAN.md` §5.9,
+change). The workaround registry's single authority is `Plans~/archive/UNITY_6_5_SUPPORT_PLAN.md` §5.9,
 including the removal procedure.
 
 ## [0.14.1] - 2026-08-02

@@ -189,7 +189,7 @@ namespace Ruitk.Core
         //             On a fixed editor the callback arrives and this never runs.
         //             Opt-out: config.json "mount_watchdog".
         // REMOVE WHEN: both are fixed upstream AND package.json's "unity" floor is past the fixes.
-        // EVIDENCE:   Plans~/UNITY_6_5_SUPPORT_PLAN.md 5.7.1 (verified end-to-end on 6000.5.6f1)
+        // EVIDENCE:   Plans~/archive/UNITY_6_5_SUPPORT_PLAN.md 5.7.1 (verified end-to-end on 6000.5.6f1)
         //             and 5.9.2 (registry rows WA1/WA2 - one mechanism, one flag).
         // NOTE:       the panelSettings self-assignment is the MECHANISM (one of the four
         //             attach/release paths), not dead code. Success is judged by OUTCOME
@@ -257,7 +257,7 @@ namespace Ruitk.Core
         //             to observe; it costs one frame of the child being disabled and only
         //             runs around our own rebuild levers. Opt-out: config.json "nested_prevention".
         // REMOVE WHEN: UUM-148452 is fixed AND package.json's "unity" floor is past the fix.
-        // EVIDENCE:   Plans~/UNITY_6_5_SUPPORT_PLAN.md 5.8.7 (recovery ladder N1-N6) and
+        // EVIDENCE:   Plans~/archive/UNITY_6_5_SUPPORT_PLAN.md 5.8.7 (recovery ladder N1-N6) and
         //             5.8.8 T3 (prevention holds in a built player).
         private List<PanelRenderer> DisableNestedChildRenderers()
         {
@@ -307,7 +307,7 @@ namespace Ruitk.Core
         //             per mount generation; judged by outcome (the fresh component's
         //             callback re-enters the normal mount path).
         // REMOVE WHEN: UUM-148452 is fixed AND package.json's "unity" floor is past the fix.
-        // EVIDENCE:   Plans~/UNITY_6_5_SUPPORT_PLAN.md 5.8.7 (N6 measured, decisions D1-D5)
+        // EVIDENCE:   Plans~/archive/UNITY_6_5_SUPPORT_PLAN.md 5.8.7 (N6 measured, decisions D1-D5)
         //             and 5.8.8 T5 (repair works in a built player).
         // NOTE:       every copyable setting is carried over (visualTreeAsset, sortingOrder,
         //             position, pivot, pivotReferenceSize, worldSpaceSizeMode, worldSpaceSize;
