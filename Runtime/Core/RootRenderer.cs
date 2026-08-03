@@ -34,6 +34,9 @@ namespace Ruitk.Core
 
         private void EnsureSetup()
         {
+            // TEMP WRAP PROBE (remove after the 6.5 wrap diagnosis): proves the
+            // probe build is the one actually running in the editor.
+            UnityEngine.Debug.Log("[WrapProbe] alive - probe build is running");
             if (elementRegistry == null)
             {
                 elementRegistry = ElementRegistryProvider.GetDefaultRegistry();
