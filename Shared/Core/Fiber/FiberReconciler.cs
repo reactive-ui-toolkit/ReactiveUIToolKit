@@ -1155,6 +1155,15 @@ namespace Ruitk.Core.Fiber
                 }
                 else
                 {
+                    // TEMP WRAP PROBE (remove after the 6.5 wrap diagnosis)
+                    if (fiber.ElementType == "Label")
+                    {
+                        UnityEngine.Debug.Log(
+                            $"[WrapProbe] Placement Label typed={fiber.PendingHostProps != null} "
+                                + $"typedType={fiber.PendingHostProps?.GetType().Name ?? "null"} "
+                                + $"dictKeys={(fiber.PendingProps != null ? string.Join("|", fiber.PendingProps.Keys) : "null")}"
+                        );
+                    }
                     // Apply initial properties before inserting
                     if (fiber.PendingHostProps != null)
                     {

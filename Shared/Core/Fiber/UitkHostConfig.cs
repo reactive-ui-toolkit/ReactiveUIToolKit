@@ -21,6 +21,11 @@ namespace Ruitk.Core.Fiber
 
         public override object CreateElement(string elementType)
         {
+            // TEMP WRAP PROBE (remove after the 6.5 wrap diagnosis)
+            if (elementType == "Label")
+            {
+                UnityEngine.Debug.Log("[WrapProbe] CreateElement Label (Shared assembly is current)");
+            }
             var adapter = _registry.Resolve(elementType);
             VisualElement element;
             if (adapter != null)
