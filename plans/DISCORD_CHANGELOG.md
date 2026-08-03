@@ -1085,3 +1085,39 @@ VS Code **1.1.5 ? 1.1.6** | VS2022 **1.1.5 ? 1.1.6**
 
 ### Extensions
 VS Code **1.0.306** | VS2022 **1.0.82**
+
+---
+
+## Intro post (Discord server description, Unity leg) - 2026-08-04
+
+Building UI in Unity shouldn't mean hand-wiring UXML, USS and C# event plumbing for every screen. **Reactive UI Toolkit - Unity** brings the React component model to Unity UI Toolkit, in plain C# - function components, hooks, a fiber reconciler, and a JSX-like markup language called **UITKX**. Write your UI in `.uitkx` files, hit save, and your running game updates in place.
+
+**What it does:**
+- Function components with hooks - useState, useEffect, useMemo, useContext, useSignal, useTweenFloat, and more
+- `.uitkx` markup compiles to plain C# by a Roslyn source generator at build time - zero runtime overhead, no custom packages pipeline
+- Hot reload - save while the game runs in the editor and the live UI hot-swaps in ~50-200 ms with hook state preserved, no domain reload
+- ~60 host elements mapping to UI Toolkit controls, typed compile-checked styling, a router, signals, portals, suspense, error boundaries
+- A second **uGUI backend** - the same components, hooks and router render into classic Canvas UI
+- Tooling on a shared language server: **VS Code**, **Visual Studio 2022** and **Rider** extensions - highlighting, live diagnostics, completion, go-to-definition, rename, formatting
+
+**A quick taste:**
+```jsx
+export VirtualNode Counter() {
+  var (count, setCount) = useState(0);
+  return (
+    <VisualElement>
+      <Label text={$"Count: {count}"} />
+      <Button text="+1" onClick={_ => setCount(count + 1)} />
+    </VisualElement>
+  );
+}
+```
+
+:book: **Repo & releases**
+https://github.com/reactive-ui-toolkit/ruitk-unity
+:book: **Documentation:**
+https://reactiveuitoolkit.info/unity/
+
+A Doom-style demo (and 40+ other samples) ships in the package - import and play.
+
+Happy to answer questions about the approach or the architecture - more to come on the road to 1.0!
